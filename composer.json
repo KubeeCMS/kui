@@ -19,6 +19,7 @@
     },
     "minimum-stability": "dev",
     "require": {
+        "composer/installers": "^1.10",
         "php": ">=7.3"
     },
     "autoload": {
