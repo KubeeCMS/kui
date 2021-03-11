@@ -1,0 +1,29 @@
+
+{
+    "name": "kubeecms/kui",
+    "description": "Admin skin...",
+    "keywords": ["kcms-kui", "kui", "skin", "kubeecms", "network", "administration", "menu", "kcms", "kubee"],
+    "type": "wordpress-plugin",
+    "homepage": "https://github.com/KubeeCMS/kui/",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+          "name": "KubeeCMS",
+          "homepage": "https://github.com/KubeeCMS/kui/",
+          "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/KubeeCMS/kui/issues/",
+        "source": "https://github.com/KubeeCMS/kui/"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "includes/"
+        }
+    }
+}
