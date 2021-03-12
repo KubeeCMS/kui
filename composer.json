@@ -21,10 +21,5 @@
     "require": {
         "composer/installers": "^1.10",
         "php": ">=7.3"
-    },
-    "autoload": {
-        "psr-4": {
-            "Admin_2020\\": "admin/includes/"
-        }
     }
 }
