@@ -2,7 +2,7 @@
 /*
 Plugin Name: KUI
 Plugin URI: https://github.com/KubeeCMS/kui/
-Description: Powerful Admin extension with a streamlined dashboard, Google Analytics & WooCommerce Integration, intuitive media library, dark mode and much more.
+Description: Admin extension with a streamlined dashboard, Google Analytics & WooCommerce Integration, intuitive media library, dark mode and much more.
 Version: 2.0.9.3
 Author: Kubee
 Text Domain: admin2020
