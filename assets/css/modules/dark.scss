@@ -7,6 +7,9 @@
   .uk-modal-footer {
     background: $dark;
   }
+  .uk-background-muted {
+    background-color: $mid-dark;
+  }
   .uk-modal-footer {
     border-top: 1px solid $inverse-global-border;
   }
@@ -47,5 +50,21 @@
   .upload-theme-wrap .wp-upload-form,
   .uk-placeholder {
     background: $mid-dark;
+  }
+
+  .a2020-switch-container {
+    background: $mid-dark;
+
+    button {
+      color: rgba(255, 255, 255, 0.7);
+      &.active {
+        background: $light-dark;
+        color: #fff;
+      }
+      &:hover {
+        background: $light-dark;
+        color: #fff;
+      }
+    }
   }
 }

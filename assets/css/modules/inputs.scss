@@ -15,6 +15,7 @@ input[type="text"],
 input[type="time"]:not(.uk-input),
 input[type="url"]:not(.uk-input),
 input[type="week"]:not(.uk-input),
+input[type="search"],
 textarea {
   @include make-input;
 }

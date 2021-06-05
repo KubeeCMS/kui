@@ -3,7 +3,7 @@
 Plugin Name: KUI
 Plugin URI: https://github.com/KubeeCMS/kui/
 Description: Powerful Admin extension with a streamlined dashboard, Google Analytics & WooCommerce Integration, intuitive media library, dark mode and much more.
-Version: 2.0.8
+Version: 2.0.9.3
 Author: Kubee
 Text Domain: admin2020
 Domain Path: /admin/languages
@@ -14,9 +14,9 @@ Author URI: https://github.com/KubeeCMS/
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 ////PRODUCT ID
-$productid = "5ebc6198701f5d0a0812c618";///ONE USE
+$productid = "5ebe7e66701f5d0fe0b4c1ab";
 ////VERSION
-$version = '2.0.8'; 
+$version = '2.0.9.3'; 
 ////NAME
 $pluginName = 'Admin 2020 Pro';
 ///PATH

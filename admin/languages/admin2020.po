@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-23 13:15+0000\n"
-"PO-Revision-Date: 2021-02-23 13:15+0000\n"
+"POT-Creation-Date: 2021-05-10 14:49+0100\n"
+"PO-Revision-Date: 2021-05-10 14:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -15,53 +15,51 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/class-activation.php:128
+#: admin/class-activation.php:129
 msgid "Admin 2020 is not activated"
 msgstr ""
 
-#: admin/class-activation.php:129
+#: admin/class-activation.php:130
 msgid "Please add a valid licence to activate"
 msgstr ""
 
-#: admin/class-activation.php:132
+#: admin/class-activation.php:133
 msgid "Enter your licence key"
 msgstr ""
 
-#: admin/class-activation.php:135
+#: admin/class-activation.php:136
 msgid "Activate"
 msgstr ""
 
-#: admin/class-activation.php:157
+#: admin/class-activation.php:159
 msgid "Supercharge your admin with Admin 2020 Pro"
 msgstr ""
 
-#: admin/class-activation.php:158
+#: admin/class-activation.php:160
 msgid "Unlock powerful features and speed up your workflow with Admin 2020 Pro"
 msgstr ""
 
-#: admin/class-activation.php:161
+#: admin/class-activation.php:163
 msgid "Upgrade"
 msgstr ""
 
-#: admin/class-activation.php:162
+#: admin/class-activation.php:164
 msgid "Dimiss"
 msgstr ""
 
-#: admin/class-activation.php:188
+#: admin/class-activation.php:190
 msgid "Admin 2020 succesfully activated"
 msgstr ""
 
-#: admin/class-activation.php:214
+#: admin/class-activation.php:216
 msgid "Unable to register admin 2020 at this time"
 msgstr ""
 
-#: admin/class-activation.php:221
+#: admin/class-activation.php:223
 msgid "No licence key provided"
 msgstr ""
 
-#: admin/class-settings.php:68 modules/premium/admin-content.php:725
-#: modules/premium/admin-content.php:1362
-#: modules/premium/admin-menu-editor.php:515
+#: admin/class-settings.php:68 modules/premium/admin-menu-editor.php:515
 msgid "Settings"
 msgstr ""
 
@@ -99,8 +97,11 @@ msgid "Settings saved. You may need to refresh for changes to take effect."
 msgstr ""
 
 #: admin/class-settings.php:395 admin/class-settings.php:600
-#: admin/class-settings.php:671 modules/premium/admin-folders.php:806
-#: modules/premium/admin-folders.php:834 modules/premium/admin-folders.php:950
+#: admin/class-settings.php:671 modules/premium/admin-content.php:557
+#: modules/premium/admin-content.php:633 modules/premium/admin-content.php:711
+#: modules/premium/admin-content.php:949 modules/premium/admin-content.php:1104
+#: modules/premium/admin-content.php:1152 modules/premium/admin-folders.php:192
+#: modules/premium/admin-folders.php:309
 #: modules/premium/admin-menu-editor.php:1386
 #: modules/premium/admin-menu-editor.php:1417
 msgid "Something went wrong"
@@ -155,8 +156,8 @@ msgid "Modules"
 msgstr ""
 
 #: admin/class-settings.php:925 admin/class-settings.php:1050
-#: modules/premium/admin-content.php:1480
-#: modules/premium/admin-content.php:1733 modules/premium/admin-folders.php:744
+#: modules/admin-menu.php:509 modules/admin-menu.php:769
+#: modules/premium/admin-content.php:3388
 #: modules/premium/admin-menu-editor.php:288
 #: modules/premium/admin-overview.php:715
 msgid "Save"
@@ -172,7 +173,7 @@ msgid ""
 "remove."
 msgstr ""
 
-#: admin/class-settings.php:975
+#: admin/class-settings.php:975 modules/premium/admin-content.php:2226
 msgid "Remove"
 msgstr ""
 
@@ -210,73 +211,73 @@ msgstr ""
 msgid "Unable to save user preferences"
 msgstr ""
 
-#: modules/admin-bar.php:126
+#: modules/admin-bar.php:176
 msgid "Admin Bar"
 msgstr ""
 
-#: modules/admin-bar.php:128
+#: modules/admin-bar.php:178
 msgid ""
 "Creates new admin bar, adds user off canvas menu and builds global search"
 msgstr ""
 
-#: modules/admin-bar.php:176
+#: modules/admin-bar.php:228
 msgid "Admin Logo"
 msgstr ""
 
-#: modules/admin-bar.php:177
+#: modules/admin-bar.php:229
 msgid ""
 "Sets the logo for the admin bar and also the logo for the login page if "
 "login styles is enabled. If no logo is set for dark mode then then the light "
 "logo will be used."
 msgstr ""
 
-#: modules/admin-bar.php:180 modules/admin-bar.php:210
-#: modules/admin-menu.php:118 modules/admin-theme.php:176
+#: modules/admin-bar.php:232 modules/admin-bar.php:262
+#: modules/admin-menu.php:122 modules/admin-theme.php:176
 msgid "Light"
 msgstr ""
 
-#: modules/admin-bar.php:185
+#: modules/admin-bar.php:237
 msgid "Light Logo Url"
 msgstr ""
 
-#: modules/admin-bar.php:188
+#: modules/admin-bar.php:240
 msgid "Select Light Logo"
 msgstr ""
 
-#: modules/admin-bar.php:192 modules/admin-bar.php:228
-#: modules/admin-menu.php:136 modules/admin-theme.php:194
+#: modules/admin-bar.php:244 modules/admin-bar.php:280
+#: modules/admin-menu.php:140 modules/admin-theme.php:194
 msgid "Dark"
 msgstr ""
 
-#: modules/admin-bar.php:197
+#: modules/admin-bar.php:249
 msgid "Dark Logo Url"
 msgstr ""
 
-#: modules/admin-bar.php:200
+#: modules/admin-bar.php:252
 msgid "Select Dark Logo"
 msgstr ""
 
-#: modules/admin-bar.php:206 modules/admin-menu.php:114
+#: modules/admin-bar.php:258 modules/admin-menu.php:118
 #: modules/admin-theme.php:172
 msgid "Background Color"
 msgstr ""
 
-#: modules/admin-bar.php:207
+#: modules/admin-bar.php:259
 msgid "Sets a background colour for the admin bar."
 msgstr ""
 
-#: modules/admin-bar.php:251
+#: modules/admin-bar.php:303
 msgid "Admin Bar Disabled for"
 msgstr ""
 
-#: modules/admin-bar.php:252
+#: modules/admin-bar.php:304
 msgid "Admin 2020 admin bar will be disabled for any users or roles you select"
 msgstr ""
 
-#: modules/admin-bar.php:271 modules/admin-menu.php:181
+#: modules/admin-bar.php:323 modules/admin-menu.php:185
 #: modules/admin-theme.php:158 modules/premium/admin-advanced.php:142
 #: modules/premium/admin-analytics.php:113
-#: modules/premium/admin-content.php:134 modules/premium/admin-folders.php:168
+#: modules/premium/admin-content.php:144 modules/premium/admin-folders.php:574
 #: modules/premium/admin-menu-editor.php:148
 #: modules/premium/admin-menu-editor.php:427
 #: modules/premium/admin-menu-editor.php:551
@@ -286,213 +287,220 @@ msgstr ""
 msgid "Select roles or users"
 msgstr ""
 
-#: modules/admin-bar.php:285 modules/admin-menu.php:195
+#: modules/admin-bar.php:337
+msgid "Hide admin bar links (left side) "
+msgstr ""
+
+#: modules/admin-bar.php:338
+msgid ""
+"Disables legacy links on left side of admin bar for all users. Also hides "
+"the user preference."
+msgstr ""
+
+#: modules/admin-bar.php:358 modules/admin-menu.php:199
 msgid "Disable Search"
 msgstr ""
 
-#: modules/admin-bar.php:286
+#: modules/admin-bar.php:359
 msgid "Disables search icon and global search function from admin bar"
 msgstr ""
 
-#: modules/admin-bar.php:305
+#: modules/admin-bar.php:378
 msgid "Disable Create Button"
 msgstr ""
 
-#: modules/admin-bar.php:306
-msgid "Disables the 'new' button in the admin bar"
+#: modules/admin-bar.php:379
+msgid "Disables the 'create' button in the admin bar"
 msgstr ""
 
-#: modules/admin-bar.php:326
+#: modules/admin-bar.php:399
 msgid "Disable View Website Button"
 msgstr ""
 
-#: modules/admin-bar.php:327
+#: modules/admin-bar.php:400
 msgid "Disables the view website link button in the admin bar"
 msgstr ""
 
-#: modules/admin-bar.php:347
+#: modules/admin-bar.php:420
 msgid "Set Dark Mode as Default"
 msgstr ""
 
-#: modules/admin-bar.php:348
+#: modules/admin-bar.php:421
 msgid ""
 "If enabled, dark mode will default to true for users that haven't set a "
 "preference."
 msgstr ""
 
-#: modules/admin-bar.php:368
+#: modules/admin-bar.php:441
 msgid "Load admin 2020 bar on front end"
 msgstr ""
 
-#: modules/admin-bar.php:369
+#: modules/admin-bar.php:442
 msgid ""
 "If enabled, admin 2020 admin bar will be load on the front end. Please note, "
 "this will not work on all themes and styling will vary."
 msgstr ""
 
-#: modules/admin-bar.php:389
+#: modules/admin-bar.php:462
 msgid "Hide admin bar on front end"
 msgstr ""
 
-#: modules/admin-bar.php:390
+#: modules/admin-bar.php:463
 msgid "If enabled, front end admin bar will not load."
 msgstr ""
 
-#: modules/admin-bar.php:410 modules/premium/admin-content.php:147
+#: modules/admin-bar.php:483
+msgid "Disable Notification Center"
+msgstr ""
+
+#: modules/admin-bar.php:484
+msgid "If disabled, notifcations will show in the normal way"
+msgstr ""
+
+#: modules/admin-bar.php:504
 msgid "Post Types available in Search"
 msgstr ""
 
-#: modules/admin-bar.php:411 modules/premium/admin-content.php:148
+#: modules/admin-bar.php:505
 msgid "The global search will only search the selected post types."
 msgstr ""
 
-#: modules/admin-bar.php:436 modules/admin-bar.php:477
-#: modules/premium/admin-content.php:172
+#: modules/admin-bar.php:530 modules/admin-bar.php:571
+#: modules/premium/admin-content.php:182
 msgid "Select Post Types"
 msgstr ""
 
-#: modules/admin-bar.php:452
+#: modules/admin-bar.php:546
 msgid "Post Types available in create button (new)"
 msgstr ""
 
-#: modules/admin-bar.php:453
+#: modules/admin-bar.php:547
 msgid "Only the selected post types will show up in the create dropdown."
 msgstr ""
 
-#: modules/admin-bar.php:626
-msgid "items found for"
-msgstr ""
-
-#: modules/admin-bar.php:630 modules/premium/admin-content.php:409
-#: modules/premium/admin-overview.php:147
-#: modules/premium/admin-overview.php:173
-msgid "Name"
-msgstr ""
-
-#: modules/admin-bar.php:631 modules/premium/admin-content.php:1406
-#: modules/premium/admin-woocommerce.php:627
-msgid "Status"
-msgstr ""
-
-#: modules/admin-bar.php:633 modules/premium/admin-overview.php:176
-msgid "Type"
-msgstr ""
-
-#: modules/admin-bar.php:634
-msgid "User"
-msgstr ""
-
-#: modules/admin-bar.php:635
-msgid "Date"
-msgstr ""
-
-#: modules/admin-bar.php:662 modules/premium/admin-content.php:1339
-#: modules/premium/admin-content.php:1625
-msgid "Edit"
-msgstr ""
-
-#: modules/admin-bar.php:671 modules/premium/admin-content.php:1342
-msgid "View"
-msgstr ""
-
-#: modules/admin-bar.php:885
+#: modules/admin-bar.php:1061
 msgid "Search website"
 msgstr ""
 
-#: modules/admin-bar.php:893 modules/admin-bar.php:903
-#: modules/admin-bar.php:911 modules/admin-menu.php:389
-#: modules/premium/admin-content.php:658
+#: modules/admin-bar.php:1077 modules/admin-bar.php:1084
+#: modules/admin-menu.php:473 modules/admin-menu.php:733
 msgid "Search"
 msgstr ""
 
-#: modules/admin-bar.php:919
-msgid "Post Types"
+#: modules/admin-bar.php:1198 modules/premium/admin-content.php:3139
+#: modules/premium/admin-content.php:3244
+msgid "Edit"
 msgstr ""
 
-#: modules/admin-bar.php:940 modules/premium/admin-content.php:1364
-#: modules/premium/admin-content.php:1450
-msgid "Categories"
+#: modules/admin-bar.php:1205 modules/premium/admin-content.php:3133
+#: modules/premium/admin-content.php:3238
+msgid "View"
 msgstr ""
 
-#: modules/admin-bar.php:967
-msgid "Filter by user"
+#: modules/admin-bar.php:1222
+msgid "Show more"
 msgstr ""
 
-#: modules/admin-bar.php:978
-msgid "Start searching to see results"
+#: modules/admin-bar.php:1224
+msgid "other matches"
 msgstr ""
 
-#: modules/admin-bar.php:1050 modules/premium/admin-overview.php:69
+#: modules/admin-bar.php:1302 modules/premium/admin-overview.php:69
 #: modules/premium/admin-overview.php:263
 msgid "Overview"
 msgstr ""
 
-#: modules/admin-bar.php:1051
+#: modules/admin-bar.php:1309
 msgid "Preferences"
 msgstr ""
 
-#: modules/admin-bar.php:1059
-msgid "View Website"
+#: modules/admin-bar.php:1318
+msgid "View site"
 msgstr ""
 
-#: modules/admin-bar.php:1062
-msgid "View Profile"
+#: modules/admin-bar.php:1323
+msgid "View Dashboard"
 msgstr ""
 
-#: modules/admin-bar.php:1075 modules/admin-login.php:126
+#: modules/admin-bar.php:1342 modules/admin-login.php:126
 msgid "Dark Mode"
 msgstr ""
 
-#: modules/admin-bar.php:1086 modules/admin-bar.php:1337
+#: modules/admin-bar.php:1353 modules/admin-bar.php:1656
 msgid "Show screen options"
 msgstr ""
 
-#: modules/admin-bar.php:1097
+#: modules/admin-bar.php:1364
 msgid "Hide admin bar links (left)"
 msgstr ""
 
-#: modules/admin-bar.php:1121
+#: modules/admin-bar.php:1393
+msgid "Edit profile"
+msgstr ""
+
+#: modules/admin-bar.php:1400
 msgid "Logout"
 msgstr ""
 
-#: modules/admin-bar.php:1144
+#: modules/admin-bar.php:1426
 msgid "Updates"
 msgstr ""
 
-#: modules/admin-bar.php:1148
+#: modules/admin-bar.php:1429
+msgid "Up to date"
+msgstr ""
+
+#: modules/admin-bar.php:1432
 msgid "Everything is up to date"
 msgstr ""
 
-#: modules/admin-bar.php:1157
-msgid "All Updates"
+#: modules/admin-bar.php:1443
+msgid "Core"
 msgstr ""
 
-#: modules/admin-bar.php:1165
-msgid "WordPress"
-msgstr ""
-
-#: modules/admin-bar.php:1174 modules/premium/admin-overview-cards.php:360
+#: modules/admin-bar.php:1457 modules/premium/admin-overview-cards.php:360
 msgid "Plugins"
 msgstr ""
 
-#: modules/admin-bar.php:1183
+#: modules/admin-bar.php:1470
 msgid "Themes"
 msgstr ""
 
-#: modules/admin-bar.php:1197
+#: modules/admin-bar.php:1486
 msgid "Notifications"
 msgstr ""
 
-#: modules/admin-bar.php:1237 modules/admin-bar.php:1242
+#: modules/admin-bar.php:1512
+msgid "Don't show again"
+msgstr ""
+
+#: modules/admin-bar.php:1521
+msgid "hidden notification"
+msgstr ""
+
+#: modules/admin-bar.php:1522
+msgid "hidden notifications"
+msgstr ""
+
+#: modules/admin-bar.php:1523
+msgid "Show all"
+msgstr ""
+
+#: modules/admin-bar.php:1560
 msgid "Toggle menu"
 msgstr ""
 
-#: modules/admin-bar.php:1329
+#: modules/admin-bar.php:1643
 msgid "View website"
 msgstr ""
 
-#: modules/admin-bar.php:1345
-msgid "new"
+#: modules/admin-bar.php:1648
+msgid "Dashboard"
+msgstr ""
+
+#: modules/admin-bar.php:1663 modules/premium/admin-content.php:2660
+#: modules/premium/admin-folders.php:859
+msgid "Create"
 msgstr ""
 
 #: modules/admin-login.php:81
@@ -532,38 +540,73 @@ msgid ""
 "If enabled, after logging in users will be redirected to the overview page"
 msgstr ""
 
-#: modules/admin-menu.php:78
+#: modules/admin-menu.php:82
 msgid "Menu"
 msgstr ""
 
-#: modules/admin-menu.php:80
+#: modules/admin-menu.php:84
 msgid "Creates new admin menu."
 msgstr ""
 
-#: modules/admin-menu.php:115
+#: modules/admin-menu.php:119
 msgid "Sets a background colour for the admin menu."
 msgstr ""
 
-#: modules/admin-menu.php:159
+#: modules/admin-menu.php:163
 msgid "Menu Disabled for"
 msgstr ""
 
-#: modules/admin-menu.php:160
+#: modules/admin-menu.php:164
 msgid "Admin 2020 menu will be disabled for any users or roles you select"
 msgstr ""
 
-#: modules/admin-menu.php:196
+#: modules/admin-menu.php:200
 msgid "Disables admin menu search"
 msgstr ""
 
-#: modules/admin-menu.php:216
+#: modules/admin-menu.php:220
 msgid "Set collapsed menu as default"
 msgstr ""
 
-#: modules/admin-menu.php:217
+#: modules/admin-menu.php:221
 msgid ""
 "If enabled, the menu will default to the shrunk menu for users that haven't "
 "set a preference."
+msgstr ""
+
+#: modules/admin-menu.php:506 modules/admin-menu.php:766
+#: modules/premium/admin-content.php:2657
+#: modules/premium/admin-content.php:2703 modules/premium/admin-folders.php:856
+#: modules/premium/admin-folders.php:902
+msgid "Cancel"
+msgstr ""
+
+#: modules/admin-menu.php:514 modules/admin-menu.php:774
+msgid "Clear Favourites"
+msgstr ""
+
+#: modules/admin-menu.php:911
+msgid "Menu Preferences"
+msgstr ""
+
+#: modules/admin-menu.php:916
+msgid "Show search bar"
+msgstr ""
+
+#: modules/admin-menu.php:931
+msgid "Hide menu icons"
+msgstr ""
+
+#: modules/admin-menu.php:946
+msgid "Show submenu on hover"
+msgstr ""
+
+#: modules/admin-menu.php:960
+msgid "Show favourites"
+msgstr ""
+
+#: modules/admin-menu.php:973
+msgid "Set Favourites"
 msgstr ""
 
 #: modules/admin-theme.php:106
@@ -775,439 +818,620 @@ msgstr ""
 msgid "Page"
 msgstr ""
 
-#: modules/premium/admin-content.php:80 modules/premium/admin-content.php:296
-#: modules/premium/admin-content.php:601 modules/premium/admin-content.php:1361
+#: modules/premium/admin-content.php:88 modules/premium/admin-content.php:1954
+#: modules/premium/admin-content.php:2210
 msgid "Content"
 msgstr ""
 
-#: modules/premium/admin-content.php:82
+#: modules/premium/admin-content.php:90
 msgid ""
 "Creates the content page where you can manage all of your assets, posts and "
 "pages from one place."
 msgstr ""
 
-#: modules/premium/admin-content.php:113
+#: modules/premium/admin-content.php:123
 msgid "Admin 2020 content page disabled for"
 msgstr ""
 
-#: modules/premium/admin-content.php:114
+#: modules/premium/admin-content.php:124
 msgid ""
 "Admin 2020 Content Page will be disabled for any users or roles you select"
 msgstr ""
 
-#: modules/premium/admin-content.php:344
-msgid "Load More"
+#: modules/premium/admin-content.php:157
+msgid "Post types available in content page"
 msgstr ""
 
-#: modules/premium/admin-content.php:395 modules/premium/admin-content.php:480
-msgid "Batch Rename"
+#: modules/premium/admin-content.php:158
+msgid "Only the selected post types will be available in the content page."
 msgstr ""
 
-#: modules/premium/admin-content.php:398
+#: modules/premium/admin-content.php:196
+msgid "Enable private library mode"
+msgstr ""
+
+#: modules/premium/admin-content.php:197
 msgid ""
-"Batch rename only currently works with media files and attachments, any "
-"selected posts will be ignored."
+"When enabled, the content page will only show content created by or uploaded "
+"by the currently logged in user. This includes folders."
 msgstr ""
 
-#: modules/premium/admin-content.php:406
-msgid "Attribute to rename"
+#: modules/premium/admin-content.php:301
+msgid "Original Title / Value"
 msgstr ""
 
-#: modules/premium/admin-content.php:410
-msgid "Alt Tag"
-msgstr ""
-
-#: modules/premium/admin-content.php:416
-msgid "New Name"
-msgstr ""
-
-#: modules/premium/admin-content.php:422
-msgid "Original Filename"
-msgstr ""
-
-#: modules/premium/admin-content.php:423 modules/premium/admin-content.php:2029
+#: modules/premium/admin-content.php:305
 msgid "Text"
 msgstr ""
 
-#: modules/premium/admin-content.php:424 modules/premium/admin-content.php:2052
-msgid "Date Uploaded"
+#: modules/premium/admin-content.php:309 modules/premium/admin-content.php:2786
+msgid "Date Created"
 msgstr ""
 
-#: modules/premium/admin-content.php:425
-msgid "Original Alt"
+#: modules/premium/admin-content.php:313
+msgid "File Extension (attachments only)"
 msgstr ""
 
-#: modules/premium/admin-content.php:426
-msgid "File Extension"
-msgstr ""
-
-#: modules/premium/admin-content.php:427
+#: modules/premium/admin-content.php:317
 msgid "Sequence Number"
 msgstr ""
 
-#: modules/premium/admin-content.php:428
+#: modules/premium/admin-content.php:321
 msgid "Meta Value"
 msgstr ""
 
-#: modules/premium/admin-content.php:434
-msgid "Add"
+#: modules/premium/admin-content.php:325
+msgid "Find and Replace"
 msgstr ""
 
-#: modules/premium/admin-content.php:452
-msgid "Preview"
-msgstr ""
-
-#: modules/premium/admin-content.php:457
-msgid "Rename"
-msgstr ""
-
-#: modules/premium/admin-content.php:479
-msgid "Deselect All"
-msgstr ""
-
-#: modules/premium/admin-content.php:481 modules/premium/admin-content.php:1483
-#: modules/premium/admin-content.php:1736 modules/premium/admin-folders.php:741
-msgid "Delete"
-msgstr ""
-
-#: modules/premium/admin-content.php:515 modules/premium/admin-content.php:676
-#: modules/premium/admin-content.php:690 modules/premium/admin-content.php:706
-#: modules/premium/admin-folders.php:456 modules/premium/admin-overview.php:581
-msgid "All"
-msgstr ""
-
-#: modules/premium/admin-content.php:542
-msgid "Upload"
-msgstr ""
-
-#: modules/premium/admin-content.php:606
-msgid "New"
-msgstr ""
-
-#: modules/premium/admin-content.php:648
-msgid "Toggle Folders"
-msgstr ""
-
-#: modules/premium/admin-content.php:652
-msgid "Toggle List View"
-msgstr ""
-
-#: modules/premium/admin-content.php:662
-msgid "Search Content"
-msgstr ""
-
-#: modules/premium/admin-content.php:665
-msgid "Filters"
-msgstr ""
-
-#: modules/premium/admin-content.php:673
-msgid "Month"
-msgstr ""
-
-#: modules/premium/admin-content.php:687
-msgid "Year"
-msgstr ""
-
-#: modules/premium/admin-content.php:703
-msgid "Users"
-msgstr ""
-
-#: modules/premium/admin-content.php:721
-msgid "Upload files"
-msgstr ""
-
-#: modules/premium/admin-content.php:731
-msgid "Thumnbnail size"
-msgstr ""
-
-#: modules/premium/admin-content.php:778
-msgid "No content found"
-msgstr ""
-
-#: modules/premium/admin-content.php:807
-msgid "Today"
-msgstr ""
-
-#: modules/premium/admin-content.php:809
-#: modules/premium/admin-overview-cards.php:278
-#: modules/premium/admin-overview-cards.php:428
-msgid "ago"
-msgstr ""
-
-#: modules/premium/admin-content.php:987 modules/premium/admin-content.php:997
-#: modules/premium/admin-content.php:1065
-#: modules/premium/admin-content.php:1079
-msgid "View details"
-msgstr ""
-
-#: modules/premium/admin-content.php:1064
-msgid "By"
-msgstr ""
-
-#: modules/premium/admin-content.php:1341
-msgid "Duplicate"
-msgstr ""
-
-#: modules/premium/admin-content.php:1378
-#: modules/premium/admin-content.php:1642
-msgid "Title"
-msgstr ""
-
-#: modules/premium/admin-content.php:1427
-msgid "Featured Image"
-msgstr ""
-
-#: modules/premium/admin-content.php:1620
-msgid "Attributes"
-msgstr ""
-
-#: modules/premium/admin-content.php:1621
-msgid "Meta"
-msgstr ""
-
-#: modules/premium/admin-content.php:1649
-msgid "Alt Text"
-msgstr ""
-
-#: modules/premium/admin-content.php:1656
-msgid "Caption"
-msgstr ""
-
-#: modules/premium/admin-content.php:1663
-msgid "Description"
-msgstr ""
-
-#: modules/premium/admin-content.php:1676
-msgid "Link copied to clipboard"
-msgstr ""
-
-#: modules/premium/admin-content.php:1695
-msgid "File Type"
-msgstr ""
-
-#: modules/premium/admin-content.php:1699
-msgid "Uploaded"
-msgstr ""
-
-#: modules/premium/admin-content.php:1703
-msgid "Size"
-msgstr ""
-
-#: modules/premium/admin-content.php:1709
-msgid "Dimensions"
-msgstr ""
-
-#: modules/premium/admin-content.php:1780
-msgid "Unable to save item"
-msgstr ""
-
-#: modules/premium/admin-content.php:1792
-msgid "Item Updated"
-msgstr ""
-
-#: modules/premium/admin-content.php:1830
-#: modules/premium/admin-content.php:2375
-#: modules/premium/admin-content.php:2383
-#: modules/premium/admin-content.php:2392
+#: modules/premium/admin-content.php:395 modules/premium/admin-content.php:403
+#: modules/premium/admin-content.php:1530
 msgid "Unable to save attachment"
 msgstr ""
 
-#: modules/premium/admin-content.php:1836
-msgid "Attachment Saved"
-msgstr ""
-
-#: modules/premium/admin-content.php:1880
-msgid "Items Deleted"
-msgstr ""
-
-#: modules/premium/admin-content.php:1900
-msgid "Unable to delete item"
-msgstr ""
-
-#: modules/premium/admin-content.php:1905
-msgid "Item Deleted"
-msgstr ""
-
-#: modules/premium/admin-content.php:1910
-msgid "insufficient privileges to delete item"
-msgstr ""
-
-#: modules/premium/admin-content.php:1977
-msgid "Post duplicated"
-msgstr ""
-
-#: modules/premium/admin-content.php:2006
-msgid "Filename"
-msgstr ""
-
-#: modules/premium/admin-content.php:2011
-msgid "Current Filename"
-msgstr ""
-
-#: modules/premium/admin-content.php:2034
-msgid "New text"
-msgstr ""
-
-#: modules/premium/admin-content.php:2057
-msgid "Format"
-msgstr ""
-
-#: modules/premium/admin-content.php:2076
-msgid "Alt"
-msgstr ""
-
-#: modules/premium/admin-content.php:2081
-msgid "Current Alt"
-msgstr ""
-
-#: modules/premium/admin-content.php:2099
-msgid "Extension"
-msgstr ""
-
-#: modules/premium/admin-content.php:2104
-msgid "Current Extension"
-msgstr ""
-
-#: modules/premium/admin-content.php:2122
-msgid "Sequence start num"
-msgstr ""
-
-#: modules/premium/admin-content.php:2127
-msgid "Start Number"
-msgstr ""
-
-#: modules/premium/admin-content.php:2145
-msgid "Meta key"
-msgstr ""
-
-#: modules/premium/admin-content.php:2150
-msgid "Meta Key"
-msgstr ""
-
-#: modules/premium/admin-content.php:2185
-msgid "No attachments selected"
-msgstr ""
-
-#: modules/premium/admin-content.php:2230
-msgid "Invalid Date Format"
-msgstr ""
-
-#: modules/premium/admin-content.php:2280
-msgid "Attachments successfully renamed"
-msgstr ""
-
-#: modules/premium/admin-content.php:2316
-#: modules/premium/admin-content.php:2434
-msgid "Failed to upload file"
-msgstr ""
-
-#: modules/premium/admin-content.php:2344
-msgid "Files succesfully uploaded"
-msgstr ""
-
-#: modules/premium/admin-content.php:2398
+#: modules/premium/admin-content.php:412
 msgid "Image Saved"
 msgstr ""
 
-#: modules/premium/admin-content.php:2454
-msgid "File saved as copy"
+#: modules/premium/admin-content.php:448
+msgid "Failed to upload file"
 msgstr ""
 
-#: modules/premium/admin-folders.php:121 modules/premium/admin-folders.php:293
-msgid "Folders"
+#: modules/premium/admin-content.php:483
+msgid "Items uploaded"
 msgstr ""
 
-#: modules/premium/admin-folders.php:123
-msgid "Creates the folder system for the content page and media page / modals."
+#: modules/premium/admin-content.php:510
+msgid "Views updated"
 msgstr ""
 
-#: modules/premium/admin-folders.php:146
-msgid "Folders Disabled for"
+#: modules/premium/admin-content.php:564
+msgid "Items duplicated succesffuly"
 msgstr ""
 
-#: modules/premium/admin-folders.php:147
-msgid "Folders will be disabled for any users or roles you select"
+#: modules/premium/admin-content.php:567
+msgid "Itms couldn't be duplicated"
 msgstr ""
 
-#: modules/premium/admin-folders.php:241
-msgid "Add New Folder"
+#: modules/premium/admin-content.php:613 modules/premium/admin-content.php:667
+msgid "No Meta Key provided"
 msgstr ""
 
-#: modules/premium/admin-folders.php:242 modules/premium/admin-folders.php:504
-#: modules/premium/admin-folders.php:508
+#: modules/premium/admin-content.php:716
+msgid "Attributes Updated"
+msgstr ""
+
+#: modules/premium/admin-content.php:956
+msgid "Items deleted succesffuly"
+msgstr ""
+
+#: modules/premium/admin-content.php:959
+msgid "Itms couldn't be deleted"
+msgstr ""
+
+#: modules/premium/admin-content.php:1082 modules/premium/admin-folders.php:287
+msgid "Title is required"
+msgstr ""
+
+#: modules/premium/admin-content.php:1088 modules/premium/admin-folders.php:293
+msgid "Colour is required"
+msgstr ""
+
+#: modules/premium/admin-content.php:1115 modules/premium/admin-folders.php:320
+msgid "Folder created"
+msgstr ""
+
+#: modules/premium/admin-content.php:1160 modules/premium/admin-folders.php:200
+msgid "Folder updated"
+msgstr ""
+
+#: modules/premium/admin-content.php:1180 modules/premium/admin-folders.php:104
+msgid "Unable to move folder into itself"
+msgstr ""
+
+#: modules/premium/admin-content.php:1197 modules/premium/admin-folders.php:121
+msgid "Unable to move folder"
+msgstr ""
+
+#: modules/premium/admin-content.php:1232 modules/premium/admin-folders.php:156
+msgid "Folder moved"
+msgstr ""
+
+#: modules/premium/admin-content.php:1254 modules/premium/admin-folders.php:70
+msgid "No content to move"
+msgstr ""
+
+#: modules/premium/admin-content.php:1269 modules/premium/admin-folders.php:85
+msgid "Content moved"
+msgstr ""
+
+#: modules/premium/admin-content.php:1290 modules/premium/admin-folders.php:221
+msgid "No folder to delete"
+msgstr ""
+
+#: modules/premium/admin-content.php:1300 modules/premium/admin-folders.php:231
+msgid "Unable to delete the folder"
+msgstr ""
+
+#: modules/premium/admin-content.php:1331 modules/premium/admin-folders.php:262
+msgid "Folder deleted"
+msgstr ""
+
+#: modules/premium/admin-content.php:1505
+msgid "Unable to update item"
+msgstr ""
+
+#: modules/premium/admin-content.php:1546
+msgid "Item updated"
+msgstr ""
+
+#: modules/premium/admin-content.php:1595
+msgid "Items updated"
+msgstr ""
+
+#: modules/premium/admin-content.php:2011
+msgid "Update Tags and Categories"
+msgstr ""
+
+#: modules/premium/admin-content.php:2018
+#: modules/premium/admin-content.php:2431
+#: modules/premium/admin-content.php:2435
+#: modules/premium/admin-content.php:2819
+#: modules/premium/admin-content.php:2822
+msgid "Categories"
+msgstr ""
+
+#: modules/premium/admin-content.php:2019
+#: modules/premium/admin-content.php:2436
+#: modules/premium/admin-content.php:2823
+msgid "Search categories..."
+msgstr ""
+
+#: modules/premium/admin-content.php:2024
+msgid "Keep existing categories"
+msgstr ""
+
+#: modules/premium/admin-content.php:2033
+#: modules/premium/admin-content.php:2442
+#: modules/premium/admin-content.php:2446
+#: modules/premium/admin-content.php:2830
+#: modules/premium/admin-content.php:2833
+msgid "Tags"
+msgstr ""
+
+#: modules/premium/admin-content.php:2034
+#: modules/premium/admin-content.php:2447
+#: modules/premium/admin-content.php:2834
+msgid "Search tags..."
+msgstr ""
+
+#: modules/premium/admin-content.php:2039
+msgid "Keep existing tags"
+msgstr ""
+
+#: modules/premium/admin-content.php:2047
+#: modules/premium/admin-content.php:2456
+#: modules/premium/admin-content.php:2706 modules/premium/admin-folders.php:905
+msgid "Update"
+msgstr ""
+
+#: modules/premium/admin-content.php:2067
+#: modules/premium/admin-content.php:3317
+msgid "Batch Rename"
+msgstr ""
+
+#: modules/premium/admin-content.php:2077
+msgid "Attribute to rename"
+msgstr ""
+
+#: modules/premium/admin-content.php:2082
+#: modules/premium/admin-content.php:2624
+#: modules/premium/admin-content.php:3039 modules/premium/admin-folders.php:823
+#: modules/premium/admin-overview.php:147
+#: modules/premium/admin-overview.php:173
+msgid "Name"
+msgstr ""
+
+#: modules/premium/admin-content.php:2083
+msgid "Meta Key"
+msgstr ""
+
+#: modules/premium/admin-content.php:2084
+msgid "Alt Tag (Attachments only)"
+msgstr ""
+
+#: modules/premium/admin-content.php:2089
+msgid "Meta Key Name"
+msgstr ""
+
+#: modules/premium/admin-content.php:2100
+msgid "Filename Structure"
+msgstr ""
+
+#: modules/premium/admin-content.php:2105
+msgid "Rename Item"
+msgstr ""
+
+#: modules/premium/admin-content.php:2113
+msgid "Add"
+msgstr ""
+
+#: modules/premium/admin-content.php:2137
+msgid "New Text"
+msgstr ""
+
+#: modules/premium/admin-content.php:2139
+msgid "Date Format"
+msgstr ""
+
+#: modules/premium/admin-content.php:2141
+msgid "Start Number"
+msgstr ""
+
+#: modules/premium/admin-content.php:2143
+msgid "Meta key Name"
+msgstr ""
+
+#: modules/premium/admin-content.php:2145
+msgid "Find"
+msgstr ""
+
+#: modules/premium/admin-content.php:2149
+msgid "Replace"
+msgstr ""
+
+#: modules/premium/admin-content.php:2173
+#: modules/premium/admin-content.php:2191
+msgid "Preview"
+msgstr ""
+
+#: modules/premium/admin-content.php:2176
+msgid "Current"
+msgstr ""
+
+#: modules/premium/admin-content.php:2177
+msgid "New"
+msgstr ""
+
+#: modules/premium/admin-content.php:2192
+msgid "Rename"
+msgstr ""
+
+#: modules/premium/admin-content.php:2219
+#: modules/premium/admin-content.php:2721 modules/premium/admin-folders.php:920
+#: modules/premium/admin-overview.php:581
+msgid "All"
+msgstr ""
+
+#: modules/premium/admin-content.php:2258
+msgid "Upload"
+msgstr ""
+
+#: modules/premium/admin-content.php:2305
+msgid "Back to content"
+msgstr ""
+
+#: modules/premium/admin-content.php:2321
+msgid "Details"
+msgstr ""
+
+#: modules/premium/admin-content.php:2325
+#: modules/premium/admin-content.php:3047
+msgid "Author"
+msgstr ""
+
+#: modules/premium/admin-content.php:2329
+msgid "Created On"
+msgstr ""
+
+#: modules/premium/admin-content.php:2333
+msgid "Last modified on"
+msgstr ""
+
+#: modules/premium/admin-content.php:2347
+msgid "Dimensions"
+msgstr ""
+
+#: modules/premium/admin-content.php:2352
+msgid "File Size"
+msgstr ""
+
+#: modules/premium/admin-content.php:2357
+msgid "File Name"
+msgstr ""
+
+#: modules/premium/admin-content.php:2371
+#: modules/premium/admin-content.php:2372
+msgid "Title"
+msgstr ""
+
+#: modules/premium/admin-content.php:2378
+msgid "Alt Text"
+msgstr ""
+
+#: modules/premium/admin-content.php:2379
+msgid "Alt"
+msgstr ""
+
+#: modules/premium/admin-content.php:2383
+#: modules/premium/admin-content.php:2384
+msgid "Caption"
+msgstr ""
+
+#: modules/premium/admin-content.php:2388
+#: modules/premium/admin-content.php:2389
+msgid "Description"
+msgstr ""
+
+#: modules/premium/admin-content.php:2399
+msgid "Meta Data"
+msgstr ""
+
+#: modules/premium/admin-content.php:2419
+#: modules/premium/admin-content.php:2424
+#: modules/premium/admin-content.php:3055
+#: modules/premium/admin-woocommerce.php:627
+msgid "Status"
+msgstr ""
+
+#: modules/premium/admin-content.php:2425
+msgid "Search status..."
+msgstr ""
+
+#: modules/premium/admin-content.php:2455
+#: modules/premium/admin-content.php:3250
+msgid "Delete"
+msgstr ""
+
+#: modules/premium/admin-content.php:2469
+msgid "Edit Image"
+msgstr ""
+
+#: modules/premium/admin-content.php:2521
+msgid "Filters"
+msgstr ""
+
+#: modules/premium/admin-content.php:2533
+msgid "List Mode"
+msgstr ""
+
+#: modules/premium/admin-content.php:2540
+msgid "Grid Mode"
+msgstr ""
+
+#: modules/premium/admin-content.php:2550
+msgid "Items Per Page"
+msgstr ""
+
+#: modules/premium/admin-content.php:2560
+msgid "Columns"
+msgstr ""
+
+#: modules/premium/admin-content.php:2571
+msgid "Search..."
+msgstr ""
+
+#: modules/premium/admin-content.php:2581
+msgid "of"
+msgstr ""
+
+#: modules/premium/admin-content.php:2584
+msgid "items"
+msgstr ""
+
+#: modules/premium/admin-content.php:2609 modules/premium/admin-folders.php:654
+#: modules/premium/admin-folders.php:808
 msgid "New Folder"
 msgstr ""
 
-#: modules/premium/admin-folders.php:243 modules/premium/admin-folders.php:726
-msgid "Edit Folder"
+#: modules/premium/admin-content.php:2615 modules/premium/admin-folders.php:814
+msgid "Delete Folder"
 msgstr ""
 
-#: modules/premium/admin-folders.php:244
-msgid "View Folder"
-msgstr ""
-
-#: modules/premium/admin-folders.php:245
-msgid "All Folders"
-msgstr ""
-
-#: modules/premium/admin-folders.php:246
-msgid "Search Folders"
-msgstr ""
-
-#: modules/premium/admin-folders.php:247
-msgid "No Folders found."
-msgstr ""
-
-#: modules/premium/admin-folders.php:248
-msgid "No Folders found in Trash."
-msgstr ""
-
-#: modules/premium/admin-folders.php:252 modules/premium/admin-pages.php:269
-msgid "Description."
-msgstr ""
-
-#: modules/premium/admin-folders.php:481
-msgid "Uncategorised"
-msgstr ""
-
-#: modules/premium/admin-folders.php:509 modules/premium/admin-folders.php:727
+#: modules/premium/admin-content.php:2623
+#: modules/premium/admin-content.php:2669
+#: modules/premium/admin-content.php:2670 modules/premium/admin-folders.php:822
+#: modules/premium/admin-folders.php:868 modules/premium/admin-folders.php:869
 msgid "Folder Name"
 msgstr ""
 
-#: modules/premium/admin-folders.php:510 modules/premium/admin-folders.php:728
-msgid "Colour Tag"
+#: modules/premium/admin-content.php:2628
+#: modules/premium/admin-content.php:2674 modules/premium/admin-folders.php:827
+#: modules/premium/admin-folders.php:873
+msgid "Folder Colour"
 msgstr ""
 
-#: modules/premium/admin-folders.php:520
-msgid "Create"
-msgstr ""
-
-#: modules/premium/admin-folders.php:622
-msgid "Double click to edit"
-msgstr ""
-
-#: modules/premium/admin-folders.php:814
-msgid "Folder succesfully renamed"
-msgstr ""
-
-#: modules/premium/admin-folders.php:861
-msgid "Folder succesfully deleted"
-msgstr ""
-
+#: modules/premium/admin-content.php:2644
+#: modules/premium/admin-content.php:2690 modules/premium/admin-folders.php:843
 #: modules/premium/admin-folders.php:889
-msgid "Items Moved to folder"
+msgid "Custom"
 msgstr ""
 
-#: modules/premium/admin-folders.php:931
-msgid "Folder is already there"
+#: modules/premium/admin-content.php:2650
+#: modules/premium/admin-content.php:2696 modules/premium/admin-folders.php:849
+#: modules/premium/admin-folders.php:895
+msgid "Custom (hex)"
 msgstr ""
 
-#: modules/premium/admin-folders.php:939
-msgid "No source or destination provided"
+#: modules/premium/admin-content.php:2732 modules/premium/admin-folders.php:931
+msgid "No folder"
 msgstr ""
 
-#: modules/premium/admin-folders.php:960
-msgid "Folder Moved"
+#: modules/premium/admin-content.php:2764
+#: modules/premium/admin-content.php:2767
+msgid "Post Types"
+msgstr ""
+
+#: modules/premium/admin-content.php:2768
+msgid "Search Post Types..."
+msgstr ""
+
+#: modules/premium/admin-content.php:2775
+#: modules/premium/admin-content.php:2778
+msgid "Post Status"
+msgstr ""
+
+#: modules/premium/admin-content.php:2779
+msgid "Search Post Statuses..."
+msgstr ""
+
+#: modules/premium/admin-content.php:2792
+msgid "Posted On"
+msgstr ""
+
+#: modules/premium/admin-content.php:2793
+msgid "Posted After"
+msgstr ""
+
+#: modules/premium/admin-content.php:2794
+msgid "Posted Before"
+msgstr ""
+
+#: modules/premium/admin-content.php:2808
+#: modules/premium/admin-content.php:2811
+msgid "Media Types"
+msgstr ""
+
+#: modules/premium/admin-content.php:2812
+msgid "Search Media Types..."
+msgstr ""
+
+#: modules/premium/admin-content.php:2838
+msgid "Clear Filters"
+msgstr ""
+
+#: modules/premium/admin-content.php:2839
+msgid "Save as view"
+msgstr ""
+
+#: modules/premium/admin-content.php:2886
+msgid "Posted"
+msgstr ""
+
+#: modules/premium/admin-content.php:3043
+#: modules/premium/admin-overview.php:176
+msgid "Type"
+msgstr ""
+
+#: modules/premium/admin-content.php:3051
+msgid "Date"
+msgstr ""
+
+#: modules/premium/admin-content.php:3145
+#: modules/premium/admin-content.php:3232
+msgid "Quick Edit"
+msgstr ""
+
+#: modules/premium/admin-content.php:3151
+msgid "Duplicate"
+msgstr ""
+
+#: modules/premium/admin-content.php:3162
+msgid "Delete Item"
+msgstr ""
+
+#: modules/premium/admin-content.php:3271
+msgid "Load More"
+msgstr ""
+
+#: modules/premium/admin-content.php:3280
+msgid "No content found"
+msgstr ""
+
+#: modules/premium/admin-content.php:3305
+msgid "items selected"
+msgstr ""
+
+#: modules/premium/admin-content.php:3323
+msgid "Categories & Tags"
+msgstr ""
+
+#: modules/premium/admin-content.php:3329
+msgid "Delete selected"
+msgstr ""
+
+#: modules/premium/admin-content.php:3340
+msgid "Clear Selection"
+msgstr ""
+
+#: modules/premium/admin-content.php:3370
+msgid "Create New View"
+msgstr ""
+
+#: modules/premium/admin-content.php:3377
+msgid "View name"
+msgstr ""
+
+#: modules/premium/admin-content.php:3380
+msgid "View Name"
+msgstr ""
+
+#: modules/premium/admin-folders.php:527 modules/premium/admin-folders.php:705
+msgid "Folders"
+msgstr ""
+
+#: modules/premium/admin-folders.php:529
+msgid "Creates the folder system for the content page and media page / modals."
+msgstr ""
+
+#: modules/premium/admin-folders.php:552
+msgid "Folders Disabled for"
+msgstr ""
+
+#: modules/premium/admin-folders.php:553
+msgid "Folders will be disabled for any users or roles you select"
+msgstr ""
+
+#: modules/premium/admin-folders.php:653
+msgid "Add New Folder"
+msgstr ""
+
+#: modules/premium/admin-folders.php:655
+msgid "Edit Folder"
+msgstr ""
+
+#: modules/premium/admin-folders.php:656
+msgid "View Folder"
+msgstr ""
+
+#: modules/premium/admin-folders.php:657
+msgid "All Folders"
+msgstr ""
+
+#: modules/premium/admin-folders.php:658
+msgid "Search Folders"
+msgstr ""
+
+#: modules/premium/admin-folders.php:659
+msgid "No Folders found."
+msgstr ""
+
+#: modules/premium/admin-folders.php:660
+msgid "No Folders found in Trash."
+msgstr ""
+
+#: modules/premium/admin-folders.php:664 modules/premium/admin-pages.php:269
+msgid "Description."
 msgstr ""
 
 #: modules/premium/admin-menu-editor.php:105
@@ -1371,6 +1595,11 @@ msgstr ""
 
 #: modules/premium/admin-overview-cards.php:261
 msgid "No comments for date range"
+msgstr ""
+
+#: modules/premium/admin-overview-cards.php:278
+#: modules/premium/admin-overview-cards.php:428
+msgid "ago"
 msgstr ""
 
 #: modules/premium/admin-overview-cards.php:319

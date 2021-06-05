@@ -12,5 +12,7 @@ $card-default-background: #fff;
 $dropdown-background: #fff;
 // Import default variables and available mixins.
 $global-primary-background: var(--a2020-primary);
+$global-primary-muted: var(--a2020-primary-wash);
+//rgb(98 146 232 / 24%);
 
 @import "uikit/variables.scss";

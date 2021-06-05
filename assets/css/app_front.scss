@@ -13,7 +13,7 @@
 html body.admin-bar {
   margin-top: -32px;
 }
-#a2020-front-wrap {
+#a2020-admin-bar-app {
   @import "uikit/mixins-theme.scss";
 
   @import "modules/hooks.scss";
@@ -85,4 +85,8 @@ html body.admin-bar {
     left: auto;
     right: 0;
   }
+}
+
+#a2020-admin-bar-app .a2020_night_mode.uk-background-default {
+  background: $dark;
 }

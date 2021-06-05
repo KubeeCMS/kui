@@ -36,6 +36,146 @@
 .upload-theme .wp-upload-form {
   background: none;
 }
+input.a2020-muted-input {
+  background: #f8f8f8;
+}
+.a2020-label-tag {
+  color: $global-primary-background;
+  background: $global-primary-muted;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 4px;
+
+  &.green {
+    color: #27c389;
+    background: #34dc9d33;
+  }
+  &.muted {
+    color: #777;
+    background: rgb(242, 242, 242);
+  }
+  a {
+    color: $global-primary-background !important;
+  }
+  .material-icons-outlined {
+    font-size: 20px;
+  }
+  &.primary {
+  }
+  &.errormsg {
+    color: #f0506e;
+    background: #f0506e2e;
+  }
+  &.success {
+    color: #06a067;
+    background: #34dc9d2e;
+  }
+  &.warning {
+    background: #ff8a2f2b;
+    color: #ff8a2f;
+  }
+}
+
+.a2020_night_mode {
+  .a2020-label-tag.muted {
+    background: $light-dark;
+    color: #fff;
+  }
+}
+
+.a2020-post-label {
+  font-size: 12px;
+  text-transform: none;
+  border-radius: 4px;
+  color: $global-primary-background;
+  background: #84afff30;
+  border: none;
+  text-transform: capitalize;
+  padding: 5px;
+}
+
+.admin2020loaderwrap.inline {
+  width: auto;
+  position: absolute;
+  top: 7px;
+  bottom: auto;
+}
+.a2020-post-label {
+  font-size: 12px;
+  text-transform: none;
+  border-radius: 4px;
+  color: $global-primary-background;
+  background: #84afff30;
+  border: none;
+  text-transform: capitalize;
+  padding: 5px;
+  &.Published {
+    background: #34dc9d30 !important;
+    color: #06b775 !important;
+  }
+  &.Inherit {
+    background: #84afff30 !important;
+    color: $global-primary-background !important;
+  }
+  &.Private,
+  &.Bin {
+    background: #f0506e1a !important;
+    color: $global-danger-background !important;
+  }
+  &.Pending,
+  &.Draft {
+    color: #ff7307 !important;
+    background: #faa05a2b !important;
+  }
+}
+highlight {
+  background: #ffc61e42;
+  border-radius: 4px;
+}
+
+.a2020-notification-tag {
+  color: $global-primary-background;
+  background: transparent;
+  font-weight: bold;
+  padding: 10px 0;
+  border-bottom: 1px solid $global-border;
+  cursor: pointer;
+  &.muted {
+    color: #777;
+    background: rgb(242, 242, 242);
+  }
+  .material-icons-outlined {
+    font-size: 20px;
+  }
+  &.primary {
+  }
+  &.errormsg {
+    color: #f0506e;
+  }
+  &.success {
+    color: #06a067;
+  }
+  &.warning {
+    color: #ff8a2f;
+  }
+}
+
+.a2020-warning-count {
+  border-radius: 4px;
+  background: #ff8a2f2b;
+  color: #ff8a2f;
+  width: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 15px;
+  font-size: 12px;
+  display: inline;
+  font-weight: bold;
+  &.success {
+    color: #27c389;
+    background: #34dc9d33;
+  }
+}
 
 .community-events ul {
   background: none;

@@ -18,6 +18,7 @@ class Admin_2020_activation {
 	 */
 	
 	public function start(){
+		
 	} 
 	
 	/**
@@ -57,14 +58,14 @@ class Admin_2020_activation {
 		
 		if(is_network_admin()){
 			
-			add_action('network_admin_notices', function(){
-		    	echo '<div id="activationpanel" class="notice notice-warning" style="display: block !important;visibility: visible !important;">' . $this->create_activation_message() . '</div>';
+			add_action('admin_head', function(){
+		    	echo '<div id="activationpanel" class="notice notice-warning a2020-activation-message" style="display: block !important;visibility: visible !important;">' . $this->create_activation_message() . '</div>';
 			});
 			
 		} else {
 			
-			add_action('admin_notices', function(){
-				echo '<div id="activationpanel" class="notice notice-warning" style="display: block !important;visibility: visible !important;">' . $this->create_activation_message() . '</div>';
+			add_action('admin_head', function(){
+				echo '<div id="activationpanel" class="notice notice-warning a2020-activation-message" style="display: block !important;visibility: visible !important;">' . $this->create_activation_message() . '</div>';
 			});
 			
 		}
@@ -105,16 +106,18 @@ class Admin_2020_activation {
 		
 		
 		?>
+		
 		<div class="uk-grid-small" uk-grid>
 			<div class="uk-width-1-1@s uk-width-expand@m">
 				<div class="uk-h4 uk-margin-remove"><?php _e('Admin 2020 is not activated','admin2020')?></div>
 				<div class="uk-text-meta"><?php _e('Please add a valid licence to activate','admin2020')?></div>
 			</div>
-			<div class="uk-width-1-1@s uk-width-1-3@m">
+			<div class="uk-width-2-3@s uk-width-1-3@m">
 				<input class="uk-input" id="a2020-licence-key" placeholder="<?php _e('Enter your licence key','admin2020') ?>">
 			</div>
-			<div class="uk-width-1-1@s uk-width-auto@m">
+			<div class="uk-width-1-3@s uk-width-auto@m uk-flex uk-flex-middle uk-flex-between">
 				<button class="uk-button uk-button-secondary" onclick="check_licence_key(<?php echo $network?>)"><?php _e('Activate','admin2020') ?></button>
+				<a href="#" onclick="jQuery('.a2020-activation-message').remove()" class="uk-margin-small-left"><span class="material-icons">close</span></a>
 			</div>
 		</div>
 		

@@ -53,10 +53,10 @@
 }
 
 @mixin hook-button-primary {
-  border-radius: 500px;
+  border-radius: 4px;
 }
 @mixin hook-button-danger {
-  border-radius: 500px;
+  border-radius: 4px;
 }
 
 @mixin make-card {
@@ -94,7 +94,7 @@
 @mixin make-primary-button {
   background: $global-primary-background;
   color: $global-inverse-color;
-  border-radius: 500px;
+  border-radius: 4px;
   padding-left: 20px;
   padding-right: 20px;
   font-size: 14px;
@@ -107,7 +107,7 @@
   &:active {
     background: var(--a2020-primary-darker);
     color: $global-inverse-color;
-    border-radius: 500px;
+    border-radius: 4px;
     padding: auto;
     box-shadow: none;
     font-size: 14px;

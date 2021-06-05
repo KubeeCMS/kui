@@ -43,18 +43,418 @@ class Admin_2020_module_admin_folders
 		add_action( 'init', array($this,'a2020_create_folders_cpt') );
 		
 		///FOLDER AJAX
-		add_action('wp_ajax_admin2020_create_folder', array($this,'admin2020_create_folder'));
-		add_action('wp_ajax_admin2020_delete_folder', array($this,'admin2020_delete_folder'));
-		add_action('wp_ajax_admin2020_rename_folder', array($this,'admin2020_rename_folder'));
-		add_action('wp_ajax_admin2020_move_to_folder', array($this,'admin2020_move_to_folder'));
-		add_action('wp_ajax_admin2020_move_folder_into_folder', array($this,'admin2020_move_folder_into_folder'));
-		add_action('wp_ajax_admin2020_refresh_all_folders', array($this,'admin2020_refresh_all_folders'));
 		add_filter('ajax_query_attachments_args', array($this,'legacy_media_filter'));
+		
+		add_action('wp_ajax_a2020_get_folders_legacy', array($this,'a2020_get_folders_legacy'));
+		add_action('wp_ajax_a2020_create_folder_legacy', array($this,'a2020_create_folder_legacy'));
+		add_action('wp_ajax_a2020_delete_folder_legacy', array($this,'a2020_delete_folder_legacy'));
+		add_action('wp_ajax_a2020_update_folder_legacy', array($this,'a2020_update_folder_legacy'));
+		add_action('wp_ajax_a2020_move_folder_legacy', array($this,'a2020_move_folder_legacy'));
+		add_action('wp_ajax_a2020_move_content_to_folder_legacy', array($this,'a2020_move_content_to_folder_legacy'));
 		
 		
     }
 	
 	
+	/**
+	* Moves content to Folder
+	* @since 2.9
+	*/
+	public function a2020_move_content_to_folder_legacy(){
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
+			
+			$contentIds = $this->utils->clean_ajax_input($_POST['contentID']);
+			$destination = $this->utils->clean_ajax_input($_POST['destinationId']);
+			
+			if(!is_array($contentIds)){
+				$returndata['error'] = __('No content to move','admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			foreach($contentIds as $contentId){
+			
+				if($destination == "toplevel"){
+					$status = delete_post_meta($contentId,"admin2020_folder");
+				} else {
+					$status = update_post_meta($contentId,"admin2020_folder",$destination);
+				}
+				
+			}
+			
+			$returndata['message'] = __('Content moved','admin2020');
+			echo json_encode($returndata);
+			die();
+			
+		}
+		die();
+	}
+	
+	/**
+	* Moves Folder
+	* @since 2.9
+	*/
+	public function a2020_move_folder_legacy(){
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
+			
+			$folderToMove = $this->utils->clean_ajax_input($_POST['folderiD']);
+			$destination = $this->utils->clean_ajax_input($_POST['destinationId']);
+			
+			if($folderToMove == $destination){
+				$returndata['error'] = __('Unable to move folder into itself','admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			$currentParent = get_post_meta($folderToMove,"parent_folder",true);
+			
+			if($destination == "toplevel"){
+				$status = delete_post_meta($folderToMove,"parent_folder");
+			} else {
+				$status = update_post_meta($folderToMove,"parent_folder",$destination);
+			}
+			
+			
+			
+			if($status != true){
+				
+				$returndata['error'] = __('Unable to move folder','admin2020');
+				echo json_encode($returndata);
+				die();
+				
+			}
+			
+			
+			///CHECK IF WE NEED TO MAKE SUB FOLDERS TOP LEVEL
+			if(!$currentParent || $currentParent == ''){
+					
+					
+					$args = array(
+					  'numberposts' => -1,
+					  'post_type'   => 'admin2020folders',
+					  'orderby' => 'title',
+					  'order'   => 'ASC',
+					  'meta_query' => array(
+						  array(
+							  'key' => 'parent_folder',
+							  'value' => $folderToMove,
+							  'compare' => '=',
+						  )
+					  )
+					);
+					
+					$folders = get_posts( $args );
+					
+					foreach ($folders as $folder){
+						
+						delete_post_meta($folder->ID,"parent_folder");
+						
+					}
+					
+			}
+			
+			$returndata['message'] = __('Folder moved','admin2020');
+			echo json_encode($returndata);
+			die();
+			
+		}
+		die();
+	}
+	
+	/**
+	* Updates folder
+	* @since 2.9
+	*/
+	
+	public function a2020_update_folder_legacy(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
+			
+			
+			$folder = $this->utils->clean_ajax_input($_POST['thefolder']);
+			
+			
+			$foldername = $folder['name'];
+			$folderid = $folder['id'];
+			$foldertag = $folder['color'];
+			
+			$my_post = array(
+			  'post_title'    => $foldername,
+			  'post_status'   => 'publish',
+			  'ID'            => $folderid,
+			);
+			
+			// Insert the post into the database.
+			$thefolder = wp_update_post( $my_post );
+			
+			if(!$thefolder){
+				$returndata = array();
+				$returndata['error'] = __('Something went wrong','admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			update_post_meta($folderid,"color_tag",$foldertag);
+			
+			$returndata = array();
+			$returndata['message'] = __('Folder updated','admin2020');
+			echo json_encode($returndata);
+			
+		}
+		die();
+		
+	}
+	
+	/**
+	* Deletes folder
+	* @since 2.9
+	*/
+	
+	public function a2020_delete_folder_legacy(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
+			
+			
+			$folderID = $this->utils->clean_ajax_input($_POST['activeFolder']);
+			
+			if(!is_numeric($folderID) && !$folderID > 0){
+				$returndata['error'] = __("No folder to delete",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			$currentParent = get_post_meta($folderID, "parent_folder",true);
+			
+			$status = wp_delete_post($folderID);
+			
+			if(!$status){
+				$returndata['error'] = __("Unable to delete the folder",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			$args = array(
+			  'numberposts' => -1,
+			  'post_type'   => 'admin2020folders',
+			  'orderby' => 'title',
+			  'order'   => 'ASC',
+			  'meta_query' => array(
+				  array(
+					  'key' => 'parent_folder',
+					  'value' => $folderID,
+					  'compare' => '=',
+				  )
+			  )
+			);
+			
+			$folders = get_posts( $args );
+			
+			foreach ($folders as $folder){
+				
+				
+				if($currentParent) {
+					update_post_meta($folder->ID,"parent_folder",$currentParent);
+				} else {
+					delete_post_meta($folder->ID,"parent_folder");
+				}
+			}
+			
+			$returndata['message'] = __('Folder deleted','admin2020');
+			echo json_encode($returndata);
+			die();
+			
+
+		}
+		die();
+	}
+	
+	/**
+	* Build content for front end app
+	* @since 2.9
+	*/
+	
+	public function a2020_create_folder_legacy(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
+			
+			
+			$folders = $this->utils->clean_ajax_input($_POST['folders']);
+			$name = $folders['name'];
+			$color = $folders['color'];
+			$parent = $folders['parent'];
+			
+			if(!$name){
+				$returndata['error'] = __("Title is required",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			if(!$color){
+				$returndata['error'] = __("Colour is required",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			
+			$my_post = array(
+			  'post_title'    => $name,
+			  'post_status'   => 'publish',
+			  'post_type'     => 'admin2020folders'
+			);
+			
+			// Insert the post into the database.
+			$thefolder = wp_insert_post( $my_post );
+			
+			if(!$thefolder){
+				$returndata['error'] = __("Something went wrong",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			update_post_meta($thefolder,"color_tag",$color);
+			
+			if(is_numeric($parent) && $parent > 0){
+				update_post_meta($thefolder,"parent_folder",$parent);
+			}
+			
+			$returndata['message'] = __("Folder created",'admin2020');
+			echo json_encode($returndata);
+			die();
+			
+
+		}
+		die();
+	}
+	
+	
+	/**
+	* Build content for front end app
+	* @since 2.9
+	*/
+	
+	public function a2020_get_folders_legacy(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
+			
+			$args = array(
+			  'numberposts' => -1,
+			  'post_type'   => 'admin2020folders',
+			  'orderby' => 'title',
+			  'order'   => 'ASC',
+			);
+			
+			$info = $this->component_info();
+			$optionname = $info['option_name'];
+			$privatemode = $this->utils->get_option($optionname,'private-mode');
+			
+			if($privatemode == 'true'){
+				$args['author'] = get_current_user_id();
+			}
+			
+			$folders = get_posts( $args );
+			$structure = array();
+			$folderIDS = array();
+			
+			foreach ($folders as $folder){
+				
+				array_push($folderIDS, $folder->ID);
+				
+			}
+			
+			$args = array('public'   => true);
+			$output = 'objects'; 
+			$post_types = get_post_types( $args, $output );
+			$types = array();
+			
+			
+			foreach($post_types as $posttype){
+				array_push($types,$posttype->name);
+			}
+			
+			///QUERY CONTENT
+			$args = array(
+				'post_type'=> 'attachment',
+				'fields' => 'ids',
+				'posts_per_page' => -1,
+				'post_status' => 'any',
+				'meta_query' => array(
+					 array(
+						'key' => 'admin2020_folder',
+						'value' => $folderIDS,
+						'compare' => 'IN'
+					)
+				),
+			);
+			
+			$query = new WP_Query($args);
+			$contentWithFolder = $query->get_posts();
+			$contentCount = array();
+			
+			foreach($contentWithFolder as $item){
+				
+				$folderid = get_post_meta($item, 'admin2020_folder', true);
+				
+				if(isset($contentCount[$folderid])){
+					$contentCount[$folderid] += 1;
+				} else {
+					$contentCount[$folderid] = 1;
+				}
+				
+			}
+			
+			
+			foreach ($folders as $folder){
+				
+				  $parent_folder = get_post_meta($folder->ID, "parent_folder",true);
+				  
+				  if(!$parent_folder){
+					$structure[] =  $this->build_folder_structure($folder,$folders,$contentCount);
+				  }
+				
+			}
+			
+			
+			
+			
+			echo json_encode($structure);
+		}
+		die();
+	}
+	
+	
+	public function build_folder_structure($folder, $folders, $contentcount){
+		
+		
+		$temp = array();
+		$foldercolor = get_post_meta($folder->ID, "color_tag",true);
+		$top_level = get_post_meta($folder->ID, "parent_folder",true);
+		$title = $folder->post_title;
+		
+		$temp['title'] = $title;
+		$temp['color'] = $foldercolor;
+		$temp['id'] = $folder->ID;
+		$temp['count'] = 0;
+		
+		if(isset($contentcount[$folder->ID])){
+			$temp['count'] = $contentcount[$folder->ID];
+		}
+		
+		
+		foreach ($folders as $aFolder) {
+			
+			$folderParent = get_post_meta($aFolder->ID, "parent_folder",true);
+			
+			if($folderParent == $folder->ID){
+				
+				$temp['subs'][] = $this->build_folder_structure($aFolder,$folders, $contentcount);
+				
+			}
+			
+		}
+		
+		return $temp;
+		
+	}
 	
 	
 	/**
@@ -69,12 +469,18 @@ class Admin_2020_module_admin_folders
 			
 			if ($folderid == ""){ 
 				
-			} else if ($folderid == "uncategorised"){
+			} else if ($folderid == "uncat"){
 				
 				$args['meta_query'] = array(
+					'relation' => 'OR',
 					array(
 						'key' => 'admin2020_folder',
 						'compare' => 'NOT EXISTS'
+					),
+					array(
+						'key' => 'admin2020_folder',
+						'value' => '',
+						'compare' => '=',
 					)
 				);
 				
@@ -210,12 +616,18 @@ class Admin_2020_module_admin_folders
 		  $theid = 'toplevel_page_admin_2020_content';
 	  }
 	  
-	  wp_enqueue_script('admin-theme-folders', $this->path . 'assets/js/admin2020/admin-folders.min.js', array('jquery'));
-	  wp_localize_script('admin-theme-folders', 'admin2020_admin_folder_ajax', array(
-		  'ajax_url' => admin_url('admin-ajax.php'),
-		  'security' => wp_create_nonce('admin2020-admin-folder-security-nonce'),
-		  'screen' => $theid,
-	  ));
+	  if($theid != 'toplevel_page_admin_2020_content'){
+		  
+		  wp_enqueue_script('admin-theme-folders', $this->path . 'assets/js/admin2020/admin-folders.min.js', array('jquery'), $this->version, true);
+			wp_localize_script('admin-theme-folders', 'admin2020_folder_ajax', array(
+				'ajax_url' => admin_url('admin-ajax.php'),
+				'security' => wp_create_nonce('admin2020-admin-folder-security-nonce'),
+				'screen' => $theid,
+			));
+		  
+	  }
+	  
+	  
 	  
 	}
 	
@@ -288,18 +700,18 @@ class Admin_2020_module_admin_folders
 			<script type="text/html" id="tmpl-media-frame_custom"> 
 			  
 			  <div class="uk-grid-collapse uk-height-1-1 a2020_legacy_filter" uk-grid uk-filter="target: .attachments">			
-				<div class="uk-width-auto uk-position-relative">
+				<div class="uk-width-1-1@s uk-width-auto@m uk-position-relative">
 					<div class="admin2020-folder-modal" id="admin2020_settings_column" style="width:270px">
 						  <div class="a2020-folder-title uk-h4"><?php _e('Folders','admin2020')?></div>	
 						  <div class="a2020_modal_folders">
 							<?php
-							$this->build_folder_panel('media');
+							$this->build_folder_panel();
 							?>
 						</div>
 					</div>
 				</div>
 				
-				<div class="uk-width-expand uk-position-relative">
+				<div class="uk-width-1-1@s uk-width-expand@m uk-position-relative">
 				
 				  <div class="media-frame-title" id="media-frame-title"></div>
 				  <h2 class="media-frame-menu-heading"><?php _ex( 'Actions', 'media modal menu actions' ); ?></h2>
@@ -323,6 +735,20 @@ class Admin_2020_module_admin_folders
 		<script>
 		  jQuery(document).ready( function($) {
 			  
+			  
+			  var delayInMilliseconds = 1000; //1 second
+			  var foldersMounted = false;
+			  
+			  setTimeout(function () {
+				if (jQuery("#wpcontent #media-folder-app").length > 0) {
+				  if (!foldersMounted && !a2020foldersapp._container) {
+					a2020foldersapp.mount("#media-folder-app");
+					foldersMounted = true;
+				  }
+				}
+			  }, delayInMilliseconds);
+			  
+			  
 			  window.setInterval(function(){
 				  a2020_add_drag();
 			  }, 1000);
@@ -340,7 +766,18 @@ class Admin_2020_module_admin_folders
 				  });
 		
 				  wp.media.view.Modal.prototype.on('open', function() {
-				  //MODAL OPEN
+					  //MODAL OPEN
+					  
+					  setTimeout(function () {
+						  
+							  if(!a2020foldersapp._container){
+							  console.log('running');
+						  		if (!foldersMounted){
+								  a2020foldersapp.mount(".media-modal.wp-core-ui #media-folder-app");
+								  foldersMounted = true;
+							    }
+							}
+					   }, 1000);
 					  //refreshFolderCountModal();
 				  });
 		
@@ -356,652 +793,162 @@ class Admin_2020_module_admin_folders
 	}
 	
 	/**
-	* Creates folder panel
-	* @since 1.4
+	* Build folders panel
+	* @since 2.9
 	*/
-		
-	public function build_folder_panel($view = null){
-	
-		$this->view = $view;
+	public function build_folder_panel(){
 		?>
-		  <div class="uk-grid-small" uk-grid>
 		
-		
-			<?php
-			echo $this->get_add_new_folder();
-			echo $this->get_default_folders($this->view) ?>
-		
-			<div class="uk-width-1-1"><hr></div>
-		
-			<div id="admin2020folderswrap">
-		
-			  <?php $this->get_user_folders($this->view)?>
-		
+		<div class="uk-background-default uk-border-rounded a2020-border all " uk-sticky="offset: 100;media: 1000" id="media-folder-app">
+			
+			<div class="folder-toolbar  uk-padding-small a2020-border bottom" >
+				<ul class="uk-iconnav">
+					<li>
+						<a href="#" uk-tooltip="delay:300;title:<?php _e('New Folder','admin2020')?>" uk-toggle="target:#newfolderpanel">
+							<span class="material-icons" style="font-size: 22px">create_new_folder</span>
+						</a>
+					</li>
+					<li  class="uk-text-right" style="flex-grow: 1;" v-if="folders.activeFolder[0] > 0">
+						<a  href="#" @click="confirmDeleteFolder()" >
+							<span uk-tooltip="delay:300;title:<?php _e('Delete Folder','admin2020')?>" class="material-icons uk-text-danger" style="font-size: 22px;">delete_outline</span>
+						</a>
+					</li>
+				</ul>
 			</div>
-		
-		  </div>
-		
+			
+			<div class="new-folder uk-padding-small a2020-border bottom" id="newfolderpanel" hidden="true">
+				
+				<div class="uk-text-meta uk-margin-small-bottom"><?php _e('Folder Name','admin2020')?>:</div>
+				<input class="uk-input uk-margin-bottom" v-model="folders.newFolder.name" placeholder="<?php _e('Name','admin2020')?>..." type="text">
+				
+				<div class="" style="margin-bottom: 30px;">
+					
+					<div class="uk-text-meta uk-margin-small-bottom"><?php _e('Folder Colour','admin2020')?>:</div>
+				
+					<div class="uk-child-width-auto uk-flex uk-flex-between uk-margin-small-bottom" id="admin2020_foldertag">
+						
+						<div>
+							<a href="#" class="color_tag" style="background-color:#0c5cef" 
+							:class="{'selected' : folders.newFolder.color == '#0c5cef'}" @click="folders.newFolder.color = '#0c5cef'"></a>
+							<a href="#" class="color_tag" style="background-color:#32d296" 
+							:class="{'selected' : folders.newFolder.color == '#32d296'}" @click="folders.newFolder.color = '#32d296'"></a>
+							<a href="#" class="color_tag" style="background-color:#faa05a" 
+							:class="{'selected' : folders.newFolder.color == '#faa05a'}" @click="folders.newFolder.color = '#faa05a'"></a>
+							<a href="#" class="color_tag" style="background-color:#f0506e" 
+							:class="{'selected' : folders.newFolder.color == '#f0506e'}" @click="folders.newFolder.color = '#f0506e'"></a>
+							<a href="#" class="color_tag" style="background-color:#ff9ff3" 
+							:class="{'selected' : folders.newFolder.color == '#ff9ff3'}" @click="folders.newFolder.color = '#ff9ff3'"></a>
+						</div>
+						<a href="#" class="uk-button uk-button-small uk-button-default " uk-toggle="target:#custom-folder-color" style="line-height: 21px;"><?php _e('Custom','admin2020')?></a>
+						
+						
+					</div>
+					
+					<input class="uk-input uk-form-small" id="custom-folder-color" style="width: 100%;" 
+					v-model="folders.newFolder.color" placeholder="<?php _e('Custom (hex)','admin2020')?>" hidden="true">
+				
+				</div>
+				
+				
+				<div class="uk-grid uk-grid-small uk-child-width-1-2">
+					<div>
+						<button class="uk-button uk-button-small uk-button-default uk-width-1-1" uk-toggle="target:#newfolderpanel"><?php _e('Cancel','admin2020')?></button>
+					</div>
+					<div>
+						<button class="uk-button uk-button-small uk-button-secondary uk-width-1-1" @click="createFolder()"><?php _e('Create','admin2020')?></button>
+					</div>
+				</div>
+				
+			</div>
+			
+			<!-- EDIT CURRENT FOLDER -->
+			<div class="new-folder uk-padding-small a2020-border bottom" id="updatefolderpanel" style="display: none;">
+				
+				<div class="uk-text-meta uk-margin-small-bottom"><?php _e('Folder Name','admin2020')?>:</div>
+				<input class="uk-input uk-margin-bottom" v-model="folders.editFolder.name" placeholder="<?php _e('Folder Name','admin2020')?>" type="text">
+				
+				<div  style="margin-bottom: 30px;">
+					
+					<div class="uk-text-meta uk-margin-small-bottom"><?php _e('Folder Colour','admin2020')?>:</div>
+				
+					<div class="uk-child-width-auto uk-flex uk-flex-between uk-margin-small-bottom" id="admin2020_foldertag">
+						
+						<div>
+							<a href="#" class="color_tag" style="background-color:#0c5cef" 
+							:class="{'selected' : folders.editFolder.color == '#0c5cef'}" @click="folders.editFolder.color = '#0c5cef'"></a>
+							<a href="#" class="color_tag" style="background-color:#32d296" 
+							:class="{'selected' : folders.editFolder.color == '#32d296'}" @click="folders.editFolder.color = '#32d296'"></a>
+							<a href="#" class="color_tag" style="background-color:#faa05a" 
+							:class="{'selected' : folders.editFolder.color == '#faa05a'}" @click="folders.editFolder.color = '#faa05a'"></a>
+							<a href="#" class="color_tag" style="background-color:#f0506e" 
+							:class="{'selected' : folders.editFolder.color == '#f0506e'}" @click="folders.editFolder.color = '#f0506e'"></a>
+							<a href="#" class="color_tag" style="background-color:#ff9ff3" 
+							:class="{'selected' : folders.editFolder.color == '#ff9ff3'}" @click="folders.editFolder.color = '#ff9ff3'"></a>
+						</div>
+						<a href="#" class="uk-button uk-button-small uk-button-default " uk-toggle="target:#custom-folder-color-existing" style="line-height: 21px;"><?php _e('Custom','admin2020')?></a>
+						
+						
+					</div>
+					
+					<input class="uk-input uk-form-small" id="custom-folder-color-existing" style="width: 100%;" 
+					v-model="folders.editFolder.color" placeholder="<?php _e('Custom (hex)','admin2020')?>" hidden="true">
+				
+				</div>
+				
+				
+				<div class="uk-grid uk-grid-small uk-child-width-1-2">
+					<div>
+						<button class="uk-button uk-button-small uk-button-default uk-width-1-1" onClick="jQuery('#updatefolderpanel').hide();"><?php _e('Cancel','admin2020')?></button>
+					</div>
+					<div>
+						<button class="uk-button uk-button-small uk-button-secondary  uk-width-1-1" @click="updateFolder()"><?php _e('Update','admin2020')?></button>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class=" uk-padding-small" id="a2020-folders-top-level" style="max-height:500px;overflow:auto;">
+			
+				<div class="a2020-folder-component ">
+				  <div class="uk-flex uk-flex-middle folder_block" :class="[ {'active-folder' : folders.activeFolder.length == 0} ]">
+					<span class="material-icons-outlined uk-text-muted folderChevron nosub"  @click="">
+					  chevron_right
+					</span>
+					<span class="uk-flex uk-flex-middle folder-click" @click="viewAllMedia()">
+					<span class="material-icons  uk-margin-small-right ">folder</span>
+					<span class=" uk-text-bold"><?php _e('All','admin2020')?></span></span>
+				  </div>
+				</div>
+				
+				<div class="a2020-folder-component uk-margin-bottom" >
+				  <div class="uk-flex uk-flex-middle folder_block" :class="[ {'active-folder' : folders.activeFolder[0] == 'uncat'} ]">
+					<span class="material-icons-outlined uk-text-muted folderChevron nosub"  @click="">
+					  chevron_right
+					</span>
+					<span class="uk-flex uk-flex-middle folder-click" @click="viewAllMediaWithoutFolder()">
+					<span class="material-icons  uk-margin-small-right ">folder</span>
+					<span class=" uk-text-bold"><?php _e('No folder','admin2020')?></span></span>
+				  </div>
+				</div>
+				
+				
+				
+				<template v-for="folder in queryTheFolders">
+					<folder-template :folder="folder" :open="folders.openFolders" :current="folders.activeFolder" ></folder-template>
+				</template>
+				
+				<div id="a2020-folder-template"
+				@drop="dropInTopLevel($event)"
+				@dragover.prevent
+				@dragenter.prevent
+				></div>
+			
+			</div>
+		</div>
 		<?php
-	
 	}
 
-	/**
-	* Gets default folders
-	* @since 1.4
-	*/
-		
-	public function get_default_folders($view = null){ 
 	
-		$attachment_count = wp_count_attachments();
-		$total = 0;
-		
-		
-		foreach($attachment_count as $count){
-		  $total += $count;
-		}
-		
-		$args = array('public'   => true);
-		$output = 'objects';  
-		$post_types = get_post_types( $args, $output );
-		$selected_post_types = array();
-		
-		foreach($post_types as $posttype){
-			array_push($selected_post_types,$posttype->name);
-		}
-		
-		if($view == 'media'){
-			$selected_post_types = array('attachment');
-		}
-	
-		$total = 0;
-	    foreach($selected_post_types as $type){
-		  
-		  $allposts = wp_count_posts($type);
-		  $total += $allposts->publish;
-		  $total += $allposts->future;
-		  $total += $allposts->draft;
-		  $total += $allposts->inherit;
-		  $total += $allposts->pending;
-		  $total += $allposts->private;
-		}
-		
-		$filter_string = "[a2020_folder='']";
-		$onclick = 'admin2020_set_content_folder_query';
-		  
-		if($view == 'media'){
-			$filter_string = ".folder";
-			$onclick = 'admin2020_set_folder_query';
-		} 
-		if ($view != 'toplevel_page_admin_2020_content' && $view != null){
-			$filter_string = ".folder";
-			$onclick = 'admin2020_set_folder_query';
-		}
-		
-		
-			
-		
-		
-		
-		?>
-		
-		<div class="admin2020allFolders uk-width-1-1" >
-		
-		  <!-- ALL -->		
-		  <div class="uk-grid-small" uk-grid>
-		
-			<div class="uk-width-expand">
-				
-			  <a folder-id=""  onclick="<?php echo $onclick ?>('')" uk-filter-control="group: folders" href="#" class="admin2020folderTitle uk-link-text uk-text-bold">
-				<span class="uk-icon-button uk-margin-small-right a2020_folder_icon" style="width:25px;height:25px;" uk-icon="icon:folder;ratio:0.8"></span>
-				<?php _e('All','admin2020') ?>
-			  </a>
-			  
-			</div>
-		
-			<div class="uk-width-auto uk-flex uk-flex-middle uk-flex-right">
-			  <span class="uk-icon-button uk-text-meta" style="width:25px;height:25px;background:rgba(197,197,197,0.2);border-radius: 4px;"><?php echo number_format($total)?></span>
-			</div>
-		
-		  </div>
-		  
-		  <!-- UNCATEGORISED -->
-		  <div class="uk-grid-small" uk-grid>
-		
-			<div class="uk-width-expand">
-		
-			  <div class="uk-width-1-1">
-				  
-				<a folder-id="uncategorised" 
-					onclick="<?php echo $onclick ?>('uncategorised')" 
-					uk-filter-control="filter: <?php echo $filter_string ?>;group: folders" 
-					href="#" 
-					class="admin2020folderTitle uk-width-1-1 uk-link-text uk-text-bold">
-					
-				  <span class="uk-icon-button uk-margin-small-right a2020_folder_icon" style="width:25px;height:25px;" uk-icon="icon:folder;ratio:0.8"></span>
-				  <?php _e('Uncategorised','admin2020') ?>
-				</a>
-				
-			  </div>
-		
-			</div>
-		  </div>
-		
-		</div>
-		<?php
-	
-	
-	}
-	
-	/**
-	* Add new folder panel
-	* @since 1.4
-	*/
-		
-	public function get_add_new_folder(){
-		?>
-		<div class="uk-margin-bottom uk-width-1-1">
-		
-		  <button class="uk-button uk-button-default uk-width-1-1 a2020_make_light" uk-toggle="target: .admin2020createfolder"><?php _e('New Folder','admin2020') ?></button>
-		
-		  <div  class="uk-flex-top admin2020createfolder"  uk-modal>
-			<div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-			  <div class="uk-h4"><?php _e('New Folder','admin2020')?></div>
-			  <input type="text" class="uk-input uk-margin-bottom" id="foldername" placeholder="<?php _e('Folder Name','admin2020')?>">
-			  <span class="uk-text-meta"><?php _e('Colour Tag','admin2020')?></span>
-		
-			  <div class="uk-margin uk-child-width-auto" id="admin2020_foldertag">
-				<input class="uk-radio" type="radio" name="color_tag" checked value="#0c5cef" style="border-color:#0c5cef;background-color:#0c5cef">
-				<input class="uk-radio" type="radio" name="color_tag" value="#32d296" style="border-color:#32d296;background-color:#32d296">
-				<input class="uk-radio" type="radio" name="color_tag" value="#faa05a" style="border-color:#faa05a;background-color:#faa05a">
-				<input class="uk-radio" type="radio" name="color_tag" value="#f0506e" style="border-color:#f0506e;background-color:#f0506e">
-				<input class="uk-radio" type="radio" name="color_tag" value="#ff9ff3" style="border-color:#ff9ff3;background-color:#ff9ff3">
-			  </div>
-		
-			  <button class="uk-button uk-button-primary uk-width-1-1" onclick="admin2020newfolder()" type="button"><?php _e('Create','admin2020') ?></button>
-			</div>
-		
-		  </div>
-		</div>
-		<?php
-	}
-	
-	/**
-	* Builds single folder template
-	* @since 1.4
-	*/	
-		
-	public function foldertemplate($folder,$folders,$view = null){
-	
-		$foldercolor = get_post_meta($folder->ID, "color_tag",true);
-		$top_level = get_post_meta($folder->ID, "parent_folder",true);
-		$folder_id = $folder->ID;
-		$the_class = '';
-		$post_type = 'attachment';
-		$ondrop = 'admin2020mediadrop';
-		$onclick = 'admin2020_set_content_folder_query('.$folder->ID.')';
-		
-			
-		$args = array('public'   => true);
-		$output = 'objects'; 
-		$post_types = get_post_types( $args, $output );
-		$types = array();
-		
-		foreach($post_types as $posttype){
-			array_push($types,$posttype->name);
-		}
-		
-		if($view == 'media'){
-			$types = array('attachment');
-			$onclick = 'admin2020_set_folder_query('.$folder->ID.')';
-		}
-		if ($view != 'toplevel_page_admin_2020_content' && $view != null){
-			$types = array('attachment');
-			$onclick = 'admin2020_set_folder_query('.$folder->ID.')';
-		}
-		
-		$ondrop = 'admin2020postdrop';
-		
-		$this->post_status = array('publish', 'pending', 'draft', 'future', 'private','inherit');
-		
-		$args = array(
-		  'post_type' => $types,
-		  'post_status' => $this->post_status,
-		  'posts_per_page' => -1,
-		  'fields' => 'ids',
-		  'meta_query' => array(
-		   array(
-				   'key' => 'admin2020_folder',
-				   'value' => $folder_id,
-				   'compare' => '=',
-			   )
-		   )
-		);
-		
-		$theattachments = get_posts( $args );
-		
-		if($theattachments){
-		  $folder_count = number_format(count($theattachments));
-		} else {
-		  $folder_count = 0;
-		}
-		
-		if(!$foldercolor){
-		  $foldercolor = '#1e87f0';
-		}
-		
-		if(!$top_level){
-		  $the_class = 'admin2020_top_level_folder';
-		}
-		
-		$count = 0;
-		foreach($folders as $sub_folder){
-		
-		  $parent_folder = get_post_meta($sub_folder->ID, "parent_folder",true);
-		
-		  if($parent_folder == $folder_id){
-			$count = $count + 1;
-		  }
-		
-		}
-		if($view == 'media'){
-			$filter_string = ".folder".$folder->ID;
-		} else if ($view != 'toplevel_page_admin_2020_content' && $view != null) {
-			$filter_string = ".folder".$folder->ID;
-		} else	{
-			$filter_string = "[a2020_folder='".$folder->ID."']";
-		} 
-		
-		ob_start();
-		
-		?>
-		<div class="admin2020folder <?php echo $the_class.' '.$view?>" folder-id="<?php echo $folder->ID?>" 
-			ondrop="<?php echo $ondrop?>(event)" 
-			ondragover="admin2020mediaAllowDrop(event)" 
-			ondragleave="admin2020mediaDropOut(event)"
-		  	draggable="true" ondragstart="admin2020folderdrag(event)" id="folder<?php echo $folder->ID?>"
-			uk-tooltip="delay:1000;title: <?php _e('Double click to edit','admin2020')?>" 
-			>
-			  
-		  <div class="uk-grid-small" ondblclick="admin2020_edit_folder(<?php echo $folder->ID?>)" uk-grid>
-		
-			<div class="uk-width-auto uk-flex uk-flex-middle">
-			  <span class="uk-icon-button a2020_folder_icon" style="width:25px;height:25px;" uk-icon="icon:folder;ratio:0.8"></span>
-			</div>
-		
-			<div class="uk-width-auto uk-flex uk-flex-middle">
-			  <span class="folder_tag" style="width:10px;height:10px;border-radius: 50%;background-color:<?php echo $foldercolor?>" value="<?php echo $foldercolor?>"></span>
-			</div>
-		
-			<div class="uk-width-expand uk-flex uk-flex-middle">
-			  <a 
-			  class="uk-link-text folder_title uk-text-bold" 
-			  href="#" 
-			  folder-id="<?php echo $folder->ID?>"
-			  onclick="<?php echo $onclick?>" 
-			  uk-filter-control="filter: <?php echo $filter_string?>;group: folders"><?php echo $folder->post_title ?></a>
-			</div>
-		
-			<div class="uk-width-auto uk-flex uk-flex-right uk-flex-middle">
-			  <span class="uk-icon-button uk-text-meta" style="width:25px;height:25px;background:rgba(197,197,197,0.2)"><?php echo $folder_count?></span>
-			</div>
-		
-		
-			<div class="uk-width-auto uk-flex uk-flex-right uk-flex-middle">
-			  <?php if($count > 0) { ?>
-				<span class="folder_icon"  onclick="jQuery(this).parent().parent().parent().toggleClass('sub_open');" uk-icon="chevron-down"></span>
-			  <?php } else { ?>
-				<span class="folder_icon"  style="width:20px;height:20px;"></span>
-			  <?php } ?>
-			</div>
-		
-		  </div>
-		
-		  <?php
-		
-		
-		  if($count > 0){
-			?>
-			<div class="admin_folders_sub">
-			  <?php
-				foreach($folders as $sub_folder){
-		
-				  $parent_folder = get_post_meta($sub_folder->ID, "parent_folder",true);
-		
-				  if($parent_folder == $folder_id){
-		
-					echo $this->foldertemplate($sub_folder,$folders,$view);
-		
-				  }
-		
-				}
-			  ?>
-			</div>
-		  <?php
-		  }
-		  ?>
-		</div>
-		
-		<?php
-		
-		return ob_get_clean();
-	
-	}
-		
-	/**
-	* Gets custom folders
-	* @since 1.4
-	*/		
-	public function get_user_folders($view = null){
-	
-		$args = array(
-		  'numberposts' => -1,
-		  'post_type'   => 'admin2020folders',
-		  'orderby' => 'title',
-		  'order'   => 'ASC',
-		);
-		
-		$folders = get_posts( $args );
-		
-		if (count($folders) < 1){
-		  return;
-		}
-		
-		foreach ($folders as $folder){
-		
-		  $parent_folder = get_post_meta($folder->ID, "parent_folder",true);
-		  if(!$parent_folder){
-			echo $this->foldertemplate($folder,$folders,$view);
-		  }
-		  continue;
-		
-		}
-		
-		?>
-		<div class="admin2020folder set_as_top" folder-id="false" ondrop="admin2020postdrop(event)" ondragover="admin2020mediaAllowDrop(event)" ondragleave="admin2020mediaDropOut(event)"
-		  draggable="true" ondragstart="admin2020folderdrag(event)" id="folderfalse">
-		</div>
-		
-		<div  class="uk-flex-top" id="admin2020_edit_folder"  uk-modal>
-		  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-			<div class="uk-h4"><?php _e('Edit Folder','admin2020')?></div>
-			<input type="text" class="uk-input uk-margin-bottom" id="foldername_update" placeholder="<?php _e('Folder Name','admin2020')?>">
-			<span class="uk-text-meta"><?php _e('Colour Tag','admin2020')?></span>
-		
-			<div class="uk-margin uk-child-width-auto" id="admin2020_folder_tag_update">
-			  <input class="uk-radio" type="radio" name="color_tag" value="#0c5cef" style="border-color:#0c5cef;background-color:#0c5cef">
-			  <input class="uk-radio" type="radio" name="color_tag" value="#32d296" style="border-color:#32d296;background-color:#32d296">
-			  <input class="uk-radio" type="radio" name="color_tag" value="#faa05a" style="border-color:#faa05a;background-color:#faa05a">
-			  <input class="uk-radio" type="radio" name="color_tag" value="#f0506e" style="border-color:#f0506e;background-color:#f0506e">
-			  <input class="uk-radio" type="radio" name="color_tag" value="#ff9ff3" style="border-color:#ff9ff3;background-color:#ff9ff3">
-			</div>
-			<div class="uk-grid-small" uk-grid>
-			  <div class="uk-width-1-1 uk-margin-small-bottom">
-			  </div>
-			  <div class="uk-width-1-2 ">
-				<button class="uk-button uk-button-danger" id="delete_the_folder" type="button"><?php _e('Delete','admin2020') ?></button>
-			  </div>
-			  <div class="uk-width-1-2 uk-flex uk-flex-right">
-				<button class="uk-button uk-button-primary" id="update_the_folder" type="button"><?php _e('Save','admin2020') ?></button>
-			  </div>
-			</div>
-		  </div>
-		
-		</div>
-		
-		<?php
-	
-	}
-		
-	/**
-	* Creates folder from front end
-	* @since 1.4
-	*/	
-		
-	public function admin2020_create_folder() {
-	  if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
-	
-		  $foldername = wp_strip_all_tags($_POST['title']);
-		  $foldertag = wp_strip_all_tags($_POST['foldertag']);
-	
-		  $my_post = array(
-			  'post_title'    => $foldername,
-			  'post_status'   => 'publish',
-			  'post_type'     => 'admin2020folders'
-		  );
-	
-		  // Insert the post into the database.
-		  $thefolder = wp_insert_post( $my_post );
-		  update_post_meta($thefolder,"color_tag",$foldertag);
-		  //update_post_meta($thefolder,"parent_folder",161);
-	
-		  echo $this->build_individual_folder_stack($thefolder);
-	
-	  }
-	  die();
-	}
-		
-	/**
-	* Renames Folder
-	* @since 1.4
-	*/	
-		
-	public function admin2020_rename_folder() {
-	  if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
-	
-		  $foldername = $_POST['title'];
-		  $folderid = $_POST['folderid'];
-		  $foldertag = $_POST['foldertag'];
-	
-		  $my_post = array(
-			  'post_title'    => $foldername,
-			  'post_status'   => 'publish',
-			  'ID'            => $folderid,
-		  );
-	
-		  // Insert the post into the database.
-		  $thefolder = wp_update_post( $my_post );
-	
-		  if(!$thefolder){
-			$returndata = array();
-			$returndata['error'] = __('Something went wrong','admin2020');
-			echo json_encode($returndata);
-			die();
-		  }
-	
-		  update_post_meta($folderid,"color_tag",$foldertag);
-	
-		  $returndata = array();
-		  $returndata['message'] = __('Folder succesfully renamed','admin2020');
-		  $returndata['html'] = $this->build_individual_folder_stack($thefolder);
-		  echo json_encode($returndata);
-	
-	  }
-	  die();
-	}
-		
-	/**
-	* Deletes folder and any sub folders
-	* @since 1.4
-	*/	
-	public function admin2020_delete_folder() {
-	  if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
-	
-		  $folderid = $_POST['folderid'];
-		  $status = wp_delete_post($folderid);
-	
-		  if(!$status){
-			$returndata = array();
-			$returndata['error'] = __('Something went wrong','admin2020');
-			echo json_encode($returndata);
-			die();
-		  }
-	
-		  $args = array(
-			'post_type' => 'admin2020folders',
-			'posts_per_page' => -1,
-			'fields' => 'ids',
-			'meta_query' => array(
-			 array(
-					 'key' => 'parent_folder',
-					 'value' => $folderid,
-					 'compare' => '=',
-				 )
-			 )
-		  );
-	
-		  $thechildren = get_posts($args);
-	
-		  foreach($thechildren as $child){
-	
-			wp_delete_post($child);
-	
-		  }
-	
-		  $returndata = array();
-		  $returndata['message'] = __('Folder succesfully deleted','admin2020');
-		  echo json_encode($returndata);
-	
-	  }
-	  die();
-	}
-		
-	
-	/**
-	* Moves folder into or out of folders
-	* @since 1.4
-	*/		
-		
-	public function admin2020_move_to_folder() {
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
-	
-			$attachmentids = $_POST['theids'];
-			$folderid = $_POST['folderid'];
-			$screen = $_POST['screen'];
-	
-			foreach ($attachmentids as $attachmentid){
-	
-			  //wp_delete_attachment($attachmentid);
-			  update_post_meta($attachmentid, "admin2020_folder",$folderid);
-	
-			}
-			
-			$returndata = array();
-			$returndata['message'] = __('Items Moved to folder');
-			$returndata['html'] =  $this->build_individual_folder_stack('',$screen);
-			echo json_encode($returndata);
-		}
-		die();
-	}
-		
-	/**
-	* Refreshes all folders
-	* @since 1.4
-	*/		
-	public function admin2020_refresh_all_folders(){
-	  if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
-	
-		$page_id = $_POST['page_id'];
-	
-	
-		echo $this->get_user_folders($page_id);
-	
-	  }
-	  die();
-	}
-	
-	/**
-	* Moves folder into another
-	* @since 1.4
-	*/	
-	public function admin2020_move_folder_into_folder() {
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-folder-security-nonce', 'security') > 0) {
-	
-			$destination_id = $_POST['destination_id'];
-			$origin_folder_id = $_POST['origin_id'];
-			$page_id = $_POST['page_id'];
-	
-			if($destination_id == 'false'){
-			  $destination_id = "";
-			}
-	
-			$current_value = get_post_meta( $origin_folder_id, "parent_folder", true );
-	
-			if($current_value == $destination_id){
-			  $senddata = array();
-			  $senddata['error'] = __('Folder is already there','admin2020');
-			  echo json_encode($senddata);
-			  die();
-			}
-	
-	
-			if(!$origin_folder_id){
-			  $senddata = array();
-			  $senddata['error'] = __('No source or destination provided','admin2020');
-			  echo json_encode($senddata);
-			  die();
-			}
-	
-	
-	
-			$success = update_post_meta($origin_folder_id, "parent_folder",$destination_id);
-	
-			if(!$success){
-			  $senddata = array();
-			  $senddata['error'] = __('Something went wrong','admin2020');
-			  echo json_encode($senddata);
-			  die();
-			}
-	
-			if($destination_id == ""){
-			  $destination_id = $origin_folder_id;
-			}
-	
-			$senddata = array();
-			$senddata['message'] = __('Folder Moved','admin2020');
-			$senddata['html'] = $this->build_individual_folder_stack($destination_id,$page_id);
-	
-	
-			echo json_encode($senddata);
-		}
-		die();
-	}
-	
-	/**
-	* Builds individual folder stack
-	* @since 1.4
-	*/	
-	public function build_individual_folder_stack($folderid, $screen = null){
-	
-	  $args = array(
-		'numberposts' => -1,
-		'post_type'   => 'admin2020folders',
-		'orderby' => 'title',
-		'order'   => 'ASC',
-	  );
-	
-	  $folders = get_posts( $args );
-	  $folder = get_post($folderid);
-	
-	  if($folderid == "" || $folderid == null){
-	
-		$data = "";
-	
-		foreach($folders as $folder){
-		  $parent_folder = get_post_meta($folder->ID, "parent_folder",true);
-		  if(!$parent_folder){
-			$data = $data . $this->foldertemplate($folder,$folders,$screen);
-		  }
-		}
-	
-		return $data;
-	
-	  } else {
-	
-		return $this->foldertemplate($folder,$folders,$screen);
-	
-	  }
-	
-	}
 	
 	
 }

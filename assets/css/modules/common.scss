@@ -172,6 +172,176 @@ select.uk-form-danger:focus {
     }
   }
 }
+
+.a2020-checkbox {
+  padding: 5px;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border: 1px solid #999;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    border-color: #555;
+  }
+  .material-icons-outlined {
+    font-size: 20px;
+    top: -5px;
+    position: relative;
+    left: -5px;
+    opacity: 0;
+    color: #fff;
+  }
+  input {
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    left: -1px;
+    top: 3px;
+    border-radius: 0;
+    opacity: 0 !important;
+  }
+
+  &.checked {
+    background: $global-primary-background;
+    border-color: $global-primary-background;
+    .material-icons-outlined {
+      opacity: 1;
+    }
+  }
+}
+
+.a2020-checkbox-small {
+  width: 18px;
+  height: 18px;
+  .material-icons-outlined {
+    font-size: 14px;
+    top: -4px;
+    left: -4px;
+  }
+}
+
+.uk-dropdown {
+  &::after {
+    content: " ";
+    background: white;
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid $global-border;
+    position: absolute;
+    border-top: 1px solid $global-border;
+    border-radius: 3px 0px 0 0;
+
+    transform: translateX(-50%) rotate(45deg);
+  }
+  &.uk-dropdown-bottom-center::after {
+    left: 50%;
+    top: -6px;
+  }
+  &.uk-dropdown-bottom-left::after {
+    left: 15px;
+    top: -6px;
+  }
+  &.uk-dropdown-bottom-right::after {
+    right: 5px;
+    top: -6px;
+  }
+  &.uk-dropdown-right-center::after,
+  &.a2020-dropdown-right-center::after {
+    transform: translateX(-50%) rotate(-45deg);
+    left: -1px;
+    top: 50%;
+  }
+  &.uk-dropdown-top-right::after {
+    right: 5px;
+    bottom: -6px;
+    border-left: none;
+    border-top: none;
+    border-right: 1px solid $global-border;
+    border-bottom: 1px solid $global-border;
+    border-radius: 0px 0px 3px 0;
+  }
+  &.uk-dropdown-top-left::after {
+    left: 5px;
+    bottom: -6px;
+    border-left: none;
+    border-top: none;
+    border-right: 1px solid $global-border;
+    border-bottom: 1px solid $global-border;
+    border-radius: 0px 0px 3px 0;
+  }
+  &.uk-dropdown-top-center::after {
+    left: 50%;
+    bottom: -6px;
+    border-left: none;
+    border-top: none;
+    border-right: 1px solid $global-border;
+    border-bottom: 1px solid $global-border;
+    border-radius: 0px 0px 3px 0;
+  }
+  &.wpteams-no-after::after {
+    content: none;
+  }
+}
+
+.a2020_night_mode {
+  .uk-dropdown {
+    &::after {
+      background: $dark;
+      border-color: $inverse-global-border !important;
+    }
+  }
+}
+
+.toplevel_page_vg_sheet_editor_setup {
+  #wpbody-content {
+    width: 99%;
+  }
+}
+.a2020-switch-container {
+  position: relative;
+  display: flex;
+  background: $global-muted-background;
+  border-radius: 5px;
+  padding: 5px;
+  button {
+    width: 50%;
+    border: none;
+    background: none;
+    display: block;
+    padding: 5px 20px;
+    border-radius: 5px;
+    outline: none !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &.active {
+      background: $global-inverse-color;
+    }
+    &:hover {
+      color: $global-primary-background;
+    }
+  }
+}
+.a2020-border {
+  border-color: $global-border;
+}
+.a2020-border.left {
+  border-left: 1px solid $global-border;
+}
+.a2020-border.right {
+  border-right: 1px solid $global-border;
+}
+.a2020-border.top {
+  border-top: 1px solid $global-border;
+}
+.a2020-border.bottom {
+  border-bottom: 1px solid $global-border;
+}
+.a2020-border.all {
+  border: 1px solid $global-border;
+}
 .a2020_border {
   border: 1px solid $global-border;
 }
@@ -191,6 +361,17 @@ select.uk-form-danger:focus {
   border-radius: 4px;
   background: $global-inverse-color;
 }
+
+.a2020-activation-message {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 9999999999;
+  width: auto;
+  border: 1px solid $global-border !important;
+  margin-bottom: 0 !important;
+}
 .a2020_night_mode {
   .tokenize-dropdown.dropdown {
     background: #333;
@@ -201,6 +382,16 @@ select.uk-form-danger:focus {
       }
     }
   }
+  .uk-button-default {
+    background: $light-dark !important;
+    color: #fff !important;
+    border: none;
+  }
+
+  .uk-button-secondary {
+    background: #464646 !important;
+    color: #fff !important;
+  }
   .a2020_make_light {
     background: $mid-dark;
     border-color: $inverse-global-border;
@@ -209,6 +400,9 @@ select.uk-form-danger:focus {
     &:active {
       background: $mid-dark;
     }
+  }
+  .a2020-border {
+    border-color: $inverse-global-border !important;
   }
   .a2020_border {
     border-color: $inverse-global-border;

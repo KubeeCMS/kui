@@ -63,7 +63,7 @@ table.widefat {
   }
   td,
   th {
-    padding: 15px;
+    padding: 15px 5px;
     .post-state {
       @include make-label;
       margin-right: 5px;
@@ -238,5 +238,11 @@ body.a2020_night_mode {
   }
   .tablenav.top .alignleft.actions.bulkactions {
     background: #111;
+  }
+}
+
+@media screen and (max-width: 782px) {
+  .a2020_admin_theme .wp-list-table tr:not(.inline-edit-row):not(.no-items) td.column-primary ~ td:not(.check-column) {
+    padding: 3px 8px 3px 35% !important;
   }
 }

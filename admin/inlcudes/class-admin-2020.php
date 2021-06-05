@@ -20,6 +20,12 @@ class Admin_2020{
 	public function run(){
 		
 		if ( is_admin() ){
+			
+			global $pagenow;
+			if($pagenow == 'customize.php'){
+				return;
+			}
+			
 			$this->load_admin();
 			$this->build_admin_app();
 		} else {
@@ -50,6 +56,8 @@ class Admin_2020{
 	 */
 	 
 	public function build_admin_app(){
+		
+		
 		
 		$utilities = new Admin_2020_utilities($this->version,$this->path, $this->productid);
 		$utilities->start();

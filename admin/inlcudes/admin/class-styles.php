@@ -28,6 +28,8 @@ class Admin_2020_styles{
 	}
 	
 	
+	
+	
 	/**
 	 * Loads Admin 2020 on front end
 	 * @since 1.4
@@ -199,6 +201,10 @@ class Admin_2020_styles{
 		///GOOGLE FONTS
 		wp_register_style('custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap', array());
 		wp_enqueue_style('custom-google-fonts');
+		
+		///GOOGLE ICONS
+		wp_register_style('custom-google-icons', $this->path . 'assets/css/google-icons.css', array());
+		wp_enqueue_style('custom-google-icons');
 			
 		if(is_rtl()){
 		    ////RTL	
@@ -230,6 +236,9 @@ class Admin_2020_styles{
 		 wp_register_style('custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap', array());
 		 wp_enqueue_style('custom-google-fonts');
 			 
+		 wp_register_style('custom-google-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined', array());
+		 wp_enqueue_style('custom-google-icons');
+			 
 		 if(is_rtl()){
 			 ////RTL	
 			 wp_register_style('admin2020_app', $this->path . 'assets/css/app_front_rtl.css', array(), $this->version);
@@ -249,6 +258,7 @@ class Admin_2020_styles{
 	  
 	  public function add_scripts(){
 		  
+		  
 		///UIKIT FRAMEWORK
 		wp_enqueue_script('uikit', $this->path . 'assets/js/uikit/uikit.min.js', array('jquery'));
 		wp_enqueue_script('uikit-icons', $this->path . 'assets/js/uikit/uikit-icons.min.js', array('jquery'));
@@ -258,6 +268,9 @@ class Admin_2020_styles{
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'security' => wp_create_nonce('admin2020-utilities-security-nonce'),
 		));
+		
+		///LOAD VUE
+		wp_enqueue_script('a2020-vue-build', $this->path . 'assets/js/vuejs/vue-global-dev.js', array('jquery'));
 		  
 	  }
 	
@@ -269,7 +282,7 @@ class Admin_2020_styles{
 	public function add_body_classes($classes) {
 		
 		$darkmode = $this->utils->get_user_preference('darkmode');
-		$menu_state = $this->utils->get_user_preference('menu_collapse');
+		$menu_state = $this->utils->get_user_preference('a2020_menu_collapse');
 		$shrunk_enabled = $this->utils->get_option('admin2020_admin_menu','shrunk-enabled');
 		$dark_enabled = $this->utils->get_option('admin2020_admin_bar','dark-enabled');
 		$bodyclass = '';

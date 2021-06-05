@@ -18,6 +18,14 @@
     top: 61px;
   }
 }
+
+.a2020_admin_menu.a2020_menu_small {
+  .woocommerce-layout__header {
+    left: 61px;
+    width: calc(100% - 61px);
+  }
+}
+
 .a2020_admin_menu {
   .woocommerce-layout__header {
     z-index: 800;
@@ -175,5 +183,33 @@ ul.order_actions {
   }
   .woocommerce-table {
     background: #fff;
+  }
+  table.wc_emails tr:nth-child(odd) td,
+  table.wc_gateways tr:nth-child(odd) td,
+  table.wc_shipping tr:nth-child(odd) td {
+    background: $mid-dark;
+  }
+  .wc-backbone-modal .wc-backbone-modal-content {
+    background: $dark;
+  }
+  .wc-backbone-modal-main .wc-backbone-modal-header {
+    background: $dark;
+  }
+  .wc-backbone-modal-main footer {
+    background: $mid-dark;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .a2020_admin_menu.a2020_menu_small {
+    .woocommerce-layout__header {
+      left: 0px;
+      width: 100%;
+    }
+  }
+  .a2020_admin_theme .wrap .page-title-action {
+    float: none;
+    margin-bottom: 10px;
+    padding: 5px;
   }
 }

@@ -45,7 +45,7 @@ class Admin_2020_module_admin_menu_editor
 		add_action('admin_enqueue_scripts', [$this, 'add_scripts'], 0);
 		add_action('admin_menu', array( $this, 'add_menu_item'));
 		add_filter('parent_file', array( $this, 'set_menu'),800);
-		add_filter('parent_file', array( $this, 'apply_menu'),900);
+		add_action('admin_enqueue_scripts', array( $this, 'apply_menu'),0);
 		add_action('wp_ajax_a2020_save_menu_settings', array($this,'a2020_save_menu_settings'));
 		add_action('wp_ajax_a2020_delete_menu_settings', array($this,'a2020_delete_menu_settings'));
 		add_action('wp_ajax_a2020_export_menu', array($this,'a2020_export_menu'));
@@ -927,7 +927,7 @@ class Admin_2020_module_admin_menu_editor
 	 * @since 1.4
 	 */
 	
-	public function apply_menu($parent_file){
+	public function apply_menu(){
 		
 		global $menu, $submenu;
 		$tempmenu = array();
@@ -969,7 +969,6 @@ class Admin_2020_module_admin_menu_editor
 		$submenu = $tempsub;
 		$menu = $this->utils->sort_array($tempmenu);
 		
-		return $parent_file;
 		
 	}
 	

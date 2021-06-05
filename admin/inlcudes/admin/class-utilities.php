@@ -486,7 +486,9 @@ class Admin_2020_utilities {
 		$returndata['total'] = 0;
 		$returndata['wordpress'] = 0;
 		$returndata['theme'] = 0;
+		$returndata['themeCount'] = 0;
 		$returndata['plugin'] = 0;
+		$returndata['pluginCount'] = 0;
 		
 		if(!is_admin()){
 			return $returndata;
@@ -522,7 +524,9 @@ class Admin_2020_utilities {
 			$returndata['total'] = $totalupdates;
 			$returndata['wordpress'] =$wordpressupdates;
 			$returndata['theme'] = $themeupdates;
+			$returndata['themeCount'] = count($themeupdates);
 			$returndata['plugin'] = $pluginupdates;
+			$returndata['pluginCount'] = count($pluginupdates);
 		
 		}
 		
@@ -572,7 +576,7 @@ class Admin_2020_utilities {
 	 */
 	public function formatBytes($size, $precision = 0){
 		$base = log($size, 1024);
-		$suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');
+		$suffixes = array('', 'KB', 'MB', 'GB', 'TB');
 		
 		return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
 	}

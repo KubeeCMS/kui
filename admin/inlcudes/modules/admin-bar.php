@@ -11,6 +11,7 @@ class Admin_2020_module_admin_bar
         $this->path = $path;
         $this->utils = $utilities;
 		$this->front = false;
+		$this->notices = '';
     }
 
     /**
@@ -30,6 +31,7 @@ class Admin_2020_module_admin_bar
 		
 		$info = $this->component_info();
 		$optionname = $info['option_name'];
+		$notification_center = $this->utils->get_option($optionname,'notification-center-disabled');
 		
 		if($this->utils->is_locked($optionname)){
 			return;
@@ -38,15 +40,65 @@ class Admin_2020_module_admin_bar
 		
         add_action('admin_head', [$this, 'rebuild_admin_bar']);
         add_action('admin_enqueue_scripts', [$this, 'add_styles'], 0);
-		add_action('admin_enqueue_scripts', [$this, 'add_scripts'], 0);
+		add_action('admin_enqueue_scripts', [$this, 'add_scripts']);
+		add_filter('pre_get_posts', array($this, 'modify_query'));
 		add_filter('admin_body_class', array($this, 'add_body_classes'));
+		///MODIFY WP QUERY
+		add_action('admin_enqueue_scripts', [$this, 'add_scripts']);
+		///AJAX
 		add_action('wp_ajax_a2020_master_search', array($this,'a2020_master_search'));
 		add_action('wp_ajax_a2020_get_users_for_select', array($this,'a2020_get_users_for_select'));
-		//EXTEND SEARCH
-		
-		
+		//CAPTURE NOTICES
+		if($notification_center != 'true'){
+			add_action('admin_notices', array($this,'start_capture_admin_notices'),-99);
+			add_action('admin_notices', [$this, 'capture_admin_notices'],999);
+		}
 		
     }
+	
+	/**
+	* Modifies query to search in meta AND title
+	* @since 2.9
+	*/
+	public function modify_query($q){
+		
+		if( $title = $q->get( '_a2020_meta_or_title' ) ) {
+			
+			add_filter( 'get_meta_sql', function( $sql ) use ( $title )
+			{
+				global $wpdb;
+	
+				// Only run once:
+				static $nr = 0; 
+				if( 0 != $nr++ ) return $sql;
+	
+				// Modify WHERE part:
+				$sql['where'] = sprintf(
+					" AND ( %s OR %s ) ",
+					$wpdb->prepare( "{$wpdb->posts}.post_title like '%%%s%%'", $title),
+					mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
+				);
+				return $sql;
+			});
+		}
+	}
+	
+	/**
+	* Capture admin notices
+	* @since 2.9
+	*/
+	
+	public function start_capture_admin_notices(){
+		ob_start();
+	}
+	/**
+	* End Capture admin notices
+	* @since 2.9 
+	*/
+	
+	public function capture_admin_notices(){
+		$this->notices = ob_get_clean();
+	}
 	
 	/**
 	* Output body classes
@@ -100,8 +152,6 @@ class Admin_2020_module_admin_bar
 		add_action('wp_enqueue_scripts', [$this, 'add_styles'], 99);
 		add_action('wp_enqueue_scripts', [$this, 'add_scripts'], 0);
 		
-		add_action('wp_ajax_a2020_master_search', array($this,'a2020_master_search'));
-		
 	}
 	
 	/**
@@ -129,6 +179,64 @@ class Admin_2020_module_admin_bar
 		return $data;
 		
 	}
+	
+	
+	/**
+	 * Returns settings options for settings page
+	 * @since 2.1
+	 */
+	public function get_settings_options(){
+		
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
+		
+		$settings = array();
+		
+		$temp = array();
+		$temp['name'] = __('Logo Light Mode','admin2020');
+		$temp['description'] = __("Sets the logo for the admin bar in light mode.",'admin2020');
+		$temp['type'] = 'image';
+		$temp['optionName'] = 'light-logo'; 
+		$temp['value'] = $this->utils->get_option($optionname,'light-logo');
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Logo Dark Mode','admin2020');
+		$temp['description'] = __("Optional dark mode logo for admin bar.",'admin2020');
+		$temp['type'] = 'image';
+		$temp['optionName'] = 'dark-logo'; 
+		$temp['value'] = $this->utils->get_option($optionname,'dark-logo');
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Hide admin bar links (left side)','admin2020');
+		$temp['description'] = __("Disables legacy links on left side of admin bar for all users. Also hides the user preference.",'admin2020');
+		$temp['type'] = 'switch';
+		$temp['optionName'] = 'legacy-admin'; 
+		$temp['value'] = $this->utils->get_option($optionname,'legacy-admin');
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Background color (light mode)','admin2020');
+		$temp['description'] = __("Sets admin bar background color in light mode.",'admin2020');
+		$temp['type'] = 'color';
+		$temp['optionName'] = 'light-background'; 
+		$temp['value'] = $this->utils->get_option($optionname,'light-background');
+		$temp['default'] = '#fff';
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Background color (dark mode)','admin2020');
+		$temp['description'] = __("Sets admin bar background color in dark mode.",'admin2020');
+		$temp['type'] = 'color';
+		$temp['optionName'] = 'dark-background'; 
+		$temp['value'] = $this->utils->get_option($optionname,'dark-background');
+		$temp['default'] = '#222';
+		$settings[] = $temp;
+		
+		return $settings;
+		
+	}
 	/**
 	 * Returns settings for module
 	 * @since 1.4
@@ -152,6 +260,8 @@ class Admin_2020_module_admin_bar
 		$dark_enabled = $this->utils->get_option($optionname,'dark-enabled');
 		$admin_hidden = $this->utils->get_option($optionname,'hide-admin');
 		$admin_front = $this->utils->get_option($optionname,'load-front');
+		$legacy_admin = $this->utils->get_option($optionname,'legacy-admin');
+		$notification_center = $this->utils->get_option($optionname,'notification-center-disabled');
 		///GET POST TYPES
 		$post_types = $this->utils->get_post_types();
 		
@@ -282,6 +392,27 @@ class Admin_2020_module_admin_bar
 			
 			<!-- DISABLE SEARCH -->
 			<div class="uk-width-1-1@ uk-width-1-3@m">
+				<div class="uk-h5 "><?php _e('Hide admin bar links (left side) ','admin2020')?></div>
+				<div class="uk-text-meta"><?php _e("Disables legacy links on left side of admin bar for all users. Also hides the user preference.",'admin2020') ?></div>
+			</div>
+			<div class="uk-width-1-1@ uk-width-2-3@m">
+				
+				<?php
+				$checked = '';
+				if($legacy_admin == 'true'){
+					$checked = 'checked';
+				}
+				?>
+				
+				<label class="admin2020_switch uk-margin-left">
+					<input class="a2020_setting" name="legacy-admin" module-name="<?php echo $optionname?>" type="checkbox" <?php echo $checked ?>>
+					<span class="admin2020_slider constant_dark"></span>
+				</label>
+				
+			</div>	
+			
+			<!-- DISABLE SEARCH -->
+			<div class="uk-width-1-1@ uk-width-1-3@m">
 				<div class="uk-h5 "><?php _e('Disable Search','admin2020')?></div>
 				<div class="uk-text-meta"><?php _e("Disables search icon and global search function from admin bar",'admin2020') ?></div>
 			</div>
@@ -303,7 +434,7 @@ class Admin_2020_module_admin_bar
 			<!-- DISABLE NEW BUTTON -->
 			<div class="uk-width-1-1@ uk-width-1-3@m">
 				<div class="uk-h5 "><?php _e('Disable Create Button','admin2020')?></div>
-				<div class="uk-text-meta"><?php _e("Disables the 'new' button in the admin bar",'admin2020') ?></div>
+				<div class="uk-text-meta"><?php _e("Disables the 'create' button in the admin bar",'admin2020') ?></div>
 			</div>
 			<div class="uk-width-1-1@ uk-width-2-3@m">
 				
@@ -400,6 +531,27 @@ class Admin_2020_module_admin_bar
 				
 				<label class="admin2020_switch uk-margin-left">
 					<input class="a2020_setting" name="hide-admin" module-name="<?php echo $optionname?>" type="checkbox" <?php echo $checked ?>>
+					<span class="admin2020_slider constant_dark"></span>
+				</label>
+				
+			</div>
+			
+			<!-- DISABLE NOTIFICATION CENTER -->
+			<div class="uk-width-1-1@ uk-width-1-3@m">
+				<div class="uk-h5 "><?php _e('Disable Notification Center','admin2020')?></div>
+				<div class="uk-text-meta"><?php _e("If disabled, notifcations will show in the normal way",'admin2020') ?></div>
+			</div>
+			<div class="uk-width-1-1@ uk-width-2-3@m">
+				
+				<?php
+				$checked = '';
+				if($notification_center == 'true'){
+					$checked = 'checked';
+				}
+				?>
+				
+				<label class="admin2020_switch uk-margin-left">
+					<input class="a2020_setting" name="notification-center-disabled" module-name="<?php echo $optionname?>" type="checkbox" <?php echo $checked ?>>
 					<span class="admin2020_slider constant_dark"></span>
 				</label>
 				
@@ -530,12 +682,110 @@ class Admin_2020_module_admin_bar
 	  if(!is_user_logged_in() && $pagenow != 'wp-login.php'){
 		  return;
 	  }
-	  ///UIKIT FRAMEWORK
-	  wp_enqueue_script('admin-bar-js', $this->path . 'assets/js/admin2020/admin-bar.min.js', array('jquery'));
-	  wp_localize_script('admin-bar-js', 'admin2020_admin_bar_ajax', array(
-		  'ajax_url' => admin_url('admin-ajax.php'),
-		  'security' => wp_create_nonce('admin2020-admin-bar-security-nonce'),
-	  ));
+	  ///ADMIN BAR JS FRAMEWORK
+	  $info = $this->component_info();
+	  $optionname = $info['option_name'];
+	  
+	  $post_types_create = $this->utils->get_option($optionname,'post-types-create');
+	  $supressedNotifications = $this->utils->get_user_preference('a2020_supressed_notifications');
+	  $screenOptions = $this->utils->get_user_preference('screen_options');
+	  $legacyLinks = $this->utils->get_user_preference('legacy_admin_links');
+	  $darkmode = $this->utils->get_user_preference('darkmode');
+	  $searchDisabled = $this->utils->get_option($optionname,'search-enabled');
+	  $post_types_enabled = $this->utils->get_option($optionname,'post-types-search');
+	  $new_enabled = $this->utils->get_option($optionname,'new-enabled');
+	  $home_enabled = $this->utils->get_option($optionname,'view-enabled');
+	  $legacy_admin = $this->utils->get_option($optionname,'legacy-admin');
+	  $notification_center = $this->utils->get_option($optionname,'notification-center-disabled');
+	  
+	  if($post_types_enabled == '' || !$post_types_enabled || !is_array($post_types_enabled)){
+		  $post_types = 'any';
+	  } else {
+		  $post_types = $post_types_enabled;
+	  }
+	  
+	  
+	  $front = is_admin();
+	  
+	  if(!$supressedNotifications or !is_array($supressedNotifications)){
+		  $supressedNotifications = array();
+	  }
+	  
+	  $preferences = array();
+	  
+	  $preferences['screenOptions'] = $screenOptions;
+	  $preferences['darkmode'] = $darkmode;
+	  $preferences['legacyLinks'] = $legacyLinks;
+	  
+	  $master = array();
+	  $master['searchDisabled'] = $searchDisabled;	
+	  $master['backend'] = $front;	 
+	  $master['postTypesSearch'] = $post_types_enabled; 
+	  $master['createEnabled'] = $new_enabled;
+	  $master['homeEnabled'] = $home_enabled;
+	  $master['legacyAdmin'] = $legacy_admin;
+	  $master['notificationCenter'] = $notification_center;
+	  
+	  if($post_types_create == '' || !$post_types_create){
+		  $args = array('public'   => true);
+		  $output = 'objects'; 
+		  $post_types = get_post_types($args,$output);
+	  } else {
+		  $post_types = $this->utils->get_post_types();
+	  }
+	  
+	  $formattedPostTypes = array();
+	  
+		foreach($post_types as $type){
+			$temp = array();
+			
+			if($post_types_create == '' || !$post_types_create){
+				$name = $type->name;
+				$temp['href'] = 'post-new.php?post_type='.$name;
+				$temp['name'] = $type->labels->singular_name;
+				$temp['all'] = $type;
+				$formattedPostTypes[] = $temp;
+			} else {
+				if(in_array($type->name, $post_types_create)){
+					$name = $type->name;
+					$temp['href'] = 'post-new.php?post_type='.$name;
+					$temp['name'] = $type->labels->singular_name;
+					$formattedPostTypes[] = $temp;
+				}
+			}
+			
+		}
+		
+	  	$allnotices = array();
+		$updates = array();
+		if(is_admin() == true && $notification_center != 'true'){
+		  $updates = $this->utils->get_total_updates();
+		  do_action('admin_notices');
+		  
+		  $notices = json_encode($this->notices);
+		  $allnotices = $this->notices;
+		  if(!json_decode($notices)){
+			  $notices = array();
+			  $allnotices = json_encode($notices);
+		  }
+		} 
+		
+		if(!is_array($updates)){
+			$updates = array();
+		}
+	    
+	  
+		wp_enqueue_script('admin-bar-app', $this->path . 'assets/js/admin2020/admin-bar-app.min.js', array('jquery'),$this->version, true );
+		wp_localize_script('admin-bar-app', 'admin2020_admin_bar_ajax', array(
+		   'ajax_url' => admin_url('admin-ajax.php'),
+		   'security' => wp_create_nonce('admin2020-admin-bar-security-nonce'),
+		   'postTypes' => json_encode($formattedPostTypes),
+		   'updates' => json_encode($updates),
+		   'notices' => $allnotices,
+		   'supressed' => json_encode($supressedNotifications),
+		   'preferences' => json_encode($preferences),
+		   'master' => json_encode($master),
+		)); 
 	  
 	}
 	
@@ -559,39 +809,37 @@ class Admin_2020_module_admin_bar
 	*/
 	
 	public function a2020_master_search(){
+		
 		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-bar-security-nonce', 'security') > 0) {
 			
 			$term = $_POST['search'];
+			$page = $_POST['currentpage'];
+			$perpage = $_POST['perpage'];
 			
-			//BUILD SEARCH ARGS
+			$info = $this->component_info();
+			$optionname = $info['option_name'];
+			$post_types_enabled = $this->utils->get_option($optionname,'post-types-search');
+			
+			if($post_types_enabled == '' || !$post_types_enabled || !is_array($post_types_enabled)){
+				$post_types = 'any';
+			} else {
+				$post_types = $post_types_enabled;
+			}
+			
+			//BUILD SEARCH ARGS//shop_order
 			$args = array(
-			  'numberposts' => - 1, 
-			  's' => $term, 
-			  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit','wc-completed','wc-pending','wc-processing', 'wc-on-hold'),
-			);
-			
-			
-			$args_meta = array(
-				  'numberposts' => - 1, 
-				  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit','wc-completed','wc-pending','wc-processing', 'wc-on-hold'),
-				  'meta_query' => array(
-					  'relation' => 'OR',
-						array(
-							'key' => '_sku',
-							'value' => $term,
-							'compare' => 'LIKE'
-						),
-						array(
-							'key' => '_billing_email',
-							'value' => $term,
-							'compare' => 'LIKE'
-						),
-						array(
-							 'key' => '_billing_address_index',
-							 'value' => $term,
-							 'compare' => 'LIKE'
-						),
-				   )
+			  '_a2020_meta_or_title' => $term, 
+			  'posts_per_page' => $perpage,
+			  'post_type' => $post_types,
+			  'paged' => $page,
+			  'post_status' => 'all',
+			  'meta_query' => array(
+				  'relation' => 'OR',
+				  array(
+					  'value' => $term,
+					  'compare' => 'LIKE',
+				  )
+			  )
 			);
 			
 			
@@ -611,77 +859,83 @@ class Admin_2020_module_admin_bar
 				$args_meta['author__in'] = $users;
 			}
 			
-			$q1 = new WP_Query($args);
-			$q2 = new WP_Query($args_meta);
+			//$q1 = new WP_Query($args);
+			//$q2 = new WP_Query($args_meta);
 			
-			$result = new WP_Query();
-			$result->posts = array_unique( array_merge( $q1->posts, $q2->posts ), SORT_REGULAR );
+			//$result = new WP_Query();
+			//$result->posts = array_unique( array_merge( $q1->posts, $q2->posts ), SORT_REGULAR );
+			$result = new WP_Query($args);
 			$result->post_count = count( $result->posts );
 			
 			$foundposts = $result->posts;
-			
-			ob_start();
-			
-			?>
-			<p class="uk-text-meta"><?php echo count($foundposts).' '.__('items found for')?>: <strong><?php echo $term?></strong></p>
-			<table class="uk-table uk-table-divider uk-table-striped">
-				<thead>
-					<tr>
-						<th><?php _e('Name','admin2020')?></th>
-						<th><?php _e('Status','admin2020')?></th>
-						
-						<th><?php _e('Type','admin2020')?></th>
-						<th><?php _e('User','admin2020')?></th>
-						<th><?php _e('Date','admin2020')?></th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					
-				<?php	
+			$searchresults = array();
+			$categorized = array();
+			$categ = array();
 				
-				foreach ($foundposts as $item){
+			foreach ($foundposts as $item){
+				
+				
+				$temp = array();
+				$author_id = $item->post_author;
+				$title =  $item->post_title;
+				$status = get_post_status_object( get_post_status( $item->ID));
+				$label = $status->label;
+				
+				$postype_single = get_post_type($item);
+				$postype = get_post_type_object($postype_single);
+				$postype_label = $postype->label;
+				
+				$editurl = get_edit_post_link($item, '&');
+				$public = get_permalink($item);
+				
+				if ($postype_single == 'attachment' && wp_attachment_is_image($item)){
 					
-					$author_id = $item->post_author;
-					$status = get_post_status_object( get_post_status( $item->ID));
-					$label = $status->label;
-					
-					$postype_single = get_post_type($item);
-					$postype = get_post_type_object($postype_single);
-					$postype_label = $postype->label;
-					
-					$editurl = get_edit_post_link($item);
-					$public = get_permalink($item);
-					?>
-					<tr>
-						<td>
-							<?php if ($postype_single == 'attachment' && wp_attachment_is_image($item)){
-								$url = wp_get_attachment_thumb_url(  $item->ID );
-								?><img class="uk-margin-small-right" src="<?php echo $url?>" style="height:40px;"><?php
-							} ?>
-							<a uk-tooltip="<?php echo __('Edit','admin2020').' '.get_post_type($item)?>" href="<?php echo $editurl ?>"><?php echo get_the_title($item)?></a>
-						</td>
-						
-						<td><span class="uk-label <?php echo strtolower($label) ?>"><?php echo $label ?></span></td>
-							
-						
-						<td><span class="uk-min-label"><?php echo $postype_label ?></span></td>
-						<td><?php echo the_author_meta( 'user_login' , $author_id )?></td>
-						<td><?php echo get_the_date('j M y',$item)?></td>
-						<td><a target="_blank" uk-tooltip="<?php echo __('View','admin2020').' '.get_post_type($item)?>" href="<?php echo $public ?>"><span uk-icon="link"></span></a></td>
-					</tr>
-					<?php
+					$temp['image'] = wp_get_attachment_thumb_url(  $item->ID );
 					
 				}
 				
-				?>
-				</tbody>
-			</table><?php
+				if ($postype_single == 'attachment'){
+					$temp['attachment'] = true;
+					
+					$mime = get_post_mime_type($item->ID);
+					$actualMime = explode("/", $mime);
+					$actualMime = $actualMime[1];
+					
+					$temp['mime'] = $actualMime;
+				}
+				
+				$temp['name'] = $title;
+				
+				if($term != ''){
+					
+					$foundtitle = str_ireplace($term, '<highlight>'.$term.'</highlight>', $title);
+					$temp['name'] = $foundtitle;
+					
+				}
+				
+				$temp['editUrl'] = $editurl;
+				$temp['type'] = $postype_label;
+				$temp['status'] = $label;
+				$temp['author'] = get_the_author_meta( 'user_login' , $author_id );
+				$temp['date'] = get_the_date('j M y',$item);
+				$temp['url'] = $public;
+				
+				
+				$categorized[$postype_single]['label'] = $postype_label;
+				$categorized[$postype_single]['found'][] = $temp;
+				
+				$searchresults[] = $temp;
+				
+			}
 			
-			$results = ob_get_clean();
-			
+			$totalFound = $result->found_posts;
+			$totalPages = $result->max_num_pages;
+				
 			$returndata = array();
-			$returndata['html'] = $results;
+			$returndata['founditems'] = $searchresults;
+			$returndata['totalfound'] = $totalFound;
+			$returndata['totalpages'] = $totalPages;
+			$returndata['categorized'] = $categorized;
 			echo json_encode($returndata);
 		}
 		die();
@@ -701,7 +955,6 @@ class Admin_2020_module_admin_bar
 
     public function rebuild_admin_bar() {
 		
-		
 		if (!is_admin_bar_showing()) {
 			return false;
 		}
@@ -712,7 +965,6 @@ class Admin_2020_module_admin_bar
 			return false;
 		}
 
-		$legacyadmin = $this->utils->get_user_preference('legacy_admin_links');
 		$darkmode = $this->utils->get_user_preference('darkmode');
 		
 		$info = $this->component_info();
@@ -722,12 +974,6 @@ class Admin_2020_module_admin_bar
 		$dark_enabled = $this->utils->get_option($optionname,'dark-enabled');
 		
 		$class = '';
-		
-		if($darkmode == 'true'){
-			$class= 'a2020_night_mode uk-light';
-		} else if ($darkmode == '' && $dark_enabled == 'true'){
-			$class = "a2020_night_mode uk-light";
-		}
 			
 		
 		if($light_background != ""){
@@ -759,44 +1005,34 @@ class Admin_2020_module_admin_bar
 			</style>
 			<?php
 		}
-		
-		$frontwrap = '';
-		
-		if($this->front == true){
-			$frontwrap = 'a2020-front-wrap';
-		}
 
         /// START MENU BUILD
         ob_start();
         ?>
 		
-		<div uk-sticky="sel-target: . a2020-admin-bar;" id="<?php echo $frontwrap ?>">
-			<nav class="uk-navbar-container uk-navbar-transparent uk-background-default a2020-admin-bar uk-padding-small uk-padding-remove-vertical a2020_dark_anchor <?php echo $class ?>" id="" uk-navbar>
-			
-				<div class="uk-navbar-left">
-				
-					<?php $this->build_logo(); ?>
+		<div uk-sticky="sel-target: . a2020-admin-bar;" id="a2020-admin-bar-app" >
+				<nav class="uk-navbar-container uk-navbar-transparent uk-background-default a2020-admin-bar uk-padding-small uk-padding-remove-vertical a2020_dark_anchor"
+				:class="{'a2020_night_mode uk-light' : prefs.darkMode}"  
+				uk-navbar style="max-height:61px;">
+					<div  class="uk-navbar-left show-after-load" v-if="!loading" :class="{'loaded' : !loading}">
 					
-					<div class="admin2020_legacy_admin">
-						<?php 
-						if($legacyadmin != 'true'){
-							echo wp_admin_bar_render(); 
-						}
-						?>
+						<?php $this->build_logo(); ?>
+						
+						<div v-if="!prefs.legacyAdmin && !masterPrefs.legacyAdmin" class="admin2020_legacy_admin">
+							<?php echo wp_admin_bar_render(); ?>
+						</div>
+					
+					</div>
+					
+					<div  class="uk-navbar-right show-after-load" v-if="!loading" :class="{'loaded' : !loading}">
+					
+						<?php $this->build_nav_right(); ?>
+					
 					</div>
 				
-				</div>
-				
-				<div class="uk-navbar-right">
-				
-					<?php $this->build_nav_right(); ?>
-				
-				</div>
+				</nav>
 			
-			</nav>
-		
-			<?php $this->build_user_offcanvas(); ?>
-	
+				<?php $this->build_user_offcanvas(); ?>
 		</div>
 		<?php 
 		
@@ -831,9 +1067,11 @@ class Admin_2020_module_admin_bar
 	
 	public function build_search_bar() {
 		
+		
+		
+		
 		$info = $this->component_info();
 		$optionname = $info['option_name'];
-		$search_enabled = $this->utils->get_option($optionname,'search-enabled');
 		$post_types_enabled = $this->utils->get_option($optionname,'post-types-search');
 		
 		if($post_types_enabled == '' || !$post_types_enabled){
@@ -844,11 +1082,10 @@ class Admin_2020_module_admin_bar
 			$post_types = $this->utils->get_post_types();
 		}
 		
-		if($search_enabled == 'true'){
-			return;
-		}
 		
 		$temp = array();
+		
+		
 		
 		
 		
@@ -880,103 +1117,174 @@ class Admin_2020_module_admin_bar
 		}
 		?>
 		
-		<li id="a2020_admin_bar_search_wrap">
+		<li v-if="!masterPrefs.searchDisabled" id="a2020_admin_bar_search_wrap">
 			<a class="uk-navbar-toggle" href="#" uk-toggle="target: .ma-admin-search-results; animation: uk-animation-slide-top">
-				<span uk-tooltip="<?php _e('Search website','admin2020')?>" class="uk-icon-button" uk-icon="search"></span>
+				<span class="uk-background-muted uk-border-rounded " style="padding: 6px 10px;">
+					<span style="font-size: 20px;display: block;"uk-tooltip="<?php _e('Search website','admin2020')?>" class="material-icons">search</span>
+				</span>
 			</a>
 		</li>
 		
-		<div class="ma-admin-search-results <?php echo $class?>" uk-modal>
-			<div class="uk-modal-dialog uk-modal-body ma-admin-search-results-inner uk-padding-remove" style="width:1000px;max-width:100%">
-				
-				<div class="uk-padding-small a2020-border-bottom" style="padding-top:15px;padding-bottom:15px;">
-					<div class="uk-text-bold"><?php _e('Search','admin2020')?></div>
-					<button class="uk-modal-close-default" type="button" uk-close></button>
-				</div>
+		<div v-if="!masterPrefs.searchDisabled" class="ma-admin-search-results <?php echo $class?>" uk-dropdown="mode: click;pos:bottom-right">
+			<div class="ma-admin-search-results-inner uk-padding-remove" style="width:550px;max-width:100%">
 		
 				
-				<div class="uk-padding">
+				<div class="uk-padding-small">
 					<div class="uk-grid-small" uk-grid>
 						<div class="uk-width-expand">
 							<div class="uk-inline" style="width: 100%;">
-								<span class="uk-form-icon" uk-icon="icon: search"></span>
-								<input class="uk-input" type="text" id="a2020_master_search" placeholder="<?php _e('Search','admin2020') ?>"autofocus>
-								<span class="uk-form-icon" uk-icon="icon: search"></span>
+								<span class="uk-form-icon material-icons uk-margin-small-right">search</span>
+								<input class="uk-input a2020-muted-input"  
+								v-on:keyup.enter="masterSearch()"
+								v-model="search.string" style="border: none;"type="search" id="a2020_master_search" placeholder="<?php _e('Search','admin2020') ?>"autofocus>
 								<span class="uk-position-right" style="padding:10px;">
 									<div uk-spinner="ratio: 0.7" id="a2020_master_search_progress" style="display: none;"></div>
 								</span>
 							</div>
 						</div>
 						<div class="uk-width-auto">
-							<button class="uk-button uk-button-primary" id="a2020_master_search_submit"><?php _e('Search','admin2020')?></button>
-						</div>
-						<div class="uk-width-auto">
-							<button class="uk-button uk-button-default a2020_make_square" uk-toggle="target: #master_search_wrap"><span uk-icon="settings" class="uk-icon"></span></button>
-						</div>
-					</div>
-					<div class="uk-grid-small" uk-grid id="master_search_wrap" hidden>
-						<div class="uk-width-1-1@s uk-width-1-3@m">
-							<button class="uk-button uk-button-default uk-width-1-1"><?php _e('Post Types','admin2020') ?></button>
-							
-							<div uk-dropdown="mode: click">
-								<ul class="uk-list uk-margin-remove-bottom" id="admin2020_search_post_types">
-									<?php
-									foreach($post_types as $type){
-										$name = $type->name;
-										$label = $type->label;
-										?>
-										<li>
-											<input class="uk-checkbox" type="checkbox" value="<?php echo $name?>" checked>
-											<span><?php echo $label ?></span>
-										</li>
-										
-										<?php
-									}
-									?>
-								</ul>
-							</div>
-						</div>
-						<div class="uk-width-1-1@s uk-width-1-3@m">
-							<button class="uk-button uk-button-default uk-width-1-1"><?php _e('Categories','admin2020') ?></button>
-							
-							<div uk-dropdown="mode: click">
-								<ul class="uk-list uk-margin-remove-bottom" id="admin2020_search_categories">
-									<?php
-									foreach($categories as $type){
-										$name = $type->name;
-										$label = $type->term_id;
-										?>
-										<li>
-											<input class="uk-checkbox" type="checkbox" value="<?php echo $label?>">
-											<span><?php echo $name ?></span>
-										</li>
-										
-										<?php
-									}
-									?>
-								</ul>
-							</div>
-						</div>
-						<div class="uk-width-1-1@s uk-width-1-3@m">
-							<select  class="uk-select" id="admin2020_search_users" multiple>
-							</select>
+							<button class="uk-button uk-button-secondary" @click="masterSearch()"><?php _e('Search','admin2020')?></button>
 						</div>
 						
-						<script>
-							  jQuery('#admin2020_search_users').tokenize2({
-								  placeholder: '<?php _e('Filter by user','admin2020') ?>',
-								  dataSource: function (term, object) {
-									  a2020_get_users_for_select(term, object);
-								  },
-								  debounce: 1000,
-							  });
-						</script>
 					</div>
 					
-					<div class="uk-width-1-1 uk-margin-top uk-overflow-auto" style="max-height: 500px" id="a2020_master_search_results">
-						<div class="uk-placeholder" id="">
-							<?php _e('Start searching to see results','admin2020') ?>
-						</div>
+					
+					
+					<div class="uk-width-1-1 uk-margin-top uk-overflow-auto uk-margin-small-top" style="max-height: 600px">
+						
+						<svg v-if="search.loading"
+						  role="img"
+							width="400"
+							height="430"
+							aria-labelledby="loading-aria"
+							viewBox="0 0 400 460"
+							preserveAspectRatio="none"
+						  >
+							<title id="loading-aria">Loading...</title>
+							<rect
+							  x="0"
+							  y="0"
+							  width="100%"
+							  height="100%"
+							  clip-path="url(#clip-path)"
+							  style='fill: url("#fill");'
+							></rect>
+							<defs>
+							  <clipPath id="clip-path">
+								  <rect x="0" y="18" rx="2" ry="2" width="211" height="16" /> 
+								  <rect x="0" y="47" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="279" y="47" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="0" y="94" rx="2" ry="2" width="211" height="16" /> 
+								  <rect x="0" y="123" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="279" y="123" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="0" y="173" rx="2" ry="2" width="211" height="16" /> 
+								  <rect x="0" y="202" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="279" y="202" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="0" y="253" rx="2" ry="2" width="211" height="16" /> 
+								  <rect x="0" y="282" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="279" y="282" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="0" y="335" rx="2" ry="2" width="211" height="16" /> 
+								  <rect x="0" y="364" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="279" y="364" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="0" y="412" rx="2" ry="2" width="211" height="16" /> 
+								  <rect x="0" y="441" rx="2" ry="2" width="120" height="16" /> 
+								  <rect x="279" y="441" rx="2" ry="2" width="120" height="16" />
+							  </clipPath>
+							  <linearGradient id="fill">
+								<stop
+								  offset="0.599964"
+								  stop-color="#f3f3f3"
+								  stop-opacity="1"
+								>
+								  <animate
+									attributeName="offset"
+									values="-2; -2; 1"
+									keyTimes="0; 0.25; 1"
+									dur="2s"
+									repeatCount="indefinite"
+								  ></animate>
+								</stop>
+								<stop
+								  offset="1.59996"
+								  stop-color="#ecebeb"
+								  stop-opacity="1"
+								>
+								  <animate
+									attributeName="offset"
+									values="-1; -1; 2"
+									keyTimes="0; 0.25; 1"
+									dur="2s"
+									repeatCount="indefinite"
+								  ></animate>
+								</stop>
+								<stop
+								  offset="2.59996"
+								  stop-color="#f3f3f3"
+								  stop-opacity="1"
+								>
+								  <animate
+									attributeName="offset"
+									values="0; 0; 3"
+									keyTimes="0; 0.25; 1"
+									dur="2s"
+									repeatCount="indefinite"
+								  ></animate>
+								</stop>
+							  </linearGradient>
+							</defs>
+						  </svg>
+						<template v-for="cat in searchedCats" v-if="!search.loading">
+							<div class="uk-text-meta uk-text-bold uk-margin-small-bottom" style="padding: 5px;">{{cat.label}}</div>
+							<div class="cat-area uk-margin-small-bottom">
+								<template v-for="foundItem in cat.found" v-if="!search.loading">
+									<div class="a2020-found-item">
+										<div class="uk-grid uk-grid-small">
+											
+											<div class="uk-width-auto  ">
+												<img v-if="foundItem.image" :src="foundItem.image" style="height:26px;border-radius: 4px;">
+												
+												<span v-if="foundItem.attachment && !foundItem.image" class="a2020-post-label" style="display: block;">{{foundItem.mime}}</span>
+												
+												<span v-if="!foundItem.attachment && !foundItem.image" 
+												class="a2020-post-label" :class="foundItem.status" style="display: block;">{{foundItem.status}}</span>
+											</div>
+											<div class="uk-width-expand uk-flex uk-flex-middle">
+													<a class="uk-text-bold uk-margin-small-right uk-link-muted" :href="foundItem.editUrl" v-html="foundItem.name"></a>
+													<!--<span class="uk-text-muted">{{foundItem.date}}</span>-->
+												<div>
+													<!--<span class="a2020-post-label uk-margin-small-right" style="display: inline;">{{foundItem.type}}</span>-->
+												</div>
+											</div>
+											<div class="uk-width-auto a2020-search-actions">
+												<a :href="foundItem.editUrl" 
+												uk-tooltip="title:<?php _e('Edit','admin2020')?>"
+												class="uk-button uk-button-small uk-flex-middle uk-background-default" style="height: 26px;display: inline-flex">
+													<span class="material-icons" style="font-size: 18px;">edit_note</span>
+												</a>
+											</div>
+											<div class="uk-width-auto a2020-search-actions">
+												<a :href="foundItem.url" 
+												uk-tooltip="title:<?php _e('View','admin2020')?>"
+												class="uk-button uk-button-small uk-flex-middle uk-background-default" style="height: 26px;display: inline-flex">
+													<span class="material-icons" style="font-size: 18px;">pageview</span>
+												</a>
+											</div>
+											
+										</div>
+									</div>
+								</template>
+							</div>
+						</template>
+						
+						
+					</div>
+					
+					<div class="uk-width-1-1 uk-margin-top" v-if="search.totalPages > 1">
+						<button class="uk-button uk-button-default uk-button-small  uk-width-1-1" @click="loadMoreResults">
+							<span><?php _e('Show more','admin2020')?> </span>
+							<span>({{search.totalFound - search.results.length}}</span>
+							<span> <?php _e('other matches','admin2020')?>)</span>
+						</button>
 					</div>
 				</div>
 
@@ -1027,7 +1335,7 @@ class Admin_2020_module_admin_bar
 		
 		<!-- OFFCANVAS USER MENU -->
 		<div id="offcanvas-user-menu" uk-offcanvas="flip: true; overlay: true;">
-			<div class="uk-offcanvas-bar uk-padding-remove" style="height:100vh;border-left:1px solid rgba(162,162,162,.2)">
+			<div class="uk-offcanvas-bar uk-padding-remove" style="height:100vh;width: 400px;max-width:100%;border-left:1px solid rgba(162,162,162,.2)">
 				
 				<button class="uk-offcanvas-close" type="button" uk-close></button>
 				
@@ -1039,35 +1347,56 @@ class Admin_2020_module_admin_bar
 								<img class="uk-border-circle" width="50" height="50" src="<?php echo get_avatar_url($this->utils->get_user_id()) ?>">  
 							</div>
 						</div>
-						<div class="uk-width-expand">
-							<div class="uk-h4 uk-margin-remove"><?php echo $name_string ?></div>
-							<div class="uk-text-meta"><?php echo $email ?></div>
+						<div class="uk-width-expand uk-flex uk-flex-middle">
+							<span>
+								<div class="uk-h4 uk-margin-remove" style="line-height: 1"><?php echo $name_string ?></div>
+								<div class="uk-flex uk-flex-middle uk-text-meta" >
+									<span class="material-icons " style="font-size: 14px;margin-right: 3px;">mail_outline</span>
+									<span><?php echo $email ?></span>
+								</div>
+							</span>
 						</div>
 						
 						<div class="uk-width-1-1 uk-margin-top">
 							
-							<ul class="uk-subnav uk-subnav-pill" uk-switcher>
-								<li><a href="#"><?php _e('Overview','admin2020') ?></a></li>
-								<li><a href="#"><?php _e('Preferences','admin2020') ?></a></li>
-							</ul>
+							<div class="a2020-switch-container uk-margin-bottom">
+								  <button  
+								  uk-tooltip="title:<?php _e('Overview','admin2020') ?>;delay:300"
+								  :class="{ 'active' : userMenu.panel == 'overview'}" 
+								  @click="userMenu.panel = 'overview'">
+									  <span class="material-icons-outlined" style="font-size: 20px">dashboard</span>
+								  </button>
+								  
+								  <button  
+								  uk-tooltip="title:<?php _e('Preferences','admin2020') ?>;delay:300"
+								  :class="{ 'active' :  userMenu.panel == 'settings'}" 
+								  @click="userMenu.panel = 'settings'">
+									  <span class="material-icons-outlined" style="font-size: 20px">tune</span>
+								  </button>
+							</div>
 							
-							<ul class="uk-switcher" style="margin-top: 30px;">
+							<a v-if="masterPrefs.backend" href="<?php echo get_home_url() ?>" class="a2020-label-tag uk-flex uk-flex-middle uk-margin-small-bottom">
+								<span class="material-icons-outlined uk-margin-small-right ">launch</span>
+								<span><?php _e('View site','admin2020') ?></span>
+							</a>
+							
+							<a v-if="!masterPrefs.backend" href="<?php echo get_home_url() ?>" class="a2020-label-tag uk-flex uk-flex-middle uk-margin-small-bottom">
+								<span class="material-icons-outlined uk-margin-small-right ">launch</span>
+								<span><?php _e('View Dashboard','admin2020') ?></span>
+							</a>
+							
+							
+							
+							
+							<ul style="margin-top: 30px;">
 								
-								<li>
-									<ul class="uk-nav uk-nav-default uk-margin-bottom">
-										<li>
-											<a href="<?php echo get_home_url() ?>"><span class="uk-margin-right" uk-icon="icon: link"></span><?php _e('View Website','admin2020')?></a>
-										</li>
-										<li>
-											<a href="<?php echo get_edit_profile_url($userid) ?>"><span class="uk-margin-right" uk-icon="icon: user"></span><?php _e('View Profile','admin2020')?></a>
-										</li>
-									</ul>
+								<li v-if="userMenu.panel == 'overview'" class="uk-animation-slide-right">
 									
 									<?php $this->build_notifications() ?>
 								</li>
 								
 								
-								<li>
+								<li v-if="userMenu.panel == 'settings'" class="uk-animation-slide-right">
 									
 									<div class="uk-grid-small" uk-grid>
 										
@@ -1077,8 +1406,8 @@ class Admin_2020_module_admin_bar
 										
 										<div class="uk-width-1-3">
 											<label class="admin2020_switch uk-margin-left">
-												<input type="checkbox" id="maAdminSwitchDarkMode" <?php echo $dark_on ?>>
-												<span class="admin2020_slider constant_dark"></span>
+												<input type="checkbox" v-model="prefs.darkMode">
+												<span class="admin2020_slider "></span>
 											</label>
 										</div>
 										
@@ -1088,19 +1417,19 @@ class Admin_2020_module_admin_bar
 										
 										<div class="uk-width-1-3 a2020_wp_admin_screen_option">
 											<label class="admin2020_switch uk-margin-left">
-												<input type="checkbox" id="showscreenoptions" <?php checked( $screenoptions, 'true' ); ?>>
-												<span class="admin2020_slider constant_dark"></span>
+												<input type="checkbox" v-model="prefs.screenOptions">
+												<span class="admin2020_slider "></span>
 											</label>
 										</div>
 										
-										<div class="uk-width-2-3 a2020_wp_admin_bar_option">
+										<div v-if="!masterPrefs.legacyAdmin" class="uk-width-2-3 a2020_wp_admin_bar_option">
 											<?php _e('Hide admin bar links (left)','admin2020')?>
 										</div>
 										
-										<div class="uk-width-1-3 a2020_wp_admin_bar_option">
+										<div v-if="!masterPrefs.legacyAdmin"  class="uk-width-1-3 a2020_wp_admin_bar_option">
 											<label class="admin2020_switch uk-margin-left">
-												<input type="checkbox" id="hiddelegacylinks" <?php checked( $legacyadmin, 'true' ); ?>>
-												<span class="admin2020_slider constant_dark"></span>
+												<input type="checkbox" v-model="prefs.legacyAdmin">
+												<span class="admin2020_slider "></span>
 											</label>
 										</div>
 										
@@ -1117,8 +1446,24 @@ class Admin_2020_module_admin_bar
 				
 				</div>
 				
-				<div class="uk-position-bottom uk-padding uk-width-1-1 a2020_logout uk-background-secondary" style="padding-top:15px;padding-bottom:15px;">
-					<a href="<?php echo wp_logout_url() ?>"><span class="uk-margin-right" uk-icon="icon: sign-out"></span><?php _e('Logout','admin2020')?></a>
+				<div class="uk-position-bottom uk-padding uk-width-1-1 a2020_logout uk-background-default " style="padding-top:15px;padding-bottom:15px;">
+					
+					<div class="uk-grid uk-grid-small  uk-child-width-1-2">
+						<div>
+							<a href="<?php echo get_edit_profile_url($userid) ?>" class="a2020-label-tag uk-flex uk-flex-middle">
+								<span class="material-icons-outlined uk-margin-small-right">account_circle</span>
+								<span><?php _e('Edit profile','admin2020') ?></span>
+							</a>
+						</div>
+					
+						<div>
+							<a href="<?php echo wp_logout_url() ?>" class="a2020-label-tag muted uk-flex uk-flex-middle">
+								<span class="material-icons-outlined uk-margin-small-right">logout</span>
+								<span><?php _e('Logout','admin2020') ?></span>
+							</a>
+						</div>
+					</div>
+					
 				</div>
 			
 			</div>
@@ -1133,73 +1478,113 @@ class Admin_2020_module_admin_bar
 
 	public function build_notifications() {
 		
-		$updates = $this->utils->get_total_updates();
-		$total_updates = $updates['total'];
-		$pluginupdates = $updates['plugin'];
-		$themeupdates = $updates['theme'];
-		$wordpressupdates = $updates['wordpress'];
 		$adminurl = get_admin_url();
 		
-		?> <div id="a2020-update-wrap">
-			<div class="uk-h5 uk-margin-remove-top"><?php _e('Updates','admin2020')?></div> <?php
+		?> 
+		<div v-if="masterPrefs.backend" id="a2020-update-wrap">
+			<div class="uk-h5 uk-text-bold uk-flex uk-flex-middle uk-flex-between">
+				<div class="uk-flex uk-flex-middle"> 
+					<span class="material-icons-outlined uk-margin-small-right" style="font-size: 20px">update</span>
+					<span><?php _e('Updates','admin2020')?></span>
+				</div>
+				<span v-if="updates.total > 0" class="a2020-warning-count">{{updates.total}}</span>
+				<span v-if="updates.total < 1" class="a2020-warning-count success"><?php _e('Up to date','admin2020') ?></span>
+			</div> 
 		
-		if ($total_updates < 1){ ?>
-		
-			<p class="uk-text-meta"><?php _e('Everything is up to date','admin2020') ?></p>
-			
-		<?php } else {	?>
+			<p v-if="updates.total < 1" class="uk-text-meta"><?php _e('Everything is up to date','admin2020') ?></p>
 			
 		
-			<ul class="uk-nav uk-nav-default uk-margin-bottom" id="admin2020_updates_center">
+			<ul v-if="updates.total > 0" class="uk-nav uk-nav-default uk-margin-bottom" id="admin2020_updates_center">
+			
 			
 			   <li>
-				 <a href="<?php echo $adminurl.'update-core.php'?>" id="" style="position:relative;">
-				   <span class="uk-margin-right" uk-icon="icon: refresh"></span><?php _e('All Updates','admin2020')?>
-				   <span class="uk-badge uk-position-center-right uk-text-primary" style="background:#f0506e"><?php echo $total_updates?></span>
-				 </a>
+					<a href="<?php echo $adminurl.'update-core.php'?>" >
+						<div class="uk-flex uk-flex-between uk-flex-middle">
+							<div class="uk-flex uk-flex-middle"> 
+								<span class="material-icons-outlined uk-margin-small-right" style="font-size: 20px">system_update_alt</span>
+								<span class="uk-margin-small-right"><?php _e('Core','admin2020')?></span>
+							</div>
+							<span v-if="updates.wordpress > 0" class="a2020-warning-count">{{updates.wordpress}}</span>
+							<span v-if="updates.wordpress < 1" class="material-icons-outlined uk-text-success" style="font-size: 16px">check_circle</span>	
+						</div>
+					</a>  
 			   </li>
 			
-			   <?php if ($wordpressupdates > 0){?>
 			   <li>
-				 <a href="<?php echo $adminurl.'update-core.php'?>" id="" style="position:relative;">
-				   <span class="uk-margin-right" uk-icon="icon: wordpress"></span><?php _e('WordPress','admin2020')?>
-				   <span class="uk-badge uk-position-center-right uk-text-primary" style="background:#f0506e"><?php echo $wordpressupdates?></span>
-				 </a>
+				   
+				 <a href="<?php echo $adminurl.'plugins.php'?>" >
+					 <div class="uk-flex uk-flex-between uk-flex-middle">
+						 <div class="uk-flex uk-flex-middle"> 
+						 	<span class="material-icons-outlined uk-margin-small-right" style="font-size: 20px">extension</span>
+						 	<span class="uk-margin-small-right"><?php _e('Plugins','admin2020')?></span>
+						 </div>
+						 <span v-if="updates.pluginCount > 0" class="a2020-warning-count">{{updates.pluginCount}}</span>
+						 <span v-if="updates.pluginCount < 1" class="material-icons-outlined uk-text-success" style="font-size: 16px">check_circle</span>	
+					 </div>
+				 </a>    
 			   </li>
-			   <?php } ?>
 			
-			   <?php if (count($pluginupdates) > 0){?>
 			   <li>
-				 <a href="<?php echo $adminurl.'plugins.php'?>" id="" style="position:relative;">
-				   <span class="uk-margin-right" uk-icon="icon: bolt"></span><?php _e('Plugins','admin2020')?>
-				   <span class="uk-badge uk-position-center-right uk-text-primary" style="background:#f0506e"><?php echo count($pluginupdates)?></span>
-				 </a>
+				 <a href="<?php echo $adminurl.'themes.php'?>" >
+					 <div class="uk-flex uk-flex-between uk-flex-middle">
+						  <div class="uk-flex uk-flex-middle"> 
+						  	<span class="material-icons-outlined uk-margin-small-right" style="font-size: 20px">color_lens</span>
+						  	<span class="uk-margin-small-right"><?php _e('Themes','admin2020')?></span>
+						  </div>
+						  <span v-if="updates.themeCount > 0" class="a2020-warning-count">{{updates.themeCount}}</span>
+						  <span v-if="updates.themeCount < 1" class="material-icons-outlined uk-text-success" style="font-size: 16px">check_circle</span>	
+					  </div>
+				  </a>   
 			   </li>
-			 <?php } ?>
-			
-			   <?php if (count($themeupdates) > 0){?>
-			   <li>
-				 <a href="<?php echo $adminurl.'themes.php'?>" id="" style="position:relative;">
-				   <span class="uk-margin-right" uk-icon="icon: paint-bucket"></span><?php _e('Themes','admin2020')?>
-				   <span class="uk-badge uk-position-center-right uk-text-primary" style="background:#f0506e"><?php echo count($themeupdates)?></span>
-				 </a>
-			   </li>
-			 <?php } ?>
 			
 			</ul>
 		</div>
 		
-		<?php } ?>
-		
-		<div id="a2020-notification-wrap">
-			<ul uk-accordion>
-				<li class="uk-open">
-					<a class="uk-accordion-title uk-h5" style="font-size: 16px;" href="#"><?php _e('Notifications','admin2020')?></a>
-					<div class="uk-accordion-content" id="admin2020_notification_center">
-						
+		<div v-if="masterPrefs.backend && !masterPrefs.notifcations" id="a2020-notification-wrap" style="margin-top: 30px !important;padding-bottom:30px;">
+			
+			<div class="uk-h5 uk-text-bold uk-flex uk-flex-middle uk-flex-between">
+				<div class="uk-flex uk-flex-middle"> 
+					<span class="material-icons-outlined uk-margin-small-right" style="font-size: 20px">notifications</span>
+					<span><?php _e('Notifications','admin2020')?></span>
+				</div>
+				<span v-if="notifications.total > 0" class="a2020-warning-count">{{notifications.total}}</span>
+			</div> 
+			
+			<div id="a2020-notifications" >
+				<template v-for="notification in allNotifications">
+					<div class="a2020-notification-tag  uk-margin-small-bottom" :class="notification.type" >
+						<div class="uk-flex uk-flex-between" @click="notification.open = !notification.open">
+							<div class="uk-flex">
+								<span v-if="notification.type == 'info'"class="material-icons-outlined uk-margin-small-right">info</span>
+								<span v-if="notification.type == 'warning'"class="material-icons-outlined uk-margin-small-right">announcement</span>
+								<span v-if="notification.type == 'success'"class="material-icons-outlined uk-margin-small-right">check_circle_outline</span>
+								<span v-if="notification.type == 'errormsg'"class="material-icons-outlined uk-margin-small-right">error_outline</span>
+								<span v-if="notification.type == 'primary'"class="material-icons-outlined uk-margin-small-right">info</span>
+								<span>{{notification.shortDes}}...</span>
+							</div>
+							<a href="#">
+								<span v-if="!notification.open" class="material-icons-outlined " >chevron_left</span>
+								<span v-if="notification.open" class="material-icons-outlined " >expand_more</span>
+							</a>
+						</div>
+						<div v-if="notification.open" class="uk-margin-top" >
+							<div class="uk-margin">
+									<button class="uk-button uk-button-small uk-button-secondary" 
+									@click="supressNotification(notification.shortDes, notifications.supressed)"
+									type="button"><?php _e('Don\'t show again','admin2020')?></button>
+							</div>
+							<div v-html="notification.content"></div>
+						</div>
 					</div>
-				</li>
-			</ul>
+				</template>
+				
+				<p v-if="notifications.supressedPage > 0" class="uk-text-muted">
+					{{notifications.supressedPage}}
+					<span v-if="notifications.supressedPage == 1"><?php _e('hidden notification','admin2020')?>. </span>
+					<span v-if="notifications.supressedPage > 1"><?php _e('hidden notifications','admin2020')?>. </span>
+					<a href="#"class="uk-link-meta" @click="notifications.supressed = []"><?php _e('Show all')?></a>
+				</p>
+			</div>
 		</div>		
 		<?php
 		
@@ -1232,14 +1617,9 @@ class Admin_2020_module_admin_bar
         ?>
 		
 		<ul class="uk-navbar-nav">
-			<li class="uk-visible@m" id="a2020_toggle_wrap">
-				<a href="#" style="padding-left: 0;" id="a2020_menu_toggle">
-					<span uk-tooltip="delay:500;title:<?php _e('Toggle menu') ?>" class="uk-icon-button" uk-icon="menu"></span>
-				</a>
-			</li>
-			<li class="uk-hidden@m">
-				<a href="#" style="padding-left: 0;" id="a2020_menu_mobile_toggle">
-					<span uk-tooltip="delay:500;title:<?php _e('Toggle menu') ?>" class="uk-icon-button" uk-icon="menu"></span>
+			<li class="" v-if="isSmallScreen()">
+				<a href="#" style="padding-left: 0;" uk-toggle="target: #a2020-mobile-nav">
+					<span uk-tooltip="delay:500;title:<?php _e('Toggle menu') ?>" class="material-icons">menu_open</span>
 				</a>
 			</li>
 			<li class="uk-active">
@@ -1317,49 +1697,45 @@ class Admin_2020_module_admin_bar
 		
 			<ul class="uk-navbar-nav">
 				
-				<li>
-					<hr class="uk-divider-vertical uk-margin-small-right"  >
-				</li>
-				
 				<?php $this->build_search_bar();  ?>
 				
-				<?php if($view_enabled != 'true'){ ?>
-				<li>
-					<a href="<?php echo get_home_url() ?>" target="_blank">
-						<span uk-tooltip="<?php _e('View website','admin2020')?>" class="uk-icon-button" uk-icon="link"></span>
+				<li  v-if="!masterPrefs.viewHome">
+					<a v-if="masterPrefs.backend && !isSmallScreen()" href="<?php echo get_home_url() ?>">
+						<span class="uk-background-muted uk-border-rounded " style="padding: 6px 10px;">
+							<span style="font-size: 20px;display: block;"uk-tooltip="<?php _e('View website','admin2020')?>" class="material-icons">home</span>
+						</span>
+					</a>
+					<a v-if="!masterPrefs.backend" href="<?php echo get_admin_url() ?>">
+						<span class="uk-background-muted uk-border-rounded " style="padding: 6px 10px;">
+							<span style="font-size: 20px;display: block;"uk-tooltip="<?php _e('Dashboard','admin2020')?>" class="material-icons">dashboard</span>
+						</span>
 					</a>
 				</li>
-				<?php } ?>
 				
-				<?php if ($screenoptions == 'true'){ ?>
-				<li>
+				<li v-if="prefs.screenOptions">
 					<a href="#" id="maAdminToggleScreenOptions" onclick="jQuery('#screen-meta').toggleClass('a2020_open_sc');">
-						<span uk-tooltip="<?php _e('Show screen options','admin2020')?>" class="uk-icon-button" uk-icon="settings"></span>
+						<span class="uk-background-muted uk-border-rounded " style="padding: 6px 10px;">
+							<span style="font-size: 20px;display: block;" uk-tooltip="<?php _e('Show screen options','admin2020')?>" class=" material-icons">tune</span>
+						</span>
 					</a>
 				</li>
-				<?php } ?>
 				
-				<?php if($new_enabled != 'true'){ ?>
-				<li>
+				<li v-if="!masterPrefs.create">
 					<a href="#" target="_blank">
-						<span class="uk-button uk-button-small uk-border-pill uk-button-primary" ><?php _e('new','admin2020')?></span>
+						<span class="uk-button uk-button-small uk-button-secondary" ><?php _e('Create','admin2020')?></span>
 					</a>
 					
-					<div uk-dropdown="offset:0;pos:bottom-justify;">
+					<div uk-dropdown="pos:bottom-justify;">
 						<ul class="uk-nav uk-dropdown-nav">
-							<?php foreach ($post_types as $type){ 
-								
-								$nicename = $type->labels->singular_name;
-								$type = $type->name;
-								$link = 'post-new.php?post_type='.$type;
-								
-								?>	
-								<li><a href="<?php echo $link?>"><?php echo $nicename?></a></li>
-							<?php } ?>
+							
+							<li v-for="posttype in postTypes">
+								<a :href="posttype.href">
+									<span class="uk-text-bold"> {{posttype.name}}</span>
+								</a>
+							</li>
 						</ul>
 					</div>
 				</li>
-				<?php } ?>
 				
 				
 				<li uk-toggle="target: #offcanvas-user-menu" style="position:relative">
@@ -1380,7 +1756,10 @@ class Admin_2020_module_admin_bar
 						
 						</div>
 						
-						<span class="uk-badge uk-position-top-right-out admin2020notificationBadge uk-animation-scale-up" style="display:none;"><?php echo $total_updates['total']; ?></span>
+						<span v-if="updates.total + notifications.total > 0" 
+							class="uk-badge uk-position-top-right-out admin2020notificationBadge uk-animation-scale-up" >
+							{{updates.total + notifications.total}}
+						</span>
 					</a>
 				</li>
 			

@@ -149,3 +149,110 @@
     }
   }
 }
+
+.a2020-folder-component {
+  .folder_block {
+    padding: 5px 0;
+  }
+  .a2020-folder-sub {
+    padding-left: 20px;
+    margin-top: 5px;
+  }
+  .folder-click {
+    cursor: pointer;
+  }
+  .nosub {
+    opacity: 0;
+  }
+  .a2020-folder-edit {
+    display: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .folder_block {
+    &:hover > .a2020-folder-edit {
+      display: block;
+    }
+  }
+  .folderChevron {
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  .folder_open {
+    & > .folderChevron {
+      transform: rotate(90deg);
+    }
+  }
+  .active-folder {
+    background: $global-muted-background;
+    border-radius: 4px;
+    color: $global-primary-background;
+  }
+  .valid_drop {
+    background: #84afff30;
+    border-radius: 4px;
+    color: $global-primary-background;
+  }
+}
+
+#a2020-folder-template {
+  width: 100%;
+  border: 2px dashed #84afff30;
+  height: 40px;
+  border-radius: 4px;
+  display: none;
+}
+
+#a2020Contentdrag {
+  padding: 10px 15px;
+  background: $global-inverse-color;
+  width: auto;
+  border-radius: 5px;
+  float: left;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+a.color_tag {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+a.color_tag.selected {
+  border: 3px solid #222;
+  box-sizing: border-box;
+}
+
+.a2020-folder-count {
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.a2020_night_mode {
+  #a2020-content-app {
+    .uk-background-default {
+      background: $mid-dark !important;
+    }
+  }
+  .a2020-content-table-head {
+    background: $mid-dark !important;
+  }
+  .a2020-table-item {
+    &:hover {
+      background: $mid-dark;
+    }
+  }
+  .active-folder {
+    background: $global-primary-muted;
+  }
+  .a2020-select-container {
+    background: $mid-dark;
+    border-color: $inverse-global-border;
+  }
+  .a2020-available-container .available-item {
+    background: $light-dark;
+    border-color: $inverse-global-border;
+    color: #fff;
+  }
+}

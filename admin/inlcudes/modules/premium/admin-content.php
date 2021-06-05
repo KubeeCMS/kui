@@ -39,19 +39,27 @@ class Admin_2020_module_admin_content
 		add_action('admin_menu', array( $this, 'add_menu_item'));
         add_action('admin_enqueue_scripts', [$this, 'add_styles'], 0);
 		add_action('admin_enqueue_scripts', [$this, 'add_scripts'], 0);
-		add_action('wp_ajax_a2020_fetch_more_media', array($this,'a2020_fetch_more_media'));
-		add_action('wp_ajax_a2020_fetch_attachment_modal', array($this,'a2020_fetch_attachment_modal'));
-		add_action('wp_ajax_a2020_save_post', array($this,'a2020_save_post'));
-		add_action('wp_ajax_a2020_save_attachment', array($this,'a2020_save_attachment'));
-		add_action('wp_ajax_a2020_delete_item', array($this,'a2020_delete_item'));
-		add_action('wp_ajax_a2020_duplicate_post', array($this,'a2020_duplicate_post'));
-		add_action('wp_ajax_a2020_search_content', array($this,'a2020_search_content'));
-		add_action('wp_ajax_admin2020_set_content_folder_query', array($this,'admin2020_set_content_folder_query'));
-		add_action('wp_ajax_a2020_add_batch_rename_item', array($this,'a2020_add_batch_rename_item'));
-		add_action('wp_ajax_a2020_process_batch_rename', array($this,'a2020_process_batch_rename'));
+		
+		
+		////AJAX
+		add_action('wp_ajax_a2020_get_content', array($this,'a2020_get_content'));
+		add_action('wp_ajax_a2020_save_view', array($this,'a2020_save_view'));
+		add_action('wp_ajax_a2020_delete_selected', array($this,'a2020_delete_selected'));
+		add_action('wp_ajax_a2020_duplicate_selected', array($this,'a2020_duplicate_selected'));
+		add_action('wp_ajax_a2020_get_folders', array($this,'a2020_get_folders'));
+		add_action('wp_ajax_a2020_create_folder', array($this,'a2020_create_folder'));
+		add_action('wp_ajax_a2020_delete_folder', array($this,'a2020_delete_folder'));
+		add_action('wp_ajax_a2020_update_folder', array($this,'a2020_update_folder'));
+		add_action('wp_ajax_a2020_move_folder', array($this,'a2020_move_folder'));
+		add_action('wp_ajax_a2020_move_content_to_folder', array($this,'a2020_move_content_to_folder'));
 		add_action('wp_ajax_a2020_process_upload', array($this,'a2020_process_upload'));
-		add_action('wp_ajax_a2020_upload_edited_image', array($this,'a2020_upload_edited_image'));
-		add_action('wp_ajax_a2020_upload_edited_image_as_copy', array($this,'a2020_upload_edited_image_as_copy'));
+		add_action('wp_ajax_a2020_open_quick_edit', array($this,'a2020_open_quick_edit'));
+		add_action('wp_ajax_a2020_update_item', array($this,'a2020_update_item'));
+		add_action('wp_ajax_a2020_batch_tags_cats', array($this,'a2020_batch_tags_cats'));
+		add_action('wp_ajax_a2020_batch_rename_preview', array($this,'a2020_batch_rename_preview'));
+		add_action('wp_ajax_a2020_process_batch_rename', array($this,'a2020_process_batch_rename'));
+		add_action('wp_ajax_a2020_save_edited_image', array($this,'a2020_save_edited_image'));
+		
 		
     }
 	
@@ -96,6 +104,8 @@ class Admin_2020_module_admin_content
 		  
 		  $disabled_for = $this->utils->get_option($optionname,'disabled-for');
 		  $post_types_enabled = $this->utils->get_option($optionname,'post-types-content');
+		  $privatemode = $this->utils->get_option($optionname,'private-mode');
+		  
 		  if($disabled_for == ""){
 			  $disabled_for = array();
 		  }
@@ -144,8 +154,8 @@ class Admin_2020_module_admin_content
 			  </div>	
 			  <!-- POST TYPES AVAILABLE IN CONTENT PAGE -->
 			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  <div class="uk-h5 "><?php _e('Post Types available in Search','admin2020')?></div>
-				  <div class="uk-text-meta"><?php _e("The global search will only search the selected post types.",'admin2020') ?></div>
+				  <div class="uk-h5 "><?php _e('Post types available in content page','admin2020')?></div>
+				  <div class="uk-text-meta"><?php _e("Only the selected post types will be available in the content page.",'admin2020') ?></div>
 			  </div>
 			  <div class="uk-width-1-1@ uk-width-1-3@m">
 				  
@@ -179,6 +189,28 @@ class Admin_2020_module_admin_content
 				  </script>
 				  
 			  </div>	
+			  <div class="uk-width-1-1@ uk-width-1-3@m">
+					</div>
+			  <!-- ENABLE USER ONLY CONTENT -->
+			  <div class="uk-width-1-1@ uk-width-1-3@m">
+				  <div class="uk-h5 "><?php _e('Enable private library mode','admin2020')?></div>
+				  <div class="uk-text-meta"><?php _e("When enabled, the content page will only show content created by or uploaded by the currently logged in user. This includes folders.",'admin2020') ?></div>
+			  </div>
+			  <div class="uk-width-1-1@ uk-width-2-3@m">
+				  
+				  <?php
+				  $checked = '';
+				  if($privatemode == 'true'){
+					  $checked = 'checked';
+				  }
+				  ?>
+				  
+				  <label class="admin2020_switch uk-margin-left">
+					  <input class="a2020_setting" name="private-mode" module-name="<?php echo $optionname?>" type="checkbox" <?php echo $checked ?>>
+					  <span class="admin2020_slider constant_dark"></span>
+				  </label>
+				  
+			  </div>
 		  </div>	
 		  
 		  <?php
@@ -197,14 +229,10 @@ class Admin_2020_module_admin_content
 				
 				wp_enqueue_editor();
 				wp_enqueue_media();
-		
-		        wp_register_style(
-		            'admin2020_admin_content',
-		            $this->path . 'assets/css/modules/admin-content.css',
-		            array(),
-		            $this->version
-		        );
-		        wp_enqueue_style('admin2020_admin_content');
+				
+				//APP CSS
+				wp_register_style('a2020-content-app', $this->path . 'assets/css/modules/admin-content-app.css', array(), $this->version);
+				wp_enqueue_style('a2020-content-app');
 				
 				///FILEPOND IMAGE PREVIEW
 				wp_register_style(
@@ -223,14 +251,8 @@ class Admin_2020_module_admin_content
 				);
 				wp_enqueue_style('admin2020_filepond');
 				
-				wp_register_style(
-					'admin2020_image_editor',
-					$this->path . 'assets/css/tui-image-editor/tui-style.css',
-					array(),
-					$this->version
-				);
-				wp_enqueue_style('admin2020_image_editor');
-				
+				wp_register_style('a2020-doka', $this->path . 'assets/css/doka/doka.css', array(), $this->version);
+				wp_enqueue_style('a2020-doka');
 				
 					
 			}
@@ -239,7 +261,7 @@ class Admin_2020_module_admin_content
 	
 	/**
 	* Enqueue Admin Bar 2020 scripts
-	* @since 1.4
+	* @since 2.9
 	*/
 	
 	public function add_scripts(){
@@ -253,7 +275,68 @@ class Admin_2020_module_admin_content
 				foreach($types as $type){
 					array_push($temparay,$type);
 				}
-			
+				
+				$folderViews = $this->utils->get_user_preference('content_folder_view');
+				$perpage = $this->utils->get_user_preference('content_per_page');
+				$gridsize = $this->utils->get_user_preference('content_grid_size');
+				$viewmode = $this->utils->get_user_preference('content_view_mode');
+				
+				
+				
+				if(!is_numeric($perpage)){
+					$perpage = 20;	
+				}
+				
+				if(!is_numeric($gridsize)){
+					$gridsize = 5;	
+				}
+				
+				if(!$viewmode){
+					$viewmode = 'list';
+				}
+				
+				$renameOptions = array(
+					array (
+						'name' => "Original Filename",
+						'label' => __("Original Title / Value",'admin2020'),
+					), 
+					array (
+						'name' => "Text",
+						'label' => __("Text",'admin2020'),
+					), 
+					array (
+						'name' => "Date Created",
+						'label' => __("Date Created",'admin2020'),
+					), 
+					array (
+						'name' => "File Extension",
+						'label' => __("File Extension (attachments only)",'admin2020'),
+					), 
+					array (
+						'name' => "Sequence Number",
+						'label' => __("Sequence Number",'admin2020'),
+					), 
+					array (
+						'name' => "Meta Value",
+						'label' => __("Meta Value",'admin2020'),
+					), 
+					array (
+						'name' => "Find and Replace",
+						'label' => __("Find and Replace",'admin2020'),
+					)
+				);
+				
+					
+					
+				
+				$preferences['perPage'] = $perpage;
+				$preferences['folderView'] = $folderViews;
+				$preferences['gridSize'] = $gridsize;
+				$preferences['viewMode'] = $viewmode;
+				$preferences['renameOptions'] = $renameOptions;
+				
+				
+				
 				
 				////FILEPOND PLUGINS
 				wp_enqueue_script('a2020_filepond_encode', $this->path . 'assets/js/filepond/filepond-file-encode.min.js', array('jquery'),$this->version);
@@ -264,20 +347,21 @@ class Admin_2020_module_admin_content
 				////FILEPOND
 				wp_enqueue_script('a2020_filepond', $this->path . 'assets/js/filepond/filepond.min.js', array('jquery'),$this->version);
 				wp_enqueue_script('a2020_filepond_jquery', $this->path . 'assets/js/filepond/filepond-jquery.min.js', array('jquery'),$this->version);
-				///CONTENT JS
-				wp_enqueue_script('admin-content-js', $this->path . 'assets/js/admin2020/admin-content.min.js', array('a2020_filepond_jquery'),$this->version);
-				wp_localize_script('admin-content-js', 'admin2020_admin_content_ajax', array(
+				////DOKA
+				wp_enqueue_script('a2020_doka', $this->path . 'assets/js/doka/doka.js', array('jquery'),$this->version);
+				wp_enqueue_script('a2020_doka', $this->path . 'assets/js/doka/doka.js', array('jquery'),$this->version);
+
+				
+				///LOAD CONTENT APP IN FOOTER
+				wp_enqueue_script('admin-content-app', $this->path . 'assets/js/admin2020/admin-content-app.min.js', array('jquery'),$this->version, true);
+				wp_localize_script('admin-content-app', 'a2020_content_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
-					'security' => wp_create_nonce('admin2020-admin-content-security-nonce'),
-					'current_page' => 1,
-					'a2020_allowed_types' => json_encode($temparay)
+					'security' => wp_create_nonce('a2020-content-security-nonce'),
+					'a2020_allowed_types' => json_encode($temparay),
+					'a2020_content_prefs' => json_encode($preferences),
 				));
 				
-				///IMAGE EDITOR
-				$scripts = array('fabric','code-snippet','color-picker','filesaver','tui-image-editor','night-theme');
-				foreach($scripts as $script){
-					wp_enqueue_script('a2020_'.$script, $this->path . 'assets/js/tui-image-editor/' . $script . '.min.js', array('jquery'),$this->version);
-				}
+			
 			
 			}
 		}
@@ -287,2004 +371,51 @@ class Admin_2020_module_admin_content
 	
 	
 	/**
-	* Adds media menu item
+	* Processes file upload from image editor
 	* @since 1.4
 	*/
+	public function a2020_save_edited_image() {
+		
+		  if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
 	
-	public function add_menu_item() {
-		
-		add_menu_page( '2020_content', __('Content',"admin2020"), 'read', 'admin_2020_content', array($this,'build_media_page'),'dashicons-database', 4 );
-		return;
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+			require_once( ABSPATH . 'wp-admin/includes/file.php' );
 	
-	}
+			$current_imageid = $this->utils->clean_ajax_input($_POST['attachmentid']);
+			$new_file =  $_FILES['ammended_image'];
 	
-	/**
-	* Build media page
-	* @since 1.4
-	*/
-	
-	public function build_media_page(){
-		
-		$listview = $this->utils->get_user_preference('content_list_view');
-		$folder_view = $this->utils->get_user_preference('content_folder_view');
-		$class = '';
-		$folder_class = '';
-		
-		if($listview == 'list'){
-			$class = 'a2020_list_view';
-		}
-		
-		if($folder_view == 'hidden'){
-			$folder_class = 'hidden';
-		}
-		
-		$folders_info = $this->folders->component_info();
-		$folder_module = $folders_info['option_name']; 		
-		?>
-		<div class="wrap">
-			<div class="uk-width-1-1" uk-filter="target: #a2020_media_items;" id="a2020_content_filter">
-				<?php $this->build_header() ?>
-				<?php $this->build_post_type_nav() ?>
-				<div class=" uk-grid-divider" uk-grid>
-					
-					<?php if(!$this->utils->is_locked($folder_module) && $this->utils->enabled($this->folders)){ ?>
-					<div class="uk-width-1-1@s uk-width-medium@m"  id="folder_panel" <?php echo $folder_class?>>
-						<div uk-sticky="media: 640;offset:100">
-							<?php $this->folders->build_folder_panel() ?>
-						</div>
-					</div>
-					<?php } ?>
-					<div class="uk-width-1-1@s uk-width-expand@m">
-						<?php $this->build_view_filters() ?>
-						<div class="uk-grid-medium <?php echo $class?>"  id="a2020_media_items" uk-grid>
-							<?php $this->build_media($this->build_media_query()) ?>
-						</div>
-						<div class="load-more uk-margin-top uk-text-center">
-							<hr>
-							<button class="uk-button uk-button-default uk-width-medium" onclick="a2020_load_more()" type="button"><?php _e('Load More','admin2020')?></button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="admin2020loaderwrap" id="admincontentloader" style="display: none;">
-				<div class="admin2020loader"></div>
-			</div>
-			<?php $this->build_media_bacth() ?>
-			<?php $this->build_media_modal() ?>
-			<?php $this->build_batch_rename_modal() ?>
-			<?php $this->build_upload_modal() ?>
-			<?php $this->build_edit_modal() ?>
-			
-		</div>
-		<?php
-	}
-	
-	/**
-	* Build wrap for image editing
-	* @since 1.4
-	*/
-	
-	public function build_edit_modal(){
-		
-		?>
-		<div class="admin2020_image_edit_wrap">
-			<div class="admin2020_image_edit_header uk-padding-small uk-position-small uk-position-top-right" style="z-index:9">
-				<a href="#" uk-icon="icon: close" onclick="jQuery('.admin2020_image_edit_wrap').hide();" style="float:right"></a>
-			</div>
-			<div id="admin2020_image_edit_area"></div>
-		</div>
-		<?php
-		
-	}
-	
-	/**
-	* Build batch modal
-	* @since 1.4
-	*/
-	
-	public function build_batch_rename_modal(){
-		
-		?>
-		
-		<div id="batch-rename" class="uk-flex-top" uk-modal>
-		  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-
-			  <button class="uk-modal-close-default" type="button" uk-close></button>
-
-			  <div class="uk-h4"><?php _e("Batch Rename",'admin2020')?>
-		  		<span uk-icon="info"></span>
-				  <div uk-dropdown="pos:bottom-justify">
-					  <p class="uk-text-meta"><?php _e('Batch rename only currently works with media files and attachments, any selected posts will be ignored.','admin2020')?></p>
-				  </div>
-		  	  </div>
-
-			  <form class="uk-form-stacked uk-grid-small" uk-grid>
-
-
-				<div class="uk-width-1-1">
-					<label class="uk-form-label" for="form-stacked-select"><?php _e('Attribute to rename','admin2020')?></label>
-					<div class="uk-form-controls">
-						<select class="uk-select" id="form-stacked-select">
-							<option value="name"><?php _e('Name','admin2020')?></option>
-							<option value="alt"><?php _e('Alt Tag','admin2020')?></option>
-						</select>
-					</div>
-				</div>
-
-				<div class="uk-width-1-1">
-				  <div class=""><?php _e('New Name','admin2020')?></div>
-				</div>
-
-				<div class="uk-width-1-3">
-					<div class="uk-form-controls">
-						<select class="uk-select" id="batch_name_chooser">
-							<option value="filename"><?php _e('Original Filename','admin2020')?></option>
-							<option value="text"><?php _e('Text','admin2020')?></option>
-							<option value="date"><?php _e('Date Uploaded','admin2020')?></option>
-							<option value="original_alt"><?php _e('Original Alt','admin2020')?></option>
-							<option value="extension"><?php _e('File Extension','admin2020')?></option>
-							<option value="sequence"><?php _e('Sequence Number','admin2020')?></option>
-							<option value="meta"><?php _e('Meta Value','admin2020')?></option>
-						</select>
-					</div>
-				</div>
-
-				<div class="uk-width-1-3">
-					<button class="uk-button uk-button-default" type="button" onclick="add_batch_rename_item()"><?php _e('Add','admin2020')?></button>
-				</div>
-
-				<div class="uk-width-1-1">
-				  <hr style="margin: 30px 0;">
-				</div>
-
-				<div class="uk-width-1-1" id="batch_rename_builder" uk-sortable="handle: .rename_drag">
-
-				</div>
-
-
-
-				<div class="uk-width-1-1">
-				  <hr style="margin: 30px 0 0 0;">
-				</div>
-
-				<div class="uk-width-2-3 uk-flex uk-flex-middle" >
-				  <span><?php _e('Preview','admin2020')?>: </span>
-				  <span class="uk-text-bold" id="batch_rename_preview"></span>
-				</div>
-
-				<div class="uk-width-1-3 uk-flex uk-flex-right">
-				  <button class="uk-button uk-button-primary" type="button" onclick="batch_rename_process();"><?php _e('Rename','admin2020') ?></button>
-				</div>
-
-			</form>
-
-		  </div>
-	  </div>
-		<?php
-		
-		
-	}
-	
-	/**
-	* Builds batch options
-	* @since 1.4
-	*/
-	
-	public function build_media_bacth(){
-		?>
-		<div class="a2020_bulk_actions uk-padding-small uk-background-default a2020_border_top uk-text-right">
-			
-			<button class="uk-button uk-button-secondary uk-margin-right" 
-			onclick="jQuery('.a2020_selected').removeClass('a2020_selected');jQuery('.a2020_bulk_actions').hide();"><?php _e('Deselect All','admin2020')?></button>
-			<button class="uk-button uk-button-primary uk-margin-small-right" uk-toggle="target:#batch-rename"><?php _e('Batch Rename','admin2020') ?></button>
-			<button class="uk-button uk-button-danger" onclick="a2020_delete_multiple()"><?php _e('Delete','admin2020') ?></button>
-			
-		</div>
-		<?php
-	}
-	
-	/**
-	* Build post type navigation 
-	* @since 1.4
-	*/
-	
-	public function build_post_type_nav(){
-		
-		$args = array('public'   => true);
-		$output = 'objects'; 
-		$post_types = get_post_types( $args, $output );
-		$info = $this->component_info();
-		$optionname = $info['option_name'];
-		$post_types_enabled = $this->utils->get_option($optionname,'post-types-content');
-		$temp = array();
-		
-		if($post_types_enabled && is_array($post_types_enabled)){
-			foreach($post_types_enabled as $posttype){
-				$type_object = get_post_type_object($posttype);
-				array_push($temp,$type_object);
-			}
-			$post_types = $temp;
-		} 
-		
-		if(count($post_types) < 2){
-			return;
-		}
-		?>
-		<ul uk-tab>
-			<li class="uk-active" uk-filter-control="group:types"><a href="#"><?php _e('All','admin2020') ?></a></li>
-			<?php foreach($post_types as $posttype) { ?>
-			<li><a href="#" uk-filter-control="group:types;filter:[post_type='<?php echo $posttype->name ?>']"><?php echo $posttype->label ?></a></li>
-			<?php } ?>
-		</ul>
-		
-		<?php
-	}
-	
-	/**
-	* Build upload modal
-	* @since 1.4
-	*/
-	 
-	public function build_upload_modal(){
-		
-		$maxupload = $this->utils->formatBytes(wp_max_upload_size());
-		$maxupload = str_replace(" ", "", $maxupload);
-		?>
-			
-		
-		<div id="a2020_upload_modal" uk-modal>
-			<div class="uk-modal-dialog uk-modal-body uk-padding-remove" style="">
-				
-				
-				
-				<div class="uk-padding a2020-border-bottom" style="padding-top:15px;padding-bottom:15px;">
-					<div class="uk-h4 uk-margin-remove-bottom"><?php _e('Upload','admin2020')?></div>
-					<button class="uk-modal-close-default" type="button" uk-close></button>
-				</div>
-				
-				<div class="uk-padding">
-					
-					<input type="file" 
-					class="filepond"
-					name="filepond" 
-					multiple 
-					id="a2020_file_upload"
-					data-allow-reorder="true"
-					data-max-file-size="<?php echo $maxupload?>"
-					data-max-files="30">
-					
-				</div>
-			</div>
-		</div>
-		
-		
-		<?php
-	}
-	
-	/**
-	* Build media modal
-	* @since 1.4
-	*/
-	
-	public function build_media_modal(){
-		?>
-			
-		<div id="admin2020MediaViewer" class="uk-flex-top" uk-modal >
-		
-			<div class="uk-modal-dialog uk-margin-auto-vertical uk-padding-remove uk-box-shadow-large" >
-			
-				<div id="admin2020MediaViewer_content">
-				
-				</div>
-			
-			</div>
-		</div>
-		
-		
-		<?php
-	}
-	/**
-	* Build media page head
-	* @since 1.4
-	*/
-	
-	public function build_header(){
-		
-		$args = array('public'   => true);
-		$output = 'objects'; 
-		$post_types = get_post_types( $args, $output );
-		
-		?>
-		<div class=" uk-margin-bottom" uk-grid>
-			<div class="uk-width-expand">
-				<div class="uk-h2"><?php _e('Content','admin2020') ?></div>
-			</div>
-			<div class="uk-width-auto">
-				
-				
-				<button class="uk-button uk-button-primary"><?php _e('New','admin2020') ?></button>
-				<div uk-dropdown="offset:0;pos:bottom-justify;">
-					<ul class="uk-nav uk-dropdown-nav">
-						<?php foreach ($post_types as $type){ 
-							
-							$nicename = $type->labels->singular_name;
-							$type = $type->name;
-							$link = 'post-new.php?post_type='.$type;
-							
-							?>	
-							<li><a href="<?php echo $link?>"><?php echo $nicename?></a></li>
-						<?php } ?>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<?php
-		
-	}
-	
-	/**
-	* Build media view filters
-	* @since 1.4
-	*/
-	
-	public function build_view_filters(){
-		
-		$attachment_size = $this->utils->get_user_preference('attachment_size');
-		
-		if($attachment_size == false || $attachment_size == ""){
-			$this->attachment_size = 100;
-		} else {
-			$this->attachment_size = $attachment_size;
-		}
-		
-		$folders_info = $this->folders->component_info();
-		$folder_module = $folders_info['option_name']; 	
-		?>
-		
-		<div class=" uk-margin-bottom" uk-grid>
-			<div class="uk-width-expand">
-				<?php if(!$this->utils->is_locked($folder_module) && $this->utils->enabled($this->folders)){ ?>
-				<button id="a2020_folder_toggle" uk-tooltip="title:<?php _e('Toggle Folders','admin2020')?>;delay:500" class="uk-button uk-button-default a2020_make_light a2020_make_square">
-					<span class="uk-icon" uk-icon="folder"></span>
-				</button>
-				<?php } ?>
-				<button id="a2020_list_view" uk-tooltip="title:<?php _e('Toggle List View','admin2020')?>;delay:500" class="uk-button uk-button-default a2020_make_light a2020_make_square">
-					<span class="uk-icon" uk-icon="list"></span>
-				</button>
-			</div>
-			
-			<div class="uk-width-auto">
-				<button uk-tooltip="title:<?php _e('Search','admin2020')?>;delay:500" class="uk-button uk-button-default a2020_make_light a2020_make_square">
-					<span class="uk-icon" uk-icon="search"></span>
-				</button>
-				<div uk-drop="pos:left-center;mode:click">
-					<input class="uk-input" id="a2020_search_content" type="text" placeholder="<?php _e('Search Content','admin2020')?>" autofocus>
-				</div>
-				
-				<button uk-tooltip="title:<?php _e('Filters','admin2020')?>;delay:500" class="uk-button uk-button-default a2020_make_light a2020_make_square">
-					<span class="dashicons dashicons-filter uk-icon" style="font-family: dashicons;line-height: inherit"></span>
-				</button>
-				
-				<div uk-dropdown="mode:click" style="width: 400px">
-					
-					<ul uk-accordion>
-						<li >
-							<a class="uk-accordion-title uk-h6 uk-margin-remove-bottom" href="#"><?php _e('Month','admin2020') ?></a>
-							<div class="uk-accordion-content">
-								<ul class="uk-nav uk-nav-default">
-									<li uk-filter-control="group: month" class="uk-active" ><a href="#"><?php _e('All','admin2020')?></a></li>
-									<?php
-									for($m=1; $m<=12; ++$m){
-										$month = date('F', mktime(0, 0, 0, $m, 1));
-										?><li uk-filter-control="filter: [data-month='<?php echo $month ?>'];group: month"><a href="#"><?php echo $month?></a></li><?php	  
-									}	  
-								    ?>
-								</ul>
-							</div>
-						</li>
-						<li >
-							<a class="uk-accordion-title uk-h6 uk-margin-remove-bottom" href="#"><?php _e('Year','admin2020') ?></a>
-							<div class="uk-accordion-content">
-								<ul class="uk-nav uk-nav-default">
-									<li uk-filter-control="group: year" class="uk-active" ><a href="#"><?php _e('All','admin2020')?></a></li>
-									<?php
-									$today = date("Y-m-d");
-									for($m=0; $m<=8; ++$m){
-									
-										$year = date('Y', strtotime($today." - ".$m." years"));
-										?><li uk-filter-control="filter: [data-year='<?php echo $year ?>'];group: year"><a href="#"><?php echo $year?></a></li><?php
-										
-									} ?>
-								</ul>
-							</div>
-						</li>
-						<li >
-							<a class="uk-accordion-title uk-h6 uk-margin-remove-bottom" href="#"><?php _e('Users','admin2020') ?></a>
-							<div class="uk-accordion-content">
-								<ul class="uk-nav uk-nav-default">
-									<li uk-filter-control="group: users" class="uk-active" ><a href="#"><?php _e('All','admin2020')?></a></li>
-									<?php
-									$blogusers = get_users();
-									foreach($blogusers as $user){
-										$username = $user->display_name;
-										?><li uk-filter-control="filter: [data-username='<?php echo $username ?>'];group: users"><a href="#"><?php echo $username?></a></li><?php
-									} ?>
-								</ul>
-							</div>
-						</li>
-						
-					</ul>
-					
-				</div>
-				
-				<button uk-tooltip="delay:300;title:<?php _e('Upload files','admin2020')?>" uk-toggle="target:#a2020_upload_modal" class="uk-button uk-button-default a2020_make_light a2020_make_square">
-					<span uk-icon="cloud-upload"></span>
-				</button>
-				
-				<button uk-tooltip="title:<?php _e('Settings','admin2020')?>;delay:500" class="uk-button uk-button-default a2020_make_light a2020_make_square">
-					<span class="uk-icon" uk-icon="settings"></span>
-				</button>
-				<div class="uk-width-medium" uk-dropdown="pos:bottom-left;mode:click">
-					
-					<ul class="uk-nav">
-						<li class="uk-nav-header uk-margin-small-bottom" style="text-transform:none"><?php _e('Thumnbnail size','admin2020')?></li>
-						<li>
-							<div class="uk-grid-small" uk-grid>
-								<div class="uk-width-auto">
-									<span uk-icon="icon:image;ratio:0.7"></span>
-								</div>
-								<div class="uk-width-small">
-									<input class="uk-range" id="a2020_atachment_size" type="range" value="<?php echo $attachment_size?>" min="75" max="250" step="5">
-								</div>
-								<div class="uk-width-auto">
-									<span uk-icon="icon:image"></span>
-								</div>
-							</div>
-						</li>
-					</ul>
-					
-				</div>
-			</div>
-		</div>
-		<?php
-		
-	}
-	
-	/**
-	* Builds media
-	* @since 1.4
-	*/
-	
-	public function build_media($attachments){
-		
-		if($this->attachment_size > 1){
-			
-		} else {
-			$attachment_size = $this->utils->get_user_preference('attachment_size');
-			
-			if($attachment_size == false || $attachment_size == ""){
-				$this->attachment_size = 100;
-			} else {
-				$this->attachment_size = $attachment_size;
-			}
-		}
-		
-		?>
-		
-			
-		<?php if (count($attachments) < 1) { ?>
-		
-			<p class="uk-text-bold"><?php _e('No content found','admin2020') ?></p>
-			
-		<?php } else { ?>	
-			
-			<?php foreach ( $attachments as $attachment ) {
-				
-				$this->build_date_break($attachment);
-				
-				echo $this->build_single_attachment($attachment);
-				
-			} ?>
-		
-		<?php } ?>	
-			
-		<?php
-		
-	}
-	
-	/**
-	* Builds date divider  
-	* @since 1.4
-	*/
-	
-	public function build_date_break($attachment){
-		
-		$current = $this->media_date;
-		$postdate = $attachment->post_date;
-		
-		if (date('d/m/Y',strtotime($postdate)) == date('d/m/Y')){
-			$stamp = __('Today','admin2020');
-		} else {
-			$stamp = human_time_diff( date('U',strtotime($postdate)), current_time('timestamp') )  . ' ' . __('ago','admin2020');
-		}
-		
-		if ($stamp != $current){ ?>
-			<div admin2020_file_size_order="" class="uk-width-1-1 uk-text-meta uk-text-bold"><?php echo $stamp ?></div>
-		<?php }
-		
-		$this->media_date = $stamp;
-		
-	}
-	
-	/**
-	* Builds media query 
-	* @since 1.4
-	*/
-	
-	public function build_media_query(){
-		
-		$args = array('public'   => true);
-		$output = 'objects'; 
-		$post_types = get_post_types( $args, $output );
-		$info = $this->component_info();
-		$optionname = $info['option_name'];
-		$post_types_enabled = $this->utils->get_option($optionname,'post-types-content');
-		$types = array();
-		
-		if($post_types_enabled && is_array($post_types_enabled)){
-			
-			$types = $post_types_enabled;
-			
-		} else { 
-		
-			foreach($post_types as $posttype){
-				array_push($types,$posttype->name);
-			}
-		}
-		
-		$args = array(
-		  'post_type' => $types,
-		  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
-		  'posts_per_page' => 70,
-		  'orderby' => 'date',
-		  'order'   => 'DESC',
-		);
-		wp_reset_query();
-		$attachments = new WP_Query($args);
-		$post_ids = $attachments->get_posts();
-		
-		return $post_ids;
-		
-	}
-	
-	/**
-	* Builds media card
-	* @since 1.4
-	*/
-	
-	public function build_single_attachment($attachment){
-		
-		ob_start();
-		
-		//ATTACHMENT INFO
-		$attachment_id = $attachment->ID;
-		$post_type = $attachment->post_type;
-		
-		if($post_type != 'attachment'){
-			echo $this->build_single_post($attachment);
-			return;
-		}
-		
-		$mime_type = $attachment->post_mime_type;
-		$name = $attachment->post_title;
-		$caption = $attachment->post_excerpt;
-		
-		try {
-		   $filesize = filesize( get_attached_file( $attachment_id ) );
-		} catch (Throwable $e) {
-		   $filesize = "NA";
-		}
-		
-		$formatted_size = $this->utils->formatBytes($filesize);
-		$alt_text = get_post_meta($attachment_id , '_wp_attachment_image_alt', true);
-		$guid = $attachment->guid;
-		//AUTHOR
-		$author = $attachment->post_author;
-		$user = get_user_by('ID',$author);
-		$display_name = $user->display_name;
-		//DATES
-		$attachment_date = $attachment->post_date;
-		$uploadedon = date('Y-m-d',strtotime($attachment_date));
-		$post_month = date('F',strtotime($attachment_date));
-		$post_year = date('Y',strtotime($attachment_date));
-		$folderid = get_post_meta( $attachment_id, 'admin2020_folder', true );
-		
-		if($this->attachment_size == ""){
-			$attachment_size = $this->utils->get_user_preference('attachment_size');
-			
-			if($attachment_size == false || $attachment_size == ""){
-				$this->attachment_size = 100;
-			} else {
-				$this->attachment_size = $attachment_size;
-			}
-		}
-		
-		?>
-		<div class="uk-width-auto attachment_wrap" post_type="<?php echo $post_type?>" 
-			attachment_id="<?php echo $attachment_id?>"
-			data-month='<?php echo $post_month?>'
-			data-year='<?php echo $post_year?>'
-			data-username='<?php echo $display_name?>'
-			a2020_folder='<?php echo $folderid?>'
-			id="file_<?php echo $attachment_id?>"
-			draggable="true"
-			>
-			
-			<div class="uk-background-default a2020_attachment uk-box-shadow-small" 
-			onclick='a2020_select_media_item(this, event)'
-			style="height: <?php echo $this->attachment_size.'px' ?>;">
-			
-				<div class="a2020_image_wrap" style="display:inline;">
-					
-					<?php if (strpos($mime_type, 'image') !== false) {
-					
-						//URLS
-						$attachment_url = wp_get_attachment_url($attachment_id);
-						$attachment_info = wp_get_attachment_image_src($attachment_id,'medium');
-						$small_src = $attachment_info[0];
-					    
-						?>
-						<img class="uk-image" style="height: 100%" src="<?php echo $small_src ?>">
-						
-					<?php } else if (strpos($mime_type, 'video') !== false) { ?>
-					
-						<video src="<?php echo $guid?>" controls uk-video="autoplay: false" style="height:100%"></video>
-						
-					<?php } else if (strpos($mime_type, 'zip') !== false) { ?>
-						
-							<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle uk-height-1-1 uk-width-small">
-								<span class="dashicons dashicons-media-archive" style="display: contents;font-size: 40px;"></span>
-								<div class="uk-text-center" style="padding:10px;max-width:100%;overflow: hidden;"><?php echo $name?></div>
-							</div>		
-						
-					<?php } else if (strpos($mime_type, 'pdf') !== false) { ?>
-						
-							<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle uk-height-1-1 uk-width-small">
-								<span uk-icon="icon:file-pdf;ratio:2"></span>
-								<div class="uk-text-center" style="padding:10px;max-width:100%;overflow: hidden;"><?php echo $name?></div>
-							</div>	
-					
-					<?php } else if (strpos($mime_type, 'application') !== false) { ?>
-					
-						<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle uk-height-1-1 uk-width-small">
-							<span uk-icon="icon:file-text;ratio:2"></span>
-							<div class="uk-text-center" style="padding:10px;max-width:100%;overflow: hidden;"><?php echo $name?></div>
-						</div>
-						
-					<?php } else if (strpos($mime_type, 'csv') !== false) { ?>
-						
-						<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle uk-height-1-1 uk-width-small">
-							<span class="dashicons dashicons-media-spreadsheet" style="display: contents;font-size: 40px;"></span>
-							<div class="uk-text-center" style="padding:10px;max-width:100%;overflow: hidden;"><?php echo $name?></div>
-						</div>	
-					
-					<?php } else if (strpos($mime_type, 'audio') !== false) { ?>
-					
-						<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle uk-height-1-1 uk-width-small">
-							<span uk-icon="icon:microphone;ratio:2"></span>
-							<div class="uk-text-center" style="padding:5px;max-width:100%;overflow: hidden;"><?php echo $name?></div>
-						</div>
-					
-					<?php } ?>
-					</div>
-					
-					<div class="attachment_meta_list">
-						<div class="uk-text-meta uk-text-emphasis uk-text-bold attachment_author"><?php echo $name?></div>
-						<div class="uk-text-meta"">
-							<?php echo $formatted_size ?>
-						</div>
-						<button class="uk-button uk-button-link" onclick='a2020_fetch_attachment_modal(<?php echo $attachment_id?>)'><?php _e('View details','admin2020') ?></button>
-					</div>
-				
-				
-			</div>
-			<div class="attachment_meta" uk-dropdown="delay-show:300" style="padding:10px;max-width: 150px" >
-				<div class="uk-text-meta uk-text-emphasis uk-text-bold attachment_author"><?php echo $name?></div>
-				<div class="uk-text-meta"">
-					<?php echo $formatted_size ?>
-				</div>
-				<button class="uk-button uk-button-link" onclick='a2020_fetch_attachment_modal(<?php echo $attachment_id?>)'><?php _e('View details','admin2020') ?></button>
-			</div>
-			
-		</div>
-		
-		<?php
-		
-		return ob_get_clean();
-	}
-	
-	/**
-	* Builds post card
-	* @since 1.4
-	*/
-	
-	public function build_single_post($attachment){
-		
-		ob_start();
-		
-		//POST INFO
-		$attachment_id = $attachment->ID;
-		$post_type = $attachment->post_type;
-		$post_status = $attachment->post_status;
-		$name = $attachment->post_title;
-		$caption = get_the_excerpt($attachment);
-		//AUTHOR
-		$author = $attachment->post_author;
-		$user = get_user_by('ID',$author);
-		$display_name = $user->display_name;
-		//DATES
-		$attachment_date = $attachment->post_date;
-		$postedon = date('Y-m-d',strtotime($attachment_date));
-		$post_month = date('F',strtotime($attachment_date));
-		$post_year = date('Y',strtotime($attachment_date));
-		
-		$folderid = get_post_meta( $attachment_id, 'admin2020_folder', true );
-		
-		if($this->attachment_size == ""){
-			$attachment_size = $this->utils->get_user_preference('attachment_size');
-			
-			if($attachment_size == false || $attachment_size == ""){
-				$this->attachment_size = 100;
-			} else {
-				$this->attachment_size = $attachment_size;
-			}
-		}
-		
-		?>
-		<div class="uk-width-auto attachment_wrap" 
-			post_type="<?php echo $post_type?>" 
-			attachment_id="<?php echo $attachment_id?>"
-			data-month='<?php echo $post_month?>'
-			data-year='<?php echo $post_year?>'
-			data-username='<?php echo $display_name?>'
-			a2020_folder='<?php echo $folderid?>'
-			id="file_<?php echo $attachment_id?>"
-			draggable="true"
-			>
-		
-			<div class="uk-background-default a2020_attachment uk-box-shadow-small uk-overflow-hidden" 
-			post_type="<?php echo $post_type?>"
-			onclick='a2020_select_media_item(this, event)'
-			style="max-width:250px;height: <?php echo $this->attachment_size.'px' ?>;">
-				
-				<div class="uk-padding-small a2020_post_details" >
-					<div class="post_titles">
-						<div class="uk-text-bold""><?php echo $name?></div>
-						<div class="uk-text-meta uk-margin-small-bottom"><?php echo __('By','admin2020').' '.$display_name?></div>
-						<button class="uk-button uk-button-link list_view_details" onclick='a2020_fetch_attachment_modal(<?php echo $attachment_id?>)'><?php _e('View details','admin2020') ?></button>
-					</div>
-					<div class="post_statuses">
-						<div class="uk-label uk-margin-small-bottom"><?php echo $post_type?></div>
-						<div class="uk-label uk-margin-small-bottom <?php echo $post_status?>"><?php echo $post_status?></div>
-					</div>
-					<div class="post_description">
-						<div class="uk-text-meta uk-margin-small-bottom"><?php echo $caption?></div>
-					</div>
-				</div>
-				
-			</div>
-			
-			<div class="attachment_meta" uk-dropdown="delay-show:300" style="padding:10px;max-width: 150px" >
-				<button class="uk-button uk-button-link" onclick='a2020_fetch_attachment_modal(<?php echo $attachment_id?>)'><?php _e('View details','admin2020') ?></button>
-			</div>
-		</div>
-		
-		<?php
-		
-		return ob_get_clean();
-	}
-	
-	
-	/**
-	* Loads more media from jquery
-	* @since 1.4
-	*/
-	
-	public function a2020_fetch_more_media(){
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			$page = $this->utils->clean_ajax_input($_POST['page']);
-			$term = $this->utils->clean_ajax_input($_POST['term']);
-			$folder_id = $this->utils->clean_ajax_input($_POST['folder_id']);
-			
-			
-			$args = array('public'   => true);
-			$output = 'objects'; 
-			$post_types = get_post_types( $args, $output );
-			$types = array();
-			$info = $this->component_info();
-			$optionname = $info['option_name'];
-			$post_types_enabled = $this->utils->get_option($optionname,'post-types-content');
-			
-			if($post_types_enabled && is_array($post_types_enabled)){
-				
-				$types = $post_types_enabled;
-				
-			} else { 
-			
-				foreach($post_types as $posttype){
-					array_push($types,$posttype->name);
-				}
-			}
-			
-			$args = array(
-			  'post_type' => $types,
-			  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
-			  'posts_per_page' => 70,
-			  'paged' => $page + 1,
-			  'orderby' => 'date',
-			  'order'   => 'DESC',
-			  's' => $term,
+			$upload_overrides = array(
+			  'test_form' => false
 			);
-			
-			if ($folder_id == 'uncategorised'){
-				
-				$args['meta_query'] = array(
-					array(
-						'key' => 'admin2020_folder',
-						'compare' => 'NOT EXISTS'
-					)
-				);
-				
-			} else if($folder_id != ""){
-				
-				$args['meta_query'] = array(
-					array(
-						'key' => 'admin2020_folder',
-						'value' => $folder_id,
-						'compare' => '='
-					)
-				);
-				
-			}
-			
-			wp_reset_query();
-			$attachments = new WP_Query($args);
-			
-			if($attachments->have_posts()){
-				$post_ids = $attachments->get_posts();
-				echo $this->build_media($post_ids);
-			} else {
-				echo '';
-			}
-			
-		}
-		die();
-		
-	}
 	
 	
-	/**
-	* Searches Content
-	* @since 1.4
-	*/
-	
-	public function a2020_search_content(){
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			$term = $this->utils->clean_ajax_input($_POST['term']);
-			
-			$args = array('public'   => true);
-			$output = 'objects'; 
-			$post_types = get_post_types( $args, $output );
-			$info = $this->component_info();
-			$optionname = $info['option_name'];
-			$post_types_enabled = $this->utils->get_option($optionname,'post-types-content');
-			
-			if($post_types_enabled && is_array($post_types_enabled)){
-				
-				$types = $post_types_enabled;
-				
-			} else { 
-			
-				foreach($post_types as $posttype){
-					array_push($types,$posttype->name);
-				}
-			}
-			
-			$args = array(
-			  'post_type' => $types,
-			  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
-			  'posts_per_page' => 70,
-			  's' => $term,
-			  'orderby' => 'date',
-			  'order'   => 'DESC',
-			);
-			wp_reset_query();
-			$attachments = new WP_Query($args);
-			
-			$post_ids = $attachments->get_posts();
-			echo $this->build_media($post_ids);
-			
-		}
-		die();
-		
-	}
-	
-	
-	/**
-	* Requery items based on folder id
-	* @since 1.4
-	*/
-	
-	public function admin2020_set_content_folder_query(){
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			$term = $this->utils->clean_ajax_input($_POST['term']);
-			$folder_id = $this->utils->clean_ajax_input($_POST['folder_id']);
-			
-			$args = array('public'   => true);
-			$output = 'objects'; 
-			$post_types = get_post_types( $args, $output );
-			$info = $this->component_info();
-			$optionname = $info['option_name'];
-			$post_types_enabled = $this->utils->get_option($optionname,'post-types-content');
-			$types = array();
-			
-			if($post_types_enabled && is_array($post_types_enabled)){
-				
-				$types = $post_types_enabled;
-				
-			} else { 
-			
-				foreach($post_types as $posttype){
-					array_push($types,$posttype->name);
-				}
-			}
-			
-			$args = array(
-			  'post_type' => $types,
-			  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
-			  'posts_per_page' => 70,
-			  's' => $term,
-			  'orderby' => 'date',
-			  'order'   => 'DESC',
-			);
-			
-			if ($folder_id == 'uncategorised'){
-				
-				$args['meta_query'] = array(
-					array(
-						'key' => 'admin2020_folder',
-						'compare' => 'NOT EXISTS'
-					)
-				);
-				
-			} else if($folder_id != ""){
-				
-				$args['meta_query'] = array(
-					array(
-						'key' => 'admin2020_folder',
-						'value' => $folder_id,
-						'compare' => '='
-					)
-				);
-				
-			}
-			
-			wp_reset_query();
-			$attachments = new WP_Query($args);
-			
-			$post_ids = $attachments->get_posts();
-			echo $this->build_media($post_ids);
-			
-		}
-		die();
-		
-	}
-	/**
-	* Loads post modal
-	* @since 1.4
-	*/
-	public function a2020_fetch_post_modal($attachment){
-		
-		$thepost = $attachment;
-		$attachment_id = $thepost->ID;
-		$post_url = get_the_permalink($attachment_id);
-		$post_title = get_the_title($attachment_id);
-		$date_format = get_option('date_format');
-		$posted_date = get_the_date($date_format,$attachment_id);
-		$author_id = $thepost->post_author;
-		$user_info = get_userdata($author_id);
-		$username = $user_info->user_login;
-		$meta_string = $posted_date.', '.$username;
-		$post_type = get_post_type($thepost);
-		
-		$edit_url = get_edit_post_link($attachment_id);
-		
-		$categories = get_categories( array(
-			'orderby' => 'name',
-			'order'   => 'ASC',
-			'hide_empty' => false,
-		) );
-		
-		$post_cats = wp_get_post_categories($attachment_id);
-		
-		
-		?>
-		
-		<span style="display:none" id="admin2020_viewer_currentid"><?php echo $attachment_id?></span>
-		<button class="uk-modal-close-default" type="button" uk-close></button>
-	
-		<div class="uk-padding" style="max-width: 100%;">
-	
-		  <iframe class="uk-box-shadow-medium" src="<?php echo $post_url?>" id="admin2020_post_preview" width="100%" height="300" style="border:none;border-radius:4px;">
-		  </iframe>
-		</div>
-	
-		<div class="uk-padding" style="padding-bottom:0;">
-	
-	
-		  <div class="uk-grid-small" uk-grid>
-	
-			<div class="uk-h4 uk-width-expand uk-text-bold uk-margin-remove">
-			  <?php echo $post_title?>
-			</div>
-	
-			<?php if(current_user_can( 'edit_posts' , $attachment_id)){ ?>
-			  <div class="uk-width-auto"><a href="<?php echo $edit_url?>" id="admin2020_edit_post" uk-icon="icon: file-edit" uk-tooltip="<?php _e('Edit','admin2020')?>"></a></div>
-			<?php } ?>
-			<div class="uk-width-auto"><a href="#" id="admin2020_duplicate_post" uk-icon="icon: copy" uk-tooltip="<?php _e('Duplicate','admin2020')?>" onclick="a2020_duplicate_post(<?php echo $attachment_id?>)"></a></div>
-			<div class="uk-width-auto"><a href="<?php echo $post_url?>" target="_blank" id="admin2020_view_post" uk-icon="icon: link" uk-tooltip="<?php _e('View','admin2020')?>"></a></div>
-	
-	
-			<div class="uk-width-auto">
-				<a href="#" uk-icon="icon:chevron-left" onclick="switchinfo('left',<?php echo $attachment_id?>)"></a>
-			</div>
-	
-			<div class="uk-width-auto">
-				<a href="#" uk-icon="icon:chevron-right" onclick="switchinfo('right',<?php echo $attachment_id?>)"></a>
-			</div>
-	
-			<div class="uk-width-1-1">
-			  <span class="uk-text-meta"><span uk-icon="file-edit" class="uk-margin-small-right"></span><?php echo esc_html($username)?></span>
-			  <span class="uk-text-meta uk-margin-left"><span uk-icon="calendar" class="uk-margin-small-right"></span><?php echo esc_html(get_the_date(get_option('date_format'),$attachment_id))?></span>
-			</div>
-		  </div>
-	
-	
-		  <ul uk-switcher="connect: .post_preview_switcher" class="uk-width-1-1 uk-subnav uk-subnav-pill" id="admin2020_post_switcher">
-			  <li><a href="#"><?php _e("Content",'admin2020')?></a></li>
-			  <li><a href="#"><?php _e("Settings",'admin2020')?></a></li>
-			  <?php if($post_type != 'page') { ?>
-			  <li><a href="#"><?php _e("Categories",'admin2020')?></a></li>
-			  <?php } ?>
-		  </ul>
-	
-		</div>
-	
-		<ul class="uk-switcher uk-margin post_preview_switcher uk-padding" style="padding-top:0;max-height:300px;min-height: 300px;overflow:auto;padding-bottom:0;">
-	
-	
-	
-		  <li><!-- CONTENT -->
-			<form class="uk-form-stacked uk-margin-top">
-			  <div uk-grid class="uk-grid-small">
-				<div class="uk-width-1-1">
-					<label class="uk-form-label" for="form-stacked-text"><?php _e('Title','admin2020')?></label>
-					<div class="uk-form-controls">
-						<input class="uk-input" id="admin2020_viewer_title" type="text" placeholder="Title..." value="<?php echo esc_html($post_title)?>">
-					</div>
-				</div>
-			  </div>
-	
-			  <textarea id="post_preview_editor" style="width:100%"><?php echo $thepost->post_content?></textarea>
-	
-			</form>
-	
-	
-	
-	
-		  </li><!-- END OF CONTENT -->
-	
-		  <li><!-- SETTINGS -->
-	
-			<?php
-			$all_statuses = get_post_statuses($attachment_id);
-			$current_stats = get_post_status($attachment_id);
-			$image = get_the_post_thumbnail_url($attachment_id);
-			$imageid = get_post_thumbnail_id($attachment_id);
-			?>
-			<form class="uk-form-stacked uk-margin-top">
-	
-			  <div uk-grid class="uk-grid-small">
-				<div class="uk-width-1-1">
-					<label class="uk-form-label" for="form-stacked-text"><?php _e('Status','admin2020')?></label>
-					<div class="uk-form-controls">
-					  <select class="uk-select" id='admin2020_post_status'>
-						<?php
-						foreach ($all_statuses as $key => $status){
-						  $nice_name = $status;
-						  $selec = '';
-	
-						  if($key == $current_stats){
-							$selec = 'selected';
-						  }
-	
-						  ?><option value="<?php echo $key?>" <?php echo $selec?>><?php echo $nice_name?></option><?php
-						}
-						?>
-					  </select>
-					</div>
-				</div>
-	
-				<div class="uk-width-1-1">
-	
-				  <span class="uk-form-label uk-margin-small-bottom"><?php _e('Featured Image','admin2020')?></span>
-	
-				  <div class="uk-background-muted" id="admin2020_post_image_select" style="position:relative;">
-	
-	
-					<div onclick="admin2020_set_featured_image()" style="min-height:150px;position:relative;cursor: pointer">
-					  <span class="uk-position-center"uk-icon="icon:image;ratio:3" style="z-index:1"></span>
-					  <img data-src="<?php echo $image?>" data-id="<?php echo $imageid?>" width="1800" height="1200" id="admin2020_post_image" uk-img style="z-index:2;position:relative">
-					</div>
-	
-					<span class="uk-icon-button uk-position-small uk-position-top-right"uk-icon="icon:close;" style="z-index:4" onclick="jQuery('#admin2020_post_image').attr('data-src','');jQuery('#admin2020_post_image').attr('data-id','');"></span>
-				  </div>
-	
-				</div>
-	
-			  </div>
-	
-			</form>
-	
-		  </li><!-- END OF SETTINGS -->
-	
-		  <?php if($post_type != 'page') { ?>
-		  <li><!-- CATEGORIES -->
-			<div class="uk-text-emphasis uk-margin-small-bottom uk-margin-top"><?php _e('Categories','admin2020') ?></div>
-			<form class="uk-form uk-form-small uk-child-width-1-1 uk-grid-collapse admin2020_categories" uk-grid>
-			  <?php
-			  foreach ($categories as $category){
-				$id = $category->term_id;
-				$name = $category->name;
-				$checked = '';
-	
-				if(in_array($id,$post_cats)){
-				  $checked = 'checked';
-				}
-				?>
-				<label><input class="uk-checkbox uk-margin-small-right" type="checkbox" <?php echo $checked?> value="<?php echo $id ?>"><?php echo $name ?></label>
-				<?php
-			  }
-			  ?>
-			</form>
-	
-		  </li><!-- END OF CATEGORIES -->
-		<?php } ?>
-	
-	
-		</ul>
-	
-	
-		<div class="uk-padding uk-background-default" style="position:relative;padding-top:15px;padding-bottom:15px;border-top:1px solid rgba(162,162,162,0.2)">
-	
-		 
-	
-		  <?php if(current_user_can( 'edit_post' , $attachment_id)){ ?>
-			<button class="uk-button uk-button-primary uk-align-right uk-margin-remove" type="button" id="admin2020_save_post" onclick="admin2020_save_post()"><?php _e('Save','admin2020')?></button>
-		  <?php } ?>
-		  <?php if(current_user_can( 'delete_post' , $attachment_id)){ ?>
-			<button class="uk-button uk-button-danger" type="button" onclick="a2020_delete_item(<?php echo $attachment_id?>)"><?php _e('Delete','admin2020') ?></button>
-		  <?php } ?>
-		</div>
-		
-		<?php
-		
-		
-	}	
-	
-	
-	/**
-	* Loads attachment modal
-	* @since 1.4
-	*/
-	public function a2020_fetch_attachment_modal(){
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			$attachment_id = $this->utils->clean_ajax_input($_POST['attachmentid']);
-			
-			$attachment = get_post($attachment_id);
-			$post_type = $attachment->post_type;
-			
-			if($post_type != 'attachment'){
-				$this->a2020_fetch_post_modal($attachment);
-				die();
-			}
-			
-			$attchmenttitle = get_the_title($attachment_id);
-			$attachment_url = wp_get_attachment_url($attachment_id);
-		
-			$postdate = $attachment->post_date;
-			$attachmenttype = $attachment->post_mime_type;
-			$pieces = explode("/", $attachmenttype);
-			$maintype = $pieces[0];
-		
-			$alt_text = get_post_meta($attachment_id , '_wp_attachment_image_alt', true);
-		
-			$filesize = filesize( get_attached_file( $attachment_id ) );
-		
-			$attachmentinfo = wp_get_attachment_image_src($attachment_id, 'full');
-			$width = $attachmentinfo[1];
-			$height = $attachmentinfo[2];
-		
-			if (strpos($attachmenttype, 'image') !== false || strpos($attachmenttype, 'video') !== false ) {
-			  $dimensions = $width."x".$height;
-			} else {
-			  $dimensions = false;
-			}
-			
-			$filesize = $this->utils->formatBytes($filesize);
-		
-			$userid = $attachment->post_author;
-			$user = get_user_by('ID',$userid);
-		
-			?>
-		
-			<span style="display:none" id="admin2020_viewer_currentid"><?php echo $attachment_id?></span>
-
-			<button class="uk-modal-close-default" type="button" uk-close></button>
-
-			<div class="uk-padding" style="">
-
-
-			  <?php
-			  if (strpos($attachmenttype, 'image') !== false) {
-
-				?><img id="admin2020imgViewer" src="<?php echo $attachment_url?>" class="uk-image uk-box-shadow-medium uk-align-center uk-margin-remove-bottom" style="border-radius:4px;max-height:350px;"></><?php
-
-			  } else if (strpos($attachmenttype, 'video') !== false) {
-
-				?><video id="admin2020videoViewer" src="<?php echo $attachment_url?>" playsinline controls uk-video="autoplay: false" class="uk-align-center uk-margin-remove-bottom" style="border-radius:4px;max-height:350px;"></video><?php
-				
-			  } else if (strpos($attachmenttype, 'zip') !== false) {
-				
-				?><div id="admin2020docViewer" class="uk-flex uk-flex-center uk-flex-middle uk-align-center uk-margin-remove-bottom" style="width:100%;height:200px;float:left;">
-					<span class="dashicons dashicons-media-archive" style="display: contents;font-size: 60px;"></span>
-				</div><?php		
-				
-			  } else if (strpos($attachmenttype, 'csv') !== false) {
-				
-				?><div id="admin2020docViewer" class="uk-flex uk-flex-center uk-flex-middle uk-align-center uk-margin-remove-bottom" style="width:100%;height:200px;float:left;">
-				    <span class="dashicons dashicons-media-spreadsheet" style="display: contents;font-size: 60px;"></span>
-				</div><?php		
-				
-			  } else if (strpos($attachmenttype, 'pdf') !== false) {
-				
-				?><div id="admin2020docViewer" class="uk-flex uk-flex-center uk-flex-middle uk-align-center uk-margin-remove-bottom" style="width:100%;height:200px;float:left;">
-				  <span uk-icon="icon: file-pdf;ratio:4"></span>
-				</div><?php	
-
-			  } else if (strpos($attachmenttype, 'application') !== false) {
-
-				?><div id="admin2020docViewer" class="uk-flex uk-flex-center uk-flex-middle uk-align-center uk-margin-remove-bottom" style="width:100%;height:200px;float:left;">
-				  <span uk-icon="icon: file-text;ratio:4"></span>
-				</div><?php
-
-			  } else if (strpos($attachmenttype, 'audio') !== false) {
-
-				?><video id="admin2020audioViewer" src="<?php echo $attachment_url?>" playsinline controls uk-video="autoplay: false" class="uk-align-center uk-margin-remove-bottom" style="border-radius:4px;max-height:350px;"></video><?php
-
-			  }
-			  ?>
-
-			</div>
-
-			<div class="uk-padding uk-padding-remove-vertical">
-
-			  <div class="uk-grid-small" uk-grid>
-
-				<div class="uk-h4 uk-width-expand uk-text-bold uk-margin-remove">
-				  <?php echo $attchmenttitle?>
-				</div>
-
-				<div class="uk-width-auto">
-					<a href="#" uk-icon="icon:chevron-left" onclick="switchinfo('left',<?php echo $attachment_id?>)"></a>
-				</div>
-
-				<div class="uk-width-auto">
-					<a href="#" uk-icon="icon:chevron-right" onclick="switchinfo('right',<?php echo $attachment_id?>)"></a>
-				</div>
-
-				<?php if (strpos($attachmenttype, 'image') !== false){ ?>
-				<div uk-lightbox class="uk-width-auto">
-					<a style="float:right" class="uk-link-muted" href="<?php echo $attachment_url?>" ><span uk-icon="expand"></span></a>
-				</div>
-				<?php } ?>
-
-				<div class="uk-width-1-1">
-				  <span class="uk-text-meta"><span uk-icon="cloud-upload" class="uk-margin-small-right"></span><?php echo esc_html($user->display_name)?></span>
-				  <span class="uk-text-meta uk-margin-left"><span uk-icon="calendar" class="uk-margin-small-right"></span><?php echo esc_html(get_the_date(get_option('date_format'),$attachment_id))?></span>
-				  <span class="uk-text-meta uk-margin-left"><span uk-icon="database" class="uk-margin-small-right"></span><?php echo $filesize?></span>
-				</div>
-			  </div>
-
-
-			  <ul uk-switcher="connect: .media-modal-tabs" class="uk-width-1-1 uk-subnav uk-subnav-pill">
-				  <li><a href="#"><?php _e("Attributes",'admin2020')?></a></li>
-				  <li><a href="#"><?php _e("Meta",'admin2020')?></a></li>
-				  <?php
-				  if (strpos($attachmenttype, 'image') !== false) {
-				   ?>
-					<li><a href="#" onclick="a2020_edit_image('<?php echo $attachment_url?>','<?php echo $attchmenttitle?>')" ><?php _e("Edit","admin2020") ?> </a></li>
-				  <?php }?>
-			  </ul>
-
-			</div>
-
-			  <ul class="uk-switcher uk-margin uk-padding media-modal-tabs" style="min-height: 250px;max-height:250px;overflow:auto;padding-top:0;">
-
-				  <li><!-- SETTINGS -->
-
-
-					<form class="uk-form-stacked" >
-					  <div uk-grid class="uk-grid-small">
-
-
-
-						<div class="uk-width-1-2">
-							<label class="uk-form-label" for="form-stacked-text"><?php _e('Title','admin2020')?></label>
-							<div class="uk-form-controls">
-								<input class="uk-input" id="admin2020_viewer_input_title" type="text" placeholder="Title..." value="<?php echo esc_html($attchmenttitle)?>">
-							</div>
-						</div>
-
-						<div class="uk-width-1-2">
-							<label class="uk-form-label" for="form-stacked-text"><?php _e('Alt Text','admin2020')?></label>
-							<div class="uk-form-controls">
-								<input class="uk-input" id="admin2020_viewer_altText" type="text" placeholder="Alt Text" value="<?php echo esc_html($alt_text)?>">
-							</div>
-						</div>
-
-						<div class="uk-width-1-1">
-							<label class="uk-form-label" for="form-stacked-text"><?php _e('Caption','admin2020')?></label>
-							<div class="uk-form-controls">
-								<textarea class="uk-input" style="height:60px;" rows="2" id="admin2020_viewer_caption" type="text" placeholder="Caption..."><?php echo esc_html($attachment->post_excerpt);?></textarea>
-							</div>
-						</div>
-
-						<div class="uk-width-1-1">
-							<label class="uk-form-label" for="form-stacked-text"><?php _e('Description','admin2020')?></label>
-							<div class="uk-form-controls">
-								<textarea class="uk-input" style="height:60px;" rows="2" id="admin2020_viewer_description" type="text" placeholder="Description..."><?php echo esc_html($attachment->post_content)?></textarea>
-							</div>
-						</div>
-
-						<div class="uk-width-1-1">
-							<label class="uk-form-label" for="form-stacked-text">URL</label>
-							<div class="uk-form-controls">
-							  <div class="uk-inline uk-width-1-1" onclick="copythis(this)" style="cursor:pointer">
-								<span class="uk-form-icon" uk-icon="icon:copy"></span>
-								<input class="uk-input" id="admin2020_viewer_fullLink" value="<?php echo $attachment_url?>">
-							  </div>
-							  <span class="uk-text-success" id="linkcopied" style="display:none;float:left;margin-top:15px"><?php _e('Link copied to clipboard','admin2020')?></span>
-							</div>
-						</div>
-
-					  </div>
-
-
-
-					</form>
-				  </li><!-- END OF SETTINGS -->
-
-				  <li><!-- META -->
-
-					<div id="admin2020MainMeta" class="" >
-
-
-					  <table class="uk-table uk-table-small  uk-table-justify">
-						<tbody>
-							<tr>
-								<td><?php _e('File Type',"admin2020")?>:</td>
-								<td><?php echo $maintype?></td>
-							</tr>
-							<tr>
-								<td><?php _e('Uploaded',"admin2020")?>:</td>
-								<td><?php echo get_the_date(get_option('date_format'),$attachment_id)?></td>
-							</tr>
-							<tr>
-								<td><?php _e('Size',"admin2020")?>:</td>
-								<td><?php echo $filesize?></td>
-							</tr>
-							<?php
-							if ($dimensions != false){ ?>
-							  <tr>
-								  <td><?php _e('Dimensions',"admin2020")?>:</td>
-								  <td><?php echo $dimensions?></td>
-							  </tr>
-							<?php }?>
-						</tbody>
-					</table>
-
-					</div>
-
-				  </li><!-- END OF META -->
-
-
-				  <li><!-- EDIT -->
-
-
-				  </li><!-- END OF EDIT -->
-
-			  </ul>
-
-			  <div class="uk-padding uk-background-default" style="position:relative;padding-top:15px;padding-bottom:15px;border-top:1px solid rgba(162,162,162,0.2)">
-
-				
-
-				<?php if(current_user_can( 'edit_post' , $attachment_id)){ ?>
-				  <button class="uk-button uk-button-primary uk-align-right uk-margin-remove" type="button" onclick="a2020_save_attachment(<?php echo $attachment_id?>)"><?php _e('Save','admin2020')?></button>
-				<?php } ?>
-				<?php if(current_user_can( 'delete_post' , $attachment_id)){ ?>
-				  <button class="uk-button uk-button-danger" type="button" onclick="a2020_delete_item(<?php echo $attachment_id?>)"><?php _e('Delete','admin2020') ?></button>
-				<?php } ?>
-			  </div>
-		
-		
-		
-		
-		
-			<?php
-			
-		}
-		die();
-		
-	}
-	
-	
-	
-	/**
-	* Saves Post from content page
-	* @since 1.4
-	*/
-	
-	public function a2020_save_post(){
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			$title = $this->utils->clean_ajax_input($_POST['title']);
-			$content = $this->utils->clean_ajax_input($_POST['content']);
-			$postid = $this->utils->clean_ajax_input($_POST['postid']);
-			$categories = $this->utils->clean_ajax_input($_POST['categories']);
-			$status = $this->utils->clean_ajax_input($_POST['status']);
-			$image = $this->utils->clean_ajax_input($_POST['image']);
-			
-			$my_post = array(
-			  'ID'           => $postid,
-			  'post_title'   => $title,
-			  'post_content' => $content,
-			  'post_category' => $categories,
-			  'post_status' => $status
-			);
-			
-			$newpost = wp_update_post( $my_post );
-			
-			if(!$newpost){
-				$message = __("Unable to save item",'admin2020');
-				echo $this->utils->ajax_error_message($message);
-				die();
-			}
-			
-			if(!$image){
-				delete_post_meta( $postid, '_thumbnail_id' );
-			} else {
-				set_post_thumbnail( $postid, $image );
-			}
-			
-			$returndata = array();
-			$returndata['message'] = __('Item Updated','admin2020');
-			$returndata['html'] = $this->build_single_post(get_post($postid));
-			
-			echo json_encode($returndata);
-			
-		}
-		die();
-		
-	}
-	
-	
-	/**
-	* Saves attachment from content page
-	* @since 1.4
-	*/
-	
-	public function a2020_save_attachment(){
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			
-			$title = $this->utils->clean_ajax_input($_POST['title']);
-			$imgalt = $this->utils->clean_ajax_input($_POST['imgalt']);
-			$caption = $this->utils->clean_ajax_input($_POST['caption']);
-			$description = $this->utils->clean_ajax_input($_POST['description']);
-			$imgid = $this->utils->clean_ajax_input($_POST['imgid']);
-			
-			$attachment = array(
-			'ID' => strip_tags($imgid),
-			'post_title' => strip_tags($title),
-			'post_content' => strip_tags($description),
-			'post_excerpt' => strip_tags($caption),
-			);
-			update_post_meta( $imgid, '_wp_attachment_image_alt', $imgalt);
-			
-			$status = wp_update_post( $attachment);
-			
-			if(!$status){
+			$movefile = wp_handle_upload( $new_file, $upload_overrides );
+			////ADD Attachment
+			if (is_wp_error($movefile)) {
 				$message = __("Unable to save attachment",'admin2020');
 				echo $this->utils->ajax_error_message($message);
 				die();
 			}
-			
-			$returndata = array();
-			$returndata['message'] = __('Attachment Saved','admin2020');
-			$returndata['html'] = $this->build_single_attachment(get_post($imgid));
-					  
-			echo json_encode($returndata);		  
-		}
-		die();
 	
-	}	
-	
-	/**
-	* Deletes items
-	* @since 1.4
-	*/
-	
-	public function a2020_delete_item(){ 
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			$post_id = $this->utils->clean_ajax_input($_POST['post_id']);
-			
-			
-			if(is_array($post_id)){
-				
-				foreach($post_id as $an_id){
-					
-					if(current_user_can( 'delete_post' , $an_id)){
-						
-						$post_type = get_post_type($an_id);
-						
-						if($post_type == "attachment"){
-							
-							$status = wp_delete_attachment($an_id);
-							
-						} else {
-						
-							$status = wp_delete_post($an_id);
-							
-						}
-						
-					}
-					
-				}
-				
-				$returndata = array();
-				$returndata['message'] = __('Items Deleted','admin2020');
-				echo json_encode($returndata);
-				
-			} else {
-				
-				if(current_user_can( 'delete_post' , $post_id)){
-					
-					$post_type = get_post_type($post_id);
-					
-					if($post_type == "attachment"){
-						
-						$status = wp_delete_attachment($post_id);
-						
-					} else {
-					
-						$status = wp_delete_post($post_id);
-						
-					}
-					
-					if(!$status){
-						$message = __("Unable to delete item",'admin2020');
-						echo $this->utils->ajax_error_message($message);
-						die();
-					} else {
-						$returndata = array();
-						$returndata['message'] = __('Item Deleted','admin2020');
-						echo json_encode($returndata);
-					}
-					
-				} else {
-					$message = __("insufficient privileges to delete item",'admin2020');
-					echo $this->utils->ajax_error_message($message);
-					die();
-				}
-				
-			}
-			
-		}
-		die();
-		
-	}
-	
-	/**
-	* Duplicates post
-	* @since 1.4
-	*/
-	
-	public function a2020_duplicate_post(){
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			global $wpdb;
-			$post_id = $this->utils->clean_ajax_input($_POST['postid']);
-			$post = get_post( $post_id );
-			
-			$current_user = wp_get_current_user();
-			$new_post_author = $current_user->ID;
-			
-			$args = array(
-			'comment_status' => $post->comment_status, 
-			'ping_status'    => $post->ping_status,
-			'post_author'    => $new_post_author,
-			'post_content'   => $post->post_content,
-			'post_excerpt'   => $post->post_excerpt,
-			'post_name'      => $post->post_name,
-			'post_parent'    => $post->post_parent,
-			'post_password'  => $post->post_password,
-			'post_status'    => 'draft',
-			'post_title'     => $post->post_title.' (copy)',
-			'post_type'      => $post->post_type,
-			'to_ping'        => $post->to_ping,
-			'menu_order'     => $post->menu_order
-			);
-			
-			$new_post_id = wp_insert_post( $args );
-			
-			$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
-			foreach ($taxonomies as $taxonomy) {
-			$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
-			wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
-			}
-			
-			$post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
-			if (count($post_meta_infos)!=0) {
-			$sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
-			foreach ($post_meta_infos as $meta_info) {
-			  $meta_key = $meta_info->meta_key;
-			  if( $meta_key == '_wp_old_slug' ) continue;
-			  $meta_value = addslashes($meta_info->meta_value);
-			  $sql_query_sel[]= "SELECT $new_post_id, '$meta_key', '$meta_value'";
-			}
-			$sql_query.= implode(" UNION ALL ", $sql_query_sel);
-			$wpdb->query($sql_query);
-			}
-			$postobject = get_post($new_post_id);
-			
-			$returndata = array();
-			$returndata['message'] = __('Post duplicated','admin2020');
-			$returndata['html'] = $this->build_single_post($postobject);
-			$returndata['newid'] = $new_post_id;
-					  
-			echo json_encode($returndata);		
-			
-		}
-		die();	
-	}
-	
-	
-	/**
-	* Adds batch rename components
-	* @since 1.4
-	*/
-	
-	public function a2020_add_batch_rename_item(){
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			$itemtoadd = $this->utils->clean_ajax_input($_POST['itemtoadd']);
-			
-			if($itemtoadd == 'filename'){
-			ob_start();
-			?>
-			<div class="uk-grid-small uk-child-width-1- rename_item uk-flex uk-flex-middle" uk-grid>
-			  <div class="uk-width-2-5">
-				<span name="<?php echo $itemtoadd?>" class="batch_rename_option">
-				  <span uk-icon="grid" class="uk-margin-small-right rename_drag"></span>
-				  <?php _e('Filename','admin2020')?>:
-				</span>
-			  </div>
-			
-			  <div class="uk-width-expand">
-				<input class="uk-input" placeholder="<?php _e("Current Filename","admin2020")?>" disabled>
-			  </div>
-			
-			  <div class="uk-text-right uk-flex uk-flex-middle uk-flex-right uk-width-auto">
-				<a href="#" onclick="jQuery(this).parent().parent().remove();build_batch_rename_preview()"><span uk-icon="minus-circle"></span></a>
-			  </div>
-			
-			</div>
-			<?php
-			}
-			
-			if($itemtoadd == 'text'){
-			ob_start();
-			?>
-			<div class="uk-grid-small rename_item uk-flex uk-flex-middle" uk-grid>
-			  <div class="uk-width-2-5">
-				<span name="<?php echo $itemtoadd?>" class="batch_rename_option">
-				  <span uk-icon="grid" class="uk-margin-small-right rename_drag"></span>
-				  <?php _e('Text','admin2020')?>:
-				</span>
-			  </div>
-			
-			  <div class="uk-width-expand">
-				<input onkeyup="build_batch_rename_preview()" class="uk-input" placeholder="<?php _e("New text","admin2020")?>">
-			  </div>
-			
-			  <div class="uk-text-right uk-flex uk-flex-middle uk-flex-right uk-width-auto">
-				<a href="#" onclick="jQuery(this).parent().parent().remove();build_batch_rename_preview()"><span uk-icon="minus-circle"></span></a>
-			  </div>
-			
-			</div>
-			<?php
-			}
-			
-			if($itemtoadd == 'date'){
-			ob_start();
-			?>
-			<div class="uk-grid-small rename_item uk-flex uk-flex-middle" uk-grid>
-			  <div class="uk-width-2-5">
-				<span name="<?php echo $itemtoadd?>" class="batch_rename_option">
-				  <span uk-icon="grid" class="uk-margin-small-right rename_drag"></span>
-				  <?php _e('Date Uploaded','admin2020')?>:
-				</span>
-			  </div>
-			
-			  <div class="uk-width-expand">
-				<input class="uk-input" onkeyup="build_batch_rename_preview()" placeholder="<?php _e("Format","admin2020")?>">
-			  </div>
-			
-			  <div class="uk-text-right uk-flex uk-flex-middle uk-flex-right uk-width-auto">
-				<a href="#" onclick="jQuery(this).parent().parent().remove();build_batch_rename_preview()"><span uk-icon="minus-circle"></span></a>
-			  </div>
-			
-			</div>
-			<?php
-			}
-			
-			
-			if($itemtoadd == 'original_alt'){
-			ob_start();
-			?>
-			<div class="uk-grid-small rename_item uk-flex uk-flex-middle" uk-grid>
-			  <div class="uk-width-2-5">
-				<span name="<?php echo $itemtoadd?>" class="batch_rename_option">
-				  <span uk-icon="grid" class="uk-margin-small-right rename_drag"></span>
-				  <?php _e('Alt','admin2020')?>:
-				</span>
-			  </div>
-			
-			  <div class="uk-width-expand">
-				<input class="uk-input" placeholder="<?php _e("Current Alt","admin2020")?>" disabled>
-			  </div>
-			
-			  <div class="uk-text-right uk-flex uk-flex-middle uk-flex-right uk-width-auto">
-				<a href="#" onclick="jQuery(this).parent().parent().remove();build_batch_rename_preview()"><span uk-icon="minus-circle"></span></a>
-			  </div>
-			
-			</div>
-			<?php
-			}
-			
-			if($itemtoadd == 'extension'){
-			ob_start();
-			?>
-			<div class="uk-grid-small rename_item uk-flex uk-flex-middle" uk-grid>
-			  <div class="uk-width-2-5">
-				<span name="<?php echo $itemtoadd?>" class="batch_rename_option">
-				  <span uk-icon="grid" class="uk-margin-small-right rename_drag"></span>
-				  <?php _e('Extension','admin2020')?>:
-				</span>
-			  </div>
-			
-			  <div class="uk-width-expand">
-				<input class="uk-input" placeholder="<?php _e("Current Extension","admin2020")?>" disabled>
-			  </div>
-			
-			  <div class="uk-text-right uk-flex uk-flex-middle uk-flex-right uk-width-auto">
-				<a href="#" onclick="jQuery(this).parent().parent().remove();build_batch_rename_preview()"><span uk-icon="minus-circle"></span></a>
-			  </div>
-			
-			</div>
-			<?php
-			}
-			
-			if($itemtoadd == 'sequence'){
-			ob_start();
-			?>
-			<div class="uk-grid-small rename_item uk-flex uk-flex-middle" uk-grid>
-			  <div class="uk-width-2-5">
-				<span name="<?php echo $itemtoadd?>" class="batch_rename_option">
-				  <span uk-icon="grid" class="uk-margin-small-right rename_drag"></span>
-				  <?php _e('Sequence start num','admin2020')?>:
-				</span>
-			  </div>
-			
-			  <div class="uk-width-expand">
-				<input class="uk-input" placeholder="<?php _e("Start Number","admin2020")?>" value="0">
-			  </div>
-			
-			  <div class="uk-text-right uk-flex uk-flex-middle uk-flex-right uk-width-auto">
-				<a href="#" onclick="jQuery(this).parent().parent().remove();build_batch_rename_preview()"><span uk-icon="minus-circle"></span></a>
-			  </div>
-			
-			</div>
-			<?php
-			}
-			
-			if($itemtoadd == 'meta'){
-			ob_start();
-			?>
-			<div class="uk-grid-small rename_item uk-flex uk-flex-middle" uk-grid>
-			  <div class="uk-width-2-5">
-				<span name="<?php echo $itemtoadd?>" class="batch_rename_option">
-				  <span uk-icon="grid" class="uk-margin-small-right rename_drag"></span>
-				  <?php _e('Meta key','admin2020')?>:
-				</span>
-			  </div>
-			
-			  <div class="uk-width-expand">
-				<input class="uk-input" placeholder="<?php _e("Meta Key","admin2020")?>" value="">
-			  </div>
-			
-			  <div class="uk-text-right uk-flex uk-flex-middle uk-flex-right uk-width-auto">
-				<a href="#" onclick="jQuery(this).parent().parent().remove();build_batch_rename_preview()"><span uk-icon="minus-circle"></span></a>
-			  </div>
-			
-			</div>
-			<?php
-			}
-			
-			echo ob_get_clean();
-			
-		}
-		die();	
-	}
-	
-	/**
-	* Processes batch rename
-	* @since 1.4
-	*/
-	
-	public function a2020_process_batch_rename(){
-		
-		
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-			
-			$attachments = $this->utils->clean_ajax_input($_POST['ids']);
-			$name_structure = $this->utils->clean_ajax_input($_POST['structure']);
-			$name_values = $this->utils->clean_ajax_input($_POST['values']);
-			$attrtibute =$this->utils->clean_ajax_input($_POST['item_to_rename']);
-			
-			$returndata = array();
-			
-			if (count($attachments) < 1){
-				$returndata['error'] = __('No attachments selected','admin2020');
-				echo json_encode($returndata);
+			$status = update_attached_file($current_imageid,$movefile['file']);
+			////ADD Attachment
+			if (!$status) {
+				$message = __("Unable to save attachment",'admin2020');
+				echo $this->utils->ajax_error_message($message);
 				die();
 			}
+	
+			$attach_data = wp_generate_attachment_metadata( $current_imageid, $movefile['file'] );
+			$status = wp_update_attachment_metadata( $current_imageid, $attach_data );
 			
-			$sequence_number = 0;
-			
-			foreach ($attachments as $attachment_id){
-				
-				
-				
-				$attachment = get_post($attachment_id);
-				$posttype = $attachment->post_type;
-				
-				if($posttype != 'attachment'){
-					continue;
-				}
-				
-				$current_title = get_the_title($attachment_id);
-				$post_date = get_the_date($attachment_id);
-				$alt_text = get_post_meta($attachment_id , '_wp_attachment_image_alt', true);
-				$attachment_url = wp_get_attachment_url($attachment_id);
-				$filetype = wp_check_filetype($attachment_url);
-				$extension = $filetype['ext'];
-				
-				$newname = "";
-				$counter = 0;
-				$test = "";
-				
-				foreach ($name_structure as $structure){
-				
-				  $structure = wp_strip_all_tags($structure);
-				  $the_value = wp_strip_all_tags($name_values[$counter]);
-				
-				  if($structure == 'filename'){
-					$newname = $newname . $current_title;
-				  }
-				  if($structure == 'text'){
-					$newname = $newname . $the_value;
-				  }
-				  if($structure == 'date'){
-				
-					if(date($the_value)){
-					  $newname = $newname . get_the_date($the_value,$attachment_id);
-					} else {
-					  $returndata['error'] = __('Invalid Date Format','admin2020');
-					  echo json_encode($returndata);
-					  die();
-					}
-				
-				  }
-				  if($structure == 'original_alt'){
-					$newname = $newname . $alt_text;
-				  }
-				  if($structure == 'extension'){
-					$newname = $newname . $extension;
-				  }
-				  if($structure == 'sequence'){
-					$start_number = $the_value;
-					if(!is_numeric($start_number)){
-					  $start_number = 0;
-					}
-					$newname = $newname . ($sequence_number + $start_number);
-				  }
-				  if($structure == 'meta'){
-					$meta_item = get_post_meta( $attachment_id, $the_value, true );
-					if($meta_item){
-					  $newname = $newname . $meta_item;
-					}
-				  }
-				
-				  $counter = $counter + 1;
-				
-				
-				}
-				
-				$sequence_number = $sequence_number + 1;
-				
-				if($attrtibute == "name"){
-				
-				  $my_post = array(
-					  'ID'           => $attachment_id,
-					  'post_title'   => $newname,
-				  );
-				  wp_update_post( $my_post );
-				
-				}
-				
-				if($attrtibute == "alt"){
-				
-				  update_post_meta( $attachment_id, '_wp_attachment_image_alt', $newname );
-				
-				}
-			
-			}
-			$returndata['message'] = __('Attachments successfully renamed','admin2020');
+			$returndata = array();
+			$returndata['message'] = __('Image Saved','admin2020');
+			$returndata['src'] = wp_get_attachment_url($current_imageid);
+	
+			////END ATTACHMENT
 			echo json_encode($returndata);
-		
-
-		
-		}
-		die();
-		
+		  }
+		  die();
 	}
 	
 	/**
@@ -2294,11 +425,12 @@ class Admin_2020_module_admin_content
 	
 	public function a2020_process_upload(){
 	
-		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
 			
 			require_once( ABSPATH . 'wp-admin/includes/image.php' );
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
 	
+			$folder = $this->utils->clean_ajax_input($_POST['folder']);
 	
 			  foreach ($_FILES as $file){
 	
@@ -2334,6 +466,13 @@ class Admin_2020_module_admin_content
 	
 					$attach_data = wp_generate_attachment_metadata( $id, $movefile['file'] );
 					wp_update_attachment_metadata( $id, $attach_data );
+					
+					
+					if(is_numeric($folder) && $folder > 0){
+						
+						update_post_meta($id,"admin2020_folder",$folder);
+						
+					}
 	
 				////END ATTACHMENT
 	
@@ -2341,8 +480,7 @@ class Admin_2020_module_admin_content
 			  }
 			  //echo $this->build_media();
 			  http_response_code(200);
-			  $returndata['message'] = __('Files succesfully uploaded','admin2020');
-			  $returndata['html'] = $this->build_single_attachment(get_post($id));
+			  $returndata['message'] = __('Items uploaded','admin2020');
 			  echo json_encode($returndata);
 			
 		}
@@ -2351,114 +489,2915 @@ class Admin_2020_module_admin_content
 	}
 	
 	/**
-	* Processes file upload from image editor
-	* @since 1.4
+	* Saves new view
+	* @since 2.9
 	*/
-	public function a2020_upload_edited_image() {
+	
+	public function a2020_save_view(){
 		
-		  if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-	
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
-	
-			$current_imageid = $this->utils->clean_ajax_input($_POST['attachmentid']);
-			$new_file =  $_FILES['ammended_image'];
-	
-			$upload_overrides = array(
-			  'test_form' => false
-			);
-	
-	
-			$movefile = wp_handle_upload( $new_file, $upload_overrides );
-			////ADD Attachment
-			if (is_wp_error($movefile)) {
-				$message = __("Unable to save attachment",'admin2020');
-				echo $this->utils->ajax_error_message($message);
-				die();
-			}
-	
-			$status = update_attached_file($current_imageid,$movefile['file']);
-			////ADD Attachment
-			if (!$status) {
-				$message = __("Unable to save attachment",'admin2020');
-				echo $this->utils->ajax_error_message($message);
-				die();
-			}
-	
-			$attach_data = wp_generate_attachment_metadata( $current_imageid, $movefile['file'] );
-			$status = wp_update_attachment_metadata( $current_imageid, $attach_data );
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
 			
-			if (!$status) {
-				$message = __("Unable to save attachment",'admin2020');
-				echo $this->utils->ajax_error_message($message);
+			
+			$views = $this->utils->clean_ajax_input($_POST['allViews']);
+			
+			$a2020_options = get_option( 'admin2020_settings' ); 
+			
+			$a2020_options['modules']['admin2020_admin_content']['views'] = $views;
+			
+			update_option( 'admin2020_settings', $a2020_options);
+			
+			$returndata = array(
+				'message' => __('Views updated','admin2020'),
+			);
+			
+			echo json_encode($returndata);
+			
+			
+		}
+		die();
+	}
+	
+	
+	/**
+	* Deletes selected items
+	* @since 2.9
+	*/
+	
+	public function a2020_duplicate_selected(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$itemIDs = $this->utils->clean_ajax_input($_POST['selected']);
+			$returndata = array();
+			$returndata['totalduplicated'] = 0;
+			$returndata['totalfailed'] = 0;
+			
+			if($itemIDs && is_array($itemIDs)){
+				
+				
+				
+					
+				foreach($itemIDs as $item){
+						
+						
+						$status = $this->a2020_duplicate_post($item);
+						
+						if($status){
+							$returndata['totalduplicated'] += 1;
+						} else {
+							$returndata['totalfailed'] += 1;
+						}
+						
+					
+				}
+					
+				
+			} else {
+				
+				$returndata['error'] = __("Something went wrong",'admin2020');
+				echo json_encode($returndata);
 				die();
+				
 			}
+			
+			
+			$returndata['deleted_message'] = __("Items duplicated succesffuly",'admin2020');
+			$returndata['deleted_total'] = $returndata['totalduplicated'];
+			
+			$returndata['failed_message'] = __("Itms couldn't be duplicated",'admin2020');
+			$returndata['failed_total'] = $returndata['totalfailed'];
+			echo json_encode($returndata);
+			die();
+			
+		}
+		
+		die();
+		
+	}
+	
+	
+	/**
+	* Batch rename preview
+	* @since 2.9
+	*/
+	
+	public function a2020_batch_rename_preview(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$itemIDs = $this->utils->clean_ajax_input($_POST['selected']);
+			$batchOptions = $this->utils->clean_ajax_input($_POST['batchoptions']);
+			$fieldtorename = $this->utils->clean_ajax_input($_POST['fieldToRename']);
+			$metaKey = $this->utils->clean_ajax_input($_POST['metaKey']);
 			
 			$returndata = array();
-			$returndata['message'] = __('Image Saved','admin2020');
-			$returndata['html'] = $this->build_single_attachment(get_post($current_imageid));
-	
-			////END ATTACHMENT
+			$returndata['newnames'] = array();
+			$returndata['options'] = $batchOptions;
+			
+			if($itemIDs && is_array($itemIDs)){
+				
+				$sequence = 0;
+				
+					
+				foreach($itemIDs as $item){
+					
+						$temp = array();
+						
+						
+						if($fieldtorename == 'name'){
+							$temp['current'] = get_the_title($item);
+						}
+						
+						if($fieldtorename == 'meta'){
+							if(!$metaKey || $metaKey == ''){
+								$temp['current'] = __('No Meta Key provided','admin2020');
+							} else {
+								$temp['current'] = get_post_meta($item, $metaKey, true);
+							}
+						}
+						
+						if($fieldtorename == 'alt'){
+							$temp['current'] = get_post_meta($item, '_wp_attachment_image_alt', true);
+						}
+						
+						$temp['new'] = $this->generate_new_name($item, $batchOptions, $sequence, $fieldtorename, $metaKey);
+						$sequence += 1;
+						
+						array_push($returndata['newnames'], $temp);
+					
+				}
+					
+				
+			} else {
+				
+				$returndata['error'] = __("Something went wrong",'admin2020');
+				echo json_encode($returndata);
+				die();
+				
+			}
+			
 			echo json_encode($returndata);
-		  }
-		  die();
+			die();
+			
+		}
+		
+		die();
+		
+	}
+	
+	
+	public function a2020_process_batch_rename(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$itemIDs = $this->utils->clean_ajax_input($_POST['selected']);
+			$batchOptions = $this->utils->clean_ajax_input($_POST['batchoptions']);
+			$fieldtorename = $this->utils->clean_ajax_input($_POST['fieldToRename']);
+			$metaKey = $this->utils->clean_ajax_input($_POST['metaKey']);
+			
+			
+			
+			
+			$returndata = array();
+			$returndata['newnames'] = array();
+			$returndata['options'] = $batchOptions;
+			
+			if($fieldtorename == 'meta'){
+				if(!$metaKey || $metaKey == ''){
+					$returndata['error'] = __('No Meta Key provided','admin2020');
+					echo json_encode($returndata);
+					die();
+				}
+			}
+			
+			if($itemIDs && is_array($itemIDs)){
+				
+				$sequence = 0;
+				
+					
+				foreach($itemIDs as $item){
+					
+						$temp = array();
+						$postType = get_post_type($item);
+						
+						$newvalue = $this->generate_new_name($item, $batchOptions, $sequence, $fieldtorename, $metaKey);
+						$sequence += 1;
+						
+						
+						if($fieldtorename == 'name'){
+							$update = array(
+								'ID'           => $item,
+								'post_title'   => $newvalue,
+							);
+							 
+							wp_update_post( $update );
+						}
+						
+						if($fieldtorename == 'meta'){
+							update_post_meta($item, $metaKey, $newvalue);
+						}
+						
+						if($fieldtorename == 'alt'){
+							if($postType == 'attachment'){
+								update_post_meta($item, '_wp_attachment_image_alt', $newvalue);
+							}
+						}
+						
+				}
+					
+				
+			} else {
+				
+				$returndata['error'] = __("Something went wrong",'admin2020');
+				echo json_encode($returndata);
+				die();
+				
+			}
+			$returndata['message'] = __('Attributes Updated','admin2020');
+			echo json_encode($returndata);
+			die();
+			
+		}
+		
+		die();
+		
+	}
+	
+	
+	public function generate_new_name($item, $options, $sequence, $fieldtorename, $metaKey){
+		
+		if($fieldtorename == 'name'){
+			$name = get_the_title($item);
+		}
+		
+		if($fieldtorename == 'meta'){
+			if(!$metaKey || $metaKey == ''){
+				$name = '';
+			} else {
+				$name = get_post_meta($item, $metaKey, true);
+			}
+		}
+		
+		if($fieldtorename == 'alt'){
+			$name = get_post_meta($item, '_wp_attachment_image_alt', true);
+		}
+		
+		$postType = get_post_type($item);
+		$newname = '';
+		
+		foreach($options as $option){
+			
+			$type = $option['name'];
+			
+			if($type == 'Text'){
+				
+				$textValue = $option['primaryValue'];
+				$newname = $newname . $textValue;
+				
+			}
+			
+			if($type == 'Original Filename'){
+				
+				$newname = $newname . $name;
+				
+			}
+			
+			if($type == 'Date Created'){
+				
+				$format = $option['primaryValue'];
+				$thedate =  get_the_date($format,$item);
+				$newname = $newname . $thedate;
+				
+			}
+			
+			if($type == 'File Extension'){
+				
+				
+				if($postType != 'attachment'){
+					continue;
+				}
+				$attachment_url = wp_get_attachment_url($item);
+				$filetype = wp_check_filetype($attachment_url);
+				$extension = $filetype['ext'];
+				$newname = $newname . $extension;
+				
+			}
+			
+			if($type == 'Sequence Number'){
+				
+				$start_number = $option['primaryValue'];
+				if(!is_numeric($start_number)){
+				  $start_number = 0;
+				}
+				$thenum = $start_number + $sequence;
+				
+				$newname = $newname . $thenum;
+				
+			}
+			
+			if($type == 'Meta Value'){
+				
+				$metakey = $option['primaryValue'];
+				if(!$metakey || $metakey == ''){
+					continue;
+				}
+				$value = get_post_meta($item, $metakey, true);
+				
+				if(!$value || $value == ''){
+					continue;
+				}
+				$newname = $newname . $value;
+				
+			}
+			
+			if($type == 'Find and Replace'){
+				
+				$find = $option['primaryValue'];
+				$replace = $option['secondaryValue'];
+				$output = str_replace($find,$replace,$name);
+				$newname = $newname . $output;
+				
+			}
+			
+			
+			
+			
+		}
+		
+		return $newname;
+		
+		
 	}
 	
 	/**
-	* Processes file upload from image editor and saves as copy
-	* @since 1.4
+	* Duplicates a single post
+	* @since 2.9
 	*/
-	public function a2020_upload_edited_image_as_copy() {
-		
-		  if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-content-security-nonce', 'security') > 0) {
-	
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
-	
-			$current_imageid = $this->utils->clean_ajax_input($_POST['attachmentid']);
-			$new_file =  $_FILES['ammended_image'];
-			$filename =  $this->utils->clean_ajax_input($_POST['file_name']);
-			$withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
-	
-			$currentfolder = get_post_meta($current_imageid , 'admin2020_folder', true);
-	
-			$upload_overrides = array(
-			  'test_form' => false
+	public function a2020_duplicate_post($post_id){
+			
+			global $wpdb;
+			$post = get_post( $post_id );
+			
+			$current_user = wp_get_current_user();
+			$new_post_author = $current_user->ID;
+			
+			$args = array(
+				'comment_status' => $post->comment_status, 
+				'ping_status'    => $post->ping_status,
+				'post_author'    => $new_post_author,
+				'post_content'   => $post->post_content,
+				'post_excerpt'   => $post->post_excerpt,
+				'post_name'      => $post->post_name,
+				'post_parent'    => $post->post_parent,
+				'post_password'  => $post->post_password,
+				'post_status'    => 'draft',
+				'post_title'     => $post->post_title.' (copy)',
+				'post_type'      => $post->post_type,
+				'to_ping'        => $post->to_ping,
+				'menu_order'     => $post->menu_order
 			);
+			
+			$new_post_id = wp_insert_post( $args );
+			
+			if(!$new_post_id){
+				return false;
+			}
+			
+			$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
+			foreach ($taxonomies as $taxonomy) {
+				$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
+				wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
+			}
+			
+			$post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
+			if (count($post_meta_infos)!=0) {
+				$sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
+				foreach ($post_meta_infos as $meta_info) {
+					
+			    	$meta_key = $meta_info->meta_key;
+			    	if( $meta_key == '_wp_old_slug' ) continue;
+			  	  	$meta_value = addslashes($meta_info->meta_value);
+			  		$sql_query_sel[]= "SELECT $new_post_id, '$meta_key', '$meta_value'";
+					  
+				}
+				
+				$sql_query.= implode(" UNION ALL ", $sql_query_sel);
+				$wpdb->query($sql_query);
+				
+			}
+			
+			$postobject = get_post($new_post_id);
+			
+			return true;
+			
+	}
+	
+	/**
+	* Deletes selected items
+	* @since 2.9
+	*/
+	
+	public function a2020_delete_selected(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$itemIDs = $this->utils->clean_ajax_input($_POST['selected']);
+			$returndata = array();
+			$returndata['totaldeleted'] = 0;
+			$returndata['totalfailed'] = 0;
+			
+			if($itemIDs && is_array($itemIDs)){
+				
+				
+				
+					
+				foreach($itemIDs as $item){
+					
+					$currentID = get_current_user_id();
+					
+					if(!current_user_can('delete_post', $item)){
+						
+						
+						$returndata['totalfailed'] += 1;
+						
+					} else {
+						
+						if(get_post_type($item) == 'attachment'){
+							$status = wp_delete_attachment($item);
+						} else {
+							$status = wp_delete_post($item);
+						}
+						
+						
+						if($status){
+							
+							$returndata['totaldeleted'] += 1;
+							
+						} else {
+							
+							$returndata['totalfailed'] += 1;
+						}
+						
+					}
+						
+					
+				}
+					
+				
+			} else {
+				
+				$returndata['error'] = __("Something went wrong",'admin2020');
+				echo json_encode($returndata);
+				die();
+				
+			}
+			
+			
+			$returndata['deleted_message'] = __("Items deleted succesffuly",'admin2020');
+			$returndata['deleted_total'] = $returndata['totaldeleted'];
+			
+			$returndata['failed_message'] = __("Itms couldn't be deleted",'admin2020');
+			$returndata['failed_total'] = $returndata['totalfailed'];
+			echo json_encode($returndata);
+			die();
+			
+		}
+		
+		die();
+		
+	}
+	
+	/**
+	* Build content for front end app
+	* @since 2.9
+	*/
+	
+	public function a2020_get_folders(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$args = array(
+			  'numberposts' => -1,
+			  'post_type'   => 'admin2020folders',
+			  'orderby' => 'title',
+			  'order'   => 'ASC',
+			);
+			
+			$info = $this->component_info();
+			$optionname = $info['option_name'];
+			$privatemode = $this->utils->get_option($optionname,'private-mode');
+			
+			if($privatemode == 'true'){
+				$args['author'] = get_current_user_id();
+			}
+			
+			$folders = get_posts( $args );
+			$structure = array();
+			$folderIDS = array();
+			
+			foreach ($folders as $folder){
+				
+				array_push($folderIDS, $folder->ID);
+				
+			}
+			
+			$args = array('public'   => true);
+			$output = 'objects'; 
+			$post_types = get_post_types( $args, $output );
+			$types = array();
+			
+			
+			foreach($post_types as $posttype){
+				array_push($types,$posttype->name);
+			}
+			
+			///QUERY CONTENT
+			$args = array(
+				'post_type'=> $types,
+				'fields' => 'ids',
+				'posts_per_page' => -1,
+				'post_status' => 'any',
+				'meta_query' => array(
+					 array(
+						'key' => 'admin2020_folder',
+						'value' => $folderIDS,
+						'compare' => 'IN'
+					)
+				),
+			);
+			
+			$query = new WP_Query($args);
+			$contentWithFolder = $query->get_posts();
+			$contentCount = array();
+			
+			foreach($contentWithFolder as $item){
+				
+				$folderid = get_post_meta($item, 'admin2020_folder', true);
+				
+				if(isset($contentCount[$folderid])){
+					$contentCount[$folderid] += 1;
+				} else {
+					$contentCount[$folderid] = 1;
+				}
+				
+			}
+			
+			
+			foreach ($folders as $folder){
+				
+				  $parent_folder = get_post_meta($folder->ID, "parent_folder",true);
+				  
+				  if(!$parent_folder){
+					$structure[] =  $this->build_folder_structure($folder,$folders,$contentCount);
+				  }
+				
+			}
+			
+			
+			
+			
+			echo json_encode($structure);
+		}
+		die();
+	}
 	
 	
-			$movefile = wp_handle_upload( $new_file, $upload_overrides );
-			////ADD Attachment
-			if (is_wp_error($movefile)) {
-				http_response_code(400);
-				$returndata['error'] = __('Failed to upload file','admin2020');
+	
+	/**
+	* Build content for front end app
+	* @since 2.9
+	*/
+	
+	public function a2020_create_folder(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			
+			$folders = $this->utils->clean_ajax_input($_POST['folders']);
+			$name = $folders['name'];
+			$color = $folders['color'];
+			$parent = $folders['parent'];
+			
+			if(!$name){
+				$returndata['error'] = __("Title is required",'admin2020');
 				echo json_encode($returndata);
 				die();
 			}
-	
-			$attachment = array(
-			  "guid" => $movefile['url'],
-			  "post_mime_type" => $movefile['type'],
-			  "post_title" => $withoutExt,
-			  "post_content" => "",
-			  "post_status" => "published",
+			
+			if(!$color){
+				$returndata['error'] = __("Colour is required",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			
+			$my_post = array(
+			  'post_title'    => $name,
+			  'post_status'   => 'publish',
+			  'post_type'     => 'admin2020folders'
 			);
-	
-			$id = wp_insert_attachment( $attachment, $movefile['file'],0);
-	
-			$attach_data = wp_generate_attachment_metadata( $id, $movefile['file'] );
-			wp_update_attachment_metadata( $id, $attach_data );
-			update_post_meta($id, "admin2020_folder",$currentfolder);
-	
-			////END ATTACHMENT
-			$returndata['message'] = __('File saved as copy','admin2020');
-		    $returndata['html'] = $this->build_single_attachment(get_post($id));
-		    echo json_encode($returndata);
 			
+			// Insert the post into the database.
+			$thefolder = wp_insert_post( $my_post );
 			
-		  }
-		  die();
+			if(!$thefolder){
+				$returndata['error'] = __("Something went wrong",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			update_post_meta($thefolder,"color_tag",$color);
+			
+			if(is_numeric($parent) && $parent > 0){
+				update_post_meta($thefolder,"parent_folder",$parent);
+			}
+			
+			$returndata['message'] = __("Folder created",'admin2020');
+			echo json_encode($returndata);
+			die();
+			
+
+		}
+		die();
 	}
+	
+	/**
+	* Updates folder
+	* @since 2.9
+	*/
+	
+	public function a2020_update_folder(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			
+			$folder = $this->utils->clean_ajax_input($_POST['thefolder']);
+			
+			
+			$foldername = $folder['name'];
+			$folderid = $folder['id'];
+			$foldertag = $folder['color'];
+			
+			$my_post = array(
+			  'post_title'    => $foldername,
+			  'post_status'   => 'publish',
+			  'ID'            => $folderid,
+			);
+			
+			// Insert the post into the database.
+			$thefolder = wp_update_post( $my_post );
+			
+			if(!$thefolder){
+				$returndata = array();
+				$returndata['error'] = __('Something went wrong','admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			update_post_meta($folderid,"color_tag",$foldertag);
+			
+			$returndata = array();
+			$returndata['message'] = __('Folder updated','admin2020');
+			echo json_encode($returndata);
+			
+		}
+		die();
+		
+	}
+	
+	
+	/**
+	* Moves Folder
+	* @since 2.9
+	*/
+	public function a2020_move_folder(){
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$folderToMove = $this->utils->clean_ajax_input($_POST['folderiD']);
+			$destination = $this->utils->clean_ajax_input($_POST['destinationId']);
+			
+			if($folderToMove == $destination){
+				$returndata['error'] = __('Unable to move folder into itself','admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			$currentParent = get_post_meta($folderToMove,"parent_folder",true);
+			
+			if($destination == "toplevel"){
+				$status = delete_post_meta($folderToMove,"parent_folder");
+			} else {
+				$status = update_post_meta($folderToMove,"parent_folder",$destination);
+			}
+			
+			
+			
+			if($status != true){
+				
+				$returndata['error'] = __('Unable to move folder','admin2020');
+				echo json_encode($returndata);
+				die();
+				
+			}
+			
+			
+			///CHECK IF WE NEED TO MAKE SUB FOLDERS TOP LEVEL
+			if(!$currentParent || $currentParent == ''){
+					
+					
+					$args = array(
+					  'numberposts' => -1,
+					  'post_type'   => 'admin2020folders',
+					  'orderby' => 'title',
+					  'order'   => 'ASC',
+					  'meta_query' => array(
+						  array(
+							  'key' => 'parent_folder',
+							  'value' => $folderToMove,
+							  'compare' => '=',
+						  )
+					  )
+					);
+					
+					$folders = get_posts( $args );
+					
+					foreach ($folders as $folder){
+						
+						delete_post_meta($folder->ID,"parent_folder");
+						
+					}
+					
+			}
+			
+			$returndata['message'] = __('Folder moved','admin2020');
+			echo json_encode($returndata);
+			die();
+			
+		}
+		die();
+	}
+	
+	
+	/**
+	* Moves content to Folder
+	* @since 2.9
+	*/
+	public function a2020_move_content_to_folder(){
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$contentIds = $this->utils->clean_ajax_input($_POST['contentID']);
+			$destination = $this->utils->clean_ajax_input($_POST['destinationId']);
+			
+			$contentIds = json_decode($contentIds);
+			
+			if(!is_array($contentIds)){
+				$returndata['error'] = __('No content to move','admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			foreach($contentIds as $contentId){
+			
+				if($destination == "toplevel"){
+					$status = delete_post_meta($contentId,"admin2020_folder");
+				} else {
+					$status = update_post_meta($contentId,"admin2020_folder",$destination);
+				}
+				
+			}
+			
+			$returndata['message'] = __('Content moved','admin2020');
+			echo json_encode($returndata);
+			die();
+			
+		}
+		die();
+	}
+	
+	/**
+	* Deletes folder
+	* @since 2.9
+	*/
+	
+	public function a2020_delete_folder(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			
+			$folderID = $this->utils->clean_ajax_input($_POST['activeFolder']);
+			
+			if(!is_numeric($folderID) && !$folderID > 0){
+				$returndata['error'] = __("No folder to delete",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			$currentParent = get_post_meta($folderID, "parent_folder",true);
+			
+			$status = wp_delete_post($folderID);
+			
+			if(!$status){
+				$returndata['error'] = __("Unable to delete the folder",'admin2020');
+				echo json_encode($returndata);
+				die();
+			}
+			
+			$args = array(
+			  'numberposts' => -1,
+			  'post_type'   => 'admin2020folders',
+			  'orderby' => 'title',
+			  'order'   => 'ASC',
+			  'meta_query' => array(
+				  array(
+					  'key' => 'parent_folder',
+					  'value' => $folderID,
+					  'compare' => '=',
+				  )
+			  )
+			);
+			
+			$folders = get_posts( $args );
+			
+			foreach ($folders as $folder){
+				
+				
+				if($currentParent) {
+					update_post_meta($folder->ID,"parent_folder",$currentParent);
+				} else {
+					delete_post_meta($folder->ID,"parent_folder");
+				}
+			}
+			
+			$returndata['message'] = __('Folder deleted','admin2020');
+			echo json_encode($returndata);
+			die();
+			
+
+		}
+		die();
+	}
+	
+	
+	public function build_folder_structure($folder, $folders, $contentcount){
+		
+		
+		$temp = array();
+		$foldercolor = get_post_meta($folder->ID, "color_tag",true);
+		$top_level = get_post_meta($folder->ID, "parent_folder",true);
+		$title = $folder->post_title;
+		
+		$temp['title'] = $title;
+		$temp['color'] = $foldercolor;
+		$temp['id'] = $folder->ID;
+		$temp['count'] = 0;
+		
+		if(isset($contentcount[$folder->ID])){
+			$temp['count'] = $contentcount[$folder->ID];
+		}
+		
+		
+		foreach ($folders as $aFolder) {
+			
+			$folderParent = get_post_meta($aFolder->ID, "parent_folder",true);
+			
+			if($folderParent == $folder->ID){
+				
+				$temp['subs'][] = $this->build_folder_structure($aFolder,$folders, $contentcount);
+				
+			}
+			
+		}
+		
+		return $temp;
+		
+	}
+	
+	/**
+	* Builds posts object for quick edits.
+	* @since 2.9
+	*/
+	
+	public function a2020_open_quick_edit(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$itemId = $this->utils->clean_ajax_input($_POST['itemid']);
+			$object = get_post($itemId);
+			$author = $object->post_author;
+			$authorData = get_userdata($author);
+			$posttype = get_post_type($itemId);
+			
+			$statusobject = get_post_status_object($object->post_status);
+			$niceStatus = $statusobject->label;
+			
+			$alltags =  wp_get_post_tags($itemId);
+			$selectedTags = array();
+			
+			foreach($alltags as $tag){
+				$selectedTags[] = $tag->term_id;
+			}
+		
+			
+			$quickedit['id'] = $itemId;
+			$quickedit['title'] = $object->post_title;
+			$quickedit['status'] = $niceStatus;
+			$quickedit['author'] = $authorData->user_login;
+			$quickedit['created'] = get_the_date( get_option('date_format'), $itemId );
+			$quickedit['modified'] = get_the_modified_date( get_option('date_format'), $itemId );
+			$quickedit['postType'] = $posttype;
+			$quickedit['url'] = get_post_permalink($itemId);
+			
+			if($posttype == 'attachment'){
+				
+				$meta = wp_get_attachment_metadata($itemId);
+				$mime = get_post_mime_type($itemId);
+				$actualMime = explode("/", $mime);
+				$actualMime = $actualMime[0];
+				
+				$quickedit['fileSize'] = $this->utils->formatBytes(filesize( get_attached_file( $itemId ) ));
+				$quickedit['dimensions'] = $meta['width'] . 'px ' . $meta['height'] . 'px';
+				$quickedit['serverName'] = $meta['file'];
+				$quickedit['photoMeta'] = $meta['image_meta'];
+				$quickedit['shortMime'] = $actualMime;
+				$quickedit['src'] = wp_get_attachment_url($itemId);
+				$quickedit['alt'] = get_post_meta($itemId , '_wp_attachment_image_alt', true);
+				$quickedit['description'] = $object->post_content;
+				$quickedit['caption'] = $object->post_excerpt;
+				
+				if (strpos($mime, '/zip') !== false) {
+					$quickedit['icontype'] = 'icon';
+					$quickedit['icon'] = 'inventory_2';
+				}
+				
+				if (strpos($mime, '/pdf') !== false) {
+					$quickedit['icontype'] = 'icon';
+					$quickedit['icon'] = 'picture_as_pdf';
+					$quickedit['pdf'] = true;
+				}
+				
+				
+				
+				if (strpos($mime, 'text') !== false) {
+					$quickedit['icontype'] = 'icon';
+					$quickedit['icon'] = 'description';
+				}
+				
+				if (strpos($mime, '/csv') !== false) {
+					$quickedit['icontype'] = 'icon';
+					$quickedit['icon'] = 'view_list';
+				}
+				
+				
+			} else {
+				
+				$quickedit['selectedStatus'] = array($object->post_status);
+				$quickedit['selectedCategories'] = wp_get_post_categories($itemId);
+				$quickedit['selectedTags'] = $selectedTags;
+				
+			}
+			
+			echo json_encode($quickedit); 
+			
+		}
+		die();
+	}
+	
+	
+	/**
+	* Update item from quick edit
+	* @since 2.9
+	*/
+	
+	public function a2020_update_item(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$itemObject = $this->utils->clean_ajax_input($_POST['options']);
+			$itemId = $itemObject['id'];
+			$posttype = get_post_type($itemId);
+			
+			if($posttype != 'attachment'){
+			
+				$updatePost = array(
+				  'ID'           => $itemId,
+				  'post_title'   => $itemObject['title'],
+				);
+				
+				if(isset($itemObject['selectedStatus'])){
+					$updatePost['post_status'] = $itemObject['selectedStatus'][0];
+				}
+				
+				$status = wp_update_post( $updatePost );
+				
+				if(isset($itemObject['selectedCategories'])){
+					wp_set_post_categories($itemId, $itemObject['selectedCategories']);
+				}
+				
+				if(isset($itemObject['selectedTags'])){
+					
+					foreach ($itemObject['selectedTags'] as $tag){
+						$alltags[] = (int)$tag;
+					}
+					wp_set_post_tags($itemId, $alltags, false);
+				}
+				
+				if($status == 0){
+					$returndata['error'] = __("Unable to update item",'admin2020');
+					echo json_encode($returndata);
+					die();
+				}
+				
+				$statusobject = get_post_status_object($itemObject['selectedStatus'][0]);
+				$niceStatus = $statusobject->label;
+				
+				
+				
+			} else {
+				
+				
+				$attachment = array(
+					'ID' => strip_tags($itemId),
+					'post_title' => strip_tags($itemObject['title']),
+					'post_content' => strip_tags($itemObject['description']),
+					'post_excerpt' => strip_tags($itemObject['caption']),
+				);
+				
+				
+				update_post_meta($itemId , '_wp_attachment_image_alt', strip_tags($itemObject['alt']));
+				$status = wp_update_post( $attachment);
+				
+				if(!$status){
+					$message = __("Unable to save attachment",'admin2020');
+					echo $this->utils->ajax_error_message($message);
+					die();
+				}
+				
+				$postObj = get_post($itemId);
+				$status = $postObj->post_status;
+				$statusobject = get_post_status_object($status);
+				$niceStatus = $statusobject->label;
+				
+				
+				
+			}
+			
+			
+			
+			$returndata['message'] = __('Item updated','admin2020');
+			$returndata['status'] = $niceStatus;
+			echo json_encode($returndata);
+			
+		}
+		die();
+	}
+	
+	
+	/**
+	* Update item from quick edit
+	* @since 2.9
+	*/
+	
+	public function a2020_batch_tags_cats(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			$selected = $this->utils->clean_ajax_input($_POST['selected']);
+			$data = $this->utils->clean_ajax_input($_POST['theTags']);
+			$replaceTags = $data['replaceTags'] == 'true';
+			$replaceCats = $data['replaceCats'] == 'true';
+			$alltags = array();
+			
+			
+			foreach($selected as $itemId){
+				
+				$posttype = get_post_type($itemId);
+			
+				if($posttype != 'attachment'){
+				
+					if(isset($data['tags'])){
+						
+						foreach ($data['tags'] as $tag){
+							$alltags[] = (int)$tag;
+						}
+						
+						wp_set_post_tags($itemId, $alltags, $replaceTags);
+						
+					}
+					
+					if(isset($data['categories'])){
+							
+						wp_set_post_categories($itemId, $data['categories'], $replaceCats);
+							
+					}
+				}
+			}
+			
+			$returndata['message'] = __('Items updated','admin2020');
+			$returndata['status'] = $niceStatus;
+			echo json_encode($returndata);
+			
+		}
+		die();
+	}
+	
+	/**
+	* Build content for front end app
+	* @since 2.9
+	*/
+	
+	public function a2020_get_content(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('a2020-content-security-nonce', 'security') > 0) {
+			
+			
+			
+			////CATEGORIES
+			$args = array(
+				'hide_empty' => false,
+			);
+			
+			$allCategories = get_categories( $args );
+			$categories = array();
+			
+			foreach($allCategories as $category) {
+				$temp = array();
+				$temp['name'] =  strval($category->term_id);
+				$temp['label'] = $category->name;
+				$categories[] = $temp;
+			}
+			
+			//TAGS
+			$alltags = get_tags();
+			$tags = array();
+			
+			foreach($alltags as $tag){
+				$temp = array();
+				$temp['name'] =  strval($tag->term_id);
+				$temp['label'] = $tag->name;
+				$tags[] = $temp;
+			}
+			
+			$searchString = $this->utils->clean_ajax_input($_POST['searchString']);
+			$page = $this->utils->clean_ajax_input($_POST['page']);
+			$filters = $this->utils->clean_ajax_input($_POST['filters']);
+			
+			
+			
+			$date = $filters['date'];
+			$dateComparison = $filters['dateComparison'];
+			
+			$queryStatus = 'any';
+			
+			$postStatuses = get_post_statuses();
+			$statuses = array();
+			
+			$temp = array();
+			$temp['label'] = 'Inherit';
+			$temp['name'] = 'inherit';
+			$statuses[] = $temp;
+			
+			foreach($postStatuses as $key => $value) {
+				$temp = array();
+				$temp['name'] = $key;
+				$temp['label'] = $value;
+				$statuses[] = $temp;
+			}
+			
+			if(isset($_POST['statuses'])){
+				$queryStatus = $this->utils->clean_ajax_input($_POST['statuses']);
+			} 
+			
+			////QUERY POSTS
+			$types = array();
+			$args = array('public'   => true);
+			$output = 'objects'; 
+			$post_types = get_post_types( $args, $output );
+			$filterPostTypes = array();
+			
+			$temp = [];
+			
+			
+			foreach($post_types as $posttype){
+				array_push($types,$posttype->name);
+				$temp = [];
+				$temp['label'] = $posttype->label;
+				$temp['name'] = $posttype->name;
+				$filterPostTypes[] = $temp;
+			}
+			
+			$info = $this->component_info();
+			$optionname = $info['option_name'];
+			$post_types_enabled = $this->utils->get_option($optionname,'post-types-content');
+			$privatemode = $this->utils->get_option($optionname,'private-mode');
+			
+			if($post_types_enabled && is_array($post_types_enabled)){
+				
+				$types = $post_types_enabled;
+				$filterPostTypes = array();
+				
+				foreach($types as $atype){
+					$typeObject = get_post_type_object($atype);
+					$temp = [];
+					$temp['label'] = $typeObject->label;
+					$temp['name'] = $typeObject->name;
+					$filterPostTypes[] = $temp;
+				}
+				
+			} 
+			
+			if(isset($_POST['types'])){
+				$types = $this->utils->clean_ajax_input($_POST['types']);
+			} 
+			
+			
+			
+			
+			$args = array(
+			  'post_type' => $types,
+			  'post_status' => $queryStatus,
+			  'posts_per_page' => $filters['perPage'],
+			  'paged' => $page,
+			  's' => $searchString,
+			);
+			
+			if($privatemode == 'true'){
+				$args['author'] = get_current_user_id();
+			}
+			
+			if($filters['selectedFileTypes']){
+				$args['post_mime_type'] = $filters['selectedFileTypes'];
+			}
+			
+			
+			if(isset($filters['selectedCategories'])){
+				
+				$args['category__in'] = $filters['selectedCategories'];
+			}
+			
+			if(isset($filters['selectedTags'])){
+				
+				$args['tag__in'] = $filters['selectedTags'];
+			}
+			
+			
+			if($date && $dateComparison){
+				
+				if($dateComparison == 'on'){
+					
+					$year = date('Y',strtotime($date));
+					$month = date('m',strtotime($date));
+					$day = date('d',strtotime($date));
+					
+					$args['date_query'] = array(
+							'year'  => $year,
+							'month' => $month,
+							'day' => $day,
+					);
+					
+				} else {  
+			
+					if($dateComparison == 'before'){
+						$args['date_query'] = array(
+							array(
+								'before' => date('Y-m-d',strtotime($date)),
+								'inclusive' => true,
+							)
+						);
+					} else if ($dateComparison == 'after'){
+						$args['date_query'] = array(
+							array(
+								'after' => date('Y-m-d',strtotime($date)),
+								'inclusive' => true,
+							)
+						);
+					}
+					
+				} 
+			}
+			
+			if($filters['activeFolder'] != ''){
+				
+				if($filters['activeFolder'] == 'uncat'){
+					$args['meta_query'] = array(
+						array(
+							'key' => 'admin2020_folder',
+							'compare' => 'NOT EXISTS'
+						)
+					);
+				} else {
+			
+					$args['meta_query'] = array(
+						array(
+							'key' => 'admin2020_folder',
+							'value' => $filters['activeFolder'],
+							'compare' => '='
+						)
+					);
+					
+				}
+				
+			}
+				
+			wp_reset_query();
+			$attachments = new WP_Query($args);
+			$totalFound = $attachments->found_posts;
+			$foundPosts = $attachments->get_posts();
+			$totalPages = $attachments->max_num_pages;
+			
+			///BUILD RETURN DATA
+			$postData = array();
+			
+			foreach($foundPosts as $item){
+				
+				$postAuthorId = $item->post_author;
+				$authorData = get_userdata($postAuthorId);
+				$authorLink = get_edit_profile_url($postAuthorId);
+				$postType = get_post_type($item->ID);
+				
+				$statusObj = get_post_status_object($item->post_status);
+				$postStatus = $statusObj->label;
+				
+				$temp = array();
+				$temp['name'] = $item->post_title;
+				$temp['type'] = $postType;
+				$temp['date'] = get_the_date(get_option('date_format'), $item);
+				$temp['author'] = $authorData->user_login;
+				$temp['authorLink'] = $authorLink;
+				$temp['status'] = $postStatus;
+				$temp['id'] = $item->ID;
+				$temp['url'] = get_the_permalink($item->ID);
+				$temp['editurl'] = get_edit_post_link($item->ID,'&');
+				
+				
+				if($postType == 'attachment'){
+					
+					$mime = get_post_mime_type($item);
+					$actualMime = explode("/", $mime);
+					$actualMime = $actualMime[0];
+					
+					$attachment_info = wp_get_attachment_image_src($item->ID,'thumbnail',true);
+					$imageMed = wp_get_attachment_image_src($item->ID,'medium',true);
+					$small_src = $attachment_info[0];
+					$temp['icontype'] = 'image';
+					$temp['icon'] = $small_src;
+					$temp['iconLarge'] = $imageMed[0];
+					$temp['mime'] = $mime;
+					$temp['fileUrl'] = wp_get_attachment_url($item->ID);
+					
+					if($actualMime == 'audio'){
+						$temp['icontype'] = 'icon';
+						$temp['icon'] = 'audiotrack';
+					}
+					
+					if($actualMime == 'video'){
+						$temp['icontype'] = 'icon';
+						$temp['icon'] = 'smart_display';
+					}
+					
+					if (strpos($mime, '/zip') !== false) {
+						$temp['icontype'] = 'icon';
+						$temp['icon'] = 'inventory_2';
+					}
+					
+					if (strpos($mime, '/pdf') !== false) {
+						$temp['icontype'] = 'icon';
+						$temp['icon'] = 'picture_as_pdf';
+						$temp['pdf'] = true;
+					}
+					
+					if (strpos($mime, 'text') !== false) {
+						$temp['icontype'] = 'icon';
+						$temp['icon'] = 'description';
+					}
+					
+					
+					
+				} else {
+					
+					$image = get_the_post_thumbnail_url($item->ID,'thumbnail');
+					$imageMed = wp_get_attachment_url( get_post_thumbnail_id($item->ID) );
+					
+					
+					if($image){
+						$temp['icontype'] = 'image';
+						$temp['icon'] = $image;
+						$temp['iconLarge'] = $imageMed;
+					} else {
+						$temp['icontype'] = 'icon';
+						$temp['icon'] = 'library_books';
+					}
+					
+				}
+				
+				
+				
+				$postData[] = $temp;
+				
+			}
+			
+			
+			
+			/////VIEWS 
+			$currentviews = array();
+			$a2020_options = get_option( 'admin2020_settings' );
+			
+			if( isset( $a2020_options['modules']['admin2020_admin_content']['views'] ) ) {
+				
+				$currentviews = $a2020_options['modules']['admin2020_admin_content']['views'];
+				
+			}
+			
+			$count = 0;
+			$allViews = array();
+			
+			if($currentviews && is_array($currentviews)){
+				foreach($currentviews as $view){
+					$view['id'] = $count;
+					$count += 1;
+					$allViews[] = $view;
+				}
+			}
+			
+			$filetypes[] = array('name' => 'image','label' => 'Image');
+			$filetypes[] = array('name' => 'video','label' => 'Video');
+			$filetypes[] = array('name' => 'application','label' => 'Zip');
+			$filetypes[] = array('name' => 'text','label' => 'Text File');
+			$filetypes[] = array('name' => 'audio','label' => 'Audio');
+			
+			$returndata = array();
+			$returndata['content'] = $postData;
+			$returndata['total'] = $totalFound;
+			$returndata['totalPages'] = $totalPages;
+			$returndata['postTypes'] = $filterPostTypes;
+			$returndata['postStatuses'] = $statuses;
+			$returndata['fileTypes'] = $filetypes;
+			$returndata['categories'] = $categories;
+			$returndata['views'] = $allViews;
+			$returndata['tags'] = $tags;
+			
+			
+			echo json_encode($returndata);
+			
+		}
+		die();
+		
+	}
+	
+	
+	/**
+	* Adds media menu item
+	* @since 2.9
+	*/
+	
+	public function add_menu_item() {
+		
+		add_menu_page( '2020_content', __('Content',"admin2020"), 'read', 'admin_2020_content', array($this,'build_content_page'),'dashicons-database', 4 );
+		return;
+	
+	}
+	
+	/**
+	* Build content page
+	* @since 2.9
+	*/
+	
+	public function build_content_page(){
+		
+		?>
+		
+		<div id="a2020-content-app" class="uk-padding">
+			<?php
+			$this->build_header();
+			$this->build_toolbar();
+			$this->active_filters();
+			
+			?>
+			
+			<div class="uk-grid uk-grid" >
+				
+				<div class="uk-width-1-1@s uk-width-1-4@m " v-if="contentTable.folderPanel">
+			    <?php $this->build_folders(); ?>
+				</div>
+				
+				<div class="uk-width-expand">	
+				<?php $this->build_table(); ?>
+				</div>
+			</div>
+			<?php
+			$this->build_batch_options();
+			$this->build_upload_modal();
+			$this->build_quick_edit_modal();
+			$this->save_view_options();
+			$this->build_batch_tags_and_categories();
+			$this->build_batch_rename();
+			?>
+		</div>
+		<?php
+	}
+	
+	/**
+	* Build batch tags and cats modal
+	* @since 2.9
+	*/
+	
+	public function build_batch_tags_and_categories(){
+		
+		?>
+		<div id="tags-cats-modal" class="uk-flex-top" uk-modal>
+		  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding-remove">
+			<div class="uk-padding" style="padding-top: 15px; padding-bottom: 15px;">
+			  <h4 class="uk-margin-remove">
+				  <span class="material-icons-outlined" style="font-size: 20px; position: relative; top: 3px;">category</span> 
+			  		<?php _e('Update Tags and Categories','admin2020')?></h4>
+			  <button class="uk-modal-close-default uk-position-small uk-position-top-right uk-icon uk-close" type="button" uk-close=""></button>
+			</div>
+			<div class="uk-padding a2020-border bottom top">
+			
+				<div class="uk-margin-bottom">
+					<multi-select :options="contentTable.categories" :selected="batchUpdate.categories"
+					:name="'<?php _e('Categories','admin2020')?>'"
+					:placeholder="'<?php _e('Search categories...','admin2020')?>'"></multi-select>
+					
+					<div class="uk-margin-small-top">
+						<label class="uk-text-meta uk-margin-small-top">
+							<input type="checkbox" class="uk-checkbox uk-margin-small-right" v-model="batchUpdate.replaceCats"> 
+							<?php _e('Keep existing categories','admin2020') ?>
+						</label>
+					</div>
+				</div>	
+				
+				
+				<div class="">
+				  <!--CONTAINER -->
+					<multi-select :options="contentTable.tags" :selected="batchUpdate.tags"
+					:name="'<?php _e('Tags','admin2020')?>'"
+					:placeholder="'<?php _e('Search tags...','admin2020')?>'"></multi-select>
+					
+					<div class="uk-margin-small-top">
+						<label class="uk-text-meta ">
+						  <input type="checkbox" class="uk-checkbox uk-margin-small-right" v-model="batchUpdate.replaceTags"> 
+						  <?php _e('Keep existing tags','admin2020') ?>
+						</label>
+					</div>
+				</div>
+			  
+			  
+			</div>
+			<div class="uk-padding" style="padding-top: 15px; padding-bottom: 15px;">
+				<button class="uk-button uk-button-secondary" @click="batchUpdateTagsCats()"> <?php _e('Update','admin2020') ?> </button>
+			</div>
+		  </div>
+		</div>
+		<?php
+	}
+	
+	/**
+	* Build batch rename modal
+	* @since 2.9
+	*/
+	
+	public function build_batch_rename(){
+		
+		?>
+		<div id="batch-rename-modal" class="uk-flex-top" uk-modal>
+		  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding-remove">
+			<div class="uk-padding" style="padding-top: 15px; padding-bottom: 15px;">
+			  <h4 class="uk-margin-remove">
+				  <span class="material-icons-outlined" style="font-size: 20px; position: relative; top: 3px;">edit</span> 
+					  <?php _e('Batch Rename','admin2020')?></h4>
+			  <button class="uk-modal-close-default uk-position-small uk-position-top-right uk-icon uk-close" type="button" uk-close=""></button>
+			</div>
+			<div class="uk-padding a2020-border bottom top">
+				
+				
+				<div class="uk-margin-bottom">
+					<div class="uk-grid-small" uk-grid>
+						
+						<div class="uk-width-1-1">
+							<div class="uk-h5"><?php _e('Attribute to rename','admin2020')?></div>
+						</div>
+						
+						<div class="uk-width-1-3">
+							<select class="uk-select" v-model="batchRename.selectedAttribute">
+									<option value="name"><?php _e('Name','admin2020') ?></option>
+									<option value="meta"><?php _e('Meta Key','admin2020') ?></option>
+									<option value="alt"><?php _e('Alt Tag (Attachments only)','admin2020') ?></option>
+							</select>
+						</div>
+						
+						<div class="uk-width-1-3" v-if="batchRename.selectedAttribute == 'meta'">
+							<input  class="uk-input" v-model="batchRename.metaKey" type="text" placeholder="<?php _e('Meta Key Name')?>">
+						</div>
+						
+						
+					</div>
+				</div>
+				
+				<div class="uk-margin-bottom">
+					<div class="uk-grid-small" uk-grid=>
+						
+						<div class="uk-width-1-1">
+							<div class="uk-h5"><?php _e('Filename Structure','admin2020')?></div>
+						</div>
+						
+						<div class="uk-width-1-3">
+							<select class="uk-select" v-model="batchRename.selectedOption">
+								<option disabled selected value="0"><?php _e('Rename Item','admin2020')?></option>
+								<template v-for="item in batchRename.renameTypes">
+									<option :value="item.name">{{item.label}}</option>
+								</template>
+							</select>
+						</div>
+						
+						<div class="uk-width-1-3">
+							<button v-if="batchRename.selectedOption" @click="addBatchNameOption()" class="uk-button uk-button-default"><?php _e('Add','admin2020')?></button>
+						</div>
+						
+						
+					</div>
+				</div>
+			
+				<div class="name-items uk-margin-bottom">
+					
+					
+					
+					<div v-for="(item, index) in batchRename.selectedTypes">
+						
+						<div class="uk-grid-small uk-margin" uk-grid>
+							
+							<div class="uk-width-1-4">
+								<select class="uk-select" v-model="item.name">
+									<template v-for="type in batchRename.renameTypes">
+										<option :value="type.name">{{type.label}}</option>
+									</template>
+								</select>
+							</div>
+							
+							<div class="uk-width-1-4">
+								<input v-if="item.name == 'Text'" v-model="item.primaryValue" class="uk-input" type="text" placeholder="<?php _e('New Text','admin2020')?>">
+								
+								<input v-if="item.name == 'Date Created'" v-model="item.primaryValue" class="uk-input" type="text" placeholder="<?php _e('Date Format','admin2020')?>">
+								
+								<input v-if="item.name == 'Sequence Number'" v-model="item.primaryValue" class="uk-input" type="number" placeholder="<?php _e('Start Number','admin2020')?>">
+								
+								<input v-if="item.name == 'Meta Value'" v-model="item.primaryValue" class="uk-input" type="text" placeholder="<?php _e('Meta key Name','admin2020')?>">
+								
+								<input v-if="item.name == 'Find and Replace'" v-model="item.primaryValue" class="uk-input" type="text" placeholder="<?php _e('Find','admin2020')?>">
+							</div>
+							
+							<div class="uk-width-1-4">
+								<input v-if="item.name == 'Find and Replace'" v-model="item.secondaryValue" class="uk-input" type="text" placeholder="<?php _e('Replace','admin2020')?>">	
+							</div>
+							
+							<div class="uk-width-1-4 uk-flex uk-flex-middle uk-flex-right">
+								<span v-if="batchRename.selectedTypes.length > 1" class="uk-margin-right">
+									<a href="#" v-if="(index + 1) < batchRename.selectedTypes.length" class="uk-link-muted" @click="moveBatchOptionDown(index)">
+										<span class="material-icons-outlined">expand_more</span>
+									</a>
+									<a href="#" v-if="index > 0" class="uk-link-muted " @click="moveBatchOptionUp(index)">
+										<span class="material-icons-outlined">expand_less</span>
+									</a>
+								</span>
+								<a href="#" class="uk-link-muted" @click="removeBatchOption(index)">
+									<span class="material-icons-outlined">remove_circle_outline</span>
+								</a>
+							</div>
+							
+						</div>
+					</div>
+					
+					
+				</div>	
+				
+				<div v-if="batchRename.preview.length > 0"class="uk-margin">
+					<div class="uk-h5"><?php _e('Preview','admin2020')?></div>
+					<div class="uk-background-muted uk-padding-small uk-border-rounded a2020-border all" style="max-height: 200px; overflow: auto;">
+						<div class="uk-grid uk-grid-small" uk-grid>
+							<div class="uk-width-1-2 uk-text-bold"><?php _e('Current','admin2020')?> {{batchRename.selectedAttribute}}</div>
+							<div class="uk-width-1-2 uk-text-bold"><?php _e('New','admin2020')?> {{batchRename.selectedAttribute}}</div>
+							
+							<template v-for="preview in batchRename.preview">
+								<div class="uk-width-1-2 ">{{preview.current}}</div>
+								<div class="uk-width-1-2 ">{{preview.new}}</div>
+							</template>
+							
+						</div>
+					</div>
+				</div>
+			  
+			</div>
+			<div class="uk-padding" style="padding-top: 15px; padding-bottom: 15px;">
+				<div class="uk-flex uk-flex-between">
+					<button class="uk-button uk-button-default" @click="batchRenamePreview()"> <?php _e('Preview','admin2020') ?> </button>
+					<button class="uk-button uk-button-secondary" @click="batchRenameProcess()"> <?php _e('Rename','admin2020') ?> </button>
+				</div>
+			</div>
+		  </div>
+		</div>
+		<?php
+	}
+	
+	/**
+	* Build content page header
+	* @since 2.9
+	*/
+	
+	public function build_header(){
+		
+		?>
+		<div class="uk-grid uk-grid-small " style="margin-bottom: 30px;">
+			<div class="uk-width-expand">
+				<div class="uk-h2"><?php _e('Content','admin2020')?></div>
+			</div>
+			
+		</div>
+		<div class="uk-grid uk-grid-small uk-margin-bottom" v-if="contentTable.views.allViews.length > 0">
+			
+			<div class="uk-width-auto">
+				<ul class="uk-tab a2020-views" uk-tab  >
+					<li :class="{'uk-active' : contentTable.views.currentView == []}">
+						<a href="#" @click="resetFilters()"><?php _e('All','admin2020')?></a>
+					</li>
+					<template v-for="view in contentTable.views.allViews">
+						<li >
+							<a href="#" @click="setView(view)">{{view.name}}</a>
+							<div uk-drop="delay-show:800;pos:top-justify;offset:10">
+								<span class='a2020-post-label private'>
+									<a href="#" class="uk-text-danger" @click="removeView(view)"><?php _e('Remove','admin2020') ?></a>
+								</span>
+							</div>
+						</li>
+					</template>
+				</ul>
+			</div>
+			
+		</div>
+		<?php
+		
+	}
+	
+	/**
+	* Build upload modal
+	* @since 2.9
+	*/
+	
+	public function build_upload_modal(){
+		
+		
+		$maxupload = $this->utils->formatBytes(wp_max_upload_size());
+		$maxupload = str_replace(" ", "", $maxupload);
+		?>
+			
+		
+		<div id="a2020-upload-modal" uk-modal>
+			<div class="uk-modal-dialog uk-modal-body uk-padding-remove" style="">
+				
+				
+				
+				<div class="a2020-border bottom uk-padding-medium" style="padding-bottom: 15px;padding-top:15px;">
+					<div class="uk-h4 uk-margin-remove"><?php _e('Upload','admin2020')?></div>
+					<button class="uk-modal-close-default" type="button" uk-close></button>
+				</div>
+				
+				<div class="uk-padding-medium">
+					
+					<input type="file" 
+					class="filepond"
+					name="filepond" 
+					multiple 
+					id="a2020_file_upload"
+					data-allow-reorder="true"
+					data-max-file-size="<?php echo $maxupload?>"
+					data-max-files="30">
+					
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+	
+	
+	/**
+	* Builds quick edit overlay
+	* @since 2.9
+	*/
+	
+	public function build_quick_edit_modal(){
+		
+		
+		
+		?>
+		
+		
+		<div id="a2020-quick-edit-modal" class="uk-modal-full" uk-modal style="z-index: 999999" >
+			
+			<div class="uk-modal-dialog">
+				
+				
+				
+				<div class="uk-grid-collapse uk-height-viewport uk-overflow-hidden" uk-grid>
+					
+					<div class="uk-width-expand a2020-border right uk-height-viewport uk-position-relative uk-overflow-hidden" style="max-height: 100vh;padding-bottom: 100px">
+						
+						<div class="uk-padding a2020-border bottom" style="padding-top: 10px;padding-bottom:10px;">
+							<a href="#" class="uk-link-muted"  onclick="UIkit.modal('#a2020-quick-edit-modal').hide()">
+								<span class="material-icons-outlined" style="font-size: 20px; position: relative; top: 6px; left: -4px;">chevron_left</span>
+								<span class="uk-text-bold"><?php _e('Back to content','admin2020')?></span>
+							</a>
+						</div>
+						<div class="uk-padding uk-position-relative uk-overflow-auto" style="height: calc(100vh - 45px);padding-bottom: 100px;box-sizing: border-box;">
+							
+							<div class="" style="margin-bottom: 40px;">
+								<div class="uk-h3 uk-margin-small-bottom">{{quickEdit.title}}</div>
+								
+								<div class="uk-margin-top">
+									<span class="a2020-post-label uk-margin-small-right">{{quickEdit.postType}}</span>
+									<span class="a2020-post-label" :class="quickEdit.status">{{quickEdit.status}}</span>
+								</div>
+							</div>
+							
+							
+							
+							<div class="uk-text-muted uk-text-bold uk-margin-small-bottom"><?php _e('Details','admin2020')?></div>
+							
+							<div class="uk-margin-bottom uk-background-muted uk-padding-small uk-border-rounded a2020-border all uk-height-small uk-overflow-auto">
+								
+								<div class="uk-text-meta uk-margin-small-bottom" uk-tooltip="title:<?php _e('Author','admin2020') ?>;delay:300;pos: top-left" >
+									<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px;">person</span>
+									<span>{{quickEdit.author}}</span>
+								</div>
+								<div class="uk-text-meta uk-margin-small-bottom" uk-tooltip="title:<?php _e('Created On','admin2020') ?>;delay:300;pos: top-left">
+									<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px;">calendar_today</span>
+									<span>{{quickEdit.created}}</span>
+								</div>
+								<div class="uk-text-meta uk-margin-small-bottom" uk-tooltip="title:<?php _e('Last modified on','admin2020') ?>;delay:300;pos: top-left">
+									<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px;">edit</span>
+									<span>{{quickEdit.modified}}</span>
+								</div>
+								
+								<div class="uk-text-meta uk-margin-small-bottom">
+									<span class="material-icons-outlined uk-margin-small-right uk-margin-small-right" 
+									style="font-size: 15px; position: relative; top: 2px; ">link</span>
+									<a :href="quickEdit.url">{{quickEdit.url}}</a>
+								</div>
+								
+								<template v-if="quickEdit.postType == 'attachment'">
+								
+									<div v-if="quickEdit.shortMime == 'image' || quickEdit.shortMime == 'video'" 
+									class="uk-text-meta uk-margin-small-bottom" uk-tooltip="title:<?php _e('Dimensions','admin2020') ?>;delay:300;pos: top-left">
+										<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px;">photo_size_select_large</span>
+										<span>{{quickEdit.dimensions}}</span>
+									</div>
+									
+									<div class="uk-text-meta uk-margin-small-bottom" uk-tooltip="title:<?php _e('File Size','admin2020') ?>;delay:300;pos: top-left">
+										<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px;">description</span>
+										<span>{{quickEdit.fileSize}}</span>
+									</div>
+									
+									<div class="uk-text-meta uk-margin-small-bottom" uk-tooltip="title:<?php _e('File Name','admin2020') ?>;delay:300;pos: top-left">
+										<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px;">dns</span>
+										<span>{{quickEdit.serverName}}</span>
+									</div>
+								
+								</template>
+								
+							</div>
+							
+							
+							
+							
+							
+							<div class="uk-margin">
+								<div class="uk-text-muted uk-text-bold uk-margin-small-bottom"><?php _e('Title','admin2020')?></div>
+								<input class="uk-input" type="text" v-model="quickEdit.title"  placeholder="<?php _e('Title','admin2020')?>">
+							</div>
+							
+							<template v-if="quickEdit.postType == 'attachment'">
+									
+									<div class="uk-margin">
+										<div class="uk-text-muted uk-text-bold uk-margin-small-bottom"><?php _e('Alt Text','admin2020')?></div>
+										<input class="uk-input" type="text" v-model="quickEdit.alt"  placeholder="<?php _e('Alt','admin2020')?>">
+									</div>
+									
+									<div class="uk-margin">
+										<div class="uk-text-muted uk-text-bold uk-margin-small-bottom"><?php _e('Caption','admin2020')?></div>
+										<textarea cols="5" class="uk-textarea uk-border-rounded" v-model="quickEdit.caption"  placeholder="<?php _e('Caption','admin2020')?>"></textarea>
+									</div>
+									
+									<div class="uk-margin">
+										<div class="uk-text-muted uk-text-bold uk-margin-small-bottom"><?php _e('Description','admin2020')?></div>
+										<textarea style="height: 75px" class="uk-textarea uk-border-rounded" v-model="quickEdit.description"  placeholder="<?php _e('Description','admin2020')?>"></textarea>
+									</div>
+									
+									
+							</template>
+							
+							<!-- IMAGE META -->
+							<template v-if="quickEdit.shortMime == 'image' || quickEdit.shortMime == 'video' || quickEdit.shortMime == 'audio'" >
+								
+								<template v-if="quickEdit.photoMeta">
+									<div class="uk-text-muted uk-text-bold uk-margin-small-bottom"><?php _e('Meta Data','admin2020')?></div>
+								
+									<div class="uk-margin-bottom uk-background-muted uk-padding-small uk-border-rounded a2020-border all uk-height-small uk-overflow-auto">
+										
+										<template  v-for="(value, name) in quickEdit.photoMeta">
+											  <div class="uk-text-meta uk-margin-small-bottom">
+												  <span class="uk-margin-small-right uk-text-bold">{{ name }}:</span>
+												  <span> {{ value }}</span>
+											  </div>
+										</template>
+										
+									</div>
+								</template>
+							
+							</template>
+							
+							<template v-if="quickEdit.postType != 'attachment'">
+								<div class="uk-margin">
+									<div class="uk-text-muted uk-text-bold uk-margin-small-bottom">
+										<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">check_circle</span>
+										<?php _e('Status','admin2020') ?>
+									</div>
+									
+									<multi-select :options="contentTable.postStatuses" :selected="quickEdit.selectedStatus"
+									:single="true"
+									:name="'<?php _e('Status','admin2020')?>'"
+									:placeholder="'<?php _e('Search status...','admin2020')?>'"></multi-select>
+								</div>
+								
+								<div class="uk-margin">
+									<div class="uk-text-muted uk-text-bold uk-margin-small-bottom">
+										<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">category</span>
+										<?php _e('Categories','admin2020') ?>
+									</div>
+									
+									<multi-select :options="contentTable.categories" :selected="quickEdit.selectedCategories"
+									:name="'<?php _e('Categories','admin2020')?>'"
+									:placeholder="'<?php _e('Search categories...','admin2020')?>'"></multi-select>
+								</div>
+								
+								<div class="uk-margin">
+									<div class="uk-text-muted uk-text-bold uk-margin-small-bottom">
+										<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">label</span>
+										<?php _e('Tags','admin2020') ?>
+									</div>
+									
+									<multi-select :options="contentTable.tags" :selected="quickEdit.selectedTags"
+									:name="'<?php _e('Tags','admin2020')?>'"
+									:placeholder="'<?php _e('Search tags...','admin2020')?>'"></multi-select>
+								</div>
+							</template>
+							
+							
+						</div>
+						
+						<div class="uk-position-bottom uk-padding a2020-border top uk-flex uk-flex-between  uk-background-default" style="padding-top: 15px;padding-bottom: 15px">
+							<button class="uk-button uk-button-danger" type="button" @click="deleteItem(quickEdit.id)" style="border-radius: 4px;"><?php _e('Delete','admin2020')?></button> 
+							<button class="uk-button uk-button-secondary" type="button" @click="updateItem()"><?php _e('Update','admin2020')?></button> 
+						</div>
+						
+					</div>
+					<div class="uk-width-1-1@s uk-width-2-3@m ">
+						
+						
+						
+						<iframe v-if="quickEdit.postType != 'attachment'" :src="quickEdit.url" style="width:100%;height: 100%;"></iframe>
+						
+						<div v-if="quickEdit.shortMime == 'image'" class="uk-flex uk-flex-middle uk-flex-center uk-height-viewport uk-overflow-auto" style="max-height: 100vh">
+							<div class="uk-grid uk-grid-small">
+								<div class="uk-width-1-1 uk-flex uk-flex-center">
+									<button class="uk-button uk-button-small uk-button-secondary uk-margin-small-bottom" @click="openImageEdit()"><?php _e('Edit Image','admin2020');?></button>
+								</div>
+								<div class="uk-width-1-1 uk-flex uk-flex-center">
+									<img class="uk-border-rounded" :src="quickEdit.src" style="max-width:90%;max-height: auto;" >
+								</div>
+							</div>
+							<!-- <div class="content-image-editor"></div>-->
+						</div>
+						
+						<div v-if="quickEdit.shortMime == 'video' || quickEdit.shortMime == 'audio'" 
+						class="uk-flex uk-flex-middle uk-flex-center uk-height-viewport uk-overflow-auto" style="max-height: 100vh">
+							<video :src="quickEdit.src" controls uk-video="autoplay: false" style="width: 90%"></video>
+						</div>
+						
+						<iframe v-if="quickEdit.pdf" :src="quickEdit.src" style="width:100%;height: 100%;"></iframe>
+						
+						<div v-if="quickEdit.shortMime != 'video' && quickEdit.shortMime != 'audio' && quickEdit.shortMime != 'image' && quickEdit.postType == 'attachment' && !quickEdit.pdf" 
+						class="uk-flex uk-flex-middle uk-flex-center uk-height-viewport uk-overflow-auto" style="max-height: 100vh">
+							
+							<!-- IS ICON -->
+							<span v-if="quickEdit.icontype == 'icon'" class="material-icons-outlined" style="font-size: 135px;">{{quickEdit.icon}}</span>
+							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+		</div>
+		
+		<?php
+		
+		
+	}
+	
+	/**
+	* Build content page header
+	* @since 2.9
+	*/
+	
+	public function build_toolbar(){
+		
+		?>
+		
+		
+		<div class="uk-grid uk-grid-small uk-margin-bottom" uk-grid>
+			<div class="uk-width-1-1@s uk-width-expand@m">
+				<ul class="uk-iconnav">
+					<li><a href="#" 
+					:class="{'uk-text-primary' : contentTable.folderPanel == true}"
+					@click="switchFolderPanel()"><span class="material-icons-outlined">folder</span></a></li>
+					<li>
+						<a href="#" uk-tooltip="title: <?php _e('Filters','admin2020')?>;delay:300"><span class="material-icons-outlined">filter_list</span></a>
+						<div uk-dropdown="mode: click;pos: bottom-left;"  class="content-table-filters uk-dropdown uk-dropdown-bottom-left " style="width: 500px; max-width: 100%;padding:25px;">
+							<?php $this->build_filters(); ?>
+						</div>
+					</li>
+					<li><a href="#" uk-toggle="target:#a2020-upload-modal"><span class="material-icons-outlined">file_upload</span></a></li>
+					<li>
+						<a href="#"><span class="material-icons-outlined">tune</span></a>
+						<div uk-dropdown="mode: click;pos: bottom-left;"  class="uk-dropdown uk-dropdown-bottom-left uk-padding-medium">
+							
+							<div class="a2020-switch-container uk-margin-bottom">
+								  <button  
+								  uk-tooltip="title:<?php _e('List Mode','admin2020') ?>;delay:300"
+								  :class="{ 'active' : this.contentTable.mode == 'list'}" 
+								  @click="this.contentTable.mode = 'list'">
+								  	<span class="material-icons-outlined">list</span>
+								  </button>
+								  
+								  <button  
+								  uk-tooltip="title:<?php _e('Grid Mode','admin2020') ?>;delay:300"
+								  :class="{ 'active' :  this.contentTable.mode == 'grid'}" 
+								  @click="this.contentTable.mode = 'grid'">
+									  <span class="material-icons-outlined">auto_awesome_mosaic</span>
+								  </button>
+							</div>
+							
+							<div class="uk-margin-bottom">
+								<div class="uk-text-bold uk-margin-small-bottom">
+									<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">article</span>
+									<?php _e('Items Per Page','admin2020')?>
+								</div>
+								<div class="uk-width-1-1">
+									<input class="uk-input uk-form-small" type="number" min="1" :max="contentTable.total" v-model="contentTable.filters.perPage">
+								</div>
+							</div>
+							
+							<div class="uk-margin-bottom">
+								<div class="uk-text-bold uk-margin-small-bottom">
+									<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px;">auto_awesome_mosaic</span>
+									<?php _e('Columns','admin2020')?>
+								</div>
+								<div class="uk-width-1-1">
+									<input class="uk-range" type="range"  min="1" max="6" step="1" v-model="contentTable.gridSize">
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="uk-inline" style="top: -2px;">
+							<span class="material-icons-outlined uk-form-icon">search</span>
+							<input class="uk-input uk-form-small" placeholder="<?php _e('Search...','admin2020')?>" v-model="contentTable.filters.search" 
+							style="width:100px;border-color: transparent">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="uk-width-auto">
+				<span class="uk-background-default uk-border-rounded a2020-border all uk-text-meta" style="padding: 5px;display: block">
+					{{fileList.length}} 
+					<span v-if="contentTable.total > fileList.length">
+						<?php _e('of','admin2020')?> 
+						{{contentTable.total}}
+					</span>
+					<?php _e('items','admin2020')?> 
+					</span>
+			</div>
+			<div class="uk-width-auto"  v-if="fileList.length < contentTable.total">
+						
+						<?php $this->build_pagination(); ?>
+					
+			</div>
+		</div>
+		
+		<?php
+	}
+	
+	/**
+	* Build folders panel
+	* @since 2.9
+	*/
+	public function build_folders(){
+		?>
+		
+		<div class="uk-background-default uk-border-rounded a2020-border all " uk-sticky="offset: 100;media: 1000">
+			
+			<div class="folder-toolbar  uk-padding-small a2020-border bottom" >
+				<ul class="uk-iconnav">
+					<li>
+						<a href="#" uk-tooltip="delay:300;title:<?php _e('New Folder','admin2020')?>" uk-toggle="target:#newfolderpanel">
+							<span class="material-icons" style="font-size: 22px">create_new_folder</span>
+						</a>
+					</li>
+					<li  class="uk-text-right" style="flex-grow: 1;" v-if="folders.activeFolder[0] > 0">
+						<a  href="#" @click="confirmDeleteFolder()" >
+							<span uk-tooltip="delay:300;title:<?php _e('Delete Folder','admin2020')?>" class="material-icons uk-text-danger" style="font-size: 22px;">delete_outline</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="new-folder uk-padding-small a2020-border bottom" id="newfolderpanel" hidden="true">
+				
+				<div class="uk-text-meta uk-margin-small-bottom"><?php _e('Folder Name','admin2020')?>:</div>
+				<input class="uk-input uk-margin-bottom" v-model="folders.newFolder.name" placeholder="<?php _e('Name','admin2020')?>..." type="text">
+				
+				<div class="" style="margin-bottom: 30px;">
+					
+					<div class="uk-text-meta uk-margin-small-bottom"><?php _e('Folder Colour','admin2020')?>:</div>
+				
+					<div class="uk-child-width-auto uk-flex uk-flex-between uk-margin-small-bottom" id="admin2020_foldertag">
+						
+						<div>
+							<a href="#" class="color_tag" style="background-color:#0c5cef" 
+							:class="{'selected' : folders.newFolder.color == '#0c5cef'}" @click="folders.newFolder.color = '#0c5cef'"></a>
+							<a href="#" class="color_tag" style="background-color:#32d296" 
+							:class="{'selected' : folders.newFolder.color == '#32d296'}" @click="folders.newFolder.color = '#32d296'"></a>
+							<a href="#" class="color_tag" style="background-color:#faa05a" 
+							:class="{'selected' : folders.newFolder.color == '#faa05a'}" @click="folders.newFolder.color = '#faa05a'"></a>
+							<a href="#" class="color_tag" style="background-color:#f0506e" 
+							:class="{'selected' : folders.newFolder.color == '#f0506e'}" @click="folders.newFolder.color = '#f0506e'"></a>
+							<a href="#" class="color_tag" style="background-color:#ff9ff3" 
+							:class="{'selected' : folders.newFolder.color == '#ff9ff3'}" @click="folders.newFolder.color = '#ff9ff3'"></a>
+						</div>
+						<a href="#" class="uk-button uk-button-small uk-button-default " uk-toggle="target:#custom-folder-color" style="line-height: 21px;"><?php _e('Custom','admin2020')?></a>
+						
+						
+					</div>
+					
+					<input class="uk-input uk-form-small" id="custom-folder-color" style="width: 100%;" 
+					v-model="folders.newFolder.color" placeholder="<?php _e('Custom (hex)','admin2020')?>" hidden="true">
+				
+				</div>
+				
+				
+				<div class="uk-grid uk-grid-small uk-child-width-1-2">
+					<div>
+						<button class="uk-button uk-button-small uk-button-default uk-width-1-1" uk-toggle="target:#newfolderpanel"><?php _e('Cancel','admin2020')?></button>
+					</div>
+					<div>
+						<button class="uk-button uk-button-small uk-button-secondary uk-width-1-1" @click="createFolder()"><?php _e('Create','admin2020')?></button>
+					</div>
+				</div>
+				
+			</div>
+			
+			<!-- EDIT CURRENT FOLDER -->
+			<div class="new-folder uk-padding-small a2020-border bottom" id="updatefolderpanel" style="display: none;">
+				
+				<div class="uk-text-meta uk-margin-small-bottom"><?php _e('Folder Name','admin2020')?>:</div>
+				<input class="uk-input uk-margin-bottom" v-model="folders.editFolder.name" placeholder="<?php _e('Folder Name','admin2020')?>" type="text">
+				
+				<div  style="margin-bottom: 30px;">
+					
+					<div class="uk-text-meta uk-margin-small-bottom"><?php _e('Folder Colour','admin2020')?>:</div>
+				
+					<div class="uk-child-width-auto uk-flex uk-flex-between uk-margin-small-bottom" id="admin2020_foldertag">
+						
+						<div>
+							<a href="#" class="color_tag" style="background-color:#0c5cef" 
+							:class="{'selected' : folders.editFolder.color == '#0c5cef'}" @click="folders.editFolder.color = '#0c5cef'"></a>
+							<a href="#" class="color_tag" style="background-color:#32d296" 
+							:class="{'selected' : folders.editFolder.color == '#32d296'}" @click="folders.editFolder.color = '#32d296'"></a>
+							<a href="#" class="color_tag" style="background-color:#faa05a" 
+							:class="{'selected' : folders.editFolder.color == '#faa05a'}" @click="folders.editFolder.color = '#faa05a'"></a>
+							<a href="#" class="color_tag" style="background-color:#f0506e" 
+							:class="{'selected' : folders.editFolder.color == '#f0506e'}" @click="folders.editFolder.color = '#f0506e'"></a>
+							<a href="#" class="color_tag" style="background-color:#ff9ff3" 
+							:class="{'selected' : folders.editFolder.color == '#ff9ff3'}" @click="folders.editFolder.color = '#ff9ff3'"></a>
+						</div>
+						<a href="#" class="uk-button uk-button-small uk-button-default " uk-toggle="target:#custom-folder-color-existing" style="line-height: 21px;"><?php _e('Custom','admin2020')?></a>
+						
+						
+					</div>
+					
+					<input class="uk-input uk-form-small" id="custom-folder-color-existing" style="width: 100%;" 
+					v-model="folders.editFolder.color" placeholder="<?php _e('Custom (hex)','admin2020')?>" hidden="true">
+				
+				</div>
+				
+				
+				<div class="uk-grid uk-grid-small uk-child-width-1-2">
+					<div>
+						<button class="uk-button uk-button-small uk-button-default uk-width-1-1" onClick="jQuery('#updatefolderpanel').hide();"><?php _e('Cancel','admin2020')?></button>
+					</div>
+					<div>
+						<button class="uk-button uk-button-small uk-button-secondary  uk-width-1-1" @click="updateFolder()"><?php _e('Update','admin2020')?></button>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class=" uk-padding-small" id="a2020-folders-top-level" style="max-height:500px;overflow:auto;">
+			
+				<div class="a2020-folder-component ">
+				  <div class="uk-flex uk-flex-middle folder_block" :class="[ {'active-folder' : folders.activeFolder.length == 0} ]">
+					<span class="material-icons-outlined uk-text-muted folderChevron nosub"  @click="">
+					  chevron_right
+					</span>
+					<span class="uk-flex uk-flex-middle folder-click" @click="folders.activeFolder = []">
+					<span class="material-icons  uk-margin-small-right ">folder</span>
+					<span class=" uk-text-bold"><?php _e('All','admin2020')?></span></span>
+				  </div>
+				</div>
+				
+				<div class="a2020-folder-component uk-margin-bottom" >
+				  <div class="uk-flex uk-flex-middle folder_block" :class="[ {'active-folder' : folders.activeFolder[0] == 'uncat'} ]">
+					<span class="material-icons-outlined uk-text-muted folderChevron nosub"  @click="">
+					  chevron_right
+					</span>
+					<span class="uk-flex uk-flex-middle folder-click" @click="folders.activeFolder = ['uncat']">
+					<span class="material-icons  uk-margin-small-right ">folder</span>
+					<span class=" uk-text-bold"><?php _e('No folder','admin2020')?></span></span>
+				  </div>
+				</div>
+				
+				
+				
+				<template v-for="folder in folders.allFolders">
+					<folder-template :folder="folder" :open="folders.openFolders" :current="folders.activeFolder" ></folder-template>
+				</template>
+				
+				<div id="a2020-folder-template"
+				@drop="dropInTopLevel($event)"
+				@dragover.prevent
+				@dragenter.prevent
+				></div>
+			
+			</div>
+		</div>
+		<?php
+	}
+	
+	
+	/**
+	* Build table filters
+	* @since 2.9
+	*/
+	public function build_filters(){
+		?>
+		<!--POST TYPE FILTERS -->
+		<div class="uk-margin-bottom">
+			<div class="uk-text-bold uk-margin-small-bottom">
+				<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px;">library_books</span>
+				<?php _e('Post Types','admin2020')?>
+			</div>
+			<multi-select :options="contentTable.postTypes" :selected="contentTable.filters.selectedPostTypes"
+			:name="'<?php _e('Post Types','admin2020')?>'"
+			:placeholder="'<?php _e('Search Post Types...','admin2020')?>'"></multi-select>
+		</div>
+		
+		<!--POST TYPE FILTERS -->
+		<div class="uk-margin-bottom">
+			<div class="uk-text-bold uk-margin-small-bottom">
+				<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">check_circle</span>
+				<?php _e('Post Status','admin2020')?>
+			</div>
+			<multi-select :options="contentTable.postStatuses" :selected="contentTable.filters.selectedPostStatuses"
+			:name="'<?php _e('Post Status','admin2020')?>'"
+			:placeholder="'<?php _e('Search Post Statuses...','admin2020')?>'"></multi-select>
+		</div>
+		<!--DATE FILTERS -->
+		<div class="uk-margin-bottom">
+			
+			<div class="uk-text-bold uk-margin-small-bottom">
+				<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">date_range</span>
+				<?php _e('Date Created','admin2020')?>
+			</div>
+			
+			<div class="uk-grid uk-grid-small">
+				<div class="uk-width-1-3">
+					<select class="uk-select" v-model="contentTable.filters.dateComparison">
+						<option value="on" selected><?php _e('Posted On','admin2020')?>:</option>
+						<option value="after"><?php _e('Posted After','admin2020')?>:</option>
+						<option value="before"><?php _e('Posted Before','admin2020')?>:</option>
+					</select>
+				</div>
+				<div class="uk-width-2-3">
+					<input class="uk-input" type="date" v-model="contentTable.filters.date"> 
+				</div>
+			</div>
+			
+		</div>
+		
+		<!--MEDIA FILTERS -->
+		<div class="uk-margin-bottom">
+			<div class="uk-text-bold uk-margin-small-bottom">
+				<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">perm_media</span>
+				<?php _e('Media Types','admin2020')?>
+			</div>
+			<multi-select :options="contentTable.fileTypes" :selected="contentTable.filters.selectedFileTypes"
+			:name="'<?php _e('Media Types','admin2020')?>'"
+			:placeholder="'<?php _e('Search Media Types...','admin2020')?>'"></multi-select>
+		</div>
+		
+		<!--CATEGORIES -->
+		<div class="uk-margin-bottom">
+			<div class="uk-text-bold uk-margin-small-bottom">
+				<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">category</span>
+				<?php _e('Categories','admin2020')?>
+			</div>
+			<multi-select :options="contentTable.categories" :selected="contentTable.filters.selectedCategories"
+			:name="'<?php _e('Categories','admin2020')?>'"
+			:placeholder="'<?php _e('Search categories...','admin2020')?>'"></multi-select>
+		</div>
+		
+		<!--TAGS -->
+		<div class="uk-margin-bottom">
+			<div class="uk-text-bold uk-margin-small-bottom">
+				<span class="material-icons-outlined uk-margin-small-right" style="font-size: 15px; position: relative; top: 2px; ">label</span>
+				<?php _e('Tags','admin2020')?>
+			</div>
+			<multi-select :options="contentTable.tags" :selected="contentTable.filters.selectedTags"
+			:name="'<?php _e('Tags','admin2020')?>'"
+			:placeholder="'<?php _e('Search tags...','admin2020')?>'"></multi-select>
+		</div>
+		
+		<div class="uk-flex uk-flex-between">
+			<button class="uk-button uk-button-default uk-margin-top" @click="resetFilters()"><?php _e('Clear Filters','admin2020') ?></button>
+			<button class="uk-button uk-button-secondary uk-margin-top" @click="nameNewView()"><?php _e('Save as view','admin2020') ?></button>
+		</div>
+		<?php
+	}
+	
+	
+	
+	/**
+	* Outputs active filters
+	* @since 2.9
+	*/
+	public function active_filters(){
+		
+		?>
+		<!--- ACTIVE FILTERS -->
+		<div class="uk-grid uk-grid-small uk-margin-bottom" uk-grid v-if="totalFilters()">
+			
+				<div class="uk-grid uk-grid-small" uk-grid>
+					
+					
+						<div class="uk-width-auto">
+							<span class="material-icons uk-text-muted">sell</span>
+						</div>
+					
+					
+						<div class="uk-width-auto" v-for="status in contentTable.filters.selectedPostStatuses">
+							
+							<div class="uk-button uk-button-small a2020-filter-tag">
+								{{status}}
+								<a class="uk-text-muted uk-margin-small-left" @click="removeFromList(status,contentTable.filters.selectedPostStatuses)" href="#">x</a>
+							</div>
+							
+						</div>
+						
+						<div class="uk-width-auto" v-for="status in contentTable.filters.selectedPostTypes">
+							
+							<div class="uk-button uk-button-small a2020-filter-tag">
+								{{status}}
+								<a class="uk-text-muted uk-margin-small-left" @click="removeFromList(status,contentTable.filters.selectedPostTypes)" href="#">x</a>
+							</div>
+							
+						</div>
+						
+						<div class="" v-if="contentTable.filters.date != ''">
+							
+							
+							<div class="uk-button uk-button-small a2020-filter-tag">
+								<?php _e('Posted','admin2020')?>
+								{{contentTable.filters.dateComparison}}
+								{{contentTable.filters.date}}
+								<a class="uk-text-muted uk-margin-small-left" @click="contentTable.filters.date = ''" href="#">x</a>
+							</div>
+							
+						</div>
+						
+						<div class="uk-width-auto" v-for="status in contentTable.filters.selectedFileTypes">
+							
+							<div class="uk-button uk-button-small a2020-filter-tag">
+								{{status}}
+								<a class="uk-text-muted uk-margin-small-left" @click="removeFromList(status,contentTable.filters.selectedFileTypes)" href="#">x</a>
+							</div>
+							
+						</div>
+						
+						<div class="uk-width-auto" v-for="cat in contentTable.filters.selectedCategories">
+							
+							<div class="uk-button uk-button-small a2020-filter-tag">
+								<template v-for="fullCat in contentTable.categories">
+								
+								<span v-if="fullCat.name == cat">
+									{{fullCat.label}}
+									<a class="uk-text-muted uk-margin-small-left" @click="removeFromList(cat,contentTable.filters.selectedCategories)" href="#">x</a>
+								</span>
+								
+								</template>
+							</div>
+							
+						</div>
+						
+						<div class="uk-width-auto" v-for="cat in contentTable.filters.selectedTags">
+							
+							<div class="uk-button uk-button-small a2020-filter-tag">
+								<template v-for="fullCat in contentTable.tags">
+								
+								<span v-if="fullCat.name == cat">
+									{{fullCat.label}}
+									<a class="uk-text-muted uk-margin-small-left" @click="removeFromList(cat,contentTable.filters.selectedTags)" href="#">x</a>
+								</span>
+								
+								</template>
+							</div>
+							
+						</div>
+					
+				</div>
+				
+		</div>
+		<?php
+	}
+	
+	/**
+	* Build table pagination
+	* @since 2.9
+	*/
+	public function build_pagination(){
+		
+		?>
+		<!--- PAGINATION  -->
+		<ul class="uk-iconnav a2020-user-pagination uk-flex-right uk-background-default uk-border-rounded  a2020-border all" style="padding: 6px 10px;">
+			
+			<li style="padding-left: 0;">
+				<a href="#" style="border: none;background: none" :class="{'uk-disabled' : contentTable.currentPage == 1}"
+				@click="contentTable.currentPage = contentTable.currentPage - 1">
+					<span class=" dashicons dashicons-arrow-left-alt2 uk-text-primary" style="font-size: 17px;height: auto;"></span>
+				</a>
+			</li>
+			<!-- IF PAGES LESS THAN 6 THEN SHOW ALL -->
+			<li v-if="contentTable.totalPages < 6" v-for="n in contentTable.totalPages">
+				<a href="#" :class="{'uk-active' : contentTable.currentPage == n}" @click="contentTable.currentPage = n">{{n}}</a>
+			</li>
+			
+			
+			
+			
+			<!-- IF PAGES MORE THAN 5 THEN SHOW FIRST PAGE -->
+			<li v-if="contentTable.totalPages > 5" >
+				<a href="#" :class="{'uk-active' : contentTable.currentPage == 1}" @click="contentTable.currentPage = 1">1</a>
+			</li>
+			
+			
+			<!-- IF CURRENT PAGE IS MORE THAN 4 THEN PAGES BETWEEN 1 AND CURRENT PAGE -->
+			<li v-if="contentTable.totalPages > 5 && (contentTable.currentPage - 2) > 1" >
+				<a href="#">...</a>
+				<div class="uk-dropdown" uk-dropdown="pos:bottom-center;mode:click" style="	min-width: auto;width: 100px;text-align: center;">
+					<div class="uk-dropdown-grid uk-grid-collapse uk-child-width-1-3" uk-grid>
+						<a class="uk-link-muted" v-for="n in (contentTable.currentPage - 3) " href="#" style="" @click="contentTable.currentPage = n + 1">{{n + 1}}</a>
+					</div>
+				</div>
+			</li>
+			
+			<!-- MIDDLE: CURRENT PAGE, ONE BEFORE AND ONE AFTER -->
+			<li v-if="contentTable.totalPages > 5 && contentTable.currentPage - 1 > 1">
+				<a href="#"  @click="contentTable.currentPage = contentTable.currentPage - 1">{{contentTable.currentPage - 1}}</a>
+			</li>
+			<li v-if="contentTable.totalPages > 5 && contentTable.currentPage != 1 && contentTable.currentPage != contentTable.totalPages">
+				<a href="#" class="uk-active uk-disabled" >{{contentTable.currentPage}}</a>
+			</li>
+			<li v-if="contentTable.totalPages > 5 && contentTable.currentPage + 1 != contentTable.totalPages">
+				<a href="#"  @click="contentTable.currentPage = contentTable.currentPage + 1">{{contentTable.currentPage + 1}}</a>
+			</li>
+			
+			<!-- IF CURRENT PAGE IS MORE THAN TOTAL PAGES MINUS  THEN PAGES BETWEEN 1 AND CURRENT PAGE -->
+			<li v-if="contentTable.totalPages > 5 && (contentTable.currentPage + 2) < contentTable.totalPages" >
+				<a href="#">...</a>
+				<div class="uk-dropdown" uk-dropdown="pos:bottom-center;mode:click" style="	min-width: auto;width: 100px;text-align: center;">
+					<div class="uk-dropdown-grid uk-grid-collapse uk-child-width-1-3" uk-grid>
+						<a class="uk-link-muted" v-for="n in (contentTable.totalPages - contentTable.currentPage - 2) " href="#" style="" 
+						@click="contentTable.currentPage = n + 1 + contentTable.currentPage">{{n + 1 + contentTable.currentPage}}</a>
+					</div>
+				</div>
+			</li>
+			
+			<!-- IF PAGES MORE THAN 5 THEN SHOW LAST PAGE -->
+			<li v-if="contentTable.totalPages > 5" >
+				<a href="#" :class="{'uk-active' : contentTable.currentPage == contentTable.totalPages}" @click="contentTable.currentPage = 1">{{contentTable.totalPages}}</a>
+			</li>
+			
+			<li>
+				<a href="#" style="border: none;background: none" :class="{'uk-disabled' : contentTable.currentPage == contentTable.totalPages}" @click="contentTable.currentPage = contentTable.currentPage + 1">
+					<span class=" dashicons dashicons-arrow-right-alt2 uk-text-primary" style="font-size: 17px;height: auto;"></span>
+				</a>
+			</li>
+		</ul>
+		
+		<?php
+	}
+	
+	/**
+	* Build content page header
+	* @since 2.9
+	*/
+	
+	public function build_table(){
+		
+		?>
+		<!-- TABLE HEAD -->
+		<template v-if="contentTable.mode == 'list'">
+			<div class="uk-background-default a2020-border all uk-border-rounded uk-padding-small uk-margin-small-bottom a2020-content-table-head" uk-sticky="offset: 100">
+				
+				<div class="uk-grid uk-grid-small">
+					
+					<div class="content-checkbox" >
+						<div class="a2020-checkbox uk-border-rounded a2020-border all" :class="{'checked' : contentTable.selectAll }" @click="selectAllTable" >
+						  <span class="material-icons-outlined">done</span>
+						  <input type="checkbox" v-model="contentTable.selectAll "  style="opacity: 0 !important;">
+						</div>
+					</div>
+					
+					
+					<div class="content-table-title uk-width-medium@m uk-width-large@xl uk-text-bold">
+						<?php _e('Name','admin2020') ?>
+					</div>
+					
+					<div class="content-table-type uk-width-expand uk-text-bold">
+						<?php _e('Type','admin2020') ?>
+					</div>
+					
+					<div class="uk-visible@s uk-width-expand uk-text-bold">
+						<?php _e('Author','admin2020') ?>
+					</div>
+					
+					<div class=" uk-visible@s uk-width-expand uk-text-bold">
+						<?php _e('Date','admin2020') ?>
+					</div>
+					
+					<div class=" uk-visible@s uk-width-expand uk-text-bold">
+						<?php _e('Status','admin2020') ?>
+					</div>
+					
+					<div style="width:40px;">
+					</div>
+					
+					
+				</div>
+				
+			</div>
+			
+			
+			<!-- TABLE CONTENT -->
+			<template  v-for="item in fileList">
+				
+				<div class="a2020-table-item uk-padding-small a2020-border bottom " draggable="true"  
+				@dragstart="startContentDrag($event,item)"
+				@dragend="endContentDrag($event,item)"
+				@dblclick="openQuickEdit(item.id)"
+				>
+					
+						<div class="uk-grid uk-grid-small ">
+							
+							<div class="content-checkbox uk-flex uk-flex-middle" >
+								
+								<div class="a2020-checkbox uk-border-rounded a2020-border all" :class="{'checked' : isIn(item.id,contentTable.selected)}" >
+								  <span class="material-icons-outlined">done</span>
+								  <input type="checkbox" v-model="contentTable.selected" :value="item.id" style="opacity: 0 !important;">
+								</div>
+							</div>
+							
+							<div class="content-table-title uk-width-medium@m uk-width-large@xl">
+								<div class="uk-grid uk-grid-small">
+									<!-- IS ICON -->
+									<div v-if="item.icontype == 'icon'" class="uk-width-auto">
+										<div class="uk-background-default uk-border-rounded a2020-border all uk-text-center" style="padding: 5px;width: 30px;height: 30px;">
+											<span class="material-icons-outlined" style="font-size: 25px;">{{item.icon}}</span>
+										</div>
+									</div>
+									<!-- HAS IMAGE -->
+									<div v-if="item.icontype == 'image'" class="uk-width-auto">
+										<img class="uk-background-default uk-border-rounded a2020-border all " 
+										:src="item.icon" style="width:40px;height:40px;">
+									</div>
+									<div class="uk-width-expand">
+										<div class="uk-text-bold">{{item.name}}</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="content-table-type uk-width-expand uk-text-bold">
+								<span class="a2020-post-label">{{item.type}}</span>
+							</div>
+							
+							<div class="uk-visible@s uk-width-expand ">
+								<a :href="item.authorLink" >
+								{{item.author}}
+								</a>
+							</div>
+							
+							<div class="uk-visible@s uk-width-expand">
+								{{item.date}}
+							</div>
+							
+							<div class="uk-visible@s uk-width-expand uk-text-bold">
+								<span class="a2020-post-label" :class="item.status">{{item.status}}</span>
+							</div>
+							
+							<div style="width:40px;">
+								<a href="" class="uk-icon-button" uk-icon="more"></a>
+								
+								<div uk-dropdown="pos: bottom-right;mode:click;" class="uk-padding-remove">
+									
+									<div class="uk-padding-small ">
+										<ul class="uk-nav uk-dropdown-nav">
+											<li >
+												<a :href="item.url" target="_BLANK" >
+													<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">pageview</span>
+													<?php _e('View','admin2020')?>
+												</a>
+											</li>
+											<li >
+												<a :href="item.editurl" >
+													<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">edit</span>
+													<?php _e('Edit','admin2020')?>
+												</a>
+											</li>
+											<li >
+												<a href="#" class="" @click="openQuickEdit(item.id)">
+													<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">preview</span>
+													<?php _e('Quick Edit','admin2020')?>
+												</a>
+											</li>
+											<li v-if="item.type != 'attachment'" >
+												<a href="#" class="" @click="duplicateItem(item.id)">
+													<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">copy</span>
+													<?php _e('Duplicate','admin2020')?>
+												</a>
+											</li>
+										</ul>
+									</div>
+									
+									<div class="uk-padding-small a2020-border top">
+										<ul class="uk-nav uk-dropdown-nav">
+											<li >
+												<a href="#" class="uk-text-danger" @click="deleteItem(item.id)">
+													<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">delete</span>
+													<?php _e('Delete Item','admin2020')?>
+												</a>
+											</li>
+										</ul>
+									</div>
+									
+									
+								</div>
+							</div>
+							
+						</div>
+					
+				</div>
+				
+			</template>
+		
+		</template>
+		
+		
+		<!-- TABLE CONTENT -->
+		<template v-if="contentTable.mode == 'grid'">
+			
+			<div class="uk-grid " uk-grid="masonry: true">
+				<template  v-for="item in fileList">
+					
+					<div  class="uk-width-1-1@s" :class=" 'uk-width-1-' + contentTable.gridSize + '@m'">
+						
+						<div class="a2020-border all uk-border-rounded uk-background-default uk-overflow-hidden uk-box-shadow-small" draggable="true"  
+						@dragstart="startContentDrag($event,item)"
+						@dragend="endContentDrag($event,item)"
+						@dblclick="openQuickEdit(item.id)">
+							
+							
+							<!-- IS ICON -->	
+							<div v-if="item.icontype == 'icon'" class="uk-width-auto">
+								<div class="uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-height-small ">
+									<span class="material-icons-outlined" style="font-size: 50px;">{{item.icon}}</span>
+								</div>
+							</div>
+							<!-- HAS IMAGE -->
+							<div v-if="item.icontype == 'image'" class="uk-width-auto">
+								<img class="uk-width-1-1" 
+								:src="item.iconLarge" style="width:100%">
+							</div>
+							
+							
+							<div class="uk-padding-small">
+								<div class="uk-text-bold">{{item.name}}</div>
+								<div class="uk-text-meta">{{item.author}} | {{item.date}}</div>
+								<div class=" uk-margin-top">
+									<span class="a2020-post-label uk-margin-small-right" v-if="item.type == 'attachment'">{{item.mime}}</span>
+									<span class="a2020-post-label uk-margin-small-right" v-if="item.type != 'attachment'">{{item.type}}</span>
+									<span class="a2020-post-label" :class="item.status">{{item.status}}</span>
+								</div>
+							</div>
+							
+							<div class="a2020-border top uk-padding-small">
+								
+								<ul class="uk-iconnav">
+									
+									<li style="flex-grow: 1;" class="uk-flex">
+										<div class="a2020-checkbox uk-border-rounded a2020-border all" :class="{'checked' : isIn(item.id,contentTable.selected)}" >
+										  <span class="material-icons-outlined">done</span>
+										  <input type="checkbox" v-model="contentTable.selected" :value="item.id" style="opacity: 0 !important;">
+										</div>
+									</li>
+								
+									
+									
+									<li style="padding-left: 15px;">
+										<a href="#" uk-tooltip="title:<?php _e('Quick Edit') ?>;delay:300" @click="openQuickEdit(item.id)">
+											<span class="material-icons-outlined"  style="font-size: 18px;position: relative;top: 2px;">preview</span>
+										</a>
+									</li>
+									
+									<li>
+										<a uk-tooltip="title:<?php _e('View') ?>;delay:300" :href="item.url" target="_BLANK">
+											<span class="material-icons-outlined"  style="font-size: 18px;position: relative;top: 2px;">pageview</span>
+										</a>
+									</li>
+									
+									<li>
+										<a :href="item.editurl" uk-tooltip="title:<?php _e('Edit') ?>;delay:300">
+											<span class="material-icons-outlined"  style="font-size: 18px;position: relative;top: 2px;">edit</span>
+										</a>
+									</li>
+									
+									<li style="flex-grow: 1;" class="uk-flex uk-flex-right">
+										<a href="#" class="uk-text-danger" uk-tooltip="title:<?php _e('Delete') ?>;delay:300" @click="deleteItem(item.id)">
+											<span class="material-icons-outlined"  style="font-size: 18px;position: relative;top: 2px;">delete</span>
+										</a>
+									</li>
+									
+								
+								</ul>
+							</div>
+						</div>
+						
+					</div>
+					
+				</template>
+				
+				
+			</div>
+			
+			<div v-if="contentTable.totalPages > contentTable.currentPage && contentTable.content.length < contentTable.total">
+		
+				<div class="uk-width-1-1 uk-flex uk-flex-center uk-margin-top">
+					<button class="uk-button uk-button-secondary" 
+					@click="contentTable.filters.perPage = Math.round(contentTable.filters.perPage * 1.5)"><?php _e("Load More",'admin2020') ?></button>
+				</div>
+			
+			</div>
+			
+		</template>
+		
+		<div v-if="fileList.length == 0" class="uk-width-1-1 uk-text-center uk-padding">
+			<div class=""><span class="material-icons-outlined">sentiment_dissatisfied</span></div>
+			<p class="uk-h4 uk-text-meta uk-margin-remove-top"><?php _e('No content found','admin2020')?></p>
+		</div>
+		
+		<div class="admin2020loaderwrap" id="admincontentloader" v-if="loading === true">
+			<div class="admin2020loader"></div>
+		</div>
+		
+		<?php
+		
+	}
+	
+	
+	/**
+	* Builds batch options for items
+	* @since 2.9
+	*/
+	
+	public function build_batch_options(){
+		
+		?>
+		
+		<div class="uk-position-small uk-position-bottom-right uk-animation-slide-right" v-if="contentTable.selected.length > 0" style="position: fixed !important;">
+			<button class="uk-button uk-button-primary uk-box-shadow-medium uk-light" style="border-radius: 4px;">
+				<div class>
+					<span class="uk-text-emphasis uk-margin-small-right" style="">{{contentTable.selected.length}} </span> 
+					<span class=""><?php _e('items selected','admin2020') ?><span class="uk-text-primary">
+				</div>
+			</button>
+			
+			
+			<div uk-dropdown="pos: top-right;mode:click;" class="uk-padding-remove">
+				
+				<div class="uk-padding-small a2020-border bottom">
+					<ul class="uk-nav uk-dropdown-nav">
+						<li >
+							<a href="#" class="" uk-toggle="target: #batch-rename-modal">
+								<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">drive_file_rename_outline</span>
+								<?php _e('Batch Rename','admin2020')?>
+							</a>
+						</li>
+						<li >
+							<a href="#" class="" @click="openCatsTags()">
+								<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">category</span>
+								<?php _e('Categories & Tags','admin2020')?>
+							</a>
+						</li>
+						<li>
+							<a href="#" class="uk-text-danger" @click='deleteMultiple()'>
+								<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">delete</span>
+								<?php _e('Delete selected','admin2020')?>
+							</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="uk-padding-small">
+					<ul class="uk-nav uk-dropdown-nav">
+						<li>
+							<a href="#" class="" @click='contentTable.selected = []'>
+								<span class="material-icons-outlined"  style="font-size: 15px;position: relative;top: 2px;">backspace</span>
+								<?php _e('Clear Selection','admin2020')?>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+		
+		<?php
+		
+	}
+	
+	
+	
+	/**
+	* Saves New View
+	* @since 2.9
+	*/
+	public function save_view_options(){
+		
+		?>
+		
+		<div id="new-view-modal" class="uk-flex-top" uk-modal>
+			<div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding-remove">
+				<div class="uk-padding" style="padding-top: 15px;padding-bottom: 15px">
+					
+					<h4 class="uk-margin-remove">
+						<span class="material-icons-outlined" style="font-size: 20px;position: relative;top: 3px;">auto_awesome</span>
+						<?php _e('Create New View','admin2020') ?>
+					</h4>
+					<button class="uk-modal-close-default uk-position-small uk-position-top-right" type="button" uk-close></button>
+				</div>
+		
+				<div class="uk-padding a2020-border bottom top">
+					<div class="uk-text-bold uk-margin-small-bottom">
+						 <?php _e('View name','admin2020') ?>
+					 </div>
+					<div class="uk-margin-bottom">
+						<input class="uk-input" v-model="newView.name" type="text" placeholder="<?php _e('View Name','admin2020') ?>"> 
+					</div>
+					
+				</div>
+				
+				<div class="uk-padding" style="padding-top: 15px;padding-bottom: 15px">
+					
+					<button class="uk-button uk-button-secondary" @click="saveView">
+						<?php _e('Save','admin2020')?>
+					</button>
+					
+				</div>
+			
+		
+			</div>
+		</div>
+		
+		<?php
+		
+	}
+	
 	
 	
 }

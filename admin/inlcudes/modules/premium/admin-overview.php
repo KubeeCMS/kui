@@ -332,15 +332,15 @@ class Admin_2020_module_admin_overview
 				<div>
 				<?php if ($type == 'url') { ?>
 				
-					<video src="<?php echo $url?>" controls muted uk-video="autoplay: false"></video>
+					<video src="<?php echo $url?>" controls uk-video="autoplay: false"></video>
 				
 				<?php } else if ($type == 'youtube'){ ?>
 				
-					<iframe src="<?php echo $url ?>" width="1920" height="1080" frameborder="0" allowfullscreen uk-responsive uk-video="automute: true;autoplay: false"></iframe>
+					<iframe src="<?php echo $url ?>" width="1920" height="1080" frameborder="0" allowfullscreen uk-responsive uk-video="automute: false;autoplay: false"></iframe>
 				
 				<?php } else if ($type == 'vimeo'){ ?>
 					
-					<iframe src="<?php echo $url ?>" width="1920" height="1080" frameborder="0" allowfullscreen uk-responsive uk-video="automute: true;autoplay: false"></iframe>
+					<iframe src="<?php echo $url ?>" width="1920" height="1080" frameborder="0" allowfullscreen uk-responsive uk-video="automute: false;autoplay: false"></iframe>
 				
 				<?php } ?>
 				</div>
@@ -636,7 +636,7 @@ class Admin_2020_module_admin_overview
 						<?php 
 						if(strpos($gavar_url,'gravatar.com')==!false){ ?>
 							
-							<span class="uk-icon-button uk-button-primary uk-text-bold uk-text-small" style="font-size:16px;height:50px;width:50px;"><?php echo $name_string?></span>
+							<span class="uk-icon-button uk-button-primary uk-text-bold uk-text-small uk-border-circle" style="font-size:16px;height:50px;width:50px;"><?php echo $name_string?></span>
 							
 						<?php } else { ?>
 						
