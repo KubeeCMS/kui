@@ -27,6 +27,9 @@
 .admin2020_menu {
   width: 250px;
 }
+.admin2020_menu .a2020-settings-panel {
+  background: #fff;
+}
 
 .admin2020_menu.a2020-menu-minified {
   width: 60px !important;
@@ -42,6 +45,10 @@
   background: #f2f2f2 !important;
 }
 
+.wp-editor-wrap {
+  z-index: 1;
+}
+
 @media only screen and (min-width: 768px) {
   body.a2020_menu_small .interface-interface-skeleton {
     left: 65px;
@@ -51,7 +58,7 @@
   }
   body.a2020_menu_small #wpcontent,
 body.a2020_menu_small #wpfooter {
-    margin-left: 66px;
+    margin-left: 61px;
   }
 }
 .admin2020_menu .uk-nav-default.loading {
@@ -144,6 +151,9 @@ body.a2020_menu_small #wpfooter {
 }
 .admin2020_menu .menu-top {
   margin-bottom: 4px;
+}
+.admin2020_menu .menu-top .menu-top {
+  margin-bottom: 0;
 }
 .admin2020_menu .a2020-menu-chev {
   cursor: pointer;
@@ -275,8 +285,74 @@ body.a2020_menu_small #wpfooter {
   color: #fff;
 }
 
+body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu {
+  color: #888;
+}
+body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu a {
+  color: #888;
+}
+body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu .a2020-menu-title:hover {
+  color: #fff;
+}
+body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu .uk-icon-button {
+  background: #333;
+}
+body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu a:hover {
+  color: #fff;
+}
+body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu .uk-nav-default > li.uk-active .a2020-menu-title,
+body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu .uk-nav-default > li.uk-active .a2020-menu-icon, body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu .uk-nav-default > li.uk-open .a2020-menu-title,
+body:not(.a2020_night_mode) .force-dark-mode .admin2020_menu .uk-nav-default > li.uk-open .a2020-menu-icon {
+  color: #fff;
+}
+body:not(.a2020_night_mode) .force-dark-mode .a2020-settings-panel {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+body:not(.a2020_night_mode) .force-dark-mode .a2020_menu_searcher_wrap .a2020_menu_search input {
+  background-color: #f2f2f214 !important;
+}
+
+body.a2020_night_mode .force-light-mode .admin2020_menu {
+  color: #888 !important;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu a:hover {
+  color: #222 !important;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu .a2020-menu-title.wp-menu-name {
+  color: #888 !important;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu .a2020-menu-icon {
+  color: #888 !important;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu .uk-nav-default > li.uk-active .a2020-menu-title,
+body.a2020_night_mode .force-light-mode .admin2020_menu .uk-nav-default > li.uk-active .a2020-menu-icon, body.a2020_night_mode .force-light-mode .admin2020_menu .uk-nav-default > li.uk-open .a2020-menu-title,
+body.a2020_night_mode .force-light-mode .admin2020_menu .uk-nav-default > li.uk-open .a2020-menu-icon {
+  color: #222 !important;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu .uk-link-muted,
+body.a2020_night_mode .force-light-mode .admin2020_menu .uk-text-meta,
+body.a2020_night_mode .force-light-mode .admin2020_menu .uk-h5 {
+  color: #888 !important;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu .uk-nav-default .uk-nav-sub a {
+  color: #888 !important;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu .a2020_menu_searcher_wrap .a2020_menu_search .uk-form-icon {
+  color: #888;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu .a2020_menu_searcher_wrap .a2020_menu_search input {
+  background: rgba(198, 198, 198, 0.36) !important;
+  color: #222;
+}
+body.a2020_night_mode .force-light-mode .admin2020_menu .a2020_menu_searcher_wrap .a2020_menu_search input::placeholder {
+  color: #888;
+}
+
 .a2020_night_mode .admin2020_menu {
   color: #888;
+}
+.a2020_night_mode .admin2020_menu .a2020-settings-panel {
+  background: #111;
 }
 .a2020_night_mode .admin2020_menu a {
   color: #888;

@@ -24,7 +24,7 @@
 .postbox .handle-order-higher,
 .postbox .handle-order-lower,
 .postbox .handlediv {
-  background: #f8f8f8;
+  background: #f3f3f3;
   border-radius: 4px;
   transition: all 0.3s ease-in-out;
   height: 25px;
@@ -38,7 +38,7 @@
 .postbox .handle-order-higher:hover,
 .postbox .handle-order-lower:hover,
 .postbox .handlediv:hover {
-  background: #ebebeb;
+  background: #e6e6e6;
 }
 
 .metabox-holder .postbox > h3,
@@ -100,17 +100,6 @@ input.a2020-muted-input {
   color: #fff;
 }
 
-.a2020-post-label {
-  font-size: 12px;
-  text-transform: none;
-  border-radius: 4px;
-  color: var(--a2020-primary);
-  background: #84afff30;
-  border: none;
-  text-transform: capitalize;
-  padding: 5px;
-}
-
 .admin2020loaderwrap.inline {
   width: auto;
   position: absolute;
@@ -122,11 +111,12 @@ input.a2020-muted-input {
   font-size: 12px;
   text-transform: none;
   border-radius: 4px;
-  color: var(--a2020-primary);
-  background: #84afff30;
+  background: var(--a2020-primary-wash);
+  font-weight: bold;
   border: none;
   text-transform: capitalize;
   padding: 5px;
+  white-space: nowrap;
 }
 .a2020-post-label.Published {
   background: #34dc9d30 !important;
@@ -283,7 +273,7 @@ highlight {
 }
 
 #plugin-information-tabs {
-  background: #f8f8f8;
+  background: #f3f3f3;
 }
 
 .theme-browser {
@@ -321,11 +311,7 @@ highlight {
 }
 
 .theme-overlay .theme-actions {
-  background: #f8f8f8;
-}
-
-.theme-browser .theme .theme-actions .button-primary {
-  line-height: 10px;
+  background: #f3f3f3;
 }
 
 .wp-core-ui.media-modal .image-editor .imgedit-help-toggle,

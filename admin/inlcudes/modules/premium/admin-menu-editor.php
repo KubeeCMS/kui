@@ -44,12 +44,14 @@ class Admin_2020_module_admin_menu_editor
         add_action('admin_enqueue_scripts', [$this, 'add_styles'], 0);
 		add_action('admin_enqueue_scripts', [$this, 'add_scripts'], 0);
 		add_action('admin_menu', array( $this, 'add_menu_item'));
-		add_filter('parent_file', array( $this, 'set_menu'),800);
-		add_action('admin_enqueue_scripts', array( $this, 'apply_menu'),0);
+		add_filter('admin_enqueue_scripts', array( $this, 'set_menu'),1);
+		add_action('admin_enqueue_scripts', array( $this, 'apply_menu'),2);
 		add_action('wp_ajax_a2020_save_menu_settings', array($this,'a2020_save_menu_settings'));
 		add_action('wp_ajax_a2020_delete_menu_settings', array($this,'a2020_delete_menu_settings'));
 		add_action('wp_ajax_a2020_export_menu', array($this,'a2020_export_menu'));
 		add_action('wp_ajax_a2020_import_menu', array($this,'a2020_import_menu'));
+		add_action('wp_ajax_a2020_get_users_and_roles_me', array($this,'a2020_get_users_and_roles_me'));
+		
 		
 		
 		
@@ -108,58 +110,33 @@ class Admin_2020_module_admin_menu_editor
 		return $data;
 		
 	}
+	
 	/**
-	 * Returns settings for module
-	 * @since 1.4
+	 * Returns settings options for settings page
+	 * @since 2.1
 	 */
-	 public function render_settings(){
-		  
-		  $info = $this->component_info();
-		  $optionname = $info['option_name'];
-		  $disabled_for = $this->utils->get_option($optionname,'disabled-for');
-		  if($disabled_for == ""){
-			  $disabled_for = array();
-		  }
-		  ?>
-		  <div class="uk-grid" id="a2020_menu_editor_settings" uk-grid>
-			  <!-- LOCKED FOR USERS / ROLES -->
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  <div class="uk-h5 "><?php _e('Menu Editor Disabled for','admin2020')?></div>
-				  <div class="uk-text-meta"><?php _e("Admin 2020 menu editor will be disabled for any users or roles you select",'admin2020') ?></div>
-			  </div>
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  
-				  
-				  <select class="a2020_setting" id="a2020-role-types" name="disabled-for" module-name="<?php echo $optionname?>" multiple>
-					  
-					<?php
-					foreach($disabled_for as $disabled) {
-						
-						?>
-						<option value="<?php echo $disabled ?>" selected><?php echo $disabled ?></option>
-						<?php
-						
-					} 
-					?>
-				  </select>
-				  
-				  <script>
-					  jQuery('#a2020_menu_editor_settings #a2020-role-types').tokenize2({
-						 	placeholder: '<?php _e('Select roles or users','admin2020') ?>',
-							dataSource: function (term, object) {
-								a2020_get_users_and_roles(term, object);
-							},
-							debounce: 1000,
-					  });
-				  </script>
-				  
-			  </div>	
-			  
-			  	
-		  </div>	
-		  
-		  <?php
-	  }
+	public function get_settings_options(){
+		
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
+		
+		$settings = array();
+		
+		
+		$temp = array();
+		$temp['name'] = __('Menu Editor disabled for','admin2020');
+		$temp['description'] = __("UiPress menu editor will be disabled for any users or roles you select.",'admin2020');
+		$temp['type'] = 'user-role-select';
+		$temp['optionName'] = 'disabled-for'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName'], true);
+		$settings[] = $temp;
+		
+		
+		
+		return $settings;
+		
+	}
+	
     /**
      * Adds menu editor styles
      * @since 1.0
@@ -208,13 +185,6 @@ class Admin_2020_module_admin_menu_editor
 				));
 				
 				
-				///SETTINGS
-				wp_enqueue_script('admin2020-settings', $this->path . 'assets/js/admin2020/settings.min.js', array('jquery'));
-				wp_localize_script('admin2020-settings', 'admin2020_settings_ajax', array(
-					'ajax_url' => admin_url('admin-ajax.php'),
-					'security' => wp_create_nonce('admin2020-settings-security-nonce'),
-				));
-				
 				///TOKENIZE
 				wp_enqueue_script('tokenize', $this->path . 'assets/js/tokenize/tokenize2.min.js', array('jquery'));
 				
@@ -232,7 +202,7 @@ class Admin_2020_module_admin_menu_editor
 	
 	public function add_menu_item(){
 		
-		add_options_page( 'Menu Editor', __('Menu Editor (Admin 2020)','admin2020'), 'manage_options', 'admin-2020-menu-editor', array($this,'admin2020_menu_editor_page') );
+		add_options_page( 'UiPress Menu Editor', __('Menu Editor (UiPress)','admin2020'), 'manage_options', 'admin-2020-menu-editor', array($this,'admin2020_menu_editor_page') );
 		
 	}
 	
@@ -247,8 +217,19 @@ class Admin_2020_module_admin_menu_editor
 		<div class="uk-width-1-1 uk-margin-top" uk-sticky="offset:41;top:100;cls-active:uk-background-default uk-padding-small a2020_border_bottom">
 			<div class="uk-container uk-container-small" >
 				<?php $this->build_header()?>
+				
+				<div class="uk-alert-warning uk-text-default" uk-alert>
+					<a class="uk-alert-close" uk-close></a>
+					<p class="uk-text-default">This feature (Menu Editor) is now depreciated and has been replaced by the menu creator. The feature will remain in the plugin until September the 15th 2021. If you have any questions please reach out to us.</p>
+				</div>
+				
 			</div>
+			
+			
 		</div>
+		
+		
+		
 		<div class="wrap" style="padding-top:0;">
 			<div class="uk-container uk-container-small uk-margin-top">
 				<p class="uk-text-meta">
@@ -426,6 +407,7 @@ class Admin_2020_module_admin_menu_editor
 															  $('#<?php echo $menu_id?> #a2020-role-types').tokenize2({
 																  placeholder: '<?php _e('Select roles or users','admin2020') ?>',
 																  dataSource: function (term, object) {
+																	  console.log('here');
 																	  a2020_get_users_and_roles(term, object);
 																  },
 																  debounce: 1000,
@@ -1387,6 +1369,83 @@ class Admin_2020_module_admin_menu_editor
 				die();
 			}
 			
+			
+			
+		}
+		die();	
+		
+	}
+	
+	
+	/**
+	* Fetches users and roles
+	* @since 2.0.8
+	*/
+	
+	public function a2020_get_users_and_roles_me(){
+		
+		if (defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('admin2020-admin-menu-editor-security-nonce', 'security') > 0) {
+			
+			$term = $this->utils->clean_ajax_input($_POST['search']); 
+			
+			if(!$term || $term == ""){
+				echo json_encode(array());
+				die(); 
+			}
+			
+			$term = strtolower($term);
+			
+			$users = new WP_User_Query( array(
+				'search'         => '*'.esc_attr( $term ).'*',
+				'fields'         => array('display_name'),
+				'search_columns' => array(
+					'user_login',
+					'user_nicename',
+					'user_email',
+					'user_url',
+				),
+			) );
+			
+			$users_found = $users->get_results();
+			$empty_array = array();
+			
+			foreach($users_found as $user){
+				
+				$temp = array();
+				$temp['value'] = $user->display_name;
+				$temp['text'] = $user->display_name;
+				
+				array_push($empty_array,$temp);
+				
+			}
+			
+			global $wp_roles;
+			
+			foreach ($wp_roles->roles as $role){
+				
+				  $rolename = $role['name'];
+				  
+				  if (strpos(strtolower($rolename), $term) !== false) {
+					  
+					  $temp = array();
+					  $temp['value'] = $rolename;
+					  $temp['text'] = $rolename;
+					  
+					  array_push($empty_array,$temp);
+				  }
+				  
+			}
+			
+			if (strpos(strtolower('Super Admin'), $term) !== false) {
+				  
+				  $temp = array();
+				  $temp['value'] = 'Super Admin';
+				  $temp['text'] = 'Super Admin';
+				  
+				  array_push($empty_array,$temp);
+			}
+			
+			echo json_encode($empty_array,true);
 			
 			
 		}

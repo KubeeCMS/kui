@@ -13,7 +13,10 @@
 html body.admin-bar {
   margin-top: -32px;
 }
-#a2020-admin-bar-app {
+
+@import "modules/dark.scss";
+
+#uip-admin-bar {
   @import "uikit/mixins-theme.scss";
 
   @import "modules/hooks.scss";
@@ -21,6 +24,7 @@ html body.admin-bar {
   @import "uikit/uikit-theme.scss";
 
   @import "modules/common.scss";
+  @import "modules/components.scss";
   @import "modules/switch.scss";
   @import "modules/dark.scss";
   @import "modules/notification.scss";

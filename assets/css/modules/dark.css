@@ -1,59 +1,84 @@
 .a2020_night_mode .uk-background-default,
 .a2020_night_mode .uk-dropdown,
 .a2020_night_mode .uk-modal-dialog,
-.a2020_night_mode .uk-modal-footer {
+.a2020_night_mode .uk-modal-footer,
+.a2020_night_mode #uip-admin-bar .uk-background-default,
+.a2020_night_mode #uip-admin-bar .uk-dropdown,
+.a2020_night_mode #uip-admin-bar .uk-modal-dialog,
+.a2020_night_mode #uip-admin-bar .uk-modal-footer {
   background: #111;
 }
-.a2020_night_mode .uk-background-muted {
+.a2020_night_mode .uk-background-muted,
+.a2020_night_mode #uip-admin-bar .uk-background-muted {
   background-color: rgba(56, 56, 56, 0.36);
 }
-.a2020_night_mode .uk-modal-footer {
+.a2020_night_mode .uk-modal-footer,
+.a2020_night_mode #uip-admin-bar .uk-modal-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
-.a2020_night_mode .uk-dropdown {
+.a2020_night_mode .uk-dropdown,
+.a2020_night_mode #uip-admin-bar .uk-dropdown {
   border-color: rgba(255, 255, 255, 0.2);
 }
-.a2020_night_mode .uk-button-primary {
+.a2020_night_mode .uk-button-primary,
+.a2020_night_mode #uip-admin-bar .uk-button-primary {
   background: var(--a2020-primary);
   color: #fff;
 }
-.a2020_night_mode .uk-button-primary:hover {
+.a2020_night_mode .uk-button-primary:hover,
+.a2020_night_mode #uip-admin-bar .uk-button-primary:hover {
   background: var(--a2020-primary-darker);
   color: #fff;
 }
-.a2020_night_mode .a2020-border-bottom {
+.a2020_night_mode .a2020-border-bottom,
+.a2020_night_mode #uip-admin-bar .a2020-border-bottom {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
-.a2020_night_mode #wpadminbar .ab-sub-wrapper {
+.a2020_night_mode #wpadminbar .ab-sub-wrapper,
+.a2020_night_mode #uip-admin-bar #wpadminbar .ab-sub-wrapper {
   background: #111 !important;
 }
-.a2020_night_mode .admin2020_menu .uk-nav-default > li.uk-open > a {
+.a2020_night_mode .admin2020_menu .uk-nav-default > li.uk-open > a,
+.a2020_night_mode #uip-admin-bar .admin2020_menu .uk-nav-default > li.uk-open > a {
   color: #fff;
 }
-.a2020_night_mode .admin2020_menu .uk-nav-default > li.uk-open > a .uk-icon-button {
+.a2020_night_mode .admin2020_menu .uk-nav-default > li.uk-open > a .uk-icon-button,
+.a2020_night_mode #uip-admin-bar .admin2020_menu .uk-nav-default > li.uk-open > a .uk-icon-button {
   color: #fff;
 }
-.a2020_night_mode .uk-card-default {
+.a2020_night_mode .uk-card-default,
+.a2020_night_mode #uip-admin-bar .uk-card-default {
   background: rgba(56, 56, 56, 0.36);
 }
 .a2020_night_mode .upload-plugin-wrap .wp-upload-form,
 .a2020_night_mode .upload-theme-wrap .wp-upload-form,
-.a2020_night_mode .uk-placeholder {
+.a2020_night_mode .uk-placeholder,
+.a2020_night_mode #uip-admin-bar .upload-plugin-wrap .wp-upload-form,
+.a2020_night_mode #uip-admin-bar .upload-theme-wrap .wp-upload-form,
+.a2020_night_mode #uip-admin-bar .uk-placeholder {
   background: rgba(56, 56, 56, 0.36);
 }
-.a2020_night_mode .a2020-switch-container {
+.a2020_night_mode .a2020-switch-container,
+.a2020_night_mode #uip-admin-bar .a2020-switch-container {
   background: rgba(56, 56, 56, 0.36);
 }
-.a2020_night_mode .a2020-switch-container button {
+.a2020_night_mode .a2020-switch-container button,
+.a2020_night_mode #uip-admin-bar .a2020-switch-container button {
   color: rgba(255, 255, 255, 0.7);
 }
-.a2020_night_mode .a2020-switch-container button.active {
+.a2020_night_mode .a2020-switch-container button.active,
+.a2020_night_mode #uip-admin-bar .a2020-switch-container button.active {
   background: rgba(90, 90, 90, 0.36);
   color: #fff;
 }
-.a2020_night_mode .a2020-switch-container button:hover {
+.a2020_night_mode .a2020-switch-container button:hover,
+.a2020_night_mode #uip-admin-bar .a2020-switch-container button:hover {
   background: rgba(90, 90, 90, 0.36);
   color: #fff;
+}
+.a2020_night_mode .uk-button.uk-button-primary.uk-forever-primary,
+.a2020_night_mode #uip-admin-bar .uk-button.uk-button-primary.uk-forever-primary {
+  background: var(--a2020-primary);
 }
 
 /*# sourceMappingURL=dark.css.map */

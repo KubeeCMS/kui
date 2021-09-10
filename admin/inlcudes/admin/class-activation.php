@@ -18,7 +18,7 @@ class Admin_2020_activation {
 	 */
 	
 	public function start(){
-		
+	
 	} 
 	
 	/**
@@ -45,7 +45,9 @@ class Admin_2020_activation {
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'security' => wp_create_nonce('admin2020-activation-security-nonce'),
 		));
-	  
+	    
+		
+		
 	}
 	
 	
@@ -109,7 +111,7 @@ class Admin_2020_activation {
 		
 		<div class="uk-grid-small" uk-grid>
 			<div class="uk-width-1-1@s uk-width-expand@m">
-				<div class="uk-h4 uk-margin-remove"><?php _e('Admin 2020 is not activated','admin2020')?></div>
+				<div class="uk-h4 uk-margin-remove"><?php _e('UiPress is not activated','admin2020')?></div>
 				<div class="uk-text-meta"><?php _e('Please add a valid licence to activate','admin2020')?></div>
 			</div>
 			<div class="uk-width-2-3@s uk-width-1-3@m">
@@ -170,7 +172,7 @@ class Admin_2020_activation {
 			if($message === true){
 				$returndata = array();
 				$returndata['success'] = true;
-				$returndata['message'] = __('Admin 2020 succesfully activated','admin2020');
+				$returndata['message'] = __('UiPress succesfully activated','admin2020');
 				echo json_encode($returndata); 
 				die();
 			} else {
@@ -196,7 +198,29 @@ class Admin_2020_activation {
 		$data["increment_usage_count"] = true;
 		$productid = $this->productid;
 		$domain = get_home_url();
-		$themessage = __('Unable to register admin 2020 at this time','admin2020');
+		$themessage = __('Unable to register UiPress at this time','admin2020');
+		$instanceid = false;
+	
+		
+		if($productid == 'lemonsqueezy'){
+			
+			if($network === 'true'){
+				$a2020_options = get_option( 'admin2020_settings_network');
+				
+				if(isset($a2020_options['modules']['activation']['instance'])){
+					$instanceid = $a2020_options['modules']['activation']['instance'];
+				}
+				
+		    } else {
+			  	$a2020_options = get_option( 'admin2020_settings');
+				  
+				if(isset($a2020_options['modules']['activation']['instance'])){  
+			  		$instanceid = $a2020_options['modules']['activation']['instance'];
+				}
+		    }
+			
+		}
+		
 		
 		if(!$productid || $productid == ""){
 			return $themessage;
@@ -206,12 +230,24 @@ class Admin_2020_activation {
 			return __('No licence key provided','admin2020');
 		}
 		
-		$remote = wp_remote_get( 'https://admintwentytwenty.com/validate/validate.php?id='.$this->productid.'&k='.$key.'&d='.$domain, array(
+		$remoteURL = 'https://uipress.co/validate/validate.php?id='.$this->productid.'&k='.$key.'&d='.$domain;
+		
+		if($instanceid){
+			$remoteURL = 'https://uipress.co/validate/validate.php?id='.$this->productid.'&k='.$key.'&d='.$domain.'&instance='.$instanceid;
+		}
+		
+		$remote = wp_remote_get( $remoteURL, array(
 		  'timeout' => 10,
 		  'headers' => array(
 			  'Accept' => 'application/json'
 		  ) )
 		);
+		
+		if($network === 'true'){
+			$a2020_options = get_option( 'admin2020_settings_network');
+		} else {
+			$a2020_options = get_option( 'admin2020_settings');
+		}
 		
 		
 		
@@ -221,26 +257,55 @@ class Admin_2020_activation {
 			$state = $remote->state;
 			$themessage = $remote->message;
 			
+			
 			if ($state != "false"){
 			  set_transient( 'admin2020_activated', true, 12 * HOUR_IN_SECONDS );
 			  
 			  if($network === 'true'){
-				  $a2020_options = get_option( 'admin2020_settings_network');
+				  
 				  $a2020_options['modules']['activation']['key'] = $key;
+				  
+				  if($productid == 'lemonsqueezy' && isset($remote->instance_id)){
+					  $a2020_options['modules']['activation']['instance'] = $remote->instance_id;
+				  }
+				  
 				  update_option( 'admin2020_settings_network', $a2020_options);
 			  } else {
-				  $a2020_options = get_option( 'admin2020_settings');
+				  
 				  $a2020_options['modules']['activation']['key'] = $key;
+				  
+				  if($productid == 'lemonsqueezy' && isset($remote->instance_id)){
+						$a2020_options['modules']['activation']['instance'] = $remote->instance_id;
+				  }
+				  
 				  update_option( 'admin2020_settings', $a2020_options);
 			  }
 			  
 			  return true;
 			} else {
+				
+			  if($network === 'true'){
+				  $a2020_options['modules']['activation']['instance'] = '';
+				  update_option( 'admin2020_settings_network', $a2020_options);
+			  } else {
+				  $a2020_options['modules']['activation']['instance'] = '';
+				  update_option( 'admin2020_settings', $a2020_options);
+			  }
+			  	
 			  delete_transient('admin2020_activated');
 			  return $themessage;
 			}
 		
 		} else {
+			
+			if($network === 'true'){
+				$a2020_options['modules']['activation']['instance'] = '';
+				update_option( 'admin2020_settings_network', $a2020_options);
+			} else {
+				$a2020_options['modules']['activation']['instance'] = '';
+				update_option( 'admin2020_settings', $a2020_options);
+			}
+			
 			delete_transient('admin2020_activated');
 			return $themessage;
 		}

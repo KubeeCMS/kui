@@ -147,7 +147,7 @@ a.color_tag.selected {
   transform: rotate(90deg);
 }
 .a2020-folder-component .active-folder {
-  background: #f8f8f8;
+  background: #f3f3f3;
   border-radius: 4px;
   color: var(--a2020-primary);
 }

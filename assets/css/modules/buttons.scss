@@ -42,7 +42,9 @@
     margin-left: 15px;
   }
 }
-
+.uk-button[disabled] {
+  cursor: not-allowed;
+}
 .media-frame-toolbar .media-toolbar {
   background: $global-muted-background;
 }
@@ -65,6 +67,12 @@ body.a2020_night_mode {
     @include make-primary-button;
     line-height: 1;
   }
+  .uk-button {
+    background: $mid-dark;
+    &:hover {
+      background: $light-dark;
+    }
+  }
   .button.disabled {
     background-color: $mid-dark !important;
     color: $global-muted-color !important;
@@ -79,5 +87,12 @@ body.a2020_night_mode {
     &:focus {
       background: var(--a2020-primary-darker);
     }
+  }
+}
+
+.uk-light .uk-button {
+  background: $mid-dark;
+  &:hover {
+    background: $light-dark;
   }
 }

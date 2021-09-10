@@ -1,6 +1,10 @@
 @import "../variables.scss";
 @import "../modules/hooks.scss";
 
+.acf-admin-field-groups .tablenav.top {
+  display: inherit;
+}
+
 .a2020_admin_theme.a2020_night_mode {
   .acf-admin-toolbar,
   .acf-field-object {

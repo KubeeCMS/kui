@@ -24,6 +24,7 @@ class Admin_2020_styles{
 		add_filter('fluentform_skip_no_conflict',array($this,'admin2020_fluentform_styles'));
 		add_filter('fluentcrm_skip_no_conflict',array($this,'admin2020_fluentform_styles'));
 		add_filter('ninja_table_skip_no_confict',array($this,'admin2020_fluentform_styles'));
+		add_filter('schedulepress_skip_no_conflict',array($this,'admin2020_schedulepress_styles'));
 		
 	}
 	
@@ -144,6 +145,13 @@ class Admin_2020_styles{
 		$supportedplugins['better-wp-security'] = $this->path . 'assets/css/plugins/plugin_better-wp-security.css';
 		$supportedplugins['borlabs-cookie'] = $this->path . 'assets/css/plugins/plugin_borlabs-cookie.css';
 		$supportedplugins['smart-slider-3'] = $this->path . 'assets/css/plugins/plugin_smart-slider-3.css';
+		$supportedplugins['fluentform'] = $this->path . 'assets/css/plugins/plugin_fluentform.css';
+		$supportedplugins['ws-form'] = $this->path . 'assets/css/plugins/plugin_ws-form.css';
+		$supportedplugins['wp-optimize'] = $this->path . 'assets/css/plugins/plugin_wp-optimize.css';
+		$supportedplugins['cartflows'] = $this->path . 'assets/css/plugins/plugin_cartflows.css';
+		$supportedplugins['fluent-crm'] = $this->path . 'assets/css/plugins/plugin_fluent-crm.css';
+		$supportedplugins['elementor'] = $this->path . 'assets/css/plugins/plugin_elementor.css';
+		$supportedplugins['revslider'] = $this->path . 'assets/css/plugins/plugin_revslider.css';
 		
 		
 		
@@ -173,6 +181,17 @@ class Admin_2020_styles{
 	}
 	
 	/**
+	 * White lists scripts for schedulepress
+	 * @since 1.4
+	 */
+	public function admin2020_schedulepress_styles($styles){
+		
+		$styles[] = 'admin-2020';
+		
+		return $styles;
+		
+	}
+	/**
 	 * White lists scripts for mailpoet
 	 * @since 1.4
 	 */
@@ -192,10 +211,11 @@ class Admin_2020_styles{
 	 
 	 public function add_styles(){
 		 
-		///ENSURE WE ARE NOT LOADING ON FRONT UNLESS NECESSARY
-		global $pagenow;
-		if(!is_user_logged_in() && $pagenow != 'wp-login.php'){
-			return;
+		 
+		$a2020_options = get_option( 'admin2020_settings');
+		  
+		if(isset($a2020_options['modules']['activation']['instance'])){  
+			  $instanceid = $a2020_options['modules']['activation']['instance'];
 		}
 		 
 		///GOOGLE FONTS
@@ -260,17 +280,16 @@ class Admin_2020_styles{
 		  
 		  
 		///UIKIT FRAMEWORK
-		wp_enqueue_script('uikit', $this->path . 'assets/js/uikit/uikit.min.js', array('jquery'));
-		wp_enqueue_script('uikit-icons', $this->path . 'assets/js/uikit/uikit-icons.min.js', array('jquery'));
+		wp_enqueue_script('uikit', $this->path . 'assets/js/uikit/uikit.min.js', array('jquery'),  $this->version);
+		wp_enqueue_script('uikit-icons', $this->path . 'assets/js/uikit/uikit-icons.min.js', array('jquery'),  $this->version);
 		///ADMIN 2020 SCRIPTS
-		wp_enqueue_script('admin2020-utilities', $this->path . 'assets/js/admin2020/utilities.min.js', array('jquery'));
+		wp_enqueue_script('admin2020-utilities', $this->path . 'assets/js/admin2020/utilities.min.js', array('jquery'),  $this->version);
 		wp_localize_script('admin2020-utilities', 'admin2020_utilities_ajax', array(
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'security' => wp_create_nonce('admin2020-utilities-security-nonce'),
 		));
-		
 		///LOAD VUE
-		wp_enqueue_script('a2020-vue-build', $this->path . 'assets/js/vuejs/vue-global-dev.js', array('jquery'));
+		wp_enqueue_script('a2020-vue-build', $this->path . 'assets/js/vuejs/vue-global-dev.js', array('jquery'),  $this->version);
 		  
 	  }
 	

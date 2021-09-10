@@ -5,6 +5,9 @@
   .wrap {
     padding: 0;
     padding-top: 20px;
+    .wp-heading-inline + .page-title-action {
+      margin-left: 10px;
+    }
   }
 }
 .a2020_admin_theme.woocommerce-embed-page {
@@ -198,6 +201,28 @@ ul.order_actions {
   .wc-backbone-modal-main footer {
     background: $mid-dark;
   }
+  .woocommerce-experimental-list li {
+    background: $mid-dark;
+  }
+  .woocommerce-task-list__item:not(.complete) .woocommerce-task__icon {
+    background: $light-dark;
+  }
+  table.wc_status_table tr:nth-child(2n) td,
+  table.wc_status_table tr:nth-child(2n) th {
+    background: none;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  table.wc_status_table tr td,
+  table.wc_status_table tr th {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .wc-metaboxes-wrapper .wc-metabox,
+  .wc-metaboxes-wrapper .wc-metabox table {
+    background: $mid-dark;
+    h3 .attribute_name {
+      color: #fff;
+    }
+  }
 }
 
 @media only screen and (max-width: 1000px) {
@@ -211,5 +236,11 @@ ul.order_actions {
     float: none;
     margin-bottom: 10px;
     padding: 5px;
+  }
+}
+
+@media only screen and (max-width: 782px) {
+  .woocommerce-embed-page .wrap #posts-filter {
+    margin-bottom: 60px;
   }
 }

@@ -57,6 +57,18 @@ table.widefat {
       }
     }
   }
+  tbody {
+    .column-categories,
+    .column-tags {
+      color: rgba(0, 0, 0, 0);
+      a {
+        background: $global-primary-muted;
+        padding: 3px;
+        color: #555;
+        border-radius: 4px;
+      }
+    }
+  }
   tr {
     background: none;
     border: none;
@@ -183,6 +195,16 @@ table.widefat {
 }
 
 body.a2020_night_mode {
+  tbody {
+    .column-categories,
+    .column-tags {
+      color: rgba(0, 0, 0, 0);
+      a {
+        color: #ababab !important;
+      }
+    }
+  }
+
   .tablenav .one-page .displaying-num {
     background-color: $mid-dark;
     border: 1px solid $inverse-global-border;

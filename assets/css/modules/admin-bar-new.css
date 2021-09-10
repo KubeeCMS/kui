@@ -1,0 +1,134 @@
+html.wp-toolbar {
+  padding-top: 0px !important;
+}
+
+html:not(.wp-toolbar) body.wp-admin #uip-admin-bar {
+  display: none !important;
+}
+
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar {
+  font-family: inherit;
+  background: none;
+  position: relative;
+  width: auto;
+  font-weight: 600;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar * {
+  font-family: inherit;
+  font-weight: 600;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar #wp-admin-bar-menu-toggle,
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar #wp-admin-bar-wp-logo,
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar #wp-admin-bar-site-name,
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar #wp-admin-bar-updates,
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar #wp-admin-bar-my-account {
+  display: none;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .wp-ui-notification {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .ab-top-secondary {
+  float: left;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-item {
+  display: flex;
+  color: #888;
+  align-items: center;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-item::before {
+  color: #888;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-item:before {
+  color: #888;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-item .ab-icon {
+  color: #888;
+  font-size: 0.875rem;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-item .ab-icon::before {
+  color: #888;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-item .ab-icon:before {
+  color: #888;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-item .ab-label {
+  color: #888;
+  font-size: 0.875rem;
+  opacity: 1;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li:hover .ab-item {
+  background: none;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li:hover .ab-item::before {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li:hover .ab-item:before {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li:hover .ab-item .ab-icon {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li:hover .ab-item .ab-icon::before {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li:hover .ab-item .ab-label {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-sub-wrapper {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-sub-wrapper a.ab-item,
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-sub-wrapper .ab-item {
+  color: #888;
+  font-size: 0.875rem;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-sub-wrapper a.ab-item:hover,
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar li .ab-sub-wrapper .ab-item:hover {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .menupop.hover .ab-item, body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .menupop:hover .ab-item {
+  background: none;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .menupop.hover .ab-item .ab-icon, body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .menupop:hover .ab-item .ab-icon {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .menupop.hover .ab-item .ab-icon::before, body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .menupop:hover .ab-item .ab-icon::before {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .menupop.hover .ab-item .ab-label, body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar .menupop:hover .ab-item .ab-label {
+  color: #333;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar #wp-admin-bar-new-content .ab-icon::before {
+  content: "add_circle_outline";
+  font-family: "Material Icons Outlined";
+  font-style: normal;
+  font-weight: 400;
+  top: 0;
+}
+body.a2020_admin_bar #uip-admin-bar .admin2020_legacy_admin #wpadminbar #wp-admin-bar-comments .ab-icon::before {
+  content: "chat_bubble_outline";
+  font-family: "Material Icons Outlined";
+  font-style: normal;
+  font-weight: 400;
+  top: 0;
+}
+
+body.a2020_admin_bar.a2020_night_mode #uip-admin-bar .admin2020_legacy_admin #wpadminbar .ab-sub-wrapper {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#wp-admin-bar-wpcss-css-hero-go a,
+#wp-admin-bar-wpcss-css-hero-go:hover a {
+  width: auto !important;
+}
+
+/*# sourceMappingURL=admin-bar-new.css.map */

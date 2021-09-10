@@ -21,7 +21,6 @@ class Admin_2020_module_admin_advanced
     {
 		///REGISTER THIS COMPONENT
 		add_filter('admin2020_register_component', array($this,'register'));
-		add_action('admin_enqueue_scripts', [$this, 'add_scripts'], 0);
 		
 		if(!$this->utils->enabled($this)){
 			return;
@@ -37,10 +36,31 @@ class Admin_2020_module_admin_advanced
 		
 		
 		add_action('admin_head',array($this,'add_body_styles'),0);
+		add_action('admin_enqueue_scripts', [$this, 'add_scripts'], 0);
 		
 		
 		
     }
+	
+	
+	public function add_scripts(){
+		
+		
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
+		$scripts = $this->utils->get_option($optionname,'enqueue-scripts');
+		
+		if(is_array($scripts) && count($scripts) > 0){
+			
+			foreach($scripts as $key=>$value) {	
+				
+				wp_enqueue_script('uipress-custom-script-'.$key, $value, array('jquery'),  $this->version);
+				
+			}
+			
+		}
+		
+	}
 	
 	
 	/**
@@ -92,148 +112,73 @@ class Admin_2020_module_admin_advanced
 		$data = array();
 		$data['title'] = __('Advanced','admin2020');
 		$data['option_name'] = 'admin2020_admin_advanced';
-		$data['description'] = __('Creates options for adding customm CSS and JS.','admin2020');
+		$data['description'] = __('Creates options for adding custom CSS and JS.','admin2020');
 		return $data;
 		
 	}
+	
 	/**
-	 * Returns settings for module
-	 * @since 1.4
+	 * Returns settings options for settings page
+	 * @since 2.1
 	 */
-	 public function render_settings(){
-		  
-		  $info = $this->component_info();
-		  $optionname = $info['option_name'];
-		  
-		  $dark_background = $this->utils->get_option($optionname,'dark-background');
-		  $light_background = $this->utils->get_option($optionname,'light-background');
-		  $customcss = $this->utils->get_option($optionname,'custom-css');
-		  $customjs = $this->utils->get_option($optionname,'custom-js');
-		  
-		  $disabled_for = $this->utils->get_option($optionname,'disabled-for');
-		  if($disabled_for == ""){
-			$disabled_for = array();
-		  }
-		  ?>
-		  <div class="uk-grid" id="a2020_advanced_settings" uk-grid>
-			  <!-- LOCKED FOR USERS / ROLES -->
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  <div class="uk-h5 "><?php _e('Advanced Disabled for','admin2020')?></div>
-				  <div class="uk-text-meta"><?php _e("Custom CSS and JS will not load for the selected roles and users.",'admin2020') ?></div>
-			  </div>
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  
-				  
-				  <select class="a2020_setting" id="a2020-role-types" name="disabled-for" module-name="<?php echo $optionname?>" multiple>
-					  
-					<?php
-					foreach($disabled_for as $disabled) {
-						
-						?>
-						<option value="<?php echo $disabled ?>" selected><?php echo $disabled ?></option>
-						<?php
-						
-					} 
-					?>
-				  </select>
-				  
-				  <script>
-					  jQuery('#a2020_advanced_settings #a2020-role-types').tokenize2({
-						  placeholder: '<?php _e('Select roles or users','admin2020') ?>',
-						   dataSource: function (term, object) {
-							   a2020_get_users_and_roles(term, object);
-						   },
-						   debounce: 1000,
-					  });
-				  </script>
-				  
-			  </div>	
-			  
-			<div class="uk-width-1-1@ uk-width-1-3@m"></div>
-			
-			<!-- CUSTOM CSS -->
-			<div class="uk-width-1-1@ uk-width-1-3@m">
-			  <div class="uk-h5 "><?php _e('Custom CSS','admin2020')?></div>
-			  <div class="uk-text-meta"><?php _e("CSS added here will be loaded on every admin page.",'admin2020') ?></div>
-			</div>
-			<div class="uk-width-1-1@ uk-width-2-3@m">
-			  
-			  <textarea class="a2020_setting" module-name="<?php echo $optionname?>" name="custom-css" id="custom-css" style="display: none;"><?php echo stripslashes($customcss)?></textarea>
-			  
-			  <div class="a2020_code_editor" id="a2020-css-editor"></div>
-			  
-			</div>	
-			<script>
-			  
-			  jQuery(document).ready(function ($) {
-				  
-				  
-				  let codeArea = new CodeFlask('#a2020-css-editor', {
-					language: 'css',
-					lineNumbers: true,
-				  })
-				  codeArea.updateCode(jQuery('#custom-css').val());
-				  
-				  codeArea.onUpdate((code) => {
-					jQuery('#custom-css').val(code);
-				  });
-			  })
-			</script> 
-			
-			<!-- CUSTOM JS -->
-			<div class="uk-width-1-1@ uk-width-1-3@m">
-			  <div class="uk-h5 "><?php _e('Custom JS','admin2020')?></div>
-			  <div class="uk-text-meta"><?php _e("JS added here will be loaded on every admin page.",'admin2020') ?></div>
-			</div>
-			<div class="uk-width-1-1@ uk-width-2-3@m">
-			  
-			  <textarea class="a2020_setting" module-name="<?php echo $optionname?>" name="custom-js" id="custom-js" style="display: none;"><?php echo stripslashes($customjs)?></textarea>
-			  
-			  <div class="a2020_code_editor" id="a2020-js-editor"></div>
-			  
-			</div>	
-			<script>
-			  
-			  jQuery(document).ready(function ($) {
-				  
-				  
-				  let codeAreajs = new CodeFlask('#a2020-js-editor', {
-					language: 'js',
-					lineNumbers: true,
-				  })
-				  codeAreajs.updateCode(jQuery('#custom-js').val());
-				  
-				  codeAreajs.onUpdate((code) => {
-					jQuery('#custom-js').val(code);
-				  });
-			  })
-			</script> 
-			  
-			  	
-		  </div>	
-		  
-		  <?php
-	  }
-	
-	/**
-	* Enqueue advanced 2020 scripts
-	* @since 1.4
-	*/
-	
-	public function add_scripts(){
+	public function get_settings_options(){
 		
-		if(isset($_GET['page'])) {
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
 		
-			if($_GET['page'] == 'admin2020-settings'){
-	  
-				  ///CODE JAR FRAMEWORK
-				  wp_enqueue_script('codeflask', $this->path . 'assets/js/codeflask/codeflask.min.js', array('jquery'));
-				  
-				  
-			}
-		} 
-	  
+		$settings = array();
+		
+		
+		$temp = array();
+		$temp['name'] = __('Advanced module disabled for','admin2020');
+		$temp['description'] = __("Custom CSS and JS will not load for the selected roles and users.",'admin2020');
+		$temp['type'] = 'user-role-select';
+		$temp['optionName'] = 'disabled-for'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName'], true);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Custom CSS','admin2020');
+		$temp['description'] = __("CSS added here will be loaded on every admin page as well as the login page",'admin2020');
+		$temp['type'] = 'code-area-css';
+		$temp['optionName'] = 'custom-css'; 
+		$temp['language'] = 'language-css';
+		$temp['value'] = stripslashes($this->utils->get_option($optionname,$temp['optionName'], false));
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Custom JS','admin2020');
+		$temp['description'] = __("Javascript added here will be loaded on every admin page as well as the login page",'admin2020');
+		$temp['type'] = 'code-area-css';
+		$temp['optionName'] = 'custom-js'; 
+		$temp['language'] = 'language-js';
+		$temp['value'] = stripslashes($this->utils->get_option($optionname,$temp['optionName'], false));
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Enqueue scripts to admin area','admin2020');
+		$temp['description'] = __("Add scripts to the head of every admin page",'admin2020');
+		$temp['type'] = 'multiple-text';
+		$temp['optionName'] = 'enqueue-scripts'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName'], true);
+		$settings[] = $temp;
+		
+		
+		$temp = array();
+		$temp['name'] = __('HTML for head','admin2020');
+		$temp['description'] = __("Add html here to be added to every admin page <head> section",'admin2020');
+		$temp['type'] = 'code-area-css';
+		$temp['optionName'] = 'head-html'; 
+		$temp['language'] = 'language-html';
+		$temp['value'] = stripslashes($this->utils->get_option($optionname,$temp['optionName'], false));
+		$settings[] = $temp;
+		
+		
+		return $settings;
+		
 	}
+	
+	
 	
 	/**
 	* Adds custom css for custom background colors
@@ -247,6 +192,7 @@ class Admin_2020_module_admin_advanced
 		$optionname = $info['option_name'];
 		$customcss = $this->utils->get_option($optionname,'custom-css');
 		$customjs = $this->utils->get_option($optionname,'custom-js');
+		$customhtml = $this->utils->get_option($optionname,'head-html');
 		
 		
 		if ($customcss != ""){
@@ -260,6 +206,10 @@ class Admin_2020_module_admin_advanced
 		  echo '<script>';
 		  echo stripslashes($customjs);
 		  echo '</script>';
+		}
+		
+		if ($customhtml != ""){
+		  echo stripslashes($customhtml);
 		}
 	}
 	

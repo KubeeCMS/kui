@@ -105,173 +105,76 @@ class Admin_2020_module_admin_theme
 		$data = array();
 		$data['title'] = __('Theme','admin2020');
 		$data['option_name'] = 'admin2020_admin_theme';
-		$data['description'] = __('Creates the main theme for admin 2020. Disables default WordPress theme and applies admin 2020.','admin2020');
+		$data['description'] = __('Creates the main theme for UiPress Disables default WordPress theme and applies UiPress.','admin2020');
 		return $data;
 		
 	}
+	
 	/**
-	 * Returns settings for module
-	 * @since 1.4
+	 * Returns settings options for settings page
+	 * @since 2.1
 	 */
-	 public function render_settings(){
-		  
-		  
-		  $info = $this->component_info();
-		  $optionname = $info['option_name'];
-		  
-		  $dark_background = $this->utils->get_option($optionname,'dark-background');
-		  $light_background = $this->utils->get_option($optionname,'light-background');
-		  $dark_primary = $this->utils->get_option($optionname,'dark-primary-color');
-		  $light_primary = $this->utils->get_option($optionname,'light-primary-color');
-		  $card_padding = $this->utils->get_option($optionname,'card-padding');
-		  
-		  $disabled_for = $this->utils->get_option($optionname,'disabled-for');
-		  if($disabled_for == ""){
-			  $disabled_for = array();
-		  }
-		  ?>
-		  <div class="uk-grid" id="a2020_theme_settings" uk-grid>
-			  <!-- LOCKED FOR USERS / ROLES -->
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  <div class="uk-h5 "><?php _e('Theme Disabled for','admin2020')?></div>
-				  <div class="uk-text-meta"><?php _e("Admin 2020 theme will be disabled for any users or roles you select",'admin2020') ?></div>
-			  </div>
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  
-				  
-				  <select class="a2020_setting" id="a2020-role-types" name="disabled-for" module-name="<?php echo $optionname?>" multiple>
-					  
-					<?php
-					foreach($disabled_for as $disabled) {
-						
-						?>
-						<option value="<?php echo $disabled ?>" selected><?php echo $disabled ?></option>
-						<?php
-						
-					} 
-					?>
-					
-				  </select>
-				  
-				  <script>
-					  jQuery('#a2020_theme_settings #a2020-role-types').tokenize2({
-						  placeholder: '<?php _e('Select roles or users','admin2020') ?>',
-						  dataSource: function (term, object) {
-							  a2020_get_users_and_roles(term, object);
-						  },
-						  debounce: 1000,
-					  });
-				  </script>
-				  
-			  </div>	
-			  
-			  <div class="uk-width-1-1@ uk-width-1-3@m"></div>
-			  
-			  <!-- BACKGROUND COLOUR -->
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  <div class="uk-h5 "><?php _e('Background Color','admin2020')?></div>
-				  <div class="uk-text-meta"><?php _e("Sets a background colour for admin pages.",'admin2020') ?></div>
-			  </div>
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  <div class="uk-h5"><?php _e('Light','admin2020')?></div>
-				  
-				  <input class=" a2020_setting" id="light-background" 
-				  module-name="<?php echo $optionname?>" 
-				  name="light-background" 
-				  type="text"
-				  data-default-color="#f8f8f8"
-				  value="<?php echo $light_background?>">
-				  
-			  </div>	
-			  
-			  <script>
-				  jQuery(document).ready(function($){
-					  $('#a2020_theme_settings #light-background').wpColorPicker();
-				  });
-			  </script>
-			  
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  <div class="uk-h5"><?php _e('Dark','admin2020')?></div>
-				  
-				  <input class="a2020_setting" id="dark-background" 
-				  module-name="<?php echo $optionname?>" 
-				  name="dark-background" 
-				  type="text"
-				  data-default-color="#111"
-				  value="<?php echo $dark_background?>">
-				  
-			  </div>	
-			  
-			  <script>
-				  jQuery(document).ready(function($){
-					  $('#a2020_theme_settings #dark-background').wpColorPicker();
-				  });
-			  </script>
-			  
-			  
-			  <!-- PRIMARY LINK COLOUR -->
-				<div class="uk-width-1-1@ uk-width-1-3@m">
-					<div class="uk-h5 "><?php _e('Primary Color','admin2020')?></div>
-					<div class="uk-text-meta"><?php _e("Sets the primary color throughout Admin 2020.",'admin2020') ?></div>
-				</div>
-				<div class="uk-width-1-1@ uk-width-1-3@m">
-					
-					<input class=" a2020_setting" id="light-primary-color" 
-					module-name="<?php echo $optionname?>" 
-					name="light-primary-color" 
-					type="text"
-					data-default-color="#0c5cef"
-					value="<?php echo $light_primary?>">
-					
-				</div>	
-				
-				<script>
-					jQuery(document).ready(function($){
-						$('#a2020_theme_settings #light-primary-color').wpColorPicker();
-					});
-				</script>
-				
-				<div class="uk-width-1-1@ uk-width-1-3@m">
-					
-					<input class="a2020_setting" id="dark-primary-color" 
-					module-name="<?php echo $optionname?>" 
-					name="dark-primary-color" 
-					type="text"
-					data-default-color="#0c5cef"
-					value="<?php echo $dark_primary?>">
-					
-				</div>	
-				
-				<script>
-					jQuery(document).ready(function($){
-						$('#a2020_theme_settings #dark-primary-color').wpColorPicker();
-					});
-				</script>
-				
-				
-				<!-- PRIMARY LINK COLOUR -->
-				<div class="uk-width-1-1@ uk-width-1-3@m">
-					<div class="uk-h5 "><?php _e('Padding','admin2020')?></div>
-					<div class="uk-text-meta"><?php _e("Sets padding (in px) for cards, metaboxes and other items in the UI.",'admin2020') ?></div>
-				</div>
-				<div class="uk-width-1-1@ uk-width-2-3@m">
-					
-					<input class="a2020_setting" id="card-padding" 
-					module-name="<?php echo $optionname?>" 
-					name="card-padding" 
-					type="number"
-					placeholder="20"
-					value="<?php echo $card_padding?>">
-					
-				</div>	
-				
-				
-			  
-			  	
-		  </div>	
-		  
-		  <?php
-	  }
+	public function get_settings_options(){
+		
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
+		
+		$settings = array();
+		
+		
+		$temp = array();
+		$temp['name'] = __('Theme Disabled for','admin2020');
+		$temp['description'] = __("UiPress theme will be disabled for any users or roles you select",'admin2020');
+		$temp['type'] = 'user-role-select';
+		$temp['optionName'] = 'disabled-for'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName'], true);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Background Color (Light Mode)','admin2020');
+		$temp['description'] = __("Sets a background colour for admin pages in light mode.",'admin2020');
+		$temp['type'] = 'color';
+		$temp['optionName'] = 'light-background'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Background Color (Dark Mode)','admin2020');
+		$temp['description'] = __("Sets a background colour for admin pages in dark mode.",'admin2020');
+		$temp['type'] = 'color';
+		$temp['optionName'] = 'dark-background'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Primary Color (Light Mode)','admin2020');
+		$temp['description'] = __("Sets a primary colour for the admin theme in light mode.",'admin2020');
+		$temp['type'] = 'color';
+		$temp['optionName'] = 'light-primary-color'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Primary Color (Dark Mode)','admin2020');
+		$temp['description'] = __("Sets a primary colour for the admin theme in dark mode.",'admin2020');
+		$temp['type'] = 'color';
+		$temp['optionName'] = 'dark-primary-color'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		
+		$temp = array();
+		$temp['name'] = __('Global Padding','admin2020');
+		$temp['description'] = __("Sets padding (in px) for cards, metaboxes and other items in the UI.",'admin2020');
+		$temp['type'] = 'number';
+		$temp['optionName'] = 'card-padding'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		return $settings;
+		
+	}
+	
     /**
      * Adds admin bar styles
      * @since 1.0

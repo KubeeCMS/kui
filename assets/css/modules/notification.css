@@ -16,6 +16,17 @@
   border-left: 4px solid #faa05a !important;
 }
 
+.a2020-activation-message {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 9999999999;
+  width: auto;
+  border: 1px solid #e5e5e5 !important;
+  margin-bottom: 0 !important;
+}
+
 .a2020_night_mode #login .message,
 .a2020_night_mode .error,
 .a2020_night_mode .is-dismissible,
@@ -23,6 +34,10 @@
 .a2020_night_mode .update-nag,
 .a2020_night_mode .updated {
   background: rgba(56, 56, 56, 0.36);
+}
+.a2020_night_mode #activationpanel {
+  background: #222;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 /*# sourceMappingURL=notification.css.map */

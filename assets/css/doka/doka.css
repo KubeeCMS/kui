@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Doka Image Editor 7.10.4
  * (c) 2018-2021 PQINA Inc. - All Rights Reserved
@@ -8,15 +9,19 @@
   display: flex;
   flex-direction: column;
 }
+
 .DokaRadioGroup .DokaRadioGroupOptionGroup + .DokaRadioGroupOptionGroup {
   margin-top: 0.5em;
 }
-.DokaRadioGroup[data-layout="row"] .DokaRadioGroupOptions {
+
+.DokaRadioGroup[data-layout=row] .DokaRadioGroupOptions {
   flex-direction: row;
 }
+
 .DokaRadioGroup label {
   -webkit-tap-highlight-color: transparent;
 }
+
 .doka-image-editor,
 doka-image-editor {
   --color-primary: #ffd843;
@@ -80,14 +85,17 @@ doka-image-editor {
   --safe-area-inset-top: 0px;
   --safe-area-inset-bottom: 0px;
 }
+
 .doka-image-editor,
 .DokaRootWrapper,
 doka-image-editor {
   display: block;
 }
+
 .DokaRootWrapper {
   height: 100%;
 }
+
 .DokaRoot {
   --nav-group-margin: 0.5em;
   --editor-calculated-inset-top: calc(var(--safe-area-inset-top) + var(--editor-inset-top));
@@ -120,9 +128,11 @@ doka-image-editor {
   background-color: var(--color-background-100);
   transition: background-color 1ms, color 0.15s ease-in-out;
 }
+
 .DokaRoot * {
   box-sizing: content-box;
 }
+
 .DokaRoot button,
 .DokaRoot fieldset,
 .DokaRoot input,
@@ -138,30 +148,37 @@ doka-image-editor {
   width: auto;
   text-decoration: none;
 }
+
 .DokaRoot button[disabled] {
   pointer-events: none;
 }
+
 .DokaRoot canvas {
   display: block;
 }
+
 .DokaRoot svg {
   display: inline-block;
   width: auto;
   height: auto;
 }
+
 .DokaRoot p {
   margin: 0;
 }
+
 .DokaRoot li,
 .DokaRoot ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+
 .DokaRoot a {
   color: inherit;
   text-decoration: none;
 }
+
 .DokaRoot .implicit {
   border: 0;
   clip: rect(0 0 0 0);
@@ -175,24 +192,29 @@ doka-image-editor {
   width: 1px;
   white-space: nowrap;
 }
+
 .DokaRoot .DokaStage {
   display: flex;
   align-self: stretch;
   flex: 1;
 }
+
 .DokaRoot .DokaStage[tabindex="-1"] {
   outline: none;
 }
+
 .DokaRoot .DokaRootPortal {
   position: absolute;
   left: 0;
   top: 0;
 }
+
 .DokaRoot > .DokaCanvas {
   width: 100%;
   height: 100%;
   z-index: 0;
 }
+
 .DokaRoot > .DokaCanvas,
 .DokaRoot > .DokaCanvas:after {
   position: absolute;
@@ -200,12 +222,14 @@ doka-image-editor {
   top: 0;
   pointer-events: none;
 }
+
 .DokaRoot > .DokaCanvas:after {
   content: "";
   bottom: 0;
   right: 0;
   background-repeat: no-repeat;
 }
+
 .DokaRoot > .DokaStatus {
   position: absolute;
   z-index: 99999;
@@ -218,6 +242,7 @@ doka-image-editor {
   align-items: flex-start;
   background-color: var(--color-background-90);
 }
+
 .DokaRoot > .DokaStatus > p {
   position: absolute;
   top: 50%;
@@ -227,20 +252,24 @@ doka-image-editor {
   align-items: center;
   transition: opacity 0.5s ease-out;
 }
+
 .DokaRoot > .DokaStatus .DokaStatusButton,
 .DokaRoot > .DokaStatus .DokaStatusIcon {
   position: absolute;
 }
+
 .DokaRoot > .DokaStatus .DokaStatusButton svg,
 .DokaRoot > .DokaStatus .DokaStatusIcon svg {
   width: 1.25em;
   height: 1.25em;
 }
+
 .DokaRoot > .DokaStatus .DokaStatusIcon svg {
   font-size: 0.875em;
   margin-top: 0.25em;
   margin-left: 0.5em;
 }
+
 .DokaRoot > .DokaStatus .DokaStatusButton .DokaButton {
   outline: transparent;
   margin-left: 0.75em;
@@ -250,123 +279,155 @@ doka-image-editor {
   padding: 0.25em;
   transition: background-color 0.1s ease-out, color 0.1s ease-out;
 }
+
 .DokaRoot > .DokaStatus .DokaStatusButton .DokaButton:not([disabled])[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaRoot > .DokaStatus .DokaStatusButton .DokaButton:not([disabled]):hover {
   background-color: var(--color-foreground-10);
 }
+
 .DokaRoot > .DokaStatus .DokaStatusMessage {
   position: absolute;
   font-size: 0.875em;
 }
+
 .DokaRoot > .DokaStatus .DokaStatusProgress {
   position: absolute;
   left: 0;
 }
+
 .DokaRoot > .DokaStatus .DokaProgressIndicator {
   margin-left: 0.5em;
 }
+
 .DokaRoot > .DokaNav {
   position: relative;
   z-index: 3;
 }
+
 .DokaRoot > .DokaNav:empty() {
   display: none !important;
 }
+
 .DokaRoot > .DokaNav .DokaButton {
   outline: transparent;
   transition: background-color 0.1s ease-out, color 0.1s ease-out;
 }
+
 .DokaRoot > .DokaNav .DokaButton svg {
   width: 1em;
   transition: opacity 0.1s ease-out;
 }
+
 .DokaRoot > .DokaNav .DokaButton > span {
   justify-content: center;
 }
+
 .DokaRoot > .DokaNav .DokaButtonIconOnly .DokaButtonInner,
 .DokaRoot > .DokaNav .DokaDropdownIconOnly .DokaButtonInner {
   width: 1.75em;
   height: 1.75em;
 }
+
 .DokaRoot > .DokaNav .DokaButton[disabled] svg {
   opacity: 0.25;
 }
+
 .DokaRoot > .DokaNav .DokaButton:not(.DokaButtonExport):not([disabled])[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaRoot > .DokaNav .DokaButton:not(.DokaButtonExport):not([disabled]):hover {
   background-color: var(--color-foreground-10);
 }
+
 .DokaRoot .DokaButtonExport {
   color: var(--color-primary-text);
   background-color: var(--color-primary);
   box-shadow: inset 0 0 0 1px var(--color-foreground-10);
 }
+
 .DokaRoot .DokaButtonExport:hover {
   background-color: var(--color-primary-dark);
 }
+
 .DokaRoot .DokaButtonExport[data-focus-visible] {
   color: var(--color-primary-text);
   background-color: var(--color-primary);
   box-shadow: inset 0 0 0 1px var(--color-foreground-5), 0 0 0 3px var(--color-focus-50);
   background-color: var(--color-primary-dark);
 }
+
 .DokaRoot .DokaButtonExport:not(.DokaButtonIconOnly) {
   flex: 1;
   padding: 0 0.75em;
 }
+
 .DokaRoot .DokaButtonExport:not(.DokaButtonIconOnly) .DokaButtonLabel {
   line-height: 2.25;
 }
+
 .DokaRoot .DokaButtonExport:not(.DokaButtonIconOnly) .DokaButtonInner {
   font-size: 0.75em;
 }
+
 .DokaRoot > .DokaNavMain {
   display: flex;
   overflow: hidden;
 }
-.DokaRoot > .DokaNavMain [aria-selected="true"] button {
+
+.DokaRoot > .DokaNavMain [aria-selected=true] button {
   -webkit-backdrop-filter: var(--backdrop-filter-dark);
   backdrop-filter: var(--backdrop-filter-dark);
   background-color: var(--color-foreground-10);
 }
+
 .DokaRoot > .DokaNavMain button svg {
   align-self: center;
   width: 1.5em;
 }
+
 .DokaRoot > .DokaNavMain button span,
 .DokaRoot > .DokaNavMain button svg {
   pointer-events: none;
 }
+
 .DokaRoot > .DokaNavMain button svg + span {
   margin-top: 0.75em;
 }
+
 .DokaRoot > .DokaNavMain button span {
   font-size: 0.875em;
 }
+
 .DokaRoot > .DokaNavMain button {
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
   transition: background-color 0.1s ease-out, color 0.1s ease-out, box-shadow 0.1s ease-out;
 }
+
 .DokaRoot > .DokaNavMain button:hover {
   box-shadow: inset 0 0 0 1px var(--color-foreground-10);
 }
+
 .DokaRoot > .DokaNavMain button[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaRoot > .DokaNavTools {
   max-width: 100%;
   box-sizing: border-box;
   pointer-events: none;
 }
+
 .DokaRoot > .DokaNavTools:empty {
   display: none;
 }
+
 .DokaRoot > .DokaNavTools,
 .DokaRoot > .DokaNavTools .DokaNavGroup,
 .DokaRoot > .DokaNavTools .DokaNavSet {
@@ -374,119 +435,149 @@ doka-image-editor {
   align-items: center;
   justify-content: center;
 }
+
 .DokaRoot > .DokaNavTools .DokaButton,
 .DokaRoot > .DokaNavTools .DokaNavSet {
   pointer-events: all;
 }
+
 .DokaRoot > .DokaNavTools .DokaButton[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaRoot .DokaNavGroup {
   margin: 0 var(--nav-group-margin);
 }
+
 .DokaRoot .DokaNavGroup > * {
   border-radius: var(--border-radius-round);
 }
+
 .DokaRoot .DokaNavGroup > * + * {
   margin-left: 0.5em;
 }
+
 .DokaRoot .DokaNavGroup:first-of-type {
   margin-right: auto;
   margin-left: 0;
 }
+
 .DokaRoot .DokaNavGroup:last-of-type {
   margin-left: auto;
   margin-right: 0;
 }
+
 .DokaRoot .DokaNavSet {
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
 }
+
 .DokaRoot .DokaNavSet > :not(:only-child) {
   border: 1px solid var(--color-foreground-3);
   border-top: 0;
   border-bottom: 0;
 }
+
 .DokaRoot .DokaNavSet > :first-child:not(:only-child) {
   border-left: 0;
 }
+
 .DokaRoot .DokaNavSet > :last-child:not(:only-child) {
   border-right: 0;
 }
+
 .DokaRoot .DokaNavSet > * + * {
   margin-left: -1px;
 }
+
 .DokaRoot .DokaNavSet > .DokaButton:hover,
 .DokaRoot .DokaNavSet > .DokaButton[data-focus-visible] {
   position: relative;
   z-index: 1;
 }
+
 .DokaRoot .DokaNavSet > :only-child {
   border-radius: var(--border-radius-round);
 }
+
 .DokaRoot .DokaNavSet > :first-child:not(:only-child) .DokaButtonInner {
   padding: 0 0.125em 0 0.25em;
 }
+
 .DokaRoot .DokaNavSet > :first-child:not(:only-child) {
   border-top-left-radius: var(--border-radius-round);
   border-bottom-left-radius: var(--border-radius-round);
 }
+
 .DokaRoot .DokaNavSet > :last-child:not(:only-child) .DokaButtonInner {
   padding: 0 0.25em 0 0.125em;
 }
+
 .DokaRoot .DokaNavSet > :last-child:not(:only-child) {
   border-top-right-radius: var(--border-radius-round);
   border-bottom-right-radius: var(--border-radius-round);
 }
-.DokaRoot[data-env~="overlay"] .DokaNavSet {
+
+.DokaRoot[data-env~=overlay] .DokaNavSet {
   background-color: var(--color-background-50);
   -webkit-backdrop-filter: var(--backdrop-filter-bright);
   backdrop-filter: var(--backdrop-filter-bright);
   box-shadow: inset 0 0 0 1px var(--color-background-15), 0 0.0625em 0.125em rgba(0, 0, 0, 0.25), 0 0.125em 0.35em rgba(0, 0, 0, 0.35);
 }
-.DokaRoot[data-env~="overlay"] .DokaNavSet .DokaButton:not(.DokaButtonExport):not([disabled]):hover,
-.DokaRoot[data-env~="overlay"] .DokaNavSet > * {
+
+.DokaRoot[data-env~=overlay] .DokaNavSet .DokaButton:not(.DokaButtonExport):not([disabled]):hover,
+.DokaRoot[data-env~=overlay] .DokaNavSet > * {
   border-color: var(--color-background-15);
 }
-.DokaRoot[data-env~="overlay"] .DokaNavGroup > .DokaButton {
+
+.DokaRoot[data-env~=overlay] .DokaNavGroup > .DokaButton {
   box-shadow: 0 0.0625em 0.125em rgba(0, 0, 0, 0.25), 0 0.125em 0.35em rgba(0, 0, 0, 0.35);
 }
-.DokaRoot[data-env~="overlay"] .DokaNavGroup .DokaButtonExport {
+
+.DokaRoot[data-env~=overlay] .DokaNavGroup .DokaButtonExport {
   box-shadow: inset 0 0 0.125em rgba(0, 0, 0, 0.25), 0 0.0625em 0.125em rgba(0, 0, 0, 0.25), 0 0.125em 0.35em rgba(0, 0, 0, 0.35);
 }
+
 .DokaRoot .DokaNavGroupFloat {
   position: absolute;
   left: 0;
   right: 0;
   pointer-events: none;
 }
+
 .DokaRoot .DokaNavGroupFloat > * {
   pointer-events: all;
 }
+
 .DokaRoot .DokaUtilFooter .DokaScrollable > div {
   padding-left: 1em;
   padding-right: 1em;
 }
+
 .DokaRoot > .DokaMain {
   max-width: 100vw;
 }
-.DokaRoot:not([data-env~="has-toolbar"]) .DokaUtilHeader {
+
+.DokaRoot:not([data-env~=has-toolbar]) .DokaUtilHeader {
   padding-top: 0;
   padding-bottom: 1em;
   margin-bottom: -1em;
 }
-.DokaRoot[data-env~="landscape"] {
+
+.DokaRoot[data-env~=landscape] {
   grid-template-rows: -webkit-min-content auto;
   grid-template-rows: min-content auto;
   grid-template-columns: auto;
 }
-.DokaRoot[data-env~="landscape"] > .DokaNavTools {
+
+.DokaRoot[data-env~=landscape] > .DokaNavTools {
   grid-row: 1;
   grid-column: 1;
   padding: 1em 1em 0;
   z-index: 3;
 }
-.DokaRoot[data-env~="landscape"] > .DokaNavMain {
+
+.DokaRoot[data-env~=landscape] > .DokaNavMain {
   align-items: center;
   justify-content: flex-end;
   position: absolute;
@@ -494,100 +585,125 @@ doka-image-editor {
   top: calc(1em + var(--editor-calculated-inset-top));
   bottom: calc(1em + var(--editor-calculated-inset-bottom));
 }
-.DokaRoot[data-env~="landscape"] > .DokaNavMain .DokaTabList {
+
+.DokaRoot[data-env~=landscape] > .DokaNavMain .DokaTabList {
   flex-direction: column;
 }
-.DokaRoot[data-env~="landscape"] > .DokaNavMain .DokaTabList li {
+
+.DokaRoot[data-env~=landscape] > .DokaNavMain .DokaTabList li {
   display: flex;
 }
-.DokaRoot[data-env~="landscape"] > .DokaNavMain .DokaTabList li + li {
+
+.DokaRoot[data-env~=landscape] > .DokaNavMain .DokaTabList li + li {
   margin: 0.5em 0 0;
 }
-.DokaRoot[data-env~="landscape"] > .DokaNavMain button {
+
+.DokaRoot[data-env~=landscape] > .DokaNavMain button {
   flex: 1;
   width: 4em;
   height: 4em;
   border-radius: var(--border-radius);
   justify-content: center;
 }
-.DokaRoot[data-env~="landscape"] > .DokaNavMain button span {
+
+.DokaRoot[data-env~=landscape] > .DokaNavMain button span {
   font-size: 0.6875em;
   margin-top: 0.5em;
 }
-.DokaRoot[data-env~="landscape"] > .DokaNavMain button svg {
+
+.DokaRoot[data-env~=landscape] > .DokaNavMain button svg {
   width: 1em;
   margin-top: 0.25em;
 }
-.DokaRoot[data-env~="landscape"][data-env~="has-toolbar"] > .DokaNavMain {
+
+.DokaRoot[data-env~=landscape][data-env~=has-toolbar] > .DokaNavMain {
   top: calc(4em + var(--editor-calculated-inset-top));
   bottom: calc(4em + var(--editor-calculated-inset-bottom));
 }
-.DokaRoot[data-env~="landscape"][data-env~="has-limited-space"] > .DokaNavMain {
+
+.DokaRoot[data-env~=landscape][data-env~=has-limited-space] > .DokaNavMain {
   align-items: flex-start;
   bottom: calc(1em + var(--editor-calculated-inset-bottom));
 }
-.DokaRoot[data-env~="landscape"] > .DokaMain {
+
+.DokaRoot[data-env~=landscape] > .DokaMain {
   grid-row: 2;
   grid-column: 1;
 }
-.DokaRoot[data-env~="landscape"][data-env~="has-navigation"] {
+
+.DokaRoot[data-env~=landscape][data-env~=has-navigation] {
   grid-template-columns: 6em auto;
 }
-.DokaRoot[data-env~="landscape"][data-env~="has-navigation"] .DokaNavGroupFloat {
+
+.DokaRoot[data-env~=landscape][data-env~=has-navigation] .DokaNavGroupFloat {
   margin: 0 0 0 6em;
 }
-.DokaRoot[data-env~="landscape"][data-env~="has-navigation"] > .DokaNavTools {
-  grid-column: 1 / span 2;
+
+.DokaRoot[data-env~=landscape][data-env~=has-navigation] > .DokaNavTools {
+  grid-column: 1/span 2;
 }
-.DokaRoot[data-env~="landscape"][data-env~="has-navigation"] > .DokaMain {
+
+.DokaRoot[data-env~=landscape][data-env~=has-navigation] > .DokaMain {
   grid-column: 2;
 }
-.DokaRoot[data-env~="portrait"] {
+
+.DokaRoot[data-env~=portrait] {
   grid-template-rows: -webkit-min-content auto -webkit-min-content;
   grid-template-rows: min-content auto min-content;
   grid-template-columns: auto;
 }
-.DokaRoot[data-env~="portrait"] > * {
+
+.DokaRoot[data-env~=portrait] > * {
   grid-column: 1;
 }
-.DokaRoot[data-env~="portrait"] > .DokaNavTools {
+
+.DokaRoot[data-env~=portrait] > .DokaNavTools {
   grid-row: 1;
   padding: 0.75em 0.75em 0;
 }
-.DokaRoot[data-env~="portrait"] > .DokaNavMain {
+
+.DokaRoot[data-env~=portrait] > .DokaNavMain {
   grid-row: 3;
   margin-bottom: 0.75em;
   justify-content: center;
 }
-.DokaRoot[data-env~="portrait"] > .DokaNavMain .DokaTabList {
+
+.DokaRoot[data-env~=portrait] > .DokaNavMain .DokaTabList {
   padding: 0 0.875em;
 }
-.DokaRoot[data-env~="portrait"] > .DokaNavMain li + li {
+
+.DokaRoot[data-env~=portrait] > .DokaNavMain li + li {
   margin-left: 0.5em;
 }
-.DokaRoot[data-env~="portrait"] > .DokaNavMain[data-state~="overflows"] {
+
+.DokaRoot[data-env~=portrait] > .DokaNavMain[data-state~=overflows] {
   overflow: visible;
 }
-.DokaRoot[data-env~="portrait"] > .DokaNavMain button {
+
+.DokaRoot[data-env~=portrait] > .DokaNavMain button {
   flex: 1;
   width: 4em;
   height: 4em;
   border-radius: var(--border-radius);
   justify-content: center;
 }
-.DokaRoot[data-env~="portrait"] > .DokaNavMain button span {
+
+.DokaRoot[data-env~=portrait] > .DokaNavMain button span {
   font-size: 0.6875em;
   margin-top: 0.5em;
 }
-.DokaRoot[data-env~="portrait"] > .DokaNavMain button svg {
+
+.DokaRoot[data-env~=portrait] > .DokaNavMain button svg {
   width: 1em;
   margin-top: 0.25em;
 }
-.DokaRoot[data-env~="portrait"] > .DokaMain {
+
+.DokaRoot[data-env~=portrait] > .DokaMain {
   grid-row: 2;
   grid-column: 1;
 }
-.DokaRoot[data-env~="landscape"][data-env~="is-compact"] > .DokaNavMain button {
+
+.DokaRoot[data-env~=landscape][data-env~=is-compact] > .DokaNavMain button {
   flex: 1;
   flex-direction: row;
   width: auto;
@@ -598,22 +714,27 @@ doka-image-editor {
   padding: 0.625em 0;
   width: 6em;
 }
-.DokaRoot[data-env~="landscape"][data-env~="is-compact"] > .DokaNavMain button span {
+
+.DokaRoot[data-env~=landscape][data-env~=is-compact] > .DokaNavMain button span {
   font-size: 0.6875em;
   margin: 0 0.625em 0 0;
   line-height: 0;
 }
-.DokaRoot[data-env~="landscape"][data-env~="is-compact"] > .DokaNavMain button svg {
+
+.DokaRoot[data-env~=landscape][data-env~=is-compact] > .DokaNavMain button svg {
   margin: 0 0.5em 0 0.625em;
   width: 1em;
 }
-.DokaRoot[data-env~="landscape"][data-env~="is-compact"][data-env~="has-navigation"] {
+
+.DokaRoot[data-env~=landscape][data-env~=is-compact][data-env~=has-navigation] {
   grid-template-columns: 8em auto;
 }
-.DokaRoot[data-env~="landscape"][data-env~="is-compact"][data-env~="has-navigation"] .DokaNavGroupFloat {
+
+.DokaRoot[data-env~=landscape][data-env~=is-compact][data-env~=has-navigation] .DokaNavGroupFloat {
   margin: 0 0 0 8em;
 }
-.DokaRoot[data-env~="portrait"][data-env~="is-compact"] > .DokaNavMain button {
+
+.DokaRoot[data-env~=portrait][data-env~=is-compact] > .DokaNavMain button {
   padding: 0;
   font-size: 0.625em;
   width: 4em;
@@ -621,49 +742,61 @@ doka-image-editor {
   justify-content: center;
   border-radius: 9999em;
 }
-.DokaRoot[data-env~="portrait"][data-env~="is-compact"] > .DokaNavMain button span {
+
+.DokaRoot[data-env~=portrait][data-env~=is-compact] > .DokaNavMain button span {
   visibility: hidden;
   font-size: 0;
   margin: 0;
 }
-.DokaRoot[data-env~="portrait"][data-env~="is-compact"] > .DokaNavMain button svg {
+
+.DokaRoot[data-env~=portrait][data-env~=is-compact] > .DokaNavMain button svg {
   margin-top: 0;
   width: 1.6em;
 }
-.DokaRoot[data-env~="portrait"][data-env~="is-compact"] > .DokaNavMain button svg [stroke-width] {
+
+.DokaRoot[data-env~=portrait][data-env~=is-compact] > .DokaNavMain button svg [stroke-width] {
   stroke-width: 0.15em;
 }
-.DokaRoot[data-env~="portrait"][data-env~="narrow"] {
+
+.DokaRoot[data-env~=portrait][data-env~=narrow] {
   --nav-group-margin: 0.25em;
   grid-template-rows: -webkit-min-content auto -webkit-min-content;
   grid-template-rows: min-content auto min-content;
   grid-template-columns: auto;
 }
-.DokaRoot[data-env~="portrait"][data-env~="narrow"] > * {
+
+.DokaRoot[data-env~=portrait][data-env~=narrow] > * {
   grid-column: 1;
 }
-.DokaRoot[data-env~="portrait"][data-env~="narrow"] .DokaUtilFooter .DokaControlList .DokaControlListOption span,
-.DokaRoot[data-env~="portrait"][data-env~="narrow"] .DokaUtilFooter .DokaControlList [role="tab"] span {
+
+.DokaRoot[data-env~=portrait][data-env~=narrow] .DokaUtilFooter .DokaControlList .DokaControlListOption span,
+.DokaRoot[data-env~=portrait][data-env~=narrow] .DokaUtilFooter .DokaControlList [role=tab] span {
   font-size: 0.6875em;
 }
-.DokaRoot[data-env~="portrait"][data-env~="narrow"] .DokaToolbar .DokaToolbarInner > * {
+
+.DokaRoot[data-env~=portrait][data-env~=narrow] .DokaToolbar .DokaToolbarInner > * {
   margin: 0 0.25em;
 }
-.DokaRoot[data-env~="portrait"][data-env~="narrow"][data-env~="short"] .DokaNavGroupFloat {
+
+.DokaRoot[data-env~=portrait][data-env~=narrow][data-env~=short] .DokaNavGroupFloat {
   position: static;
 }
-.DokaRoot[data-env~="overlay"] {
+
+.DokaRoot[data-env~=overlay] {
   grid-template-rows: auto;
   grid-template-columns: auto;
 }
-.DokaRoot[data-env~="overlay"] .DokaNav {
+
+.DokaRoot[data-env~=overlay] .DokaNav {
   z-index: 3;
 }
-.DokaRoot[data-env~="overlay"] .DokaMain {
+
+.DokaRoot[data-env~=overlay] .DokaMain {
   grid-row: 1;
   grid-column: 1;
 }
-.DokaRoot[data-env~="overlay"] .DokaUtilMain {
+
+.DokaRoot[data-env~=overlay] .DokaUtilMain {
   position: absolute;
   left: 0;
   top: 0;
@@ -672,65 +805,78 @@ doka-image-editor {
   padding: 0;
   z-index: -1;
 }
-.DokaRoot[data-env~="overlay"] .DokaUtilFooter,
-.DokaRoot[data-env~="overlay"] .DokaUtilHeader {
+
+.DokaRoot[data-env~=overlay] .DokaUtilFooter,
+.DokaRoot[data-env~=overlay] .DokaUtilHeader {
   position: absolute;
   left: 0;
   right: 0;
 }
-.DokaRoot[data-env~="overlay"] .DokaUtilHeader {
+
+.DokaRoot[data-env~=overlay] .DokaUtilHeader {
   top: 0;
 }
-.DokaRoot[data-env~="overlay"] .DokaUtilFooter {
+
+.DokaRoot[data-env~=overlay] .DokaUtilFooter {
   bottom: 0;
 }
-.DokaRoot[data-env~="overlay"] .DokaNavMain {
+
+.DokaRoot[data-env~=overlay] .DokaNavMain {
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
   background: none;
 }
-.DokaRoot[data-env~="overlay"] .DokaNavTools {
+
+.DokaRoot[data-env~=overlay] .DokaNavTools {
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
 }
-.DokaRoot[data-env~="has-swipe-navigation"] .DokaUtilMain {
+
+.DokaRoot[data-env~=has-swipe-navigation] .DokaUtilMain {
   padding-left: 2em;
   padding-right: 2em;
 }
+
 .DokaDropdownPanel {
   overflow: hidden;
   border-radius: inherit;
 }
+
 .DokaDropdownPanel .DokaDropdownOption {
   transition: background-color 0.1s;
   border-radius: inherit;
 }
+
 .DokaDropdownPanel .DokaDropdownOption label {
   display: block;
   margin: 0;
   border-radius: inherit;
   white-space: nowrap;
 }
+
 .DokaDropdownPanel .DokaDropdownOption svg {
   margin-right: 0.25em;
   margin-left: -0.5em;
   min-width: 1.5em;
 }
+
 .DokaDropdownPanel .DokaDropdownOption [slot] {
   display: flex;
   align-items: center;
   padding: 0.325em 0.75em;
 }
+
 .DokaDropdownPanel .DokaDropdownOptionLabel {
   font-size: 0.75em;
   line-height: 1.75;
   padding: 0 0.325em;
   margin-left: -0.325em;
 }
+
 .DokaDropdownPanel .DokaDropdownOptionGroup > span {
   display: block;
   padding: 0.75em 1em;
@@ -738,64 +884,79 @@ doka-image-editor {
   font-size: 0.75em;
   color: rgba(0, 0, 0, 0.75);
 }
-.DokaDropdownPanel [data-disabled="true"] {
+
+.DokaDropdownPanel [data-disabled=true] {
   color: #999;
 }
-.DokaDropdownPanel [data-selected="false"]:not([data-disabled="true"]):hover {
+
+.DokaDropdownPanel [data-selected=false]:not([data-disabled=true]):hover {
   background-color: rgba(0, 0, 0, 0.15);
 }
-.DokaDropdownPanel [data-selected="true"] {
+
+.DokaDropdownPanel [data-selected=true] {
   color: #fff;
   background: #000;
 }
+
 .DokaDropdownPanel [data-focus-visible] + label .DokaDropdownOptionLabel {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
   border-radius: 0.25em;
 }
+
 .DokaDropdownOption label {
   margin: 0;
 }
+
 .DokaColorPickerPanel {
   padding: 0.5em;
   max-width: 14em;
   overflow: visible;
   touch-action: none;
 }
+
 .DokaColorPickerPanel .DokaColorPickerButton {
   outline: transparent;
 }
+
 .DokaColorPickerPanel .DokaColorPickerButton[data-focus-visible] {
   box-shadow: inset 0 0 0 1px var(--color-foreground-70);
 }
+
 .DokaColorPickerPanel .DokaColorPreview {
   width: 1.25em;
   height: 1.25em;
   border-radius: 0.25em;
 }
+
 .DokaColorPickerPanel .DokaColorPreview span {
   border-radius: 0.2em;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
 }
+
 .DokaColorPickerPanel .DokaColorPresets legend {
   color: #777;
   margin: 0 0 0.25em 0.3125em;
   font-size: 0.75em;
 }
+
 .DokaColorPickerPanel .DokaColorPresetsGrid .DokaRadioGroupOptions {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
+
 .DokaColorPickerPanel .DokaColorPresetsGrid .DokaDropdownOption {
   display: block;
   padding: 0.25em;
 }
+
 .DokaColorPickerPanel .DokaColorPresetsGrid .DokaDropdownOption label,
 .DokaColorPickerPanel .DokaColorPresetsGrid .DokaDropdownOption label span {
   display: block;
   cursor: var(--button-cursor);
 }
+
 .DokaColorPickerPanel .DokaColorPresetsGrid input[data-focus-visible] + label .DokaColorPreview:after {
   position: absolute;
   left: -0.3125em;
@@ -808,15 +969,18 @@ doka-image-editor {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaColorPickerPanel .DokaPicker {
   width: 100%;
   padding-bottom: 0.5em;
 }
+
 .DokaColorPickerPanel .DokaPicker .DokaPickerKnob,
 .DokaColorPickerPanel .DokaPicker .DokaSliderKnob {
   border-radius: 9999em;
   box-shadow: inset 0 0.06125em 0.06125em rgba(0, 0, 0, 0.1), 0 0 0 0.125em #fff, 0 0.1875em 0.25em rgba(0, 0, 0, 0.35), 0 -0.125em 0.25em rgba(0, 0, 0, 0.1);
 }
+
 .DokaColorPickerPanel .DokaPicker .DokaPickerKnob {
   pointer-events: none;
   position: absolute;
@@ -830,6 +994,7 @@ doka-image-editor {
   visibility: visible;
   outline: none;
 }
+
 .DokaColorPickerPanel .DokaPicker .DokaPickerKnob[data-focus-visible]:after {
   position: absolute;
   left: -0.3125em;
@@ -842,6 +1007,7 @@ doka-image-editor {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaColorPickerPanel .DokaPicker .DokaPickerKnobController {
   position: absolute;
   left: 0;
@@ -850,6 +1016,7 @@ doka-image-editor {
   bottom: 0;
   visibility: hidden;
 }
+
 .DokaColorPickerPanel .DokaPicker .DokaSaturationPicker {
   position: relative;
   border-radius: var(--border-radius) var(--border-radius) 0 0;
@@ -857,9 +1024,11 @@ doka-image-editor {
   height: 7em;
   background-image: linear-gradient(180deg, transparent, #000), linear-gradient(90deg, #fff, transparent);
 }
+
 .DokaColorPickerPanel .DokaPicker .DokaHuePicker .DokaSliderTrack {
   background-image: linear-gradient(90deg, red, #ff0, #0f0, #0ff, #00f, #f0f, red);
 }
+
 .DokaColorPickerPanel .DokaPicker .DokaOpacityPicker .DokaSliderTrack:before {
   position: absolute;
   content: "";
@@ -873,18 +1042,22 @@ doka-image-editor {
   background-color: #fff;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h4v4H0zm4 4h4v4H4z' fill='%23E5E5E5'/%3E%3C/svg%3E");
 }
+
 .DokaColorPickerPanel .DokaPicker .DokaOpacityPicker {
   margin-top: 0.5em;
 }
-.DokaPanel[data-util="crop"] .DokaStage {
+
+.DokaPanel[data-util=crop] .DokaStage {
   touch-action: none;
 }
-.DokaPanel[data-util="crop"] .DokaImageInfo {
+
+.DokaPanel[data-util=crop] .DokaImageInfo {
   position: absolute;
   right: 1em;
   bottom: 1em;
 }
-.DokaPanel[data-util="crop"] .DokaButtonCenter {
+
+.DokaPanel[data-util=crop] .DokaButtonCenter {
   --size: 3em;
   position: absolute;
   left: 0;
@@ -897,70 +1070,86 @@ doka-image-editor {
   margin-left: calc(var(--size) * (-0.5));
   overflow: hidden;
   color: #000;
-  background: hsla(0, 0%, 100%, 0.8);
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
   -webkit-backdrop-filter: var(--backdrop-filter-bright);
   backdrop-filter: var(--backdrop-filter-bright);
   outline: none;
 }
-.DokaPanel[data-util="crop"] .DokaButtonCenter[data-focus-visible] {
+
+.DokaPanel[data-util=crop] .DokaButtonCenter[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
-.DokaRoot[data-env~="short"] .DokaPanel[data-util="crop"] .DokaUtilFooter {
+
+.DokaRoot[data-env~=short] .DokaPanel[data-util=crop] .DokaUtilFooter {
   padding-bottom: 0.5em;
 }
-.DokaPanel[data-util="filter"] .DokaScrollable {
+
+.DokaPanel[data-util=filter] .DokaScrollable {
   width: 100%;
   max-width: 40em;
   min-height: 5.5em;
 }
-.DokaPanel[data-util="filter"] [data-layout="row"] > .DokaRadioGroupOptions > li {
+
+.DokaPanel[data-util=filter] [data-layout=row] > .DokaRadioGroupOptions > li {
   margin: 0 0.5em;
 }
-.DokaPanel[data-util="filter"] [data-layout="row"] > .DokaRadioGroupOptions > li:first-child {
+
+.DokaPanel[data-util=filter] [data-layout=row] > .DokaRadioGroupOptions > li:first-child {
   margin-left: 0;
 }
-.DokaPanel[data-util="filter"] [data-layout="row"] > .DokaRadioGroupOptions > li:last-child {
+
+.DokaPanel[data-util=filter] [data-layout=row] > .DokaRadioGroupOptions > li:last-child {
   margin-right: 0;
 }
-.DokaPanel[data-util="filter"] .DokaRadioGroupOptionGroupLabel {
+
+.DokaPanel[data-util=filter] .DokaRadioGroupOptionGroupLabel {
   width: 1px;
   height: 1px;
   position: absolute;
   font-size: 0;
   pointer-events: none;
 }
-.DokaPanel[data-util="filter"] .DokaFilterPreview {
+
+.DokaPanel[data-util=filter] .DokaFilterPreview {
   border-radius: 0;
   transition: border-radius 1ms;
 }
-.DokaPanel[data-util="filter"] .DokaFilterOption {
+
+.DokaPanel[data-util=filter] .DokaFilterOption {
   border-radius: 0;
 }
-.DokaPanel[data-util="filter"] .DokaRadioGroupOptions .DokaRadioGroupOption:first-of-type .DokaFilterPreview {
+
+.DokaPanel[data-util=filter] .DokaRadioGroupOptions .DokaRadioGroupOption:first-of-type .DokaFilterPreview {
   border-top-left-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius);
 }
-.DokaPanel[data-util="filter"] .DokaRadioGroupOptions .DokaRadioGroupOption:first-of-type .DokaFilterOption {
+
+.DokaPanel[data-util=filter] .DokaRadioGroupOptions .DokaRadioGroupOption:first-of-type .DokaFilterOption {
   border-bottom-left-radius: var(--border-radius);
 }
-.DokaPanel[data-util="filter"] .DokaRadioGroupOptions .DokaRadioGroupOption:last-of-type .DokaFilterPreview {
+
+.DokaPanel[data-util=filter] .DokaRadioGroupOptions .DokaRadioGroupOption:last-of-type .DokaFilterPreview {
   border-top-right-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 }
-.DokaPanel[data-util="filter"] .DokaRadioGroupOptions .DokaRadioGroupOption:last-of-type .DokaFilterOption {
+
+.DokaPanel[data-util=filter] .DokaRadioGroupOptions .DokaRadioGroupOption:last-of-type .DokaFilterOption {
   border-bottom-right-radius: var(--border-radius);
 }
-.DokaPanel[data-util="filter"] .DokaRadioGroupOptionGroup {
+
+.DokaPanel[data-util=filter] .DokaRadioGroupOptionGroup {
   display: flex;
   flex-direction: column-reverse;
 }
-.DokaPanel[data-util="filter"] .DokaFilterOption {
+
+.DokaPanel[data-util=filter] .DokaFilterOption {
   cursor: var(--button-cursor);
   margin-bottom: 1em;
 }
-.DokaPanel[data-util="filter"] .DokaFilterOption span {
+
+.DokaPanel[data-util=filter] .DokaFilterOption span {
   display: block;
   text-align: center;
   padding: 0 0.3125em;
@@ -973,14 +1162,17 @@ doka-image-editor {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.DokaPanel[data-util="filter"] .DokaFilterPreview:before {
+
+.DokaPanel[data-util=filter] .DokaFilterPreview:before {
   transition: background-color 0.1s, color 0.1s;
 }
-.DokaPanel[data-util="filter"] [data-selected="true"] .DokaFilterOption .DokaFilterPreview {
+
+.DokaPanel[data-util=filter] [data-selected=true] .DokaFilterOption .DokaFilterPreview {
   position: relative;
   z-index: 1;
 }
-.DokaPanel[data-util="filter"] [data-selected="true"] .DokaFilterOption .DokaFilterPreview:before {
+
+.DokaPanel[data-util=filter] [data-selected=true] .DokaFilterOption .DokaFilterPreview:before {
   content: "";
   position: absolute;
   width: 100%;
@@ -989,66 +1181,80 @@ doka-image-editor {
   border-radius: inherit;
   background-color: var(--color-primary);
 }
-.DokaPanel[data-util="filter"] [data-focus-visible] + label > .DokaFilterOption span {
+
+.DokaPanel[data-util=filter] [data-focus-visible] + label > .DokaFilterOption span {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
   border-radius: 0.25em;
 }
-.DokaPanel[data-util="filter"] .DokaFilterOption,
-.DokaPanel[data-util="filter"] .DokaFilterPreview {
+
+.DokaPanel[data-util=filter] .DokaFilterOption,
+.DokaPanel[data-util=filter] .DokaFilterPreview {
   width: 3.75em;
   height: 4.5em;
 }
-.DokaRoot[data-env~="is-compact"] .DokaPanel[data-util="filter"] .DokaUtilFooter > div {
+
+.DokaRoot[data-env~=is-compact] .DokaPanel[data-util=filter] .DokaUtilFooter > div {
   padding: 0;
 }
-.DokaRoot[data-env~="is-compact"] .DokaPanel[data-util="filter"] .DokaFilterOption,
-.DokaRoot[data-env~="is-compact"] .DokaPanel[data-util="filter"] .DokaFilterPreview {
+
+.DokaRoot[data-env~=is-compact] .DokaPanel[data-util=filter] .DokaFilterOption,
+.DokaRoot[data-env~=is-compact] .DokaPanel[data-util=filter] .DokaFilterPreview {
   width: 2.875em;
   height: 3.5em;
 }
-.DokaRoot[data-env~="is-compact"] .DokaPanel[data-util="filter"] .DokaFilterOption span {
+
+.DokaRoot[data-env~=is-compact] .DokaPanel[data-util=filter] .DokaFilterOption span {
   font-size: 0.5em;
 }
-.DokaRoot[data-env~="is-compact"] .DokaPanel[data-util="filter"] .DokaScrollable {
+
+.DokaRoot[data-env~=is-compact] .DokaPanel[data-util=filter] .DokaScrollable {
   min-height: 4.5em;
 }
-.DokaPanel[data-util="resize"] form {
+
+.DokaPanel[data-util=resize] form {
   display: flex;
   justify-content: center;
   padding: 0 1em;
 }
-.DokaPanel[data-util="resize"] .DokaFormInner {
+
+.DokaPanel[data-util=resize] .DokaFormInner {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.DokaPanel[data-util="resize"] .DokaFormInner > button {
+
+.DokaPanel[data-util=resize] .DokaFormInner > button {
   position: absolute;
   left: 100%;
   margin-left: 1em;
 }
-.DokaPanel[data-util="resize"] .DokaFieldsetInner {
+
+.DokaPanel[data-util=resize] .DokaFieldsetInner {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-.DokaPanel[data-util="resize"] input[type="checkbox"] + label {
+
+.DokaPanel[data-util=resize] input[type=checkbox] + label {
   padding: 0 0.125em;
   outline: transparent;
   display: block;
   cursor: pointer;
 }
-.DokaPanel[data-util="resize"] input[type="checkbox"][data-focus-visible] + label {
+
+.DokaPanel[data-util=resize] input[type=checkbox][data-focus-visible] + label {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaInputDimension {
   display: inline-flex;
   align-items: center;
   position: relative;
 }
+
 .DokaInputDimension label {
   position: absolute;
   right: 0.625em;
@@ -1058,12 +1264,14 @@ doka-image-editor {
   color: var(--color-foreground-20);
   z-index: 1;
 }
+
 .DokaInputDimension button,
 .DokaInputDimension input,
 .DokaInputDimension label {
   font-size: 0.75em;
   font-weight: 400;
 }
+
 .DokaInputDimension button,
 .DokaInputDimension input {
   -webkit-appearance: none;
@@ -1080,60 +1288,76 @@ doka-image-editor {
   border: 1px solid var(--color-foreground-20);
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out, border-color 0.1s ease-in-out;
 }
+
 .DokaInputDimension button::-moz-selection,
 .DokaInputDimension input::-moz-selection {
   background-color: var(--color-foreground-20);
 }
+
 .DokaInputDimension button::selection,
 .DokaInputDimension input::selection {
   background-color: var(--color-foreground-20);
 }
+
 .DokaInputDimension button:hover,
 .DokaInputDimension input:hover {
   border-color: var(--color-foreground-30);
 }
+
 .DokaInputDimension button:focus,
 .DokaInputDimension input:focus {
   border-color: var(--color-focus-100);
 }
+
 .DokaInputDimension input {
   -webkit-backdrop-filter: var(--backdrop-filter-dark);
   backdrop-filter: var(--backdrop-filter-dark);
   background-color: var(--color-foreground-5);
 }
+
 .DokaInputDimension input:-moz-placeholder-shown {
   border-style: dashed;
 }
+
 .DokaInputDimension input:-ms-input-placeholder {
   border-style: dashed;
 }
+
 .DokaInputDimension input:placeholder-shown {
   border-style: dashed;
 }
+
 .DokaInputDimension input::-moz-placeholder {
   color: var(--color-foreground-30);
 }
+
 .DokaInputDimension input:-ms-input-placeholder {
   color: var(--color-foreground-30);
 }
+
 .DokaInputDimension input::placeholder {
   color: var(--color-foreground-30);
 }
-.DokaInputDimension input[data-state="invalid"] {
+
+.DokaInputDimension input[data-state=invalid] {
   border-color: var(--color-error-75);
   box-shadow: inset 0 0 0.25em var(--color-error-25), 0 0 0.25em var(--color-error-50);
 }
+
 .DokaInputDimension button {
   width: 10em;
   min-height: 2.65em;
 }
+
 .DokaInputDimension input::-webkit-inner-spin-button,
 .DokaInputDimension input::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
+
 .DokaInputDimension input::-ms-clear {
   display: none;
 }
+
 .DokaModal {
   --safe-area-inset-top: env(safe-area-inset-top);
   --safe-area-inset-bottom: env(safe-area-inset-bottom);
@@ -1148,23 +1372,28 @@ doka-image-editor {
   align-items: center;
   background-color: var(--color-background-95);
 }
-.DokaModal > .DokaRoot[data-env~="is-centered"] {
+
+.DokaModal > .DokaRoot[data-env~=is-centered] {
   box-shadow: 0 0 0 1px var(--color-foreground-3);
 }
+
 .DokaModal[style*="--viewport-pad-footer:1"] {
   box-sizing: border-box;
   padding-bottom: 44px;
 }
+
 .DokaCanvas canvas {
   display: block;
   width: 100%;
   height: 100%;
   position: absolute;
 }
+
 .DokaTabList {
   display: flex;
   justify-content: center;
 }
+
 .DokaTabList button {
   display: flex;
   align-items: center;
@@ -1173,16 +1402,20 @@ doka-image-editor {
   cursor: var(--button-cursor);
   -webkit-tap-highlight-color: transparent;
 }
+
 .DokaTabList button > * {
   transition: filter 0.2s ease-out;
 }
+
 .DokaTabList button[disabled] > * {
   filter: var(--filter-disabled);
 }
+
 .DokaTabPanels {
   position: relative;
   flex: 1;
 }
+
 .DokaTabPanel {
   position: absolute;
   left: 0;
@@ -1190,21 +1423,26 @@ doka-image-editor {
   width: 100%;
   height: 100%;
 }
+
 .DokaTabPanel:not([hidden]) {
   z-index: 2;
   outline: transparent;
 }
+
 .DokaTabPanel[hidden] {
   display: block !important;
   z-index: 1;
   pointer-events: none;
 }
-.DokaTabPanel[data-inert="true"] {
+
+.DokaTabPanel[data-inert=true] {
   visibility: hidden;
 }
-.DokaTabPanel[data-inert="true"] [data-inert] {
+
+.DokaTabPanel[data-inert=true] [data-inert] {
   visibility: hidden !important;
 }
+
 .DokaScrollable {
   --scrollable-feather-start-opacity: 0;
   --scrollable-feather-end-opacity: 0;
@@ -1212,61 +1450,61 @@ doka-image-editor {
   contain: paint;
   overflow: hidden;
 }
+
 .DokaScrollable:focus {
   outline: transparent;
 }
+
 .DokaScrollable > div {
   position: relative;
   display: inline-flex;
   vertical-align: top;
 }
+
 .DokaScrollable {
   touch-action: none;
 }
-.DokaScrollable[data-direction="x"] {
+
+.DokaScrollable[data-direction=x] {
   max-width: 100%;
   --mask-angle: 90deg;
 }
-.DokaScrollable[data-direction="y"] {
+
+.DokaScrollable[data-direction=y] {
   max-height: 100%;
   --mask-angle: 180deg;
 }
-.DokaScrollable[data-state~="overflows"] {
-  -webkit-mask: linear-gradient(
-    var(--mask-angle),
-    rgba(0, 0, 0, var(--scrollable-feather-start-opacity)),
-    #000 var(--scrollable-feather-size),
-    #000 calc(100% - var(--scrollable-feather-size)),
-    rgba(0, 0, 0, var(--scrollable-feather-end-opacity))
-  );
-  mask: linear-gradient(
-    var(--mask-angle),
-    rgba(0, 0, 0, var(--scrollable-feather-start-opacity)),
-    #000 var(--scrollable-feather-size),
-    #000 calc(100% - var(--scrollable-feather-size)),
-    rgba(0, 0, 0, var(--scrollable-feather-end-opacity))
-  );
+
+.DokaScrollable[data-state~=overflows] {
+  -webkit-mask: linear-gradient(var(--mask-angle), rgba(0, 0, 0, var(--scrollable-feather-start-opacity)), #000 var(--scrollable-feather-size), #000 calc(100% - var(--scrollable-feather-size)), rgba(0, 0, 0, var(--scrollable-feather-end-opacity)));
+  mask: linear-gradient(var(--mask-angle), rgba(0, 0, 0, var(--scrollable-feather-start-opacity)), #000 var(--scrollable-feather-size), #000 calc(100% - var(--scrollable-feather-size)), rgba(0, 0, 0, var(--scrollable-feather-end-opacity)));
 }
-.DokaScrollable[data-state~="scrolling"] > div * {
+
+.DokaScrollable[data-state~=scrolling] > div * {
   pointer-events: none;
 }
+
 .DokaButton {
   white-space: nowrap;
   flex-shrink: 0;
   -webkit-tap-highlight-color: transparent;
   cursor: var(--button-cursor);
 }
+
 .DokaButton > span {
   display: inline-flex;
   align-items: center;
   vertical-align: top;
 }
+
 .DokaButton svg + .DokaButtonLabel {
   margin-left: 0.5em;
 }
+
 .DokaButton[disabled] {
   cursor: default;
 }
+
 .DokaPanel {
   position: relative;
   z-index: 1;
@@ -1276,6 +1514,7 @@ doka-image-editor {
   flex-direction: column;
   contain: layout size;
 }
+
 .DokaDetailsPanel {
   position: absolute;
   top: 0;
@@ -1291,6 +1530,7 @@ doka-image-editor {
   color: #111;
   background: #fff;
 }
+
 .DokaColorPreview {
   --color: transparent;
   color: var(--color);
@@ -1298,6 +1538,7 @@ doka-image-editor {
   pointer-events: none;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h4v4H0zm4 4h4v4H4z' fill='%23E5E5E5'/%3E%3C/svg%3E");
 }
+
 .DokaColorPreview span {
   position: absolute;
   left: 0;
@@ -1307,6 +1548,7 @@ doka-image-editor {
   background-color: var(--color);
   border-radius: inherit;
 }
+
 .DokaRangeInput {
   position: relative;
   display: flex;
@@ -1325,6 +1567,7 @@ doka-image-editor {
   --range-input-line-color: var(--color-foreground-15);
   outline: transparent;
 }
+
 .DokaRangeInput[data-focus-visible]:after {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
@@ -1336,41 +1579,27 @@ doka-image-editor {
   height: 2em;
   border-radius: 0.25em;
 }
+
 .DokaRangeInputInner {
   position: relative;
   overflow: hidden;
   height: 100%;
   width: 100%;
   contain: strict;
-  -webkit-mask: linear-gradient(
-    90deg,
-    transparent 0,
-    #000 var(--range-input-feather-left),
-    #000 calc(50% - 3em),
-    transparent 50%,
-    #000 calc(50% + 3em),
-    #000 calc(100% - var(--range-input-feather-right)),
-    transparent
-  );
-  mask: linear-gradient(
-    90deg,
-    transparent 0,
-    #000 var(--range-input-feather-left),
-    #000 calc(50% - 3em),
-    transparent 50%,
-    #000 calc(50% + 3em),
-    #000 calc(100% - var(--range-input-feather-right)),
-    transparent
-  );
+  -webkit-mask: linear-gradient(90deg, transparent 0, #000 var(--range-input-feather-left), #000 calc(50% - 3em), transparent 50%, #000 calc(50% + 3em), #000 calc(100% - var(--range-input-feather-right)), transparent);
+  mask: linear-gradient(90deg, transparent 0, #000 var(--range-input-feather-left), #000 calc(50% - 3em), transparent 50%, #000 calc(50% + 3em), #000 calc(100% - var(--range-input-feather-right)), transparent);
 }
+
 .DokaRangeInputMeter {
   height: 100%;
 }
+
 .DokaRangeInput .DokaRangeInputMeter svg {
   display: block;
   pointer-events: none;
   fill: currentColor;
 }
+
 .DokaRangeInput > .DokaRangeInputValue {
   position: absolute;
   z-index: 1;
@@ -1387,6 +1616,7 @@ doka-image-editor {
   font-feature-settings: "tnum";
   font-family: Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .DokaRangeInput > .DokaRangeInputReset {
   position: absolute;
   left: calc(50% - 1.0625em);
@@ -1402,12 +1632,15 @@ doka-image-editor {
   outline: transparent;
   cursor: var(--button-cursor);
 }
+
 .DokaRangeInput > .DokaRangeInputReset:hover {
   opacity: 0.5;
 }
+
 .DokaRangeInput > .DokaRangeInputReset[data-focus-visible] {
   opacity: 1;
 }
+
 .DokaRangeInput > .DokaRangeInputReset[data-focus-visible]:before {
   content: "";
   pointer-events: none;
@@ -1421,9 +1654,11 @@ doka-image-editor {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaRangeInput > .DokaRangeInputReset[disabled] {
   opacity: 0.15;
 }
+
 .DokaRangeInput > .DokaRangeInputReset:after {
   content: "";
   position: absolute;
@@ -1433,62 +1668,68 @@ doka-image-editor {
   height: 60%;
   background: var(--color-foreground-100);
 }
+
 .DokaRangeInputInner[data-value-limited] svg {
-  -webkit-mask: linear-gradient(
-    90deg,
-    var(--range-input-mask-color) var(--range-mask-from),
-    #000 var(--range-mask-from),
-    #000 var(--range-mask-to),
-    var(--range-input-mask-color) var(--range-mask-to)
-  );
+  -webkit-mask: linear-gradient(90deg, var(--range-input-mask-color) var(--range-mask-from), #000 var(--range-mask-from), #000 var(--range-mask-to), var(--range-input-mask-color) var(--range-mask-to));
   mask: linear-gradient(90deg, var(--range-input-mask-color) var(--range-mask-from), #000 var(--range-mask-from), #000 var(--range-mask-to), var(--range-input-mask-color) var(--range-mask-to));
 }
+
 .DokaRangeInputInner[data-value-limited] svg rect {
   x: var(--range-mask-from);
   width: calc(var(--range-mask-to) - var(--range-mask-from));
   fill: var(--range-input-line-color);
 }
+
 .DokaUtilMain {
   padding: 1em;
   min-height: 1px;
 }
+
 .DokaUtilMain,
 .DokaUtilMain > [slot] {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
+
 .DokaUtilMain > [slot] {
   align-items: center;
 }
+
 .DokaUtilFooter {
   padding: 0 0 1em;
 }
+
 .DokaUtilFooter > [slot]:empty {
   height: 1em;
 }
+
 .DokaUtilFooter > [slot] {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: stretch;
 }
+
 .DokaUtilFooter .DokaRangeInput {
   margin-top: -0.25em;
 }
+
 .DokaUtilFooter > [slot] > .DokaControlList,
 .DokaUtilFooter > [slot] > .DokaControlListScroller {
   order: 1;
   margin-bottom: -0.1875em;
 }
-.DokaUtilFooter .DokaControlList [role="tab"][aria-selected="true"] button {
+
+.DokaUtilFooter .DokaControlList [role=tab][aria-selected=true] button {
   -webkit-backdrop-filter: var(--backdrop-filter-dark);
   backdrop-filter: var(--backdrop-filter-dark);
   background-color: var(--color-foreground-10);
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
 }
+
 .DokaUtilFooter .DokaControlList .DokaControlListOption label,
-.DokaUtilFooter .DokaControlList [role="tab"] button {
+.DokaUtilFooter .DokaControlList [role=tab] button {
   flex-direction: row;
   line-height: 1;
   padding: 0 0.75em;
@@ -1498,51 +1739,62 @@ doka-image-editor {
   box-shadow: inset 0 0 0 1px var(--color-foreground-0);
   cursor: var(--button-cursor);
 }
+
 .DokaUtilFooter .DokaControlList .DokaControlListOption label span,
-.DokaUtilFooter .DokaControlList [role="tab"] button span {
+.DokaUtilFooter .DokaControlList [role=tab] button span {
   font-size: 0.75em;
   font-weight: 400;
 }
+
 .DokaUtilFooter .DokaControlList .DokaControlListOption label svg,
-.DokaUtilFooter .DokaControlList [role="tab"] button svg {
+.DokaUtilFooter .DokaControlList [role=tab] button svg {
   width: 0.875em;
   font-size: 0.875em;
 }
+
 .DokaUtilFooter .DokaControlList .DokaControlListOption label svg:not(:only-child),
-.DokaUtilFooter .DokaControlList [role="tab"] button svg:not(:only-child) {
+.DokaUtilFooter .DokaControlList [role=tab] button svg:not(:only-child) {
   margin-left: -0.25em;
   margin-right: 0.375em;
 }
+
 .DokaUtilFooter .DokaControlList .DokaControlListOption label:hover,
-.DokaUtilFooter .DokaControlList [role="tab"] button:hover {
+.DokaUtilFooter .DokaControlList [role=tab] button:hover {
   box-shadow: inset 0 0 0 1px var(--color-foreground-10);
 }
+
 .DokaUtilFooter .DokaControlList .DokaControlListOption label[data-focus-visible],
-.DokaUtilFooter .DokaControlList [role="tab"] button[data-focus-visible] {
+.DokaUtilFooter .DokaControlList [role=tab] button[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaUtilFooter .DokaControlListOption [slot],
 .DokaUtilFooter .DokaControlListOption label {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.DokaUtilFooter .DokaControlListOption[data-selected="true"] label {
+
+.DokaUtilFooter .DokaControlListOption[data-selected=true] label {
   background-color: var(--color-foreground-10);
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
 }
+
 .DokaUtilFooter .DokaControlListOption input[data-focus-visible] + label {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaUtilFooter .DokaControlListOption input[disabled] + label {
   filter: var(--filter-disabled);
 }
+
 .DokaUtilFooter .DokaControlList .DokaControlListOption + .DokaControlListOption,
 .DokaUtilFooter .DokaControlList > li + li {
   margin-left: 0.5em;
 }
+
 .DokaUtilFooter .DokaControlPanels {
   position: relative;
   width: 100%;
@@ -1551,6 +1803,7 @@ doka-image-editor {
   margin: 0 auto;
   flex: auto;
 }
+
 .DokaUtilFooter .DokaControlPanel {
   position: absolute;
   left: 0;
@@ -1560,6 +1813,7 @@ doka-image-editor {
   visibility: visible;
   opacity: 1;
 }
+
 .DokaUtilFooter .DokaControlPanel[hidden] {
   display: block !important;
   visibility: hidden;
@@ -1567,36 +1821,44 @@ doka-image-editor {
   pointer-events: none;
   opacity: 0;
 }
-.DokaUtilFooter .DokaControlList[data-layout="compact"] > * + * {
+
+.DokaUtilFooter .DokaControlList[data-layout=compact] > * + * {
   margin-left: -1px;
 }
-.DokaUtilFooter .DokaControlList[data-layout="compact"] > [role="tab"] button {
+
+.DokaUtilFooter .DokaControlList[data-layout=compact] > [role=tab] button {
   padding-left: 0.625em;
   padding-right: 0.625em;
   border-radius: 0;
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
 }
-.DokaUtilFooter .DokaControlList[data-layout="compact"] > [role="tab"]:only-child button {
+
+.DokaUtilFooter .DokaControlList[data-layout=compact] > [role=tab]:only-child button {
   border-radius: var(--border-radius-round);
 }
-.DokaUtilFooter .DokaControlList[data-layout="compact"] > [role="tab"]:first-child:not(:only-child) button {
+
+.DokaUtilFooter .DokaControlList[data-layout=compact] > [role=tab]:first-child:not(:only-child) button {
   padding-left: 0.75em;
   border-top-left-radius: var(--border-radius-round);
   border-bottom-left-radius: var(--border-radius-round);
 }
-.DokaUtilFooter .DokaControlList[data-layout="compact"] > [role="tab"]:last-child:not(:only-child) button {
+
+.DokaUtilFooter .DokaControlList[data-layout=compact] > [role=tab]:last-child:not(:only-child) button {
   padding-right: 0.75em;
   border-top-right-radius: var(--border-radius-round);
   border-bottom-right-radius: var(--border-radius-round);
 }
-.DokaRoot[data-env~="is-animated"] .DokaUtilFooter .DokaControlPanel {
+
+.DokaRoot[data-env~=is-animated] .DokaUtilFooter .DokaControlPanel {
   transition: opacity 0.3s ease-in-out, visibility 0.3s linear;
   transition-delay: 0.1s;
 }
-.DokaRoot[data-env~="overlay"] .DokaUtilFooter {
+
+.DokaRoot[data-env~=overlay] .DokaUtilFooter {
   margin-bottom: 0.75em;
 }
-.DokaRoot[data-env~="overlay"] .DokaUtilFooter .DokaRangeInput {
+
+.DokaRoot[data-env~=overlay] .DokaUtilFooter .DokaRangeInput {
   margin-top: 0;
   background-color: var(--color-background-50);
   -webkit-backdrop-filter: var(--backdrop-filter-bright);
@@ -1604,9 +1866,11 @@ doka-image-editor {
   border-radius: var(--border-radius);
   box-shadow: inset 0 0 0 1px var(--color-background-15), 0 0.0625em 0.125em rgba(0, 0, 0, 0.25), 0 0.125em 0.35em rgba(0, 0, 0, 0.35);
 }
+
 .DokaSlider {
   position: relative;
 }
+
 .DokaSlider .DokaSliderKnob {
   pointer-events: none;
   position: absolute;
@@ -1620,6 +1884,7 @@ doka-image-editor {
   background-color: var(--color-background-50);
   visibility: visible;
 }
+
 .DokaSlider .DokaSliderKnobController,
 .DokaSlider .DokaSliderTrack {
   pointer-events: none;
@@ -1629,61 +1894,74 @@ doka-image-editor {
   left: 0.5em;
   right: 0.5em;
 }
+
 .DokaSlider .DokaSliderKnobController {
   visibility: hidden;
 }
+
 .DokaSlider .DokaSliderTrack {
   border-radius: 9999em;
 }
-.DokaSlider input[type="range"] {
+
+.DokaSlider input[type=range] {
   -webkit-appearance: none;
   height: 1.5em;
   display: block;
   margin-left: 0.5em;
   width: calc(100% - 1em);
 }
-.DokaSlider input[type="range"]::-webkit-slider-runnable-track {
+
+.DokaSlider input[type=range]::-webkit-slider-runnable-track {
   background: transparent;
 }
-.DokaSlider input[type="range"]::-webkit-slider-thumb {
+
+.DokaSlider input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   line-height: 0;
   margin: 0;
   padding: 0;
   border: none;
 }
-.DokaSlider input[type="range"]::-moz-range-thumb {
+
+.DokaSlider input[type=range]::-moz-range-thumb {
   line-height: 0;
   margin: 0;
   padding: 0;
   border: none;
 }
-.DokaSlider input[type="range"]::-ms-thumb {
+
+.DokaSlider input[type=range]::-ms-thumb {
   line-height: 0;
   margin: 0;
   padding: 0;
   border: none;
 }
-.DokaSlider input[type="range"]::-ms-ticks-before,
-.DokaSlider input[type="range"]::-ms-tooltip {
+
+.DokaSlider input[type=range]::-ms-ticks-before,
+.DokaSlider input[type=range]::-ms-tooltip {
   display: none;
 }
-.DokaSlider input[type="range"]::-ms-ticks-after {
+
+.DokaSlider input[type=range]::-ms-ticks-after {
   display: none;
 }
-.DokaSlider input[type="range"]::-ms-track {
+
+.DokaSlider input[type=range]::-ms-track {
   color: transparent;
   border: none;
   background: transparent;
 }
-.DokaSlider input[type="range"]::-ms-fill-lower,
-.DokaSlider input[type="range"]::-ms-fill-upper {
+
+.DokaSlider input[type=range]::-ms-fill-lower,
+.DokaSlider input[type=range]::-ms-fill-upper {
   background: transparent;
 }
-.DokaSlider input[type="range"]:focus {
+
+.DokaSlider input[type=range]:focus {
   outline: transparent;
 }
-.DokaSlider input[type="range"][data-focus-visible] ~ .DokaSliderKnobController .DokaSliderKnob:after {
+
+.DokaSlider input[type=range][data-focus-visible] ~ .DokaSliderKnobController .DokaSliderKnob:after {
   position: absolute;
   left: -0.3125em;
   right: -0.3125em;
@@ -1695,9 +1973,11 @@ doka-image-editor {
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
   pointer-events: none;
 }
+
 .DokaImageInfo {
   pointer-events: none;
 }
+
 .DokaImageInfo p {
   width: 8em;
   height: 1.25em;
@@ -1710,28 +1990,34 @@ doka-image-editor {
   line-height: 1;
   font-size: 0.75em;
 }
+
 .DokaShapePresetsPalette {
   width: 100%;
 }
-.DokaShapePresetsPalette .DokaScrollable:not([data-state~="overflows"]) {
+
+.DokaShapePresetsPalette .DokaScrollable:not([data-state~=overflows]) {
   display: flex;
   justify-content: center;
 }
+
 .DokaShapePresetsGroups {
   display: flex;
   order: 2;
   margin-bottom: -0.1875em;
 }
+
 .DokaShapePresetsGrouped {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .DokaShapePresetsFlat {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .DokaRectManipulator {
   --size: 1.25em;
   position: absolute;
@@ -1740,12 +2026,14 @@ doka-image-editor {
   outline: none;
   touch-action: none;
 }
-.DokaRectManipulator:not([data-shape="edge"]) {
+
+.DokaRectManipulator:not([data-shape=edge]) {
   width: var(--size);
   height: var(--size);
   z-index: 2;
 }
-.DokaRectManipulator:not([data-shape="edge"]):after {
+
+.DokaRectManipulator:not([data-shape=edge]):after {
   position: absolute;
   left: -0.5em;
   right: -0.5em;
@@ -1754,11 +2042,13 @@ doka-image-editor {
   border-radius: inherit;
   content: "";
 }
-.DokaRectManipulator:not([data-shape="edge"])[data-focus-visible]:after {
+
+.DokaRectManipulator:not([data-shape=edge])[data-focus-visible]:after {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
-.DokaRectManipulator[data-shape~="circle"] {
+
+.DokaRectManipulator[data-shape~=circle] {
   margin-left: calc(var(--size) * (-0.5));
   margin-top: calc(var(--size) * (-0.5));
   line-height: var(--size);
@@ -1766,67 +2056,82 @@ doka-image-editor {
   background-color: var(--color-foreground-100);
   box-shadow: 0 0 2px var(--color-background-50);
 }
-.DokaRectManipulator[data-shape="hook"] {
+
+.DokaRectManipulator[data-shape=hook] {
   border: 3px solid var(--color-foreground-100);
 }
-.DokaRectManipulator[data-shape="hook"][data-direction*="t"] {
+
+.DokaRectManipulator[data-shape=hook][data-direction*=t] {
   margin-top: -3px;
   border-bottom: 0;
 }
-.DokaRectManipulator[data-shape="hook"][data-direction*="r"] {
+
+.DokaRectManipulator[data-shape=hook][data-direction*=r] {
   border-left: 0;
   margin-left: calc(var(--size) * (-1));
 }
-.DokaRectManipulator[data-shape="hook"][data-direction*="b"] {
+
+.DokaRectManipulator[data-shape=hook][data-direction*=b] {
   margin-top: calc(var(--size) * (-1));
   border-top: 0;
 }
-.DokaRectManipulator[data-shape="hook"][data-direction*="l"] {
+
+.DokaRectManipulator[data-shape=hook][data-direction*=l] {
   border-right: 0;
   margin-left: -3px;
 }
-.DokaRectManipulator[data-shape~="edge"] {
+
+.DokaRectManipulator[data-shape~=edge] {
   height: 1px;
   width: 1px;
   z-index: 1;
 }
-.DokaRectManipulator[data-shape~="edge"][data-focus-visible] {
+
+.DokaRectManipulator[data-shape~=edge][data-focus-visible] {
   background-color: var(--color-focus-50);
 }
-.DokaRectManipulator[data-direction="b"],
-.DokaRectManipulator[data-direction="t"] {
+
+.DokaRectManipulator[data-direction=b],
+.DokaRectManipulator[data-direction=t] {
   cursor: ns-resize;
   height: var(--size);
   margin-top: calc(var(--size) * (-0.5));
   transform-origin: 0 center;
 }
-.DokaRectManipulator[data-direction="l"],
-.DokaRectManipulator[data-direction="r"] {
+
+.DokaRectManipulator[data-direction=l],
+.DokaRectManipulator[data-direction=r] {
   cursor: ew-resize;
   width: var(--size);
   margin-left: calc(var(--size) * (-0.5));
   transform-origin: center 0;
 }
-.DokaRectManipulator[data-direction="bl"],
-.DokaRectManipulator[data-direction="tr"] {
+
+.DokaRectManipulator[data-direction=bl],
+.DokaRectManipulator[data-direction=tr] {
   cursor: nesw-resize;
 }
-.DokaRectManipulator[data-direction="br"],
-.DokaRectManipulator[data-direction="tl"] {
+
+.DokaRectManipulator[data-direction=br],
+.DokaRectManipulator[data-direction=tl] {
   cursor: nwse-resize;
 }
-.DokaRoot[data-env~="pointer-coarse"] .DokaRectManipulator[data-shape="edge"]:active {
+
+.DokaRoot[data-env~=pointer-coarse] .DokaRectManipulator[data-shape=edge]:active {
   background-color: var(--color-foreground-5);
 }
-.DokaRoot[data-env~="pointer-coarse"] .DokaRectManipulator:not([data-shape="edge"]):after {
+
+.DokaRoot[data-env~=pointer-coarse] .DokaRectManipulator:not([data-shape=edge]):after {
   left: -1em;
   right: -1em;
   top: -1em;
   bottom: -1em;
 }
-.DokaRoot[data-env~="pointer-coarse"] .DokaRectManipulator:not([data-shape="edge"]):active:after {
+
+.DokaRoot[data-env~=pointer-coarse] .DokaRectManipulator:not([data-shape=edge]):active:after {
   background-color: var(--color-foreground-5);
 }
+
 .DokaToolbar {
   display: flex;
   justify-content: center;
@@ -1834,13 +2139,16 @@ doka-image-editor {
   margin-right: 1em;
   padding-top: 1em;
 }
+
 .DokaToolbar .DokaToolbarInner {
   display: inline-flex;
 }
-.DokaToolbar[data-layout="compact"] .DokaToolbarContentWide,
-.DokaToolbar[data-overflow="overflow"] .DokaToolbarContentOptional {
+
+.DokaToolbar[data-layout=compact] .DokaToolbarContentWide,
+.DokaToolbar[data-overflow=overflow] .DokaToolbarContentOptional {
   display: none;
 }
+
 .DokaToolbar .DokaButton {
   border-radius: var(--border-radius-round);
   outline: transparent;
@@ -1848,43 +2156,54 @@ doka-image-editor {
   transition: background-color 0.1s ease-out, color 0.1s ease-out, box-shadow 0.1s ease-out;
   line-height: 1.1;
 }
+
 .DokaToolbar .DokaButton:hover {
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
 }
+
 .DokaToolbar .DokaButton[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaToolbar .DokaButton svg {
   width: 1em;
 }
+
 .DokaToolbar .DokaButtonLabel {
   font-size: 0.75em;
 }
+
 .DokaToolbar .DokaDetailsPanel {
   z-index: 3;
 }
+
 .DokaToolbar .DokaToolbarInner > * {
   margin: 0 0.5em;
 }
+
 .DokaProgressIndicator {
   position: relative;
   display: block;
   width: 1.25em;
   height: 1.25em;
 }
+
 .DokaProgressIndicator .DokaProgressIndicatorFill {
   stroke-dashoffset: 0;
 }
-.DokaProgressIndicator[data-status="busy"] svg {
+
+.DokaProgressIndicator[data-status=busy] svg {
   -webkit-animation: doka_spin 1s linear infinite;
   animation: doka_spin 1s linear infinite;
 }
-.DokaProgressIndicator[data-status="busy"] .DokaProgressIndicatorFill {
+
+.DokaProgressIndicator[data-status=busy] .DokaProgressIndicatorFill {
   stroke-dashoffset: -26.5;
   stroke-dasharray: 26.5 53;
   transition: stroke-dashoffset 0.5s linear, stroke-dasharray 0.5s linear;
 }
+
 @-webkit-keyframes doka_spin {
   0% {
     transform: rotate(0deg);
@@ -1902,7 +2221,7 @@ doka-image-editor {
   }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
-  .DokaRoot[data-env~="is-ios"] .DokaProgressIndicator svg {
+  .DokaRoot[data-env~=is-ios] .DokaProgressIndicator svg {
     transform-origin: 49% 49%;
   }
 }
@@ -1922,43 +2241,52 @@ doka-image-editor {
   background: var(--color-background-70);
   box-shadow: 0 0 0 1px var(--color-foreground-5);
 }
+
 .DokaShapeList li + li {
   margin-top: -0.3125em;
 }
-.DokaShapeList[data-visible="true"] {
+
+.DokaShapeList[data-visible=true] {
   opacity: 1;
 }
+
 .DokaShapeList .DokaColorPreview {
   width: 0.75em;
   height: 0.75em;
   margin-right: 0.25em;
   border-radius: 0.25em;
 }
+
 .DokaShapeList .DokaShapeListItem {
   display: flex;
   align-items: center;
   padding: 0.25em 0.5em;
   outline: none;
 }
+
 .DokaShapeList .DokaShapeListItem > span {
   font-size: 0.75em;
   line-height: 1.75;
   padding: 0 0.325em;
   margin-left: -0.325em;
 }
+
 .DokaShapeList .DokaShapeListItem[data-focus-visible] > span {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
-.DokaShapeList[data-visible="true"] .DokaShapeListItem {
+
+.DokaShapeList[data-visible=true] .DokaShapeListItem {
   pointer-events: all;
 }
+
 .DokaShapeEditor {
   height: 100%;
   width: 100%;
   outline: none;
   touch-action: none;
 }
+
 .DokaShapeControls {
   position: absolute !important;
   left: 0;
@@ -1968,6 +2296,7 @@ doka-image-editor {
   display: flex;
   align-items: center;
 }
+
 .DokaShapeControlsGroup {
   color: #eee;
   background: #333;
@@ -1977,16 +2306,20 @@ doka-image-editor {
   pointer-events: all;
   min-height: 1.75em;
 }
+
 .DokaShapeControlsGroup + .DokaShapeControlsGroup {
   margin-left: 0.5em;
 }
+
 .DokaShapeControlsGroup .DokaButton {
   outline: transparent;
 }
+
 .DokaShapeControlsGroup .DokaButton[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaShapeControlsGroup > .DokaButton .DokaButtonLabel {
   display: block;
   line-height: 2.4;
@@ -1995,55 +2328,69 @@ doka-image-editor {
   transition: background-color 0.1s;
   outline: transparent;
 }
+
 .DokaShapeControlsGroup > .DokaButton .DokaButtonLabel:hover {
-  background-color: hsla(0, 0%, 100%, 0.15);
+  background-color: rgba(255, 255, 255, 0.15);
 }
+
 .DokaShapeControlsGroup .DokaButtonIconOnly {
   width: 1.75em;
   transition: background-color 0.1s;
 }
+
 .DokaShapeControlsGroup .DokaButtonIconOnly:hover {
-  background-color: hsla(0, 0%, 100%, 0.15);
+  background-color: rgba(255, 255, 255, 0.15);
 }
+
 .DokaShapeControlsGroup > button:first-of-type {
   border-radius: 0.25em 0 0 0.25em;
 }
+
 .DokaShapeControlsGroup > button:last-of-type {
   border-radius: 0 0.25em 0.25em 0;
 }
+
 .DokaShapeControlsGroup > * + * {
   border-left: 1px solid rgba(0, 0, 0, 0.5);
 }
+
 .DokaShapeControlsGroup svg {
   pointer-events: none;
 }
+
 .DokaShapeStyleEditor {
   position: relative;
   width: 100%;
   min-height: 2.75em;
 }
+
 .DokaShapeStyles {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
 }
-.DokaShapeStyles:not([data-state~="overflows"]) {
+
+.DokaShapeStyles:not([data-state~=overflows]) {
   display: flex;
   justify-content: center;
 }
+
 .DokaShapeStyleList {
   display: flex;
 }
+
 .DokaShapeStyleList .DokaButton,
 .DokaShapeStyleList .DokaInput {
   outline: transparent;
 }
+
 .DokaShapeStyleList .DokaInput {
   padding: 0 0 0 0.625em;
   font-size: 0.75em;
   line-height: 2.25;
 }
+
 .DokaShapeStyleList .DokaShapeStyleLabel {
   line-height: 1.75;
   font-size: 0.625em;
@@ -2055,33 +2402,41 @@ doka-image-editor {
   color: var(--color-foreground-50);
   white-space: nowrap;
 }
+
 .DokaShapeStyleList > .DokaShapeStyle {
   border-radius: var(--border-radius-round);
 }
+
 .DokaShapeStyleList > .DokaShapeStyle + .DokaShapeStyle {
   margin-left: 1em;
 }
+
 .DokaShapeStyle {
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
+
 .DokaShapeStyle .DokaDetailsButton {
   border-radius: inherit;
 }
+
 .DokaShapeStyle > .DokaButton:hover,
 .DokaShapeStyle > .DokaButton[data-focus-visible] {
   position: relative;
   z-index: 1;
 }
+
 .DokaShapeStyle > .DokaColorPickerButton .DokaButtonLabel {
   display: block;
   border-radius: inherit;
 }
+
 .DokaShapeStyle > .DokaColorPickerButton {
   display: flex;
   justify-content: center;
 }
+
 .DokaShapeStyle .DokaColorPreview {
   border-radius: inherit;
   width: 1.5em;
@@ -2091,9 +2446,11 @@ doka-image-editor {
   border: 1px solid var(--color-background-100);
   margin-top: -1px;
 }
+
 .DokaShapeStyle .DokaColorPreview span {
   border-radius: inherit;
 }
+
 .DokaShapeStyle [data-focus-visible] .DokaColorPreview span:before {
   position: absolute;
   left: 0;
@@ -2106,6 +2463,7 @@ doka-image-editor {
   content: "";
   z-index: 1;
 }
+
 .DokaShapeStyle > .DokaColorPickerButtonStroke .DokaColorPreview span:after {
   position: absolute;
   left: 6px;
@@ -2116,6 +2474,7 @@ doka-image-editor {
   border-radius: inherit;
   content: "";
 }
+
 .DokaShapeStyle > .DokaDropdownButton .DokaButtonLabel,
 .DokaShapeStyle > .DokaRadioGroup .DokaButtonLabel,
 .DokaShapeStyle > .DokaRadioGroupOption label {
@@ -2124,17 +2483,21 @@ doka-image-editor {
   padding: 0 1em;
   font-size: 0.6875em;
 }
+
 .DokaShapeStyle > .DokaButton:not(.DokaColorPickerButton)[data-focus-visible] {
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
+
 .DokaShapeStyle > .DokaDropdownButton {
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
   transition: background-color 0.1s;
 }
+
 .DokaShapeStyle > .DokaDropdownButton:hover {
   background-color: var(--color-foreground-10);
 }
+
 .DokaShapeStyle > .DokaDropdownButton .DokaButtonLabel:after {
   content: "▼";
   font-size: 0.6875em;
@@ -2144,9 +2507,11 @@ doka-image-editor {
   margin-right: -0.25em;
   pointer-events: none;
 }
+
 .DokaShapeStyle > .DokaRadioGroup > .DokaRadioGroupOptions {
   flex-direction: row;
 }
+
 .DokaShapeStyle > .DokaRadioGroup > .DokaRadioGroupOptions label {
   cursor: var(--button-cursor);
   display: flex;
@@ -2156,38 +2521,47 @@ doka-image-editor {
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
   transition: background-color 0.1s;
 }
+
 .DokaShapeStyle > .DokaRadioGroup > .DokaRadioGroupOptions label:hover {
   background-color: var(--color-foreground-20);
 }
+
 .DokaShapeStyle > .DokaRadioGroup > .DokaRadioGroupOptions svg {
   width: 1.125em;
   height: 1.125em;
 }
+
 .DokaShapeStyle > .DokaRadioGroup > .DokaRadioGroupOptions .DokaRadioGroupOption:first-of-type label {
   padding-left: 0.5em;
   border-top-left-radius: var(--border-radius-round);
   border-bottom-left-radius: var(--border-radius-round);
 }
+
 .DokaShapeStyle > .DokaRadioGroup > .DokaRadioGroupOptions .DokaRadioGroupOption:last-of-type label {
   padding-right: 0.5em;
   border-top-right-radius: var(--border-radius-round);
   border-bottom-right-radius: var(--border-radius-round);
 }
-.DokaShapeStyle > .DokaRadioGroup > .DokaRadioGroupOptions [data-selected="true"] label {
+
+.DokaShapeStyle > .DokaRadioGroup > .DokaRadioGroupOptions [data-selected=true] label {
   background-color: var(--color-foreground-10);
 }
+
 .DokaShapePresetsList {
   display: flex;
   align-items: center;
 }
+
 .DokaShapePresetsList text {
   font-family: monospace;
 }
+
 .DokaShapePresetsList .DokaShapePreset {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .DokaShapePresetsList .DokaShapePreset img,
 .DokaShapePresetsList .DokaShapePreset svg {
   display: block;
@@ -2197,17 +2571,21 @@ doka-image-editor {
   object-fit: cover;
   border-radius: 0.3125em;
 }
+
 .DokaShapePresetsList .DokaShapePreset .DokaDragButton {
   padding: 0.3125em;
   border-radius: var(--border-radius);
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
 }
+
 .DokaShapePresetsList .DokaShapePreset .DokaDragButton:hover {
   background-color: var(--color-foreground-10);
 }
+
 .DokaShapePresetsList .DokaShapePreset + .DokaShapePreset {
   margin-left: 0.5em;
 }
+
 .DokaShapePresetSelect {
   position: relative;
   line-height: 1.875;
@@ -2216,6 +2594,7 @@ doka-image-editor {
   flex-shrink: 0;
   margin-right: 1em;
 }
+
 .DokaShapePresetSelect label {
   transition: background-color 0.25s ease-out, color 0.25s ease-out;
   pointer-events: none;
@@ -2228,14 +2607,17 @@ doka-image-editor {
   padding: 0.25em 0.75em;
   cursor: var(--button-cursor);
 }
+
 .DokaShapePresetSelect label svg {
   width: 0.75em;
   margin-right: 0.325em;
 }
+
 .DokaShapePresetSelect span {
   font-size: 0.6875em;
   font-weight: 400;
 }
+
 .DokaShapePresetSelect input {
   position: absolute;
   left: 0;
@@ -2250,16 +2632,19 @@ doka-image-editor {
   font-size: 100px;
   cursor: var(--button-cursor);
 }
+
 .DokaShapePresetSelect input:focus + label,
 .DokaShapePresetSelect input:hover + label {
   background-color: var(--color-foreground-10);
 }
+
 .DokaInputForm {
   opacity: 0;
   cursor: auto;
   z-index: 2147483647;
 }
-.DokaInputForm:not([data-layout="stick"]) {
+
+.DokaInputForm:not([data-layout=stick]) {
   position: absolute;
   bottom: 6.5em;
   width: 30em;
@@ -2268,14 +2653,15 @@ doka-image-editor {
   border-radius: var(--border-radius);
   background-color: var(--color-background-95);
 }
+
 @media (max-width: 34em) {
-  .DokaInputForm:not([data-layout="stick"]) {
+  .DokaInputForm:not([data-layout=stick]) {
     left: 2em;
     right: 2em;
     width: auto;
   }
 }
-.DokaInputForm[data-layout="stick"] {
+.DokaInputForm[data-layout=stick] {
   transition: opacity 0.15s ease 0.25s;
   position: absolute;
   left: 0;
@@ -2283,49 +2669,61 @@ doka-image-editor {
   outline: 1px solid var(--color-foreground-15);
   background-color: var(--color-background-100);
 }
-.DokaInputForm[data-layout="stick"] > .DokaInputFormInner {
+
+.DokaInputForm[data-layout=stick] > .DokaInputFormInner {
   background-color: var(--color-foreground-3);
 }
+
 .DokaInputFormInner > .DokaButton {
   color: var(--color-foreground-100);
   border-radius: 9999em;
   box-shadow: inset 0 0 0 1px var(--color-foreground-5);
 }
+
 .DokaInputFormInner > .DokaButton:first-of-type {
   left: 1em;
 }
+
 .DokaInputFormInner > .DokaButton:last-of-type {
   right: 1rem;
   color: var(--color-primary-text);
   background: var(--color-primary);
   box-shadow: inset 0 0 0 1px var(--color-foreground-10);
 }
+
 .DokaInputFormInner > .DokaButton:not(.DokaButtonIconOnly) .DokaButtonInner {
   padding: 0 0.875em 0 0.625em;
 }
+
 .DokaInputFormInner > .DokaButton .DokaButtonIcon {
   width: 0.875em;
   height: 0.875em;
 }
+
 .DokaInputFormInner > .DokaButton.DokaButtonIconOnly {
   width: 1.875em;
   height: 1.875em;
 }
+
 .DokaInputFormInner > .DokaButton .DokaButtonLabel {
   font-size: 0.875em;
 }
+
 .DokaInputFormInner > .DokaButton .DokaButtonInner {
   line-height: 2;
   display: flex;
   justify-content: center;
 }
+
 .DokaInputFormInner {
   padding-bottom: 3.5em;
 }
+
 .DokaInputFormInner > .DokaButton {
   position: absolute;
   bottom: 1em;
 }
+
 .DokaInputFormFields textarea:only-child {
   width: 100%;
   margin-top: 1em;
@@ -2336,13 +2734,16 @@ doka-image-editor {
   -webkit-mask: linear-gradient(0deg, transparent, #000 1em);
   mask: linear-gradient(0deg, transparent, #000 1em);
 }
+
 .DokaInputFormFields textarea:only-child::-webkit-scrollbar {
   width: 1em;
   cursor: pointer;
 }
+
 .DokaInputFormFields textarea:only-child::-webkit-scrollbar-track {
   background: none;
 }
+
 .DokaInputFormFields textarea:only-child::-webkit-scrollbar-thumb {
   cursor: pointer;
   background-clip: padding-box;
@@ -2350,6 +2751,7 @@ doka-image-editor {
   border-radius: 9999em;
   border: 0.25em solid transparent;
 }
+
 .DokaInputForm input,
 .DokaInputForm textarea {
   box-sizing: border-box;
@@ -2359,9 +2761,11 @@ doka-image-editor {
   outline: transparent;
   color: var(--color-foreground-100);
 }
+
 .DokaInputForm input {
   background-color: var(--color-background-100);
 }
+
 .DokaShapeManipulator {
   position: absolute;
   left: 0;
@@ -2370,7 +2774,8 @@ doka-image-editor {
   touch-action: none;
   --size: 0.75em;
 }
-.DokaShapeManipulator:not([data-control="edge"]) {
+
+.DokaShapeManipulator:not([data-control=edge]) {
   margin-left: calc(var(--size) * (-0.5));
   margin-top: calc(var(--size) * (-0.5));
   line-height: var(--size);
@@ -2378,7 +2783,8 @@ doka-image-editor {
   height: var(--size);
   border-radius: 9999em;
 }
-.DokaShapeManipulator:not([data-control="edge"]):after {
+
+.DokaShapeManipulator:not([data-control=edge]):after {
   position: absolute;
   left: -0.5em;
   right: -0.5em;
@@ -2386,40 +2792,48 @@ doka-image-editor {
   bottom: -0.5em;
   content: "";
 }
-.DokaShapeManipulator:not([data-control="edge"])[data-focus-visible]:after {
+
+.DokaShapeManipulator:not([data-control=edge])[data-focus-visible]:after {
   border-radius: inherit;
   background-color: var(--color-focus-50);
   box-shadow: inset 0 0 0 1px var(--color-focus-100);
 }
-.DokaShapeManipulator[data-control="point"] {
+
+.DokaShapeManipulator[data-control=point] {
   background: linear-gradient(90deg, var(--color-secondary-dark), var(--color-secondary));
   box-shadow: 0 0 0 2px #fff, 0 0 4px #000;
   z-index: 3;
 }
-.DokaShapeManipulator[data-control="edge"] {
+
+.DokaShapeManipulator[data-control=edge] {
   margin-top: calc(var(--size) * (-0.5));
   height: var(--size);
   width: 1px;
   z-index: 1;
   transform-origin: 0 calc(var(--size) * 0.5);
 }
-.DokaShapeManipulator[data-control="edge"][data-focus-visible] {
+
+.DokaShapeManipulator[data-control=edge][data-focus-visible] {
   background-color: var(--color-focus-50);
 }
-.DokaShapeManipulator[data-control="rotate"] {
+
+.DokaShapeManipulator[data-control=rotate] {
   border-radius: 9999em;
   background: linear-gradient(90deg, #fff, #ddd);
   box-shadow: 0 0 0 2px var(--color-secondary-dark), 0 0 4px #000;
   z-index: 2;
   cursor: move;
 }
+
 .DokaDragButton {
   cursor: var(--button-cursor);
   outline: transparent;
 }
+
 .DokaDragButton > * {
   pointer-events: none;
 }
+
 .DokaDragButton {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -2429,6 +2843,9 @@ doka-image-editor {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   transition: filter 0.2s ease-out;
 }
+
 .DokaDragButton[disabled] {
   filter: var(--filter-disabled);
 }
+
+/*# sourceMappingURL=doka.css.map */

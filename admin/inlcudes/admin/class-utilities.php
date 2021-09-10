@@ -8,7 +8,7 @@ class Admin_2020_utilities {
 		$this->version = $version;
 		$this->path = $path;
 		$this->product_id = $productid;
-		$this->product_ids = array("5ebc6198701f5d0a0812c618","5ebe7e0d701f5d079480905e","5ebe7e66701f5d0fe0b4c1ab","5f6a0e2a701f5d10e8be56a3",'beta');
+		$this->product_ids = array("5ebc6198701f5d0a0812c618","5ebe7e0d701f5d079480905e","5ebe7e66701f5d0fe0b4c1ab","5f6a0e2a701f5d10e8be56a3",'lemonsqueezy');
 		$this->post_types = '';
 		$this->current_user_id = 0;
 		$this->current_user = '';
@@ -23,6 +23,7 @@ class Admin_2020_utilities {
 	public function start(){
 		
 		add_action('wp_ajax_a2020_save_user_prefences', array($this,'a2020_save_user_prefences'));
+		add_filter( 'wp_kses_allowed_html', array($this, 'gmt_allow_iframes_filter') );
 		
 	}
 	
@@ -180,6 +181,67 @@ class Admin_2020_utilities {
 	}
 	
 	/**
+	 * Sanitises and strips tags of input from ajax
+	 * @since 1.4
+	 * @variables $values = item to clean (array or string)
+	 */
+	public function clean_ajax_input_html($values){
+		
+		if(is_array($values)){
+			foreach ($values as $index => $in){
+				if(is_array($in)){
+					$values[$index] = $this->clean_ajax_input_html($in);
+				} else {	
+					$values[$index] = wp_kses_post($in);
+				}
+			}
+		} else {
+			$values = wp_kses_post($values);
+		}
+		
+		return $values;
+	}
+	
+	public function gmt_allow_iframes_filter( $allowedposttags ) {
+	
+		// Only change for users who can publish posts
+		if ( !is_admin() ) return $allowedposttags;
+	
+		// Allow iframes and the following attributes
+		$allowedposttags['iframe'] = array(
+			'align' => true,
+			'width' => true,
+			'height' => true,
+			'frameborder' => true,
+			'name' => true,
+			'src' => true,
+			'id' => true,
+			'class' => true,
+			'style' => true,
+			'scrolling' => true,
+			'marginwidth' => true,
+			'marginheight' => true,
+		);
+		
+		$allowedposttags['embed'] = array(
+			'align' => true,
+			'width' => true,
+			'height' => true,
+			'frameborder' => true,
+			'name' => true,
+			'src' => true,
+			'id' => true,
+			'class' => true,
+			'style' => true,
+			'scrolling' => true,
+			'marginwidth' => true,
+			'marginheight' => true,
+		);
+	
+		return $allowedposttags;
+	}
+	
+	/**
 	 * Returns ajax error
 	 * @since 1.4
 	 * @variables $message = error message to send back to user (string)
@@ -239,8 +301,8 @@ class Admin_2020_utilities {
 			
 			$a2020_network_options = get_blog_option(get_main_network_id(),'admin2020_settings_network');
 			
-			if(isset($a2020_network_options['modules']['network_override']['status'])){
-				$enabled = $a2020_network_options['modules']['network_override']['status'];
+			if(isset($a2020_network_options['modules']['admin2020_general']['network_override'])){
+				$enabled = $a2020_network_options['modules']['admin2020_general']['network_override'];
 				
 				if($enabled == 'true'){
 					
@@ -275,7 +337,7 @@ class Admin_2020_utilities {
 	 * @since 1.2
 	 */
 	
-	public function get_option($module_name = false,$option_name = false){
+	public function get_option($module_name = false,$option_name = false, $returnarray = false){
 		
 		if($module_name == false || $option_name == false){
 			return '';
@@ -287,8 +349,8 @@ class Admin_2020_utilities {
 			
 			$a2020_network_options = get_blog_option(get_main_network_id(),'admin2020_settings_network');
 			
-			if(isset($a2020_network_options['modules']['network_override']['status'])){
-				$enabled = $a2020_network_options['modules']['network_override']['status'];
+			if(isset($a2020_network_options['modules']['admin2020_general']['network_override'])){
+				$enabled = $a2020_network_options['modules']['admin2020_general']['network_override'];
 				
 				if($enabled == 'true'){
 					
@@ -311,6 +373,59 @@ class Admin_2020_utilities {
 			}
 		}
 		
+		if ($returnarray == true){
+			if($option == ''){
+				$option = array();
+			}
+		}
+		
+		return $option;
+	
+	}
+	
+	
+	/**
+	 * Gets user options
+	 * @since 1.2
+	 */
+	
+	public function get_module_option($module_name){
+		
+		$a2020_options = $this->get_a2020_options();
+		$option = '';
+		
+		if(is_multisite() && $this->is_site_wide('admin-2020/admin-2020.php')){
+			
+			$a2020_network_options = get_blog_option(get_main_network_id(),'admin2020_settings_network');
+			
+			if(isset($a2020_network_options['modules']['admin2020_general']['network_override'])){
+				$enabled = $a2020_network_options['modules']['admin2020_general']['network_override'];
+				
+				if($enabled == 'true'){
+					
+					$a2020_options = $a2020_network_options;
+					
+				} 
+				
+			}
+			
+		} 
+		
+		if(is_network_admin()){
+			$a2020_options = get_option( 'admin2020_settings_network' );
+		}
+			
+		if(isset($a2020_options['modules'][$module_name])){
+			$value = $a2020_options['modules'][$module_name];
+			if($value != ""){
+				$option = $value;
+			}
+		}
+		if($option == '' || !is_array($option)){
+			$option = array();
+		}
+		
+		
 		return $option;
 	
 	}
@@ -326,6 +441,42 @@ class Admin_2020_utilities {
 		if($module_name == false || $option_name == false){
 			return '';
 		}
+		$a2020_options = $this->get_a2020_options();
+		$option = '';
+		
+		if(is_multisite() && $this->is_site_wide('admin-2020/admin-2020.php')){
+			
+			$a2020_network_options = get_blog_option(get_main_network_id(),'admin2020_settings_network');
+			$a2020_options = $a2020_network_options;
+			
+		} 
+		
+		if(is_network_admin()){
+			$a2020_options = get_option( 'admin2020_settings_network' );
+		}
+			
+		if(isset($a2020_options['modules'][$module_name][$option_name])){
+			$value = $a2020_options['modules'][$module_name][$option_name];
+			if($value != ""){
+				$option = $value;
+			}
+		}
+		
+		return $option;
+	
+	}
+	
+	/**
+	 * Gets user options
+	 * @since 1.2
+	 */
+	
+	public function get_instance($module_name = false,$option_name = false){
+		
+		if($module_name == false || $option_name == false){
+			return '';
+		}
+		
 		$a2020_options = $this->get_a2020_options();
 		$option = '';
 		
@@ -568,6 +719,17 @@ class Admin_2020_utilities {
 			return false;
 		}
 		
+	}
+	
+	
+	public function isAbsoluteUrl($url)
+	{
+		$pattern = "/^(?:ftp|https?|feed)?:?\/\/(?:(?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*
+		(?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@)?(?:
+		(?:[a-z0-9\-\.]|%[0-9a-f]{2})+|(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\]))(?::[0-9]+)?(?:[\/|\?]
+		(?:[\w#!:\.\?\+\|=&@$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})*)?$/xi";
+
+		return (bool) preg_match($pattern, $url);
 	}
 	
 	/**

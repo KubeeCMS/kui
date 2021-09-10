@@ -13,6 +13,7 @@ class Admin_2020_module_admin_content
 		$this->media_date = '';
 		$this->attachment_size = '';
 		$this->folders = new Admin_2020_module_admin_folders($this->version,$this->path,$this->utils);
+		$this->legacyitems = array();
     }
 
     /**
@@ -40,7 +41,6 @@ class Admin_2020_module_admin_content
         add_action('admin_enqueue_scripts', [$this, 'add_styles'], 0);
 		add_action('admin_enqueue_scripts', [$this, 'add_scripts'], 0);
 		
-		
 		////AJAX
 		add_action('wp_ajax_a2020_get_content', array($this,'a2020_get_content'));
 		add_action('wp_ajax_a2020_save_view', array($this,'a2020_save_view'));
@@ -61,9 +61,8 @@ class Admin_2020_module_admin_content
 		add_action('wp_ajax_a2020_save_edited_image', array($this,'a2020_save_edited_image'));
 		
 		
+		
     }
-	
-	
 	/**
 	 * Register admin bar component
 	 * @since 1.4
@@ -89,6 +88,48 @@ class Admin_2020_module_admin_content
 		$data['option_name'] = 'admin2020_admin_content';
 		$data['description'] = __('Creates the content page where you can manage all of your assets, posts and pages from one place.','admin2020');
 		return $data;
+		
+	}
+	
+	/**
+	 * Returns settings options for settings page
+	 * @since 2.1
+	 */
+	public function get_settings_options(){
+		
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
+		
+		$settings = array();
+		
+		
+		$temp = array();
+		$temp['name'] = __('Content Page disabled for','admin2020');
+		$temp['description'] = __("Content Page will be disabled for any users or roles you select",'admin2020');
+		$temp['type'] = 'user-role-select';
+		$temp['optionName'] = 'disabled-for'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName'], true);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Post types available in content page','admin2020');
+		$temp['description'] = __("Only the selected post types will be available in the content page.",'admin2020');
+		$temp['type'] = 'post-type-select';
+		$temp['optionName'] = 'post-types-content'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName'], true);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Enable private library mode','admin2020');
+		$temp['description'] = __("When enabled, the content page will only show content created by or uploaded by the currently logged in user. This includes folders..",'admin2020');
+		$temp['type'] = 'switch';
+		$temp['optionName'] = 'private-mode'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		
+		
+		return $settings;
 		
 	}
 	/**
@@ -1965,32 +2006,34 @@ class Admin_2020_module_admin_content
 		
 		?>
 		
-		<div id="a2020-content-app" class="uk-padding">
-			<?php
-			$this->build_header();
-			$this->build_toolbar();
-			$this->active_filters();
-			
-			?>
-			
-			<div class="uk-grid uk-grid" >
+		<div id="a2020-content-app" class="uk-padding" v-if="masterLoader">
+			<template v-if="masterLoader">
+				<?php
+				$this->build_header();
+				$this->build_toolbar();
+				$this->active_filters();
 				
-				<div class="uk-width-1-1@s uk-width-1-4@m " v-if="contentTable.folderPanel">
-			    <?php $this->build_folders(); ?>
-				</div>
+				?>
 				
-				<div class="uk-width-expand">	
-				<?php $this->build_table(); ?>
+				<div class="uk-grid uk-grid" >
+					
+					<div class="uk-width-1-1@s uk-width-1-4@m " v-if="contentTable.folderPanel">
+				    <?php $this->build_folders(); ?>
+					</div>
+					
+					<div class="uk-width-expand">	
+					<?php $this->build_table(); ?>
+					</div>
 				</div>
-			</div>
-			<?php
-			$this->build_batch_options();
-			$this->build_upload_modal();
-			$this->build_quick_edit_modal();
-			$this->save_view_options();
-			$this->build_batch_tags_and_categories();
-			$this->build_batch_rename();
-			?>
+				<?php
+				$this->build_batch_options();
+				$this->build_quick_edit_modal();
+				$this->save_view_options();
+				$this->build_batch_tags_and_categories();
+				$this->build_batch_rename();
+				?>
+			</template>
+			<?php $this->build_upload_modal(); ?>
 		</div>
 		<?php
 	}

@@ -1,0 +1,27 @@
+@import "../variables.scss";
+@import "../modules/hooks.scss";
+
+#wpadmin_overlay,
+#wpadmin_overlay_top {
+  display: none !important;
+}
+
+.a2020_admin_menu {
+  #rs_overview_menu {
+    left: 251px;
+    margin-left: 0;
+  }
+}
+.a2020_menu_small {
+  #rs_overview_menu {
+    left: 61px;
+  }
+}
+
+.a2020_admin_menu {
+  .toplevel_page_revslider,
+  .toplevel_page_revslider #wpwrap,
+  .toplevel_page_revslider #wpwrap #wpcontent {
+    background: transparent;
+  }
+}

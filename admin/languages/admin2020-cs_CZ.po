@@ -1,0 +1,1926 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2021-05-10 14:49+0100\n"
+"PO-Revision-Date: 2021-06-02 13:02+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ../inlcudes\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"Last-Translator: \n"
+"Language: cs_CZ\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-activation.php:129
+msgid "Admin 2020 is not activated"
+msgstr "Admin 2020 není aktivován"
+
+#: admin/class-activation.php:130
+msgid "Please add a valid licence to activate"
+msgstr "K aktivaci přidejte platnou licenci"
+
+#: admin/class-activation.php:133
+msgid "Enter your licence key"
+msgstr "Zadejte licenční klíč"
+
+#: admin/class-activation.php:136
+msgid "Activate"
+msgstr "Aktivovat"
+
+#: admin/class-activation.php:159
+msgid "Supercharge your admin with Admin 2020 Pro"
+msgstr "Vylepšete Admin pomocí Admin 2020 Pro"
+
+#: admin/class-activation.php:160
+msgid "Unlock powerful features and speed up your workflow with Admin 2020 Pro"
+msgstr ""
+"Odemkněte výkonné funkce a zrychlete svůj pracovní postup s Admin 2020 Pro"
+
+#: admin/class-activation.php:163
+msgid "Upgrade"
+msgstr "Upgrade"
+
+#: admin/class-activation.php:164
+msgid "Dimiss"
+msgstr "Zavrhnout"
+
+#: admin/class-activation.php:190
+msgid "Admin 2020 succesfully activated"
+msgstr "Správce 2020 byl úspěšně aktivován"
+
+#: admin/class-activation.php:216
+msgid "Unable to register admin 2020 at this time"
+msgstr "V tuto chvíli nelze zaregistrovat správce 2020"
+
+#: admin/class-activation.php:223
+msgid "No licence key provided"
+msgstr "Není poskytnut žádný licenční klíč"
+
+#: admin/class-settings.php:68 modules/premium/admin-menu-editor.php:515
+msgid "Settings"
+msgstr "Nastavení"
+
+#: admin/class-settings.php:71
+msgid "Upgrade to Pro"
+msgstr "Upgradujte na Pro"
+
+#: admin/class-settings.php:203
+msgid "Unable to connect account"
+msgstr "Účet se nepodařilo připojit"
+
+#: admin/class-settings.php:216
+msgid "Analytics account connected"
+msgstr "Účet Analytics připojen"
+
+#: admin/class-settings.php:250
+msgid "Analytics account removed"
+msgstr "Účet Analytics byl odstraněn"
+
+#: admin/class-settings.php:288
+msgid "Licence removed"
+msgstr "Licence odstraněna"
+
+#: admin/class-settings.php:320 admin/class-settings.php:369
+#: modules/premium/admin-menu-editor.php:1373
+msgid "No options supplied to save"
+msgstr "K uložení nejsou k dispozici žádné možnosti"
+
+#: admin/class-settings.php:339
+msgid "Modules saved"
+msgstr "Moduly uloženy"
+
+#: admin/class-settings.php:392
+msgid "Settings saved. You may need to refresh for changes to take effect."
+msgstr ""
+"Nastavení uloženo. Možná se budete muset aktualizovat, aby se změny "
+"projevily."
+
+#: admin/class-settings.php:395 admin/class-settings.php:600
+#: admin/class-settings.php:671 modules/premium/admin-content.php:557
+#: modules/premium/admin-content.php:633 modules/premium/admin-content.php:711
+#: modules/premium/admin-content.php:949 modules/premium/admin-content.php:1104
+#: modules/premium/admin-content.php:1152 modules/premium/admin-folders.php:192
+#: modules/premium/admin-folders.php:309
+#: modules/premium/admin-menu-editor.php:1386
+#: modules/premium/admin-menu-editor.php:1417
+msgid "Something went wrong"
+msgstr "Něco se pokazilo"
+
+#: admin/class-settings.php:451
+msgid "Settings Imported"
+msgstr "Nastavení importováno"
+
+#: admin/class-settings.php:548
+msgid "No video supplied to save"
+msgstr "K uložení není dodáno žádné video"
+
+#: admin/class-settings.php:559
+msgid "Video name must be unique"
+msgstr "Název videa musí být jedinečný"
+
+#: admin/class-settings.php:596
+msgid "Video saved"
+msgstr "Video uloženo"
+
+#: admin/class-settings.php:624
+msgid "No video supplied to delete"
+msgstr "Nebylo dodáno žádné video k odstranění"
+
+#: admin/class-settings.php:667
+msgid "Video deleted"
+msgstr "Video smazáno"
+
+#: admin/class-settings.php:836
+msgid "Version"
+msgstr "Verze"
+
+#: admin/class-settings.php:840
+msgid "Exports Admin 2020 settings to JSON file"
+msgstr "Exportuje nastavení správce 2020 do souboru JSON"
+
+#: admin/class-settings.php:841
+msgid "Export"
+msgstr "Export"
+
+#: admin/class-settings.php:851
+msgid "Imports Admin 2020 settings to from JSON"
+msgstr "Importuje nastavení Správce 2020 do z JSON"
+
+#: admin/class-settings.php:851
+msgid "Import"
+msgstr "Import"
+
+#: admin/class-settings.php:875 admin/class-settings.php:963
+msgid "Modules"
+msgstr "Moduly"
+
+#: admin/class-settings.php:925 admin/class-settings.php:1050
+#: modules/admin-menu.php:509 modules/admin-menu.php:769
+#: modules/premium/admin-content.php:3388
+#: modules/premium/admin-menu-editor.php:288
+#: modules/premium/admin-overview.php:715
+msgid "Save"
+msgstr "Uložit"
+
+#: admin/class-settings.php:971
+msgid "Licence"
+msgstr "Licence"
+
+#: admin/class-settings.php:972
+msgid ""
+"Admin 2020 licence is active. To remove licence or change licence click "
+"remove."
+msgstr ""
+"Licence Admin 2020 je aktivní. Chcete-li odebrat licenci nebo změnit "
+"licenci, klikněte na odebrat."
+
+#: admin/class-settings.php:975 modules/premium/admin-content.php:2226
+msgid "Remove"
+msgstr "Odstranit"
+
+#: admin/class-settings.php:1002
+msgid "Override Subsite Settings?"
+msgstr "Přepsat nastavení podstránky?"
+
+#: admin/class-settings.php:1003
+msgid ""
+"If this is enabled then all the settings here will be applied to your "
+"subsites and they will not be able to be changed from a subsite."
+msgstr ""
+"Pokud je toto povoleno, všechna zde uvedená nastavení budou použita na vaše "
+"podřízené weby a nebude možné je z podřízeného webu změnit."
+
+#: admin/class-update.php:58
+msgid "Check for updates"
+msgstr "Kontrola aktualizací"
+
+#: admin/class-update.php:122
+msgid "Update available"
+msgstr "Aktualizace k dispozici"
+
+#: admin/class-update.php:128
+msgid "No Updates available"
+msgstr "Nejsou k dispozici žádné aktualizace"
+
+#: admin/class-utilities.php:125
+msgid "No preferences supplied to save"
+msgstr "Nebyly zadány žádné předvolby k uložení"
+
+#: admin/class-utilities.php:145
+msgid "Preferences saved"
+msgstr "Předvolby uloženy"
+
+#: admin/class-utilities.php:148
+msgid "Unable to save user preferences"
+msgstr "Nelze uložit předvolby uživatele"
+
+#: modules/admin-bar.php:176
+msgid "Admin Bar"
+msgstr "Admin Bar"
+
+#: modules/admin-bar.php:178
+msgid ""
+"Creates new admin bar, adds user off canvas menu and builds global search"
+msgstr ""
+"Vytvoří novou lištu správce, přidá uživatele z nabídky plátna a vytvoří "
+"globální vyhledávání"
+
+#: modules/admin-bar.php:228
+msgid "Admin Logo"
+msgstr "Admin Logo"
+
+#: modules/admin-bar.php:229
+msgid ""
+"Sets the logo for the admin bar and also the logo for the login page if "
+"login styles is enabled. If no logo is set for dark mode then then the light "
+"logo will be used."
+msgstr ""
+"Nastaví logo pro panel administrátora a také logo pro přihlašovací stránku, "
+"pokud jsou povoleny styly přihlášení. Pokud není nastaveno žádné logo pro "
+"tmavý režim, použije se světlé logo."
+
+#: modules/admin-bar.php:232 modules/admin-bar.php:262
+#: modules/admin-menu.php:122 modules/admin-theme.php:176
+msgid "Light"
+msgstr "Světlý"
+
+#: modules/admin-bar.php:237
+msgid "Light Logo Url"
+msgstr "Světlé Logo Url"
+
+#: modules/admin-bar.php:240
+msgid "Select Light Logo"
+msgstr "Vyberte světlé logo"
+
+#: modules/admin-bar.php:244 modules/admin-bar.php:280
+#: modules/admin-menu.php:140 modules/admin-theme.php:194
+msgid "Dark"
+msgstr "Tmavý"
+
+#: modules/admin-bar.php:249
+msgid "Dark Logo Url"
+msgstr "Tmavé Logo URL"
+
+#: modules/admin-bar.php:252
+msgid "Select Dark Logo"
+msgstr "Vyberte tmavé logo"
+
+#: modules/admin-bar.php:258 modules/admin-menu.php:118
+#: modules/admin-theme.php:172
+msgid "Background Color"
+msgstr "Barva pozadí"
+
+#: modules/admin-bar.php:259
+msgid "Sets a background colour for the admin bar."
+msgstr "Nastaví barvu pozadí pro panel administrátora."
+
+#: modules/admin-bar.php:303
+msgid "Admin Bar Disabled for"
+msgstr "Admin Bar zakázán pro"
+
+#: modules/admin-bar.php:304
+msgid "Admin 2020 admin bar will be disabled for any users or roles you select"
+msgstr ""
+"Panel administrátora 2020 bude deaktivován pro všechny uživatele nebo role, "
+"které vyberete"
+
+#: modules/admin-bar.php:323 modules/admin-menu.php:185
+#: modules/admin-theme.php:158 modules/premium/admin-advanced.php:142
+#: modules/premium/admin-analytics.php:113
+#: modules/premium/admin-content.php:144 modules/premium/admin-folders.php:574
+#: modules/premium/admin-menu-editor.php:148
+#: modules/premium/admin-menu-editor.php:427
+#: modules/premium/admin-menu-editor.php:551
+#: modules/premium/admin-menu-editor.php:685
+#: modules/premium/admin-overview.php:120 modules/premium/admin-pages.php:172
+#: modules/premium/admin-woocommerce.php:148
+msgid "Select roles or users"
+msgstr "Vyberte role nebo uživatele"
+
+#: modules/admin-bar.php:337
+msgid "Hide admin bar links (left side) "
+msgstr "Skrýt odkazy na lištu správce (levá strana) "
+
+#: modules/admin-bar.php:338
+msgid ""
+"Disables legacy links on left side of admin bar for all users. Also hides "
+"the user preference."
+msgstr ""
+"Zakáže starší odkazy na levé straně panelu administrátora pro všechny "
+"uživatele. Také skryje předvolby uživatele."
+
+#: modules/admin-bar.php:358 modules/admin-menu.php:199
+msgid "Disable Search"
+msgstr "Zakázat hledání"
+
+#: modules/admin-bar.php:359
+msgid "Disables search icon and global search function from admin bar"
+msgstr ""
+"Zakáže ikonu vyhledávání a funkci globálního vyhledávání na panelu "
+"administrátora"
+
+#: modules/admin-bar.php:378
+msgid "Disable Create Button"
+msgstr "Zakázat tlačítko Vytvořit"
+
+#: modules/admin-bar.php:379
+msgid "Disables the 'create' button in the admin bar"
+msgstr "Zakáže tlačítko „vytvořit“ na liště administrátora"
+
+#: modules/admin-bar.php:399
+msgid "Disable View Website Button"
+msgstr "Zakázat tlačítko Zobrazit web"
+
+#: modules/admin-bar.php:400
+msgid "Disables the view website link button in the admin bar"
+msgstr "Zakáže tlačítko pro zobrazení odkazu na web na liště správce"
+
+#: modules/admin-bar.php:420
+msgid "Set Dark Mode as Default"
+msgstr "Nastavit Dark Mode jako výchozí"
+
+#: modules/admin-bar.php:421
+msgid ""
+"If enabled, dark mode will default to true for users that haven't set a "
+"preference."
+msgstr ""
+"Pokud je povoleno, u uživatelů, kteří nenastavili předvolbu, bude tmavý "
+"režim výchozí."
+
+#: modules/admin-bar.php:441
+msgid "Load admin 2020 bar on front end"
+msgstr "Načíst panel administrátora 2020 na frontendu"
+
+#: modules/admin-bar.php:442
+msgid ""
+"If enabled, admin 2020 admin bar will be load on the front end. Please note, "
+"this will not work on all themes and styling will vary."
+msgstr ""
+"Pokud je povoleno, na klientské rozhraní se načte panel administrátora 2020. "
+"Upozorňujeme, že to nebude fungovat u všech témat a styl se bude lišit."
+
+#: modules/admin-bar.php:462
+msgid "Hide admin bar on front end"
+msgstr "Skrýt panel administrátorů na frontendu"
+
+#: modules/admin-bar.php:463
+msgid "If enabled, front end admin bar will not load."
+msgstr "Pokud je povoleno, panel administrátora frontendu se nenačte."
+
+#: modules/admin-bar.php:483
+msgid "Disable Notification Center"
+msgstr "Zakázat Centrum oznámení"
+
+#: modules/admin-bar.php:484
+msgid "If disabled, notifcations will show in the normal way"
+msgstr "Pokud je zakázáno, oznámení se budou zobrazovat běžným způsobem"
+
+#: modules/admin-bar.php:504
+msgid "Post Types available in Search"
+msgstr "Typy příspěvků dostupné ve Vyhledávání"
+
+#: modules/admin-bar.php:505
+msgid "The global search will only search the selected post types."
+msgstr "Globální vyhledávání prohledá pouze vybrané typy příspěvků."
+
+#: modules/admin-bar.php:530 modules/admin-bar.php:571
+#: modules/premium/admin-content.php:182
+msgid "Select Post Types"
+msgstr "Vyberte typy příspěvků"
+
+#: modules/admin-bar.php:546
+msgid "Post Types available in create button (new)"
+msgstr "Typy příspěvků dostupné v tlačítku pro vytvoření (nové)"
+
+#: modules/admin-bar.php:547
+msgid "Only the selected post types will show up in the create dropdown."
+msgstr ""
+"V rozbalovací nabídce pro vytvoření se zobrazí pouze vybrané typy příspěvků."
+
+#: modules/admin-bar.php:1061
+msgid "Search website"
+msgstr "Prohledat web"
+
+#: modules/admin-bar.php:1077 modules/admin-bar.php:1084
+#: modules/admin-menu.php:473 modules/admin-menu.php:733
+msgid "Search"
+msgstr "Vyhledávání"
+
+#: modules/admin-bar.php:1198 modules/premium/admin-content.php:3139
+#: modules/premium/admin-content.php:3244
+msgid "Edit"
+msgstr "Upravit"
+
+#: modules/admin-bar.php:1205 modules/premium/admin-content.php:3133
+#: modules/premium/admin-content.php:3238
+msgid "View"
+msgstr "Pohled"
+
+#: modules/admin-bar.php:1222
+msgid "Show more"
+msgstr "Show more"
+
+#: modules/admin-bar.php:1224
+msgid "other matches"
+msgstr "další shody"
+
+#: modules/admin-bar.php:1302 modules/premium/admin-overview.php:69
+#: modules/premium/admin-overview.php:263
+msgid "Overview"
+msgstr "Přehled"
+
+#: modules/admin-bar.php:1309
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: modules/admin-bar.php:1318
+msgid "View site"
+msgstr "Zobrazit web"
+
+#: modules/admin-bar.php:1323
+msgid "View Dashboard"
+msgstr "Zobrazit nástěnku"
+
+#: modules/admin-bar.php:1342 modules/admin-login.php:126
+msgid "Dark Mode"
+msgstr "Tmavý režim"
+
+#: modules/admin-bar.php:1353 modules/admin-bar.php:1656
+msgid "Show screen options"
+msgstr "Zobrazit možnosti obrazovky"
+
+#: modules/admin-bar.php:1364
+msgid "Hide admin bar links (left)"
+msgstr "Skrýt odkazy na lištu správce (vlevo)"
+
+#: modules/admin-bar.php:1393
+msgid "Edit profile"
+msgstr "Upravit profil"
+
+#: modules/admin-bar.php:1400
+msgid "Logout"
+msgstr "Odhlásit se"
+
+#: modules/admin-bar.php:1426
+msgid "Updates"
+msgstr "Aktualizace"
+
+#: modules/admin-bar.php:1429
+msgid "Up to date"
+msgstr "Aktuální"
+
+#: modules/admin-bar.php:1432
+msgid "Everything is up to date"
+msgstr "Všechno je aktuální"
+
+#: modules/admin-bar.php:1443
+msgid "Core"
+msgstr "Jádro"
+
+#: modules/admin-bar.php:1457 modules/premium/admin-overview-cards.php:360
+msgid "Plugins"
+msgstr "Pluginy"
+
+#: modules/admin-bar.php:1470
+msgid "Themes"
+msgstr "Motivy"
+
+#: modules/admin-bar.php:1486
+msgid "Notifications"
+msgstr "Oznámení"
+
+#: modules/admin-bar.php:1512
+msgid "Don't show again"
+msgstr "Nezobrazovat znovu"
+
+#: modules/admin-bar.php:1521
+msgid "hidden notification"
+msgstr "skryté oznámení"
+
+#: modules/admin-bar.php:1522
+msgid "hidden notifications"
+msgstr "skrytá oznámení"
+
+#: modules/admin-bar.php:1523
+msgid "Show all"
+msgstr "Ukázat vše"
+
+#: modules/admin-bar.php:1560
+msgid "Toggle menu"
+msgstr "Přepnout nabídku"
+
+#: modules/admin-bar.php:1643
+msgid "View website"
+msgstr "Zobrazit web"
+
+#: modules/admin-bar.php:1648
+msgid "Dashboard"
+msgstr "Přístrojová deska"
+
+#: modules/admin-bar.php:1663 modules/premium/admin-content.php:2660
+#: modules/premium/admin-folders.php:859
+msgid "Create"
+msgstr "Vytvořit"
+
+#: modules/admin-login.php:81
+msgid "Login"
+msgstr "Přihlásit se"
+
+#: modules/admin-login.php:83
+msgid "Styles the admin login page."
+msgstr "Styly stránky pro přihlášení správce."
+
+#: modules/admin-login.php:106
+msgid "Login Background Image"
+msgstr "Obrázek na pozadí přihlášení"
+
+#: modules/admin-login.php:107
+msgid "Sets an optional background image for the login page."
+msgstr "Nastaví volitelný obrázek na pozadí pro přihlašovací stránku."
+
+#: modules/admin-login.php:114
+msgid "Login background url"
+msgstr "Adresa URL pro přihlášení na pozadí"
+
+#: modules/admin-login.php:117
+msgid "Select login background"
+msgstr "Vyberte pozadí přihlášení"
+
+#: modules/admin-login.php:127
+msgid "Login style will match dark theme if enabled"
+msgstr "Styl přihlášení bude odpovídat tmavému motivu, pokud je povolen"
+
+#: modules/admin-login.php:147
+msgid "Redirect to overview page"
+msgstr "Přesměrování na stránku s přehledem"
+
+#: modules/admin-login.php:148
+msgid ""
+"If enabled, after logging in users will be redirected to the overview page"
+msgstr ""
+"Pokud je povoleno, budou uživatelé po přihlášení přesměrováni na stránku s "
+"přehledem"
+
+#: modules/admin-menu.php:82
+msgid "Menu"
+msgstr "Menu"
+
+#: modules/admin-menu.php:84
+msgid "Creates new admin menu."
+msgstr "Vytvoří nové administrátorské menu."
+
+#: modules/admin-menu.php:119
+msgid "Sets a background colour for the admin menu."
+msgstr "Nastaví barvu pozadí pro nabídku správce."
+
+#: modules/admin-menu.php:163
+msgid "Menu Disabled for"
+msgstr "Nabídka zakázána z nabídky"
+
+#: modules/admin-menu.php:164
+msgid "Admin 2020 menu will be disabled for any users or roles you select"
+msgstr ""
+"Nabídka Správce 2020 bude deaktivována pro všechny uživatele nebo role, "
+"které vyberete"
+
+#: modules/admin-menu.php:200
+msgid "Disables admin menu search"
+msgstr "Zakáže hledání v nabídce správce"
+
+#: modules/admin-menu.php:220
+msgid "Set collapsed menu as default"
+msgstr "Nastavit sbalenou nabídku jako výchozí"
+
+#: modules/admin-menu.php:221
+msgid ""
+"If enabled, the menu will default to the shrunk menu for users that haven't "
+"set a preference."
+msgstr ""
+"Pokud je tato možnost povolena, v nabídce bude výchozí zmenšená nabídka pro "
+"uživatele, kteří nenastavili předvolbu."
+
+#: modules/admin-menu.php:506 modules/admin-menu.php:766
+#: modules/premium/admin-content.php:2657
+#: modules/premium/admin-content.php:2703 modules/premium/admin-folders.php:856
+#: modules/premium/admin-folders.php:902
+msgid "Cancel"
+msgstr "Zrušení"
+
+#: modules/admin-menu.php:514 modules/admin-menu.php:774
+msgid "Clear Favourites"
+msgstr "Vymazat oblíbené položky"
+
+#: modules/admin-menu.php:911
+msgid "Menu Preferences"
+msgstr "Předvolby nabídky"
+
+#: modules/admin-menu.php:916
+msgid "Show search bar"
+msgstr "Zobrazit vyhledávací lištu"
+
+#: modules/admin-menu.php:931
+msgid "Hide menu icons"
+msgstr "Skrýt ikony nabídky"
+
+#: modules/admin-menu.php:946
+msgid "Show submenu on hover"
+msgstr "Zobrazit podnabídku při najetí myší"
+
+#: modules/admin-menu.php:960
+msgid "Show favourites"
+msgstr "Zobrazit oblíbené"
+
+#: modules/admin-menu.php:973
+msgid "Set Favourites"
+msgstr "Nastavit oblíbené"
+
+#: modules/admin-theme.php:106
+msgid "Theme"
+msgstr "Motiv"
+
+#: modules/admin-theme.php:108
+msgid ""
+"Creates the main theme for admin 2020. Disables default WordPress theme and "
+"applies admin 2020."
+msgstr ""
+"Vytvoří hlavní téma pro správce 2020. Zakáže výchozí téma WordPress a "
+"použije správce 2020."
+
+#: modules/admin-theme.php:136
+msgid "Theme Disabled for"
+msgstr "Téma zakázáno pro"
+
+#: modules/admin-theme.php:137
+msgid "Admin 2020 theme will be disabled for any users or roles you select"
+msgstr ""
+"Téma Správce 2020 bude deaktivováno pro všechny uživatele nebo role, které "
+"vyberete"
+
+#: modules/admin-theme.php:173
+msgid "Sets a background colour for admin pages."
+msgstr "Nastaví barvu pozadí pro stránky správce."
+
+#: modules/admin-theme.php:214
+msgid "Primary Color"
+msgstr "Základní barva"
+
+#: modules/admin-theme.php:215
+msgid "Sets the primary color throughout Admin 2020."
+msgstr "Nastavuje primární barvu v celém programu Admin 2020."
+
+#: modules/admin-theme.php:254
+msgid "Padding"
+msgstr "Padding"
+
+#: modules/admin-theme.php:255
+msgid "Sets padding (in px) for cards, metaboxes and other items in the UI."
+msgstr ""
+"Nastaví odsazení (v pixelech) pro karty, metaboxy a další položky v "
+"uživatelském rozhraní."
+
+#: modules/premium/admin-advanced.php:93
+msgid "Advanced"
+msgstr "Pokročilé"
+
+#: modules/premium/admin-advanced.php:95
+msgid "Creates options for adding customm CSS and JS."
+msgstr "Vytvoří možnosti pro přidání vlastních CSS a JS."
+
+#: modules/premium/admin-advanced.php:121
+msgid "Advanced Disabled for"
+msgstr "Advanced Disabled for"
+
+#: modules/premium/admin-advanced.php:122
+msgid "Custom CSS and JS will not load for the selected roles and users."
+msgstr "Vlastní CSS a JS se pro vybrané role a uživatele nenačtou."
+
+#: modules/premium/admin-advanced.php:156
+msgid "Custom CSS"
+msgstr "Vlastní CSS"
+
+#: modules/premium/admin-advanced.php:157
+msgid "CSS added here will be loaded on every admin page."
+msgstr "Zde přidané CSS budou načteny na každou stránku správce."
+
+#: modules/premium/admin-advanced.php:185
+msgid "Custom JS"
+msgstr "Vlastní JS"
+
+#: modules/premium/admin-advanced.php:186
+msgid "JS added here will be loaded on every admin page."
+msgstr "Zde přidaný JS bude načten na každé stránce pro správu."
+
+#: modules/premium/admin-analytics.php:69
+msgid "Analytics"
+msgstr "Analytics"
+
+#: modules/premium/admin-analytics.php:71
+msgid "Creates the google analytics cards for the overview page."
+msgstr "Vytvoří analytické karty Google pro stránku s přehledem."
+
+#: modules/premium/admin-analytics.php:92
+msgid "Google Analytics Disabled for"
+msgstr "Google Analytics zakázán pro"
+
+#: modules/premium/admin-analytics.php:93
+msgid "Google Analytics will be disabled for any users or roles you select"
+msgstr ""
+"Google Analytics bude deaktivován pro všechny uživatele nebo role, které "
+"vyberete"
+
+#: modules/premium/admin-analytics.php:129
+msgid "Analytics account"
+msgstr "Účet Analytics"
+
+#: modules/premium/admin-analytics.php:130
+msgid ""
+"Select the google analytics account you wish to use for displaying data on "
+"the overview page"
+msgstr ""
+"Vyberte účet Google Analytics, který chcete použít pro zobrazení dat na "
+"stránce přehledu"
+
+#: modules/premium/admin-analytics.php:146
+msgid "Remove Account"
+msgstr "Odstranit účet"
+
+#: modules/premium/admin-analytics.php:244
+msgid "Total Page Views"
+msgstr "Celkový počet zobrazení stránky"
+
+#: modules/premium/admin-analytics.php:245
+msgid "Total Site Users"
+msgstr "Celkový počet uživatelů webu"
+
+#: modules/premium/admin-analytics.php:246
+msgid "Average Page Speed"
+msgstr "Průměrná rychlost stránky"
+
+#: modules/premium/admin-analytics.php:247
+msgid "Visits By Device"
+msgstr "Návštěvy podle zařízení"
+
+#: modules/premium/admin-analytics.php:248
+msgid "Bounce Rate"
+msgstr "Míra okamžitého opuštění"
+
+#: modules/premium/admin-analytics.php:249
+msgid "Visits By Country"
+msgstr "Návštěvy podle země"
+
+#: modules/premium/admin-analytics.php:250
+msgid "Visits By Page"
+msgstr "Návštěvy podle stránky"
+
+#: modules/premium/admin-analytics.php:251
+msgid "Traffic Sources"
+msgstr "Zdroje provozu"
+
+#: modules/premium/admin-analytics.php:252
+msgid "Session Duration"
+msgstr "Doba trvání relace"
+
+#: modules/premium/admin-analytics.php:379
+msgid "Page Views"
+msgstr "Zobrazení stránky"
+
+#: modules/premium/admin-analytics.php:399
+#: modules/premium/admin-analytics.php:486
+#: modules/premium/admin-analytics.php:575
+#: modules/premium/admin-analytics.php:650
+#: modules/premium/admin-analytics.php:713
+#: modules/premium/admin-analytics.php:789
+#: modules/premium/admin-analytics.php:835
+#: modules/premium/admin-analytics.php:916
+#: modules/premium/admin-analytics.php:994
+msgid "Connect analytics account to view site statistics"
+msgstr "Chcete-li zobrazit statistiky webu, připojte účet Analytics"
+
+#: modules/premium/admin-analytics.php:410
+#: modules/premium/admin-analytics.php:497
+#: modules/premium/admin-analytics.php:586
+#: modules/premium/admin-analytics.php:724
+#: modules/premium/admin-analytics.php:800
+msgid "vs previous"
+msgstr "vs předchozí"
+
+#: modules/premium/admin-analytics.php:410
+#: modules/premium/admin-analytics.php:497
+#: modules/premium/admin-analytics.php:586
+#: modules/premium/admin-analytics.php:724
+#: modules/premium/admin-analytics.php:800
+#: modules/premium/admin-overview-cards.php:91
+#: modules/premium/admin-overview-cards.php:150
+#: modules/premium/admin-overview-cards.php:207
+#: modules/premium/admin-woocommerce.php:337
+#: modules/premium/admin-woocommerce.php:457
+msgid "days"
+msgstr "dni"
+
+#: modules/premium/admin-analytics.php:467
+msgid "Site Users"
+msgstr "Uživatelé stránek"
+
+#: modules/premium/admin-analytics.php:555
+msgid "Avg page speed"
+msgstr "Průměrná rychlost stránky"
+
+#: modules/premium/admin-analytics.php:636
+msgid "Devices"
+msgstr "Zařízení"
+
+#: modules/premium/admin-analytics.php:841
+msgid "Country"
+msgstr "Země"
+
+#: modules/premium/admin-analytics.php:842
+#: modules/premium/admin-analytics.php:923
+#: modules/premium/admin-analytics.php:1001
+msgid "Visits"
+msgstr "Návštěvy"
+
+#: modules/premium/admin-analytics.php:844
+#: modules/premium/admin-analytics.php:925
+#: modules/premium/admin-analytics.php:1003
+msgid "Change"
+msgstr "Změna"
+
+#: modules/premium/admin-analytics.php:922
+msgid "Source"
+msgstr "Zdroj"
+
+#: modules/premium/admin-analytics.php:1000
+msgid "Page"
+msgstr "Strana"
+
+#: modules/premium/admin-content.php:88 modules/premium/admin-content.php:1954
+#: modules/premium/admin-content.php:2210
+msgid "Content"
+msgstr "Obsah"
+
+#: modules/premium/admin-content.php:90
+msgid ""
+"Creates the content page where you can manage all of your assets, posts and "
+"pages from one place."
+msgstr ""
+"Vytvoří stránku s obsahem, kde můžete spravovat všechny své podklady, "
+"příspěvky a stránky z jednoho místa."
+
+#: modules/premium/admin-content.php:123
+msgid "Admin 2020 content page disabled for"
+msgstr "Stránka obsahu administrátora 2020 zakázána"
+
+#: modules/premium/admin-content.php:124
+msgid ""
+"Admin 2020 Content Page will be disabled for any users or roles you select"
+msgstr ""
+"Stránka obsahu administrátora 2020 bude deaktivována pro všechny uživatele "
+"nebo role, které vyberete"
+
+#: modules/premium/admin-content.php:157
+msgid "Post types available in content page"
+msgstr "Typy příspěvků dostupné na stránce s obsahem"
+
+#: modules/premium/admin-content.php:158
+msgid "Only the selected post types will be available in the content page."
+msgstr "Na stránce s obsahem budou k dispozici pouze vybrané typy příspěvků."
+
+#: modules/premium/admin-content.php:196
+msgid "Enable private library mode"
+msgstr "Povolit režim soukromé knihovny"
+
+#: modules/premium/admin-content.php:197
+msgid ""
+"When enabled, the content page will only show content created by or uploaded "
+"by the currently logged in user. This includes folders."
+msgstr ""
+"Je-li tato možnost povolena, stránka s obsahem bude zobrazovat pouze obsah "
+"vytvořený nebo nahraný aktuálně přihlášeným uživatelem. To zahrnuje složky."
+
+#: modules/premium/admin-content.php:301
+msgid "Original Title / Value"
+msgstr "Původní název / hodnota"
+
+#: modules/premium/admin-content.php:305
+msgid "Text"
+msgstr "Text"
+
+#: modules/premium/admin-content.php:309 modules/premium/admin-content.php:2786
+msgid "Date Created"
+msgstr "Datum vytvoření"
+
+#: modules/premium/admin-content.php:313
+msgid "File Extension (attachments only)"
+msgstr "Přípona souboru (pouze přílohy)"
+
+#: modules/premium/admin-content.php:317
+msgid "Sequence Number"
+msgstr "Pořadové číslo"
+
+#: modules/premium/admin-content.php:321
+msgid "Meta Value"
+msgstr "Meta hodnota"
+
+#: modules/premium/admin-content.php:325
+msgid "Find and Replace"
+msgstr "Najít a nahradit"
+
+#: modules/premium/admin-content.php:395 modules/premium/admin-content.php:403
+#: modules/premium/admin-content.php:1530
+msgid "Unable to save attachment"
+msgstr "Přílohu nelze uložit"
+
+#: modules/premium/admin-content.php:412
+msgid "Image Saved"
+msgstr "Obrázek uložen"
+
+#: modules/premium/admin-content.php:448
+msgid "Failed to upload file"
+msgstr "Soubor se nepodařilo nahrát"
+
+#: modules/premium/admin-content.php:483
+msgid "Items uploaded"
+msgstr "Nahrané položky"
+
+#: modules/premium/admin-content.php:510
+msgid "Views updated"
+msgstr "Zobrazení aktualizována"
+
+#: modules/premium/admin-content.php:564
+msgid "Items duplicated succesffuly"
+msgstr "Úspěšně duplikovány položky"
+
+#: modules/premium/admin-content.php:567
+msgid "Itms couldn't be duplicated"
+msgstr "Položky nelze duplikovat"
+
+#: modules/premium/admin-content.php:613 modules/premium/admin-content.php:667
+msgid "No Meta Key provided"
+msgstr "No Meta Key provided"
+
+#: modules/premium/admin-content.php:716
+msgid "Attributes Updated"
+msgstr "Atributy aktualizovány"
+
+#: modules/premium/admin-content.php:956
+msgid "Items deleted succesffuly"
+msgstr "Položky byly úspěšně odstraněny"
+
+#: modules/premium/admin-content.php:959
+msgid "Itms couldn't be deleted"
+msgstr "Položky could not be deleted"
+
+#: modules/premium/admin-content.php:1082 modules/premium/admin-folders.php:287
+msgid "Title is required"
+msgstr "Název je povinný"
+
+#: modules/premium/admin-content.php:1088 modules/premium/admin-folders.php:293
+msgid "Colour is required"
+msgstr "Vyžaduje se barva"
+
+#: modules/premium/admin-content.php:1115 modules/premium/admin-folders.php:320
+msgid "Folder created"
+msgstr "Složka vytvořena"
+
+#: modules/premium/admin-content.php:1160 modules/premium/admin-folders.php:200
+msgid "Folder updated"
+msgstr "Složka byla aktualizována"
+
+#: modules/premium/admin-content.php:1180 modules/premium/admin-folders.php:104
+msgid "Unable to move folder into itself"
+msgstr "Složku nelze přesunout do sebe"
+
+#: modules/premium/admin-content.php:1197 modules/premium/admin-folders.php:121
+msgid "Unable to move folder"
+msgstr "Složku nelze přesunout"
+
+#: modules/premium/admin-content.php:1232 modules/premium/admin-folders.php:156
+msgid "Folder moved"
+msgstr "Složka byla přesunuta"
+
+#: modules/premium/admin-content.php:1254 modules/premium/admin-folders.php:70
+msgid "No content to move"
+msgstr "Žádný obsah k přesunutí"
+
+#: modules/premium/admin-content.php:1269 modules/premium/admin-folders.php:85
+msgid "Content moved"
+msgstr "Obsah přesunut"
+
+#: modules/premium/admin-content.php:1290 modules/premium/admin-folders.php:221
+msgid "No folder to delete"
+msgstr "Žádná složka k odstranění"
+
+#: modules/premium/admin-content.php:1300 modules/premium/admin-folders.php:231
+msgid "Unable to delete the folder"
+msgstr "Složku nelze odstranit"
+
+#: modules/premium/admin-content.php:1331 modules/premium/admin-folders.php:262
+msgid "Folder deleted"
+msgstr "Složka smazána"
+
+#: modules/premium/admin-content.php:1505
+msgid "Unable to update item"
+msgstr "Položku nelze aktualizovat"
+
+#: modules/premium/admin-content.php:1546
+msgid "Item updated"
+msgstr "Položka byla aktualizována"
+
+#: modules/premium/admin-content.php:1595
+msgid "Items updated"
+msgstr "Položky aktualizovány"
+
+#: modules/premium/admin-content.php:2011
+msgid "Update Tags and Categories"
+msgstr "Aktualizujte značky a kategorie"
+
+#: modules/premium/admin-content.php:2018
+#: modules/premium/admin-content.php:2431
+#: modules/premium/admin-content.php:2435
+#: modules/premium/admin-content.php:2819
+#: modules/premium/admin-content.php:2822
+msgid "Categories"
+msgstr "Kategorie"
+
+#: modules/premium/admin-content.php:2019
+#: modules/premium/admin-content.php:2436
+#: modules/premium/admin-content.php:2823
+msgid "Search categories..."
+msgstr "Hledat kategorie..."
+
+#: modules/premium/admin-content.php:2024
+msgid "Keep existing categories"
+msgstr "Ponechat stávající kategorie"
+
+#: modules/premium/admin-content.php:2033
+#: modules/premium/admin-content.php:2442
+#: modules/premium/admin-content.php:2446
+#: modules/premium/admin-content.php:2830
+#: modules/premium/admin-content.php:2833
+msgid "Tags"
+msgstr "Značky"
+
+#: modules/premium/admin-content.php:2034
+#: modules/premium/admin-content.php:2447
+#: modules/premium/admin-content.php:2834
+msgid "Search tags..."
+msgstr "Hledat značky..."
+
+#: modules/premium/admin-content.php:2039
+msgid "Keep existing tags"
+msgstr "Ponechat stávající značky"
+
+#: modules/premium/admin-content.php:2047
+#: modules/premium/admin-content.php:2456
+#: modules/premium/admin-content.php:2706 modules/premium/admin-folders.php:905
+msgid "Update"
+msgstr "Aktualizace"
+
+#: modules/premium/admin-content.php:2067
+#: modules/premium/admin-content.php:3317
+msgid "Batch Rename"
+msgstr "Přejmenování dávky (batch)"
+
+#: modules/premium/admin-content.php:2077
+msgid "Attribute to rename"
+msgstr "Atribut k přejmenování"
+
+#: modules/premium/admin-content.php:2082
+#: modules/premium/admin-content.php:2624
+#: modules/premium/admin-content.php:3039 modules/premium/admin-folders.php:823
+#: modules/premium/admin-overview.php:147
+#: modules/premium/admin-overview.php:173
+msgid "Name"
+msgstr "Jméno"
+
+#: modules/premium/admin-content.php:2083
+msgid "Meta Key"
+msgstr "Meta klíč"
+
+#: modules/premium/admin-content.php:2084
+msgid "Alt Tag (Attachments only)"
+msgstr "Alternativní značka (pouze přílohy)"
+
+#: modules/premium/admin-content.php:2089
+msgid "Meta Key Name"
+msgstr "Název meta key"
+
+#: modules/premium/admin-content.php:2100
+msgid "Filename Structure"
+msgstr "Struktura názvu souboru"
+
+#: modules/premium/admin-content.php:2105
+msgid "Rename Item"
+msgstr "Přejmenovat položku"
+
+#: modules/premium/admin-content.php:2113
+msgid "Add"
+msgstr "Přidat"
+
+#: modules/premium/admin-content.php:2137
+msgid "New Text"
+msgstr "Nový text"
+
+#: modules/premium/admin-content.php:2139
+msgid "Date Format"
+msgstr "Datový formát"
+
+#: modules/premium/admin-content.php:2141
+msgid "Start Number"
+msgstr "Počáteční číslo"
+
+#: modules/premium/admin-content.php:2143
+msgid "Meta key Name"
+msgstr "Název meta klíče"
+
+#: modules/premium/admin-content.php:2145
+msgid "Find"
+msgstr "Najít"
+
+#: modules/premium/admin-content.php:2149
+msgid "Replace"
+msgstr "Najít a nahradit"
+
+#: modules/premium/admin-content.php:2173
+#: modules/premium/admin-content.php:2191
+msgid "Preview"
+msgstr "Náhled"
+
+#: modules/premium/admin-content.php:2176
+msgid "Current"
+msgstr "Aktuální"
+
+#: modules/premium/admin-content.php:2177
+msgid "New"
+msgstr "Nový"
+
+#: modules/premium/admin-content.php:2192
+msgid "Rename"
+msgstr "Přejmenovat"
+
+#: modules/premium/admin-content.php:2219
+#: modules/premium/admin-content.php:2721 modules/premium/admin-folders.php:920
+#: modules/premium/admin-overview.php:581
+msgid "All"
+msgstr "Všechno"
+
+#: modules/premium/admin-content.php:2258
+msgid "Upload"
+msgstr "Nahrát"
+
+#: modules/premium/admin-content.php:2305
+msgid "Back to content"
+msgstr "Zpět na obsah"
+
+#: modules/premium/admin-content.php:2321
+msgid "Details"
+msgstr "Detaily"
+
+#: modules/premium/admin-content.php:2325
+#: modules/premium/admin-content.php:3047
+msgid "Author"
+msgstr "Autor"
+
+#: modules/premium/admin-content.php:2329
+msgid "Created On"
+msgstr "Vytvořeno dne"
+
+#: modules/premium/admin-content.php:2333
+msgid "Last modified on"
+msgstr "Naposledy upraveno dne"
+
+#: modules/premium/admin-content.php:2347
+msgid "Dimensions"
+msgstr "Dimensions"
+
+#: modules/premium/admin-content.php:2352
+msgid "File Size"
+msgstr "Velikost souboru"
+
+#: modules/premium/admin-content.php:2357
+msgid "File Name"
+msgstr "Název souboru"
+
+#: modules/premium/admin-content.php:2371
+#: modules/premium/admin-content.php:2372
+msgid "Title"
+msgstr "Titul"
+
+#: modules/premium/admin-content.php:2378
+msgid "Alt Text"
+msgstr "Alternativní text"
+
+#: modules/premium/admin-content.php:2379
+msgid "Alt"
+msgstr "Alt"
+
+#: modules/premium/admin-content.php:2383
+#: modules/premium/admin-content.php:2384
+msgid "Caption"
+msgstr "Titulek"
+
+#: modules/premium/admin-content.php:2388
+#: modules/premium/admin-content.php:2389
+msgid "Description"
+msgstr "Popis"
+
+#: modules/premium/admin-content.php:2399
+msgid "Meta Data"
+msgstr "Meta data"
+
+#: modules/premium/admin-content.php:2419
+#: modules/premium/admin-content.php:2424
+#: modules/premium/admin-content.php:3055
+#: modules/premium/admin-woocommerce.php:627
+msgid "Status"
+msgstr "Status"
+
+#: modules/premium/admin-content.php:2425
+msgid "Search status..."
+msgstr "Stav hledání ..."
+
+#: modules/premium/admin-content.php:2455
+#: modules/premium/admin-content.php:3250
+msgid "Delete"
+msgstr "Vymazat"
+
+#: modules/premium/admin-content.php:2469
+msgid "Edit Image"
+msgstr "Upravit obrázek"
+
+#: modules/premium/admin-content.php:2521
+msgid "Filters"
+msgstr "Filtry"
+
+#: modules/premium/admin-content.php:2533
+msgid "List Mode"
+msgstr "Režim seznamu"
+
+#: modules/premium/admin-content.php:2540
+msgid "Grid Mode"
+msgstr "Režim mřížky"
+
+#: modules/premium/admin-content.php:2550
+msgid "Items Per Page"
+msgstr "Položek na stránce"
+
+#: modules/premium/admin-content.php:2560
+msgid "Columns"
+msgstr "Sloupce"
+
+#: modules/premium/admin-content.php:2571
+msgid "Search..."
+msgstr "Vyhledávání..."
+
+#: modules/premium/admin-content.php:2581
+msgid "of"
+msgstr "z"
+
+#: modules/premium/admin-content.php:2584
+msgid "items"
+msgstr "položky"
+
+#: modules/premium/admin-content.php:2609 modules/premium/admin-folders.php:654
+#: modules/premium/admin-folders.php:808
+msgid "New Folder"
+msgstr "Nová složka"
+
+#: modules/premium/admin-content.php:2615 modules/premium/admin-folders.php:814
+msgid "Delete Folder"
+msgstr "Odstranit složku"
+
+#: modules/premium/admin-content.php:2623
+#: modules/premium/admin-content.php:2669
+#: modules/premium/admin-content.php:2670 modules/premium/admin-folders.php:822
+#: modules/premium/admin-folders.php:868 modules/premium/admin-folders.php:869
+msgid "Folder Name"
+msgstr "Název složky"
+
+#: modules/premium/admin-content.php:2628
+#: modules/premium/admin-content.php:2674 modules/premium/admin-folders.php:827
+#: modules/premium/admin-folders.php:873
+msgid "Folder Colour"
+msgstr "Barva složky"
+
+#: modules/premium/admin-content.php:2644
+#: modules/premium/admin-content.php:2690 modules/premium/admin-folders.php:843
+#: modules/premium/admin-folders.php:889
+msgid "Custom"
+msgstr "Vlastní"
+
+#: modules/premium/admin-content.php:2650
+#: modules/premium/admin-content.php:2696 modules/premium/admin-folders.php:849
+#: modules/premium/admin-folders.php:895
+msgid "Custom (hex)"
+msgstr "Vlastní (hex)"
+
+#: modules/premium/admin-content.php:2732 modules/premium/admin-folders.php:931
+msgid "No folder"
+msgstr "Žádná složka"
+
+#: modules/premium/admin-content.php:2764
+#: modules/premium/admin-content.php:2767
+msgid "Post Types"
+msgstr "Druhy příspěvků"
+
+#: modules/premium/admin-content.php:2768
+msgid "Search Post Types..."
+msgstr "Hledat typy příspěvků ..."
+
+#: modules/premium/admin-content.php:2775
+#: modules/premium/admin-content.php:2778
+msgid "Post Status"
+msgstr "Post status"
+
+#: modules/premium/admin-content.php:2779
+msgid "Search Post Statuses..."
+msgstr "Hledat stav příspěvků..."
+
+#: modules/premium/admin-content.php:2792
+msgid "Posted On"
+msgstr "Vloženo na"
+
+#: modules/premium/admin-content.php:2793
+msgid "Posted After"
+msgstr "Publikováno po"
+
+#: modules/premium/admin-content.php:2794
+msgid "Posted Before"
+msgstr "Zveřejněno dříve"
+
+#: modules/premium/admin-content.php:2808
+#: modules/premium/admin-content.php:2811
+msgid "Media Types"
+msgstr "Druhy médií"
+
+#: modules/premium/admin-content.php:2812
+msgid "Search Media Types..."
+msgstr "Hledat typy médií ..."
+
+#: modules/premium/admin-content.php:2838
+msgid "Clear Filters"
+msgstr "Vymazat filtry"
+
+#: modules/premium/admin-content.php:2839
+msgid "Save as view"
+msgstr "Uložit jako pohled"
+
+#: modules/premium/admin-content.php:2886
+msgid "Posted"
+msgstr "Zveřejněno"
+
+#: modules/premium/admin-content.php:3043
+#: modules/premium/admin-overview.php:176
+msgid "Type"
+msgstr "Typ"
+
+#: modules/premium/admin-content.php:3051
+msgid "Date"
+msgstr "Datum"
+
+#: modules/premium/admin-content.php:3145
+#: modules/premium/admin-content.php:3232
+msgid "Quick Edit"
+msgstr "Rychlé úpravy"
+
+#: modules/premium/admin-content.php:3151
+msgid "Duplicate"
+msgstr "Duplikát"
+
+#: modules/premium/admin-content.php:3162
+msgid "Delete Item"
+msgstr "Odstranit položku"
+
+#: modules/premium/admin-content.php:3271
+msgid "Load More"
+msgstr "Načíst další"
+
+#: modules/premium/admin-content.php:3280
+msgid "No content found"
+msgstr "Nebyl nalezen žádný obsah"
+
+#: modules/premium/admin-content.php:3305
+msgid "items selected"
+msgstr "vybrané položky"
+
+#: modules/premium/admin-content.php:3323
+msgid "Categories & Tags"
+msgstr "Kategorie a značky"
+
+#: modules/premium/admin-content.php:3329
+msgid "Delete selected"
+msgstr "Smazat vybrané"
+
+#: modules/premium/admin-content.php:3340
+msgid "Clear Selection"
+msgstr "Vymazat výběr"
+
+#: modules/premium/admin-content.php:3370
+msgid "Create New View"
+msgstr "Vytvořit nový pohled"
+
+#: modules/premium/admin-content.php:3377
+msgid "View name"
+msgstr "Zobrazit jméno pohledu"
+
+#: modules/premium/admin-content.php:3380
+msgid "View Name"
+msgstr "Zobrazit jméno Pohledu"
+
+#: modules/premium/admin-folders.php:527 modules/premium/admin-folders.php:705
+msgid "Folders"
+msgstr "Složky"
+
+#: modules/premium/admin-folders.php:529
+msgid "Creates the folder system for the content page and media page / modals."
+msgstr "Vytvoří systém složek pro stránku obsahu a stránku médií / modály."
+
+#: modules/premium/admin-folders.php:552
+msgid "Folders Disabled for"
+msgstr "Složky zakázány pro"
+
+#: modules/premium/admin-folders.php:553
+msgid "Folders will be disabled for any users or roles you select"
+msgstr ""
+"Složky budou deaktivovány pro všechny uživatele nebo role, které vyberete"
+
+#: modules/premium/admin-folders.php:653
+msgid "Add New Folder"
+msgstr "Přidat novou složku"
+
+#: modules/premium/admin-folders.php:655
+msgid "Edit Folder"
+msgstr "Upravit složku"
+
+#: modules/premium/admin-folders.php:656
+msgid "View Folder"
+msgstr "Zobrazit složku"
+
+#: modules/premium/admin-folders.php:657
+msgid "All Folders"
+msgstr "Všechny složky"
+
+#: modules/premium/admin-folders.php:658
+msgid "Search Folders"
+msgstr "Hledat složky"
+
+#: modules/premium/admin-folders.php:659
+msgid "No Folders found."
+msgstr "Nebyly nalezeny žádné složky."
+
+#: modules/premium/admin-folders.php:660
+msgid "No Folders found in Trash."
+msgstr "V koši nebyly nalezeny žádné složky."
+
+#: modules/premium/admin-folders.php:664 modules/premium/admin-pages.php:269
+msgid "Description."
+msgstr "Popis."
+
+#: modules/premium/admin-menu-editor.php:105
+#: modules/premium/admin-menu-editor.php:284
+msgid "Menu Editor"
+msgstr "Editor nabídek"
+
+#: modules/premium/admin-menu-editor.php:107
+msgid ""
+"Creates the menu editor and allows for rearanging, renaming and removal of "
+"menu items."
+msgstr ""
+"Vytvoří editor nabídky a umožní přeuspořádání, přejmenování a odebrání "
+"položek nabídky."
+
+#: modules/premium/admin-menu-editor.php:127
+msgid "Menu Editor Disabled for"
+msgstr "Editor nabídek deaktivován pro"
+
+#: modules/premium/admin-menu-editor.php:128
+msgid ""
+"Admin 2020 menu editor will be disabled for any users or roles you select"
+msgstr ""
+"Editor nabídek Správce 2020 bude deaktivován pro všechny uživatele nebo "
+"role, které vyberete"
+
+#: modules/premium/admin-menu-editor.php:235
+msgid "Menu Editor (Admin 2020)"
+msgstr "Editor nabídek (správce 2020)"
+
+#: modules/premium/admin-menu-editor.php:255
+msgid ""
+"Edit each menu item's name, link, icon and visibility. Drag and drop to "
+"rearange the menu. Changes will take effect after page refresh."
+msgstr ""
+"Upravte název, odkaz, ikonu a viditelnost každé položky nabídky. Přetažením "
+"změníte nabídku. Změny se projeví po obnovení stránky."
+
+#: modules/premium/admin-menu-editor.php:259
+msgid ""
+"If you have admin 2020 menu component disabled, icons and label dividers "
+"won't change."
+msgstr ""
+"Pokud máte zakázanou součást nabídky admin 2020, ikony a oddělovače štítků "
+"se nezmění."
+
+#: modules/premium/admin-menu-editor.php:294
+msgid "Export Menu"
+msgstr "Exportovat Menu"
+
+#: modules/premium/admin-menu-editor.php:301
+msgid "Imports Admin 2020 menu from JSON"
+msgstr "Importuje nabídku Správce 2020 z JSON"
+
+#: modules/premium/admin-menu-editor.php:301
+msgid "Import Menu"
+msgstr "Importovat Menu"
+
+#: modules/premium/admin-menu-editor.php:306
+msgid "Reset Menu"
+msgstr "Nabídka Reset"
+
+#: modules/premium/admin-menu-editor.php:313
+msgid ""
+"Are you sure you want to reset your menu back to default? There is no undo"
+msgstr "Opravdu chcete obnovit výchozí nastavení nabídky? Nelze vrátit zpět"
+
+#: modules/premium/admin-menu-editor.php:393
+msgid "Separator"
+msgstr "Oddělovač"
+
+#: modules/premium/admin-menu-editor.php:401
+#: modules/premium/admin-menu-editor.php:527
+#: modules/premium/admin-menu-editor.php:660
+msgid "Rename as"
+msgstr "Přejmenovat jako"
+
+#: modules/premium/admin-menu-editor.php:402
+#: modules/premium/admin-menu-editor.php:528
+#: modules/premium/admin-menu-editor.php:661
+msgid "New name..."
+msgstr "Nové jméno..."
+
+#: modules/premium/admin-menu-editor.php:407
+#: modules/premium/admin-menu-editor.php:533
+#: modules/premium/admin-menu-editor.php:666
+msgid "Hidden For Roles"
+msgstr "Skryté pro role"
+
+#: modules/premium/admin-menu-editor.php:516
+msgid "Sub Menu"
+msgstr "Dílčí nabídka"
+
+#: modules/premium/admin-menu-editor.php:564
+#: modules/premium/admin-menu-editor.php:699
+msgid "Change Link"
+msgstr "Změnit odkaz"
+
+#: modules/premium/admin-menu-editor.php:565
+#: modules/premium/admin-menu-editor.php:700
+msgid "New Link..."
+msgstr "Nový odkaz ..."
+
+#: modules/premium/admin-menu-editor.php:569
+msgid "Set custom icon"
+msgstr "Nastavit vlastní ikonu"
+
+#: modules/premium/admin-menu-editor.php:571
+msgid "Choose Icon"
+msgstr "Zvolte ikonu"
+
+#: modules/premium/admin-menu-editor.php:592
+msgid "No sub menu items"
+msgstr "Žádné položky podnabídky"
+
+#: modules/premium/admin-menu-editor.php:727
+msgid "Icons"
+msgstr "Ikony"
+
+#: modules/premium/admin-menu-editor.php:735
+msgid "Use Default"
+msgstr "Použít výchozí"
+
+#: modules/premium/admin-menu-editor.php:916
+msgid "Select"
+msgstr "Vybrat"
+
+#: modules/premium/admin-menu-editor.php:1382
+msgid "Settings saved"
+msgstr "Nastavení uloženo"
+
+#: modules/premium/admin-menu-editor.php:1413
+msgid "Settings reset"
+msgstr "Nastavení bylo resetováno"
+
+#: modules/premium/admin-menu-editor.php:1463
+msgid "Menu Imported"
+msgstr "Nabídka importována"
+
+#: modules/premium/admin-overview-cards.php:25
+msgid "Total Posts"
+msgstr "Celkem příspěvků"
+
+#: modules/premium/admin-overview-cards.php:26
+msgid "Total Pages"
+msgstr "Celkový stránek"
+
+#: modules/premium/admin-overview-cards.php:27
+msgid "Total Comments"
+msgstr "Celkový počet komentářů"
+
+#: modules/premium/admin-overview-cards.php:28
+msgid "Recent Comments"
+msgstr "Nedávné Komentáře"
+
+#: modules/premium/admin-overview-cards.php:29
+msgid "System Info"
+msgstr "Systémová informace"
+
+#: modules/premium/admin-overview-cards.php:30
+msgid "Recently Published"
+msgstr "Nedávno publikováno"
+
+#: modules/premium/admin-overview-cards.php:91
+#: modules/premium/admin-overview-cards.php:150
+#: modules/premium/admin-overview-cards.php:207
+msgid "In the last "
+msgstr "V poslední "
+
+#: modules/premium/admin-overview-cards.php:261
+msgid "No comments for date range"
+msgstr "Žádné komentáře k časovému období"
+
+#: modules/premium/admin-overview-cards.php:278
+#: modules/premium/admin-overview-cards.php:428
+msgid "ago"
+msgstr "před"
+
+#: modules/premium/admin-overview-cards.php:319
+msgid "on"
+msgstr "na"
+
+#: modules/premium/admin-overview-cards.php:352
+msgid "WordPress version"
+msgstr "Verze WordPress"
+
+#: modules/premium/admin-overview-cards.php:356
+msgid "PHP version"
+msgstr "Verze PHP"
+
+#: modules/premium/admin-overview-cards.php:416
+msgid "No posts for date range"
+msgstr "Žádné příspěvky pro časové období"
+
+#: modules/premium/admin-overview-cards.php:435
+msgid "by"
+msgstr "podle"
+
+#: modules/premium/admin-overview.php:71
+msgid ""
+"Creates the overview page. If this is disabled, you will not be able to see "
+"analytics cards or woocommerce cards."
+msgstr ""
+"Vytvoří stránku s přehledem. Pokud je tato možnost deaktivována, nebudete "
+"moci vidět analytické karty ani karty woocommerce."
+
+#: modules/premium/admin-overview.php:99
+msgid "Overview Disabled for"
+msgstr "Přehled Zakázán pro"
+
+#: modules/premium/admin-overview.php:100
+msgid ""
+"Admin 2020 overview page will be disabled for any users or roles you select"
+msgstr ""
+"Stránka Přehled administrátora 2020 bude deaktivována pro všechny uživatele "
+"nebo role, které vyberete"
+
+#: modules/premium/admin-overview.php:137
+msgid "Add videos to the overview page"
+msgstr "Přidejte videa na stránku s přehledem"
+
+#: modules/premium/admin-overview.php:138
+msgid ""
+"Here you can add video links that will then load up as video cards on the "
+"overviewpage. Choosing a category name will also give it a custom category "
+"on the overview page. "
+msgstr ""
+"Zde můžete přidat odkazy na video, které se poté načtou jako grafické karty "
+"na přehledovou stránku. Volbou názvu kategorie získáte také vlastní "
+"kategorii na stránce přehledu "
+
+#: modules/premium/admin-overview.php:150
+msgid "Url"
+msgstr "Url"
+
+#: modules/premium/admin-overview.php:153
+#: modules/premium/admin-overview.php:175
+msgid "Category"
+msgstr "Kategorie"
+
+#: modules/premium/admin-overview.php:157
+msgid "Video URL Type"
+msgstr "Typ URL videa"
+
+#: modules/premium/admin-overview.php:159
+msgid "Youtube embed"
+msgstr "Youtube embed"
+
+#: modules/premium/admin-overview.php:160
+msgid "Vimeo embed"
+msgstr "Vimeo embed"
+
+#: modules/premium/admin-overview.php:164
+msgid "Add Video"
+msgstr "Přidat video"
+
+#: modules/premium/admin-overview.php:174
+msgid "URL"
+msgstr "URL"
+
+#: modules/premium/admin-overview.php:306
+#: modules/premium/admin-overview.php:779
+msgid "Make Primary"
+msgstr "Nastavit jako primární"
+
+#: modules/premium/admin-overview.php:311
+#: modules/premium/admin-overview.php:784
+msgid "Make Default"
+msgstr "Nastavit jako výchozí"
+
+#: modules/premium/admin-overview.php:327
+#: modules/premium/admin-overview.php:800
+msgid "Hide"
+msgstr "Skrýt"
+
+#: modules/premium/admin-overview.php:383
+msgid "No Card supplied to save"
+msgstr "K uložení není dodána žádná karta"
+
+#: modules/premium/admin-overview.php:425
+#: modules/premium/admin-overview.php:487
+msgid "Card options saved"
+msgstr "Možnosti karty byly uloženy"
+
+#: modules/premium/admin-overview.php:428
+#: modules/premium/admin-overview.php:490
+msgid "Unable to save card preferences"
+msgstr "Předvolby karty nelze uložit"
+
+#: modules/premium/admin-overview.php:450
+msgid "No Card supplied to hide"
+msgstr "Žádná karta není dodávána ke skrytí"
+
+#: modules/premium/admin-overview.php:650
+msgid "Hello"
+msgstr "Ahoj"
+
+#: modules/premium/admin-overview.php:672
+msgid "Active Cards"
+msgstr "Aktivní karty"
+
+#: modules/premium/admin-pages.php:100
+msgid "Admin Pages"
+msgstr "Správcovské stránky"
+
+#: modules/premium/admin-pages.php:102
+msgid ""
+"Creates the admin pages editor, allowing you to create new top level admin "
+"pages and their content"
+msgstr ""
+"Vytvoří editor stránek pro správu, který vám umožní vytvářet nové stránky "
+"pro správu nejvyšší úrovně a jejich obsah"
+
+#: modules/premium/admin-pages.php:126
+msgid "Admin Pages Disabled for"
+msgstr "Admin Pages Disabled for"
+
+#: modules/premium/admin-pages.php:127
+msgid ""
+"Admin 2020 admin pages will be disabled for any users or roles you select"
+msgstr ""
+"Stránky administrátora 2020 budou deaktivovány pro všechny uživatele nebo "
+"role, které vyberete"
+
+#: modules/premium/admin-pages.php:141
+#: modules/premium/admin-woocommerce.php:116
+msgid "Super Admin"
+msgstr "Super Admin"
+
+#: modules/premium/admin-pages.php:258
+msgid "Add New Admin Page"
+msgstr "Přidat novou stránku pro správu"
+
+#: modules/premium/admin-pages.php:259
+msgid "New Admin Page"
+msgstr "Nová stránka pro správu"
+
+#: modules/premium/admin-pages.php:260
+msgid "Edit Admin Page"
+msgstr "Upravit stránku správce"
+
+#: modules/premium/admin-pages.php:261
+msgid "View Admin Page"
+msgstr "Zobrazit stránku správce"
+
+#: modules/premium/admin-pages.php:262
+msgid "All Admin Pages"
+msgstr "Všechny stránky správce"
+
+#: modules/premium/admin-pages.php:263
+msgid "Search Admin Pages"
+msgstr "Prohledat stránky správce"
+
+#: modules/premium/admin-pages.php:264
+msgid "No Admin Pages found."
+msgstr "Nebyly nalezeny žádné stránky pro správu."
+
+#: modules/premium/admin-pages.php:265
+msgid "No Admin Pages found in Trash."
+msgstr "V koši nebyly nalezeny žádné stránky správce."
+
+#: modules/premium/admin-woocommerce.php:73
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: modules/premium/admin-woocommerce.php:75
+msgid "Creates the woocommerce cards for the overview page."
+msgstr "Vytvoří karty woocommerce pro stránku s přehledem."
+
+#: modules/premium/admin-woocommerce.php:101
+msgid "WooCommerce Cards"
+msgstr "Karty WooCommerce"
+
+#: modules/premium/admin-woocommerce.php:102
+msgid "WooCommerce cards will be disabled for any users or roles you select"
+msgstr ""
+"Karty WooCommerce budou deaktivovány pro všechny uživatele nebo role, které "
+"vyberete"
+
+#: modules/premium/admin-woocommerce.php:187
+#: modules/premium/admin-woocommerce.php:312
+msgid "Total Sales"
+msgstr "Celkový prodej"
+
+#: modules/premium/admin-woocommerce.php:188
+#: modules/premium/admin-woocommerce.php:431
+msgid "Total Orders"
+msgstr "Celkový počet objednávek"
+
+#: modules/premium/admin-woocommerce.php:189
+msgid "Average Order Value"
+msgstr "Průměrná hodnota objednávky"
+
+#: modules/premium/admin-woocommerce.php:190
+msgid "Popular Products"
+msgstr "Populární produkty"
+
+#: modules/premium/admin-woocommerce.php:191
+msgid "Recent Orders"
+msgstr "Nejnovější objednávky"
+
+#: modules/premium/admin-woocommerce.php:329
+#: modules/premium/admin-woocommerce.php:448
+#: modules/premium/admin-woocommerce.php:564
+#: modules/premium/admin-woocommerce.php:619
+#: modules/premium/admin-woocommerce.php:740
+msgid "No sales data available for dates"
+msgstr "Pro data nejsou k dispozici žádné údaje o prodeji"
+
+#: modules/premium/admin-woocommerce.php:337
+#: modules/premium/admin-woocommerce.php:457
+msgid "In the last"
+msgstr "V poslední"
+
+#: modules/premium/admin-woocommerce.php:573
+msgid "For given date period"
+msgstr "Pro dané období"
+
+#: modules/premium/admin-woocommerce.php:625
+msgid "Order"
+msgstr "Objednat"
+
+#: modules/premium/admin-woocommerce.php:626
+msgid "Customer"
+msgstr "Zákazník"
+
+#: modules/premium/admin-woocommerce.php:628
+#: modules/premium/admin-woocommerce.php:703
+msgid "Value"
+msgstr "Hodnota"
+
+#: modules/premium/admin-woocommerce.php:649
+msgid "View Order"
+msgstr "Zobrazit objednávku"
+
+#: modules/premium/admin-woocommerce.php:652
+msgid "View Customer"
+msgstr "Zobrazit zákazníka"
+
+#: modules/premium/admin-woocommerce.php:701
+msgid "Product"
+msgstr "Produkt"
+
+#: modules/premium/admin-woocommerce.php:702
+msgid "Sold"
+msgstr "Prodáno"

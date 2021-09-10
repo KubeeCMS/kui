@@ -135,6 +135,55 @@ function a2020_hide_single_card(functionname) {
   });
 }
 
+///SAVE ANALYTIC ACCESS
+function admin2020_set_google_data(view, code, module) {
+  jQuery.ajax({
+    url: admin2020_admin_overview_ajax.ajax_url,
+    type: "post",
+    data: {
+      action: "a2020_save_analytics",
+      security: admin2020_admin_overview_ajax.security,
+      view: view,
+      code: code,
+      module: module,
+    },
+    success: function (response) {
+      if (response) {
+        data = JSON.parse(response);
+        if (data.error) {
+          UIkit.notification(data.error_message, "danger");
+        } else {
+          UIkit.notification(data.message, "success");
+          admin2020_refresh_view();
+        }
+      }
+    },
+  });
+}
+
+///REMOVE ANALYTIC ACCESS
+function a2020_remove_analytics() {
+  jQuery.ajax({
+    url: admin2020_admin_overview_ajax.ajax_url,
+    type: "post",
+    data: {
+      action: "a2020_remove_analytics",
+      security: admin2020_admin_overview_ajax.security,
+    },
+    success: function (response) {
+      if (response) {
+        data = JSON.parse(response);
+        if (data.error) {
+          UIkit.notification(data.error_message, "danger");
+        } else {
+          UIkit.notification(data.message, "success");
+          admin2020_refresh_view();
+        }
+      }
+    },
+  });
+}
+
 ///CREATE CHART
 function a2020_new_chart(target, type, labels, chart_data) {
   senddata = [];

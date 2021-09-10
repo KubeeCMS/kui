@@ -75,6 +75,21 @@ table.widefat tfoot td a {
   padding-left: 0;
   color: var(--a2020-primary);
 }
+#wpwrap .wp-list-table tbody .column-categories,
+#wpwrap .wp-list-table tbody .column-tags,
+table.widefat tbody .column-categories,
+table.widefat tbody .column-tags {
+  color: rgba(0, 0, 0, 0);
+}
+#wpwrap .wp-list-table tbody .column-categories a,
+#wpwrap .wp-list-table tbody .column-tags a,
+table.widefat tbody .column-categories a,
+table.widefat tbody .column-tags a {
+  background: var(--a2020-primary-wash);
+  padding: 3px;
+  color: #555;
+  border-radius: 4px;
+}
 #wpwrap .wp-list-table tr,
 table.widefat tr {
   background: none;
@@ -200,6 +215,14 @@ table.widefat .row-actions .trash a {
   background: none;
 }
 
+body.a2020_night_mode tbody .column-categories,
+body.a2020_night_mode tbody .column-tags {
+  color: rgba(0, 0, 0, 0);
+}
+body.a2020_night_mode tbody .column-categories a,
+body.a2020_night_mode tbody .column-tags a {
+  color: #ababab !important;
+}
 body.a2020_night_mode .tablenav .one-page .displaying-num {
   background-color: rgba(56, 56, 56, 0.36);
   border: 1px solid rgba(255, 255, 255, 0.2);

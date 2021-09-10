@@ -73,4 +73,8 @@
   color: #fff;
 }
 
+#seopress-tabs .nav-tab-wrapper {
+  min-width: 1px;
+}
+
 /*# sourceMappingURL=plugin_wp-seopress.css.map */

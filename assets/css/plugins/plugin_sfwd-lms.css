@@ -8,6 +8,19 @@
   display: block !important;
 }
 
+.a2020_admin_bar.learndash-screen .edit-post-layout .editor-post-publish-panel {
+  top: 176px !important;
+}
+
+.a2020_admin_bar.learndash-screen.ld-header-has-tabs .edit-post-layout {
+  padding-top: 177px;
+}
+
+.a2020_admin_theme .ld-node-header .row-actions.-right {
+  opacity: 1 !important;
+  display: contents;
+}
+
 .a2020_admin_theme.a2020_night_mode .ld-bootcamp__widget {
   filter: invert(1) hue-rotate(180deg);
 }

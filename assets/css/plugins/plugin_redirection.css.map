@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["plugin_redirection.scss"],"names":[],"mappings":"AAIE;EACE;;AACA;EACE;;AAEF;EACE","file":"plugin_redirection.css"}
+{"version":3,"sourceRoot":"","sources":["plugin_redirection.scss","../variables.scss"],"names":[],"mappings":"AAIE;EACE;;AACA;EACE,OCCC;;ADCH;EACE","file":"plugin_redirection.css"}

@@ -111,10 +111,10 @@ class Admin_2020{
 		
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inlcudes/admin/class-utilities.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inlcudes/modules/admin-login.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inlcudes/admin/class-utilities.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inlcudes/admin/class-styles.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inlcudes/modules/admin-bar.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inlcudes/modules/admin-theme.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inlcudes/admin/class-settings.php';
 		
 		
 	}
@@ -140,6 +140,9 @@ class Admin_2020{
 		
 		$theme = new Admin_2020_module_admin_theme($this->version,$this->path,$front_utilities);
 		$theme->build_front();
+		
+		$settings = new Admin_2020_settings($this->version, $this->path, $front_utilities, $this->plugin_name);
+		$settings->start_front();
 		
 		if($front_utilities->is_premium()){
 			

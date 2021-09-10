@@ -4,16 +4,14 @@
   .select2-dropdown {
     background-color: $dark;
     border: 1px solid #aaa;
+    box-shadow: none;
   }
   .select2-close-mask {
     background-color: $dark;
   }
   .select2-container--default .select2-selection--single {
     background-color: $dark;
-    border: 1px solid #aaa;
-  }
-  .select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: #444;
+    border: 1px solid $inverse-global-border;
   }
   .select2-container--default .select2-selection--single .select2-selection__placeholder {
     color: #999;
@@ -54,7 +52,10 @@
     background-color: #eee;
   }
   .select2-container--default .select2-search--dropdown .select2-search__field {
-    border: 1px solid #aaa;
+    color: white;
+    margin: 5px;
+    width: calc(100% - 10px);
+    border: $inverse-global-border;
   }
 
   .select2-container--default .select2-results__option--disabled {
@@ -78,9 +79,6 @@
   }
   .select2-container--classic .select2-selection--single:focus {
     border: 1px solid $global-primary-background;
-  }
-  .select2-container--classic .select2-selection--single .select2-selection__rendered {
-    color: #444;
   }
   .select2-container--classic .select2-selection--single .select2-selection__placeholder {
     color: #999;
@@ -158,4 +156,18 @@
   .select2-container--default .select2-results__option[data-selected="true"] {
     background: $mid-dark;
   }
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #fff;
+    background: $light-dark;
+    &:hover {
+      color: $global-primary-background;
+    }
+  }
+}
+
+.a2020_admin_theme.wc-wp-version-gte-53 .select2-container.select2-container--focus .select2-selection--single,
+.a2020_admin_theme.wc-wp-version-gte-53 .select2-container.select2-container--open .select2-selection--multiple,
+.a2020_admin_theme.wc-wp-version-gte-53 .select2-container.select2-container--open .select2-selection--single {
+  border-color: $global-primary-background;
+  box-shadow: none;
 }

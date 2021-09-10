@@ -68,5 +68,11 @@ body.login {
   border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
+.a2020_night_mode #registerform,
+.a2020_night_mode #resetpassform {
+  background-color: rgba(56, 56, 56, 0.36);
+  border: none;
+  margin-top: 0;
+}
 
 /*# sourceMappingURL=admin-login.css.map */

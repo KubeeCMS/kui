@@ -43,6 +43,23 @@ body.a2020_night_mode {
   }
 }
 
+.a2020_admin_theme #wpbody-content {
+  padding-bottom: 0;
+}
+
+#wp-auth-check-wrap #wp-auth-check {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  max-height: none !important;
+  padding: 0 !important;
+}
+#wp-auth-check-wrap .wp-auth-check-close {
+  z-index: 1 !important;
+}
+#wp-auth-check-wrap #wp-auth-check-form {
+  padding-top: 20px;
+}
+
 @import "buttons.scss";
 @import "navigation.scss";
 @import "tables.scss";

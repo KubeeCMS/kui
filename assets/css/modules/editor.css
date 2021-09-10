@@ -62,7 +62,7 @@
 }
 
 .interface-interface-skeleton__body .components-notice {
-  background: #f8f8f8;
+  background: #f3f3f3;
   margin-bottom: 0 !important;
   box-shadow: none;
   border-radius: 0;
@@ -110,7 +110,7 @@
 }
 
 .wp-switch-editor {
-  background: #f8f8f8;
+  background: #f3f3f3;
   border-color: #e5e5e5;
 }
 

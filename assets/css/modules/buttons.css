@@ -72,8 +72,12 @@
   border: none;
 }
 
+.uk-button[disabled] {
+  cursor: not-allowed;
+}
+
 .media-frame-toolbar .media-toolbar {
-  background: #f8f8f8;
+  background: #f3f3f3;
 }
 
 .wp-core-ui .button.button-primary {
@@ -129,6 +133,12 @@ body.a2020_night_mode .button.action:hover, body.a2020_night_mode .button.action
   font-weight: normal;
   border: none;
 }
+body.a2020_night_mode .uk-button {
+  background: rgba(56, 56, 56, 0.36);
+}
+body.a2020_night_mode .uk-button:hover {
+  background: rgba(90, 90, 90, 0.36);
+}
 body.a2020_night_mode .button.disabled {
   background-color: rgba(56, 56, 56, 0.36) !important;
   color: #777 !important;
@@ -140,6 +150,13 @@ body.a2020_night_mode .media-frame-toolbar .media-toolbar {
 }
 body.a2020_night_mode .uk-button-primary:active, body.a2020_night_mode .uk-button-primary:focus {
   background: var(--a2020-primary-darker);
+}
+
+.uk-light .uk-button {
+  background: rgba(56, 56, 56, 0.36);
+}
+.uk-light .uk-button:hover {
+  background: rgba(90, 90, 90, 0.36);
 }
 
 /*# sourceMappingURL=buttons.css.map */

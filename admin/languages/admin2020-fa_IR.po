@@ -1,0 +1,2260 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2021-07-21 15:20+0100\n"
+"PO-Revision-Date: 2021-08-14 21:20+1000\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-Basepath: ../inlcudes\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"Last-Translator: \n"
+"Language: fa_IR\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-activation.php:131
+msgid "UiPress is not activated"
+msgstr "یوآی پرس فعال نمی شود"
+
+#: admin/class-activation.php:132
+msgid "Please add a valid licence to activate"
+msgstr "لطفاً یک مجوز معتبر برای فعال سازی اضافه کنید"
+
+#: admin/class-activation.php:135
+msgid "Enter your licence key"
+msgstr "کلید مجوز خود را وارد کنید"
+
+#: admin/class-activation.php:138
+msgid "Activate"
+msgstr "فعالسازی"
+
+#: admin/class-activation.php:161
+msgid "Supercharge your admin with Admin 2020 Pro"
+msgstr "محیط ادمین خود را با یوآی پرس سوپرشارژ کنید"
+
+#: admin/class-activation.php:162
+msgid "Unlock powerful features and speed up your workflow with Admin 2020 Pro"
+msgstr ""
+"با فعالسازی یوآی پرس پرو، ویژگیهای قدرتمند را باز کرده و به گردش کاری خود "
+"سرعت بخشید"
+
+#: admin/class-activation.php:165
+msgid "Upgrade"
+msgstr "ارتقا"
+
+#: admin/class-activation.php:166
+msgid "Dimiss"
+msgstr "رد کردن"
+
+#: admin/class-activation.php:192
+msgid "UiPress succesfully activated"
+msgstr "یوآی پرس با موفقیت فعال شد"
+
+#: admin/class-activation.php:218
+msgid "Unable to register admin 2020 at this time"
+msgstr "در حال حاضر امکان رجیستر وجود ندارد"
+
+#: admin/class-activation.php:246
+msgid "No licence key provided"
+msgstr "کلید مجوز ارائه نشده است"
+
+#: admin/class-settings.php:66
+msgid "General"
+msgstr "عمومی"
+
+#: admin/class-settings.php:68
+msgid "General settings for UIPress"
+msgstr "تنظیمات کلی یوآی پرس"
+
+#: admin/class-settings.php:99
+msgid "UIpress Licence"
+msgstr "لایسنس یوآی پرس"
+
+#: admin/class-settings.php:100
+msgid ""
+"UIPress is activated. If you want to remove the licence the click remove."
+msgstr ""
+"یوآی‌ پرس فعال شده است، اگر قصد دارید لایسنس رو بردارید، روی برداشتن کلیک "
+"کنید."
+
+#: admin/class-settings.php:108
+msgid "Global font"
+msgstr "فونت جهانی"
+
+#: admin/class-settings.php:109
+msgid "Choose your desired font from google fonts."
+msgstr "فونت مورد نظر خود را از فونت های گوگل انتخاب کنید."
+
+#: admin/class-settings.php:118
+msgid "Override Subsite Settings"
+msgstr "بازنویسی تنظیمات زیرسایت"
+
+#: admin/class-settings.php:119 admin/class-settings.php:1496
+msgid ""
+"If this is enabled then all the settings here will be applied to your "
+"subsites and they will not be able to be changed from a subsite."
+msgstr ""
+"اگر این فعال باشد ، تمام تنظیمات اینجا برای زیرمجموعه های شما اعمال می شود و "
+"نمی توانند از زیرمجموعه تغییر کنند."
+
+#: admin/class-settings.php:180 modules/premium/admin-menu-editor.php:486
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: admin/class-settings.php:183
+msgid "Upgrade to Pro"
+msgstr "ارتقا به نسخه حرفه ای"
+
+#: admin/class-settings.php:376
+msgid "Licence removed"
+msgstr "مجوز برداشته شد"
+
+#: admin/class-settings.php:407 modules/premium/admin-menu-editor.php:1343
+msgid "No options supplied to save"
+msgstr "هیچ گزینه ای برای ذخیره ارائه نشده است"
+
+#: admin/class-settings.php:435
+msgid "Settings saved. You may need to refresh for changes to take effect"
+msgstr ""
+"تنظیمات ذخیره شد. ممکن است برای اعمال تغییرات نیاز به ریفرش داشته باشید"
+
+#: admin/class-settings.php:439 admin/class-settings.php:506
+#: admin/class-settings.php:639 admin/class-settings.php:710
+#: modules/premium/admin-content.php:600 modules/premium/admin-content.php:676
+#: modules/premium/admin-content.php:754 modules/premium/admin-content.php:992
+#: modules/premium/admin-content.php:1147
+#: modules/premium/admin-content.php:1195 modules/premium/admin-folders.php:192
+#: modules/premium/admin-folders.php:309
+#: modules/premium/admin-menu-creator.php:286
+#: modules/premium/admin-menu-creator.php:315
+#: modules/premium/admin-menu-creator.php:357
+#: modules/premium/admin-menu-creator.php:415
+#: modules/premium/admin-menu-creator.php:474
+#: modules/premium/admin-menu-editor.php:1356
+#: modules/premium/admin-menu-editor.php:1464
+msgid "Something went wrong"
+msgstr "مشکلی پیش آمد"
+
+#: admin/class-settings.php:474 modules/premium/admin-menu-editor.php:1460
+msgid "Settings reset"
+msgstr "بازگردانی تنظیمات"
+
+#: admin/class-settings.php:587
+msgid "No video supplied to save"
+msgstr "هیچ ویدیویی برای ذخیره ارائه نشد"
+
+#: admin/class-settings.php:598
+msgid "Video name must be unique"
+msgstr "نام ویدئو باید منحصر به فرد باشد"
+
+#: admin/class-settings.php:635
+msgid "Video saved"
+msgstr "ویدیو ذخیره شد"
+
+#: admin/class-settings.php:663
+msgid "No video supplied to delete"
+msgstr "هیچ ویدئویی برای حذف ارائه نشده است"
+
+#: admin/class-settings.php:706
+msgid "Video deleted"
+msgstr "ویدیو حذف شد"
+
+#: admin/class-settings.php:930 admin/class-settings.php:1151
+msgid "module"
+msgstr "ماژول"
+
+#: admin/class-settings.php:950
+msgid "Active"
+msgstr "فعال"
+
+#: admin/class-settings.php:954
+msgid ""
+"UIPress licence is active. For support please send us a message on our "
+"website."
+msgstr "مجوز یوآی پرس فعال است. برای پشتیبانی لطفاً به وب سایت ما پیام دهید."
+
+#: admin/class-settings.php:966
+msgid "Not Active"
+msgstr "غیر فعال"
+
+#: admin/class-settings.php:970
+msgid "UIPress is not activated, please enter a valid licence key below."
+msgstr "یوآی پرس فعال نیست ، لطفاً یک کلید مجوز معتبر در زیر وارد کنید."
+
+#: admin/class-settings.php:1002 admin/class-settings.php:1192
+msgid "Image URL"
+msgstr "آدرس تصویر"
+
+#: admin/class-settings.php:1004 admin/class-settings.php:1194
+msgid "Choose Image"
+msgstr "انتخاب تصویر"
+
+#: admin/class-settings.php:1027
+msgid "Hex code"
+msgstr "کد Hex"
+
+#: admin/class-settings.php:1036 admin/class-settings.php:1225
+msgid "Choose users / roles"
+msgstr "کاربران / نقش ها را انتخاب کنید"
+
+#: admin/class-settings.php:1038 admin/class-settings.php:1227
+msgid "Search users and roles..."
+msgstr "جستجوی کاربران و نقش ها ..."
+
+#: admin/class-settings.php:1046 admin/class-settings.php:1235
+msgid "Choose posts and CPTs"
+msgstr "پست ها و CPT ها را انتخاب کنید"
+
+#: admin/class-settings.php:1048 admin/class-settings.php:1237
+msgid "Search posts and CPTs..."
+msgstr "جستجوی پست ها و CPT ها ..."
+
+#: admin/class-settings.php:1059 admin/class-settings.php:1248
+msgid "Remove licence"
+msgstr "حذف مجوز"
+
+#: admin/class-settings.php:1066 admin/class-settings.php:1255
+msgid "font"
+msgstr "فونت"
+
+#: admin/class-settings.php:1068 admin/class-settings.php:1257
+msgid "Search google fonts..."
+msgstr "جستجوی فونت های گوگل ..."
+
+#: admin/class-settings.php:1088 admin/class-settings.php:1277
+#: modules/premium/admin-content.php:348
+msgid "Text"
+msgstr "متن"
+
+#: admin/class-settings.php:1089 admin/class-settings.php:1278
+msgid "HTML"
+msgstr "HTML"
+
+#: admin/class-settings.php:1090 admin/class-settings.php:1279
+#: modules/premium/admin-content.php:2218
+#: modules/premium/admin-content.php:2236
+#: modules/premium/admin-menu-creator.php:1015
+msgid "Preview"
+msgstr "پیش نمایش"
+
+#: admin/class-settings.php:1096 admin/class-settings.php:1285
+msgid "Custom welcome message..."
+msgstr "پیام خوش آمد گویی سفارشی ..."
+
+#: admin/class-settings.php:1141
+msgid "Search results for"
+msgstr "نتایج جستجو برای"
+
+#: admin/class-settings.php:1338
+msgid "Version"
+msgstr "نسخه"
+
+#: admin/class-settings.php:1350
+msgid "Clear"
+msgstr "پاک کردن"
+
+#: admin/class-settings.php:1351
+msgid "Search Settings..."
+msgstr "جستجوی تنظیمات..."
+
+#: admin/class-settings.php:1355 admin/class-settings.php:1543
+#: modules/admin-menu.php:567 modules/admin-menu.php:743
+#: modules/premium/admin-content.php:3433
+#: modules/premium/admin-menu-creator.php:1248
+#: modules/premium/admin-menu-editor.php:258
+#: modules/premium/admin-overview.php:747
+msgid "Save"
+msgstr "ذخیره"
+
+#: admin/class-settings.php:1365
+msgid "Export Settings"
+msgstr "برون‌ریزی تنظیمات"
+
+#: admin/class-settings.php:1372
+msgid "Import Settings"
+msgstr "درون‌ریزی تنظیمات"
+
+#: admin/class-settings.php:1381 modules/premium/admin-menu-creator.php:1276
+msgid "Reset Settings"
+msgstr "بازگردانی تنظیمات"
+
+#: admin/class-settings.php:1409 admin/class-settings.php:1456
+msgid "Modules"
+msgstr "ماژول ها"
+
+#: admin/class-settings.php:1464
+msgid "Licence"
+msgstr "مجوز"
+
+#: admin/class-settings.php:1465
+msgid ""
+"Admin 2020 licence is active. To remove licence or change licence click "
+"remove."
+msgstr ""
+"یوآی‌ پرس فعال شده است، اگر قصد دارید لایسنس رو تغییر دهید یا بردارید، روی "
+"برداشتن کلیک کنی."
+
+#: admin/class-settings.php:1468 modules/premium/admin-content.php:2271
+msgid "Remove"
+msgstr "برداشتن"
+
+#: admin/class-settings.php:1495
+msgid "Override Subsite Settings?"
+msgstr "بازنویسی تنظیمات زیرسایت؟"
+
+#: admin/class-update.php:58
+msgid "Check for updates"
+msgstr "چک کردن بروزرسانی‌ها"
+
+#: admin/class-update.php:128
+msgid "Update available"
+msgstr "بروزرسانی موجود است"
+
+#: admin/class-update.php:134
+msgid "No Updates available"
+msgstr "هیچ به روزرسانی در دسترس نیست"
+
+#: admin/class-utilities.php:125
+msgid "No preferences supplied to save"
+msgstr "هیچ ترجیحی برای ذخیره ارائه نشده است"
+
+#: admin/class-utilities.php:145
+msgid "Preferences saved"
+msgstr "تنظیمات برگزیده ذخیره شد"
+
+#: admin/class-utilities.php:148
+msgid "Unable to save user preferences"
+msgstr "تنظیمات برگزیده کاربر ذخیره نمی شود"
+
+#: modules/admin-bar.php:176
+msgid "Admin Bar"
+msgstr "نوار مدیریت"
+
+#: modules/admin-bar.php:178
+msgid ""
+"Creates new admin bar, adds user off canvas menu and builds global search"
+msgstr ""
+"ایجاد نوار مدیریت جدید ، افزودن منوی کاربر روی بوم و ایجاد جستجوی جهانی"
+
+#: modules/admin-bar.php:197
+msgid "Admin Bar Disabled For"
+msgstr "نوار مدیریت غیرفعال برای"
+
+#: modules/admin-bar.php:198
+msgid ""
+"UiPress admin bar module will be disabled for any users or roles you select"
+msgstr ""
+"ماژول نوار مدیریت یوآی پرس برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال "
+"می شود"
+
+#: modules/admin-bar.php:205
+msgid "Logo Light Mode"
+msgstr "لوگوی حالت روشن"
+
+#: modules/admin-bar.php:206
+msgid "Sets the logo for the admin bar in light mode."
+msgstr "لوگو‌ را برای حالت روشن در نوار مدیریت، تنظیم میکند."
+
+#: modules/admin-bar.php:213
+msgid "Logo Dark Mode"
+msgstr "لوگوی حالت تاریک"
+
+#: modules/admin-bar.php:214
+msgid "Optional dark mode logo for admin bar."
+msgstr "لوگوی اختیاری حالت تاریک برای نوار مدیریت."
+
+#: modules/admin-bar.php:221
+msgid "Background color (light mode)"
+msgstr "رنگ پس زمینه (حالت روشن)"
+
+#: modules/admin-bar.php:222
+msgid "Sets admin bar background color in light mode."
+msgstr "رنگ پس‌زمینه نوار مدیریت در حالت روشن را تنظیم میکند."
+
+#: modules/admin-bar.php:230
+msgid "Background color (dark mode)"
+msgstr "رنگ پس زمینه (حالت تیره)"
+
+#: modules/admin-bar.php:231
+msgid "Sets admin bar background color in dark mode."
+msgstr "رنگ پس زمینه نوار مدیریت  را در حالت تاریک تنظیم می کند."
+
+#: modules/admin-bar.php:239
+msgid "Hide admin bar links (left side)"
+msgstr "پنهان کردن پیوندهای نوار مدیریت (سمت چپ)"
+
+#: modules/admin-bar.php:240
+msgid ""
+"Disables legacy links on left side of admin bar for all users. Also hides "
+"the user preference."
+msgstr ""
+"پیوندهای قدیمی در سمت چپ نوار مدیریت را برای همه کاربران غیرفعال می کند. "
+"همچنین ترجیح کاربر را پنهان می کند."
+
+#: modules/admin-bar.php:247 modules/admin-menu.php:130
+msgid "Disable Search"
+msgstr "جستجو را غیرفعال کنید"
+
+#: modules/admin-bar.php:248
+msgid "Disables search icon and global search function from admin bar."
+msgstr "نماد جستجو و عملکرد جستجوی سراسری را از نوار مدیریت غیرفعال می کند."
+
+#: modules/admin-bar.php:255
+msgid "Disable Create Button"
+msgstr "دکمه ایجاد را غیرفعال کنید"
+
+#: modules/admin-bar.php:256
+msgid "Disables the 'create' button in the admin bar."
+msgstr "دکمه \"ایجاد\" را در نوار مدیریت غیرفعال می کند."
+
+#: modules/admin-bar.php:263
+msgid "Disable View Website Button"
+msgstr "دکمه مشاهده وب سایت را غیرفعال کنید"
+
+#: modules/admin-bar.php:264
+msgid "Disables the view website link button in the admin bar."
+msgstr "دکمه مشاهده لینک وب سایت را در نوار مدیریت غیرفعال می کند."
+
+#: modules/admin-bar.php:271
+msgid "Set Dark Mode as Default"
+msgstr "حالت تاریک را به عنوان پیش فرض تنظیم کنید"
+
+#: modules/admin-bar.php:272
+msgid ""
+"If enabled, dark mode will default to true for users that haven't set a "
+"preference."
+msgstr ""
+"در صورت فعال بودن ، حالت تاریک برای کاربرانی که اولویت را تنظیم نکرده اند به "
+"طور پیش فرض روی true تنظیم می شود."
+
+#: modules/admin-bar.php:279
+msgid "Load UIPress admin bar on front end"
+msgstr "نوار مدیریت UIPress را در فرانت‌اند بارگذاری کنید"
+
+#: modules/admin-bar.php:280
+msgid ""
+"If enabled, UiPress admin bar will be load on the front end. Please note, "
+"this will not work on all themes and styling will vary.."
+msgstr ""
+"در صورت فعال بودن ، نوار مدیریت یوآی پرس در فرانت‌اند بارگیری می شود. لطفاً "
+"توجه داشته باشید ، این روی همه موضوعات کار نمی کند و ظاهر آن متفاوت است."
+
+#: modules/admin-bar.php:287
+msgid "Hide admin bar on front end"
+msgstr "مخفی کردن نوار مدیریت در فرانت‌اند"
+
+#: modules/admin-bar.php:288
+msgid "If enabled, front end admin bar will not load."
+msgstr "در صورت فعال بودن، نوار مدیریت در فرانت‌اند بارگیری نخواهد شد."
+
+#: modules/admin-bar.php:295
+msgid "Disable Notification Center"
+msgstr "غیرفعال کردن مرکز اطلاع رسانی"
+
+#: modules/admin-bar.php:296
+msgid "If disabled, notifcations will show in the normal way"
+msgstr "در صورت غیرفعال بودن ، اعلان ها به روش عادی نشان داده می شوند"
+
+#: modules/admin-bar.php:303
+msgid "Post Types available in Search"
+msgstr "انواع پست موجود در جستجو"
+
+#: modules/admin-bar.php:304
+msgid "The global search will only search the selected post types."
+msgstr "جستجوی سراسری فقط انواع پست های انتخاب شده را جستجو می کند."
+
+#: modules/admin-bar.php:311
+msgid "Post Types available in create button (new)"
+msgstr "انواع پست موجود در دکمه ایجاد (جدید)"
+
+#: modules/admin-bar.php:312
+msgid "Only the selected post types will show up in the create dropdown."
+msgstr "فقط انواع پست انتخاب شده در کرکره ایجاد نشان داده می شود."
+
+#: modules/admin-bar.php:797
+msgid "Search website"
+msgstr "وب سایت را جستجو کنید"
+
+#: modules/admin-bar.php:813 modules/admin-bar.php:820
+#: modules/admin-menu.php:531 modules/admin-menu.php:707
+msgid "Search"
+msgstr "جستجو کردن"
+
+#: modules/admin-bar.php:911
+msgid "Nothing found for your query"
+msgstr "چیزی برای درخواست شما پیدا نشد"
+
+#: modules/admin-bar.php:938 modules/premium/admin-content.php:3184
+#: modules/premium/admin-content.php:3289
+#: modules/premium/admin-menu-creator.php:807
+msgid "Edit"
+msgstr "ویرایش کنید"
+
+#: modules/admin-bar.php:945 modules/premium/admin-content.php:3178
+#: modules/premium/admin-content.php:3283
+msgid "View"
+msgstr "دیدن"
+
+#: modules/admin-bar.php:962
+msgid "Show more"
+msgstr "بیشتر نشان بده"
+
+#: modules/admin-bar.php:964
+msgid "other matches"
+msgstr "همخوانی‌های دیگر"
+
+#: modules/admin-bar.php:1042 modules/premium/admin-overview.php:72
+#: modules/premium/admin-overview.php:178
+msgid "Overview"
+msgstr "بررسی اجمالی"
+
+#: modules/admin-bar.php:1049
+msgid "Preferences"
+msgstr "اولویت ها"
+
+#: modules/admin-bar.php:1058
+msgid "View site"
+msgstr "مشاهده سایت"
+
+#: modules/admin-bar.php:1063
+msgid "View Dashboard"
+msgstr "مشاهده داشبورد"
+
+#: modules/admin-bar.php:1082 modules/admin-login.php:133
+msgid "Dark Mode"
+msgstr "حالت تاریک"
+
+#: modules/admin-bar.php:1093 modules/admin-bar.php:1396
+msgid "Show screen options"
+msgstr "نمایش گزینه های صفحه نمایش"
+
+#: modules/admin-bar.php:1104
+msgid "Hide admin bar links (left)"
+msgstr "پنهان کردن پیوندهای نوار مدیریت (سمت چپ)"
+
+#: modules/admin-bar.php:1133
+msgid "Edit profile"
+msgstr "ویرایش پروفایل"
+
+#: modules/admin-bar.php:1140
+msgid "Logout"
+msgstr "خروج"
+
+#: modules/admin-bar.php:1166
+msgid "Updates"
+msgstr "به روز رسانی"
+
+#: modules/admin-bar.php:1169
+msgid "Up to date"
+msgstr "به روز"
+
+#: modules/admin-bar.php:1172
+msgid "Everything is up to date"
+msgstr "همه چیز به روز است"
+
+#: modules/admin-bar.php:1183
+msgid "Core"
+msgstr "هسته"
+
+#: modules/admin-bar.php:1197 modules/premium/admin-overview-cards.php:360
+msgid "Plugins"
+msgstr "افزونه ها"
+
+#: modules/admin-bar.php:1210
+msgid "Themes"
+msgstr "قالبها"
+
+#: modules/admin-bar.php:1226
+msgid "Notifications"
+msgstr "اطلاعیه‌ها"
+
+#: modules/admin-bar.php:1252
+msgid "Don't show again"
+msgstr "دیگه نشون نده"
+
+#: modules/admin-bar.php:1261
+msgid "hidden notification"
+msgstr "اعلان مخفی"
+
+#: modules/admin-bar.php:1262
+msgid "hidden notifications"
+msgstr "اعلان های مخفی"
+
+#: modules/admin-bar.php:1263
+msgid "Show all"
+msgstr "نمایش همه"
+
+#: modules/admin-bar.php:1300
+msgid "Toggle menu"
+msgstr "تغییر وضعیت منو"
+
+#: modules/admin-bar.php:1383
+msgid "View website"
+msgstr "مشاهده وب سایت"
+
+#: modules/admin-bar.php:1388
+msgid "Dashboard"
+msgstr "داشبورد"
+
+#: modules/admin-bar.php:1403 modules/premium/admin-content.php:2705
+#: modules/premium/admin-folders.php:885
+msgid "Create"
+msgstr "ايجاد كردن"
+
+#: modules/admin-login.php:104
+msgid "Login"
+msgstr "وارد شدن"
+
+#: modules/admin-login.php:106
+msgid "Styles the admin login page."
+msgstr "صفحه ورود به سایت را شخصی‌سازی میکند."
+
+#: modules/admin-login.php:124
+msgid "Background Image"
+msgstr "تصویر پس زمینه"
+
+#: modules/admin-login.php:125
+msgid "Sets an optional background image for the login page."
+msgstr "یک تصویر پس زمینه اختیاری برای صفحه ورود تنظیم می کند."
+
+#: modules/admin-login.php:134
+msgid "Login style will match dark theme if enabled."
+msgstr "در صورت فعال بودن، استایل ورود با تم تاریک همگام خواد شد."
+
+#: modules/admin-login.php:141
+msgid "Redirect to overview page"
+msgstr "هدایت به صفحه پیش‌نمایش"
+
+#: modules/admin-login.php:142
+msgid ""
+"If enabled, after logging in users will be redirected to the overview page"
+msgstr ""
+"در صورت فعال بودن ، پس از ورود به سیستم کاربران به صفحه پیش‌نمایش هدایت می "
+"شوند"
+
+#: modules/admin-login.php:149
+msgid "Redirect to custom page"
+msgstr "هدایت به صفحه سفارشی"
+
+#: modules/admin-login.php:150
+msgid ""
+"If enabled, after logging in users will be redirected to entered link. For "
+"admin pages use a relative URL (path after /wp-admin/), for other pages use "
+"an absolute URL"
+msgstr ""
+"در صورت فعال بودن ، پس از ورود به سیستم کاربران به پیوند وارد شده هدایت می "
+"شوند. برای صفحات مدیریت از URL نسبی (مسیر بعد از /wp-admin /) ، برای صفحات "
+"دیگر از URL مطلق استفاده کنید"
+
+#: modules/admin-menu.php:85
+msgid "Menu"
+msgstr "منو"
+
+#: modules/admin-menu.php:87
+msgid "Creates new admin menu."
+msgstr "ایجاد منوی مدیریت جدید.."
+
+#: modules/admin-menu.php:105
+msgid "Menu Disabled for"
+msgstr "منو غیر فعال شده برای"
+
+#: modules/admin-menu.php:106
+msgid "UiPress menu will be disabled for any users or roles you select"
+msgstr "منوی یوآی پرس برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/admin-menu.php:113 modules/admin-theme.php:134
+msgid "Background Color (Light Mode)"
+msgstr "رنگ پس زمینه (حالت روشن)"
+
+#: modules/admin-menu.php:114 modules/admin-theme.php:135
+#: modules/admin-theme.php:151
+msgid "Sets a background colour for the admin menu in light mode."
+msgstr "یک رنگ پس زمینه برای منوی مدیر در حالت روشن تنظیم می کند."
+
+#: modules/admin-menu.php:121 modules/admin-theme.php:142
+msgid "Background Color (Dark Mode)"
+msgstr "رنگ پس زمینه (حالت تیره)"
+
+#: modules/admin-menu.php:122 modules/admin-theme.php:143
+#: modules/admin-theme.php:159
+msgid "Sets a background colour for the admin menu in dark mode."
+msgstr "یک رنگ پس زمینه برای منوی مدیر در حالت تاریک تنظیم می کند."
+
+#: modules/admin-menu.php:131
+msgid "Disables admin menu search."
+msgstr "جستجوی منوی مدیریت را غیرفعال می کند."
+
+#: modules/admin-menu.php:138
+msgid "Set collapsed menu as default"
+msgstr "منوی جمع شده را به عنوان پیش فرض تنظیم کنید"
+
+#: modules/admin-menu.php:139
+msgid ""
+"If enabled, the menu will default to the shrunk menu for users that haven't "
+"set a preference.."
+msgstr ""
+"در صورت فعال بودن ، منو برای کاربرانی که اولویت را تنظیم نکرده اند ، به صورت "
+"منوی کوچک می شود.."
+
+#: modules/admin-menu.php:564 modules/admin-menu.php:740
+#: modules/premium/admin-content.php:2702
+#: modules/premium/admin-content.php:2748 modules/premium/admin-folders.php:882
+#: modules/premium/admin-folders.php:928
+msgid "Cancel"
+msgstr "لغو کنید"
+
+#: modules/admin-menu.php:572 modules/admin-menu.php:748
+msgid "Clear Favourites"
+msgstr "موارد دلخواه را پاک کنید"
+
+#: modules/admin-menu.php:888
+msgid "Menu Preferences"
+msgstr "تنظیمات برگزیده منو"
+
+#: modules/admin-menu.php:893
+msgid "Show search bar"
+msgstr "نمایش نوار جستجو"
+
+#: modules/admin-menu.php:908
+msgid "Hide menu icons"
+msgstr "مخفی کردن آیکون‌های منو"
+
+#: modules/admin-menu.php:923
+msgid "Show submenu on hover"
+msgstr "نمایش منوی فرعی در حالت شناور"
+
+#: modules/admin-menu.php:937
+msgid "Show favourites"
+msgstr "نمایش موارد دلخواه"
+
+#: modules/admin-menu.php:950
+msgid "Set Favourites"
+msgstr "موارد دلخواه را تنظیم کنید"
+
+#: modules/admin-theme.php:106
+msgid "Theme"
+msgstr "قالب"
+
+#: modules/admin-theme.php:108
+msgid ""
+"Creates the main theme for UiPress Disables default WordPress theme and "
+"applies UiPress."
+msgstr ""
+"ایجاد تم اصلی برای یوآی پرس قالب پیش فرض وردپرس را غیرفعال می کند و یوآی پرس "
+"را اعمال می کند."
+
+#: modules/admin-theme.php:126
+msgid "Theme Disabled for"
+msgstr "تم غیرفعال شده برای"
+
+#: modules/admin-theme.php:127
+msgid "UiPress theme will be disabled for any users or roles you select"
+msgstr "تم یوآی پرس برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/admin-theme.php:150
+msgid "Primary Color (Light Mode)"
+msgstr "رنگ اصلی (حالت روشن)"
+
+#: modules/admin-theme.php:158
+msgid "Primary Color (Dark Mode)"
+msgstr "رنگ اصلی (حالت تیره)"
+
+#: modules/admin-theme.php:167
+msgid "Global Padding"
+msgstr "پدینگ سراسری"
+
+#: modules/admin-theme.php:168
+msgid "Sets padding (in px) for cards, metaboxes and other items in the UI."
+msgstr ""
+"برای کارت ها ، متابوکس ها و سایر موارد در رابط کاربری ، پد (به صورت پیکسل) "
+"تنظیم می کند."
+
+#: modules/premium/admin-advanced.php:92
+msgid "Advanced"
+msgstr "پیشرفته"
+
+#: modules/premium/admin-advanced.php:94
+msgid "Creates options for adding custom CSS and JS."
+msgstr "گزینه هایی برای افزودن CSS و JS سفارشی ایجاد می کند."
+
+#: modules/premium/admin-advanced.php:112
+msgid "Advanced module disabled for"
+msgstr "غیرفعال کردن ماژولهای پیشرفته برای"
+
+#: modules/premium/admin-advanced.php:113
+msgid "Custom CSS and JS will not load for the selected roles and users."
+msgstr "CSS و JS سفارشی برای نقش ها و کاربران انتخاب شده بارگیری نمی شود."
+
+#: modules/premium/admin-advanced.php:120
+msgid "Custom CSS"
+msgstr "CSS سفارشی"
+
+#: modules/premium/admin-advanced.php:121
+msgid ""
+"CSS added here will be loaded on every admin page as well as the login page"
+msgstr ""
+"CSS اضافه شده در اینجا در هر صفحه مدیر و همچنین صفحه ورود بارگذاری می شود"
+
+#: modules/premium/admin-advanced.php:129
+msgid "Custom JS"
+msgstr "JS سفارشی"
+
+#: modules/premium/admin-advanced.php:130
+msgid ""
+"Javascript added here will be loaded on every admin page as well as the "
+"login page"
+msgstr ""
+"جاوا اسکریپت اضافه شده در اینجا در هر صفحه سرپرست و همچنین صفحه ورود "
+"بارگذاری می شود"
+
+#: modules/premium/admin-analytics.php:69
+msgid "Analytics"
+msgstr "تجزیه و تحلیل"
+
+#: modules/premium/admin-analytics.php:71
+msgid "Creates the google analytics cards for the overview page."
+msgstr "کارت های تجزیه و تحلیل google را برای صفحه نمای کلی ایجاد می کند."
+
+#: modules/premium/admin-analytics.php:89
+msgid "Google Analytics disabled for"
+msgstr "غیرفعال کردن گوگل آنالتیک برای"
+
+#: modules/premium/admin-analytics.php:90
+msgid ""
+"Analytics will be disabled on the overview page for any users or roles you "
+"select"
+msgstr ""
+"تجزیه و تحلیل‌ها در صفحه پیش‌نمایش برای هر کاربر یا نقشی که انتخاب کنید غیر "
+"فعال میشود"
+
+#: modules/premium/admin-analytics.php:118
+msgid "Google Analytics Disabled for"
+msgstr "گوگل آنالتیک غیر فعال شد برای"
+
+#: modules/premium/admin-analytics.php:119
+msgid "Google Analytics will be disabled for any users or roles you select"
+msgstr "گوگل آنالتیک برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/premium/admin-analytics.php:139
+#: modules/premium/admin-content.php:187 modules/premium/admin-folders.php:601
+#: modules/premium/admin-menu-editor.php:397
+#: modules/premium/admin-menu-editor.php:522
+#: modules/premium/admin-menu-editor.php:656
+#: modules/premium/admin-pages.php:172
+#: modules/premium/admin-woocommerce.php:148
+msgid "Select roles or users"
+msgstr "انتخاب نقش‌ها برای کاربران"
+
+#: modules/premium/admin-analytics.php:155
+msgid "Analytics account"
+msgstr "حساب آنالتیک"
+
+#: modules/premium/admin-analytics.php:156
+msgid ""
+"Select the google analytics account you wish to use for displaying data on "
+"the overview page"
+msgstr ""
+"حساب آنالتیک را که می خواهید برای نمایش داده ها در صفحهپیش‌نمایش استفاده "
+"کنید ، انتخاب کنید"
+
+#: modules/premium/admin-analytics.php:172
+msgid "Remove Account"
+msgstr "حذف حساب کاربری"
+
+#: modules/premium/admin-analytics.php:275
+msgid "Connect to Analytics"
+msgstr "به  آنالتیک متصل شوید"
+
+#: modules/premium/admin-analytics.php:288
+msgid "Total Page Views"
+msgstr "تعداد کل بازدیدها"
+
+#: modules/premium/admin-analytics.php:289
+msgid "Total Site Users"
+msgstr "تعداد کاربران سایت"
+
+#: modules/premium/admin-analytics.php:290
+msgid "Average Page Speed"
+msgstr "میانگین سرعت صفحه"
+
+#: modules/premium/admin-analytics.php:291
+msgid "Visits By Device"
+msgstr "بازدیدها توسط دستگاه"
+
+#: modules/premium/admin-analytics.php:292
+msgid "Bounce Rate"
+msgstr "نرخ رهایی"
+
+#: modules/premium/admin-analytics.php:293
+msgid "Visits By Country"
+msgstr "بازدیدها بر اساس کشور"
+
+#: modules/premium/admin-analytics.php:294
+msgid "Visits By Page"
+msgstr "بازدیدها بر اساس صفحه"
+
+#: modules/premium/admin-analytics.php:295
+msgid "Traffic Sources"
+msgstr "منابع ترافیکی"
+
+#: modules/premium/admin-analytics.php:296
+msgid "Session Duration"
+msgstr "مدت زمان جلسه"
+
+#: modules/premium/admin-analytics.php:497
+msgid "Page Views"
+msgstr "بازدید صفحات"
+
+#: modules/premium/admin-analytics.php:517
+#: modules/premium/admin-analytics.php:604
+#: modules/premium/admin-analytics.php:693
+#: modules/premium/admin-analytics.php:780
+#: modules/premium/admin-analytics.php:845
+#: modules/premium/admin-analytics.php:921
+#: modules/premium/admin-analytics.php:972
+#: modules/premium/admin-analytics.php:1061
+#: modules/premium/admin-analytics.php:1147
+msgid "Connect analytics account to view site statistics"
+msgstr "برای مشاهده آمار سایت ، حساب تجزیه و تحلیل را متصل کنید"
+
+#: modules/premium/admin-analytics.php:528
+#: modules/premium/admin-analytics.php:615
+#: modules/premium/admin-analytics.php:704
+#: modules/premium/admin-analytics.php:856
+#: modules/premium/admin-analytics.php:932
+msgid "vs previous"
+msgstr "در مقابل قبلی"
+
+#: modules/premium/admin-analytics.php:528
+#: modules/premium/admin-analytics.php:615
+#: modules/premium/admin-analytics.php:704
+#: modules/premium/admin-analytics.php:856
+#: modules/premium/admin-analytics.php:932
+#: modules/premium/admin-overview-cards.php:91
+#: modules/premium/admin-overview-cards.php:150
+#: modules/premium/admin-overview-cards.php:207
+#: modules/premium/admin-woocommerce.php:337
+#: modules/premium/admin-woocommerce.php:457
+msgid "days"
+msgstr "روزها"
+
+#: modules/premium/admin-analytics.php:585
+msgid "Site Users"
+msgstr "کاربران سایت"
+
+#: modules/premium/admin-analytics.php:673
+msgid "Avg page speed"
+msgstr "سرعت متوسط ​​صفحه"
+
+#: modules/premium/admin-analytics.php:760
+msgid "Devices"
+msgstr "دستگاه ها"
+
+#: modules/premium/admin-analytics.php:782
+#: modules/premium/admin-analytics.php:974
+#: modules/premium/admin-analytics.php:1063
+#: modules/premium/admin-analytics.php:1149
+msgid "Not enough data to populate charts"
+msgstr "داده کافی برای پر کردن نمودارها وجود ندارد"
+
+#: modules/premium/admin-analytics.php:980
+msgid "Country"
+msgstr "کشور"
+
+#: modules/premium/admin-analytics.php:981
+#: modules/premium/admin-analytics.php:1070
+#: modules/premium/admin-analytics.php:1156
+msgid "Visits"
+msgstr "بازدیدها"
+
+#: modules/premium/admin-analytics.php:983
+#: modules/premium/admin-analytics.php:1072
+#: modules/premium/admin-analytics.php:1158
+msgid "Change"
+msgstr "تغییر دادن"
+
+#: modules/premium/admin-analytics.php:1069
+msgid "Source"
+msgstr "منبع"
+
+#: modules/premium/admin-analytics.php:1155
+msgid "Page"
+msgstr "صفحه"
+
+#: modules/premium/admin-content.php:89 modules/premium/admin-content.php:1997
+#: modules/premium/admin-content.php:2255
+msgid "Content"
+msgstr "محتوا"
+
+#: modules/premium/admin-content.php:91
+msgid ""
+"Creates the content page where you can manage all of your assets, posts and "
+"pages from one place."
+msgstr ""
+"صفحه محتوا را ایجاد می کند که در آن می توانید همه دارایی ها ، پست ها و صفحات "
+"خود را از یک مکان مدیریت کنید."
+
+#: modules/premium/admin-content.php:109
+msgid "Content Page disabled for"
+msgstr "لغو صفحه محتوا برای"
+
+#: modules/premium/admin-content.php:110
+msgid "Content Page will be disabled for any users or roles you select"
+msgstr "صفحه محتوا برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/premium/admin-content.php:117 modules/premium/admin-content.php:200
+msgid "Post types available in content page"
+msgstr "انواع پست موجود در صفحه محتوا"
+
+#: modules/premium/admin-content.php:118 modules/premium/admin-content.php:201
+msgid "Only the selected post types will be available in the content page."
+msgstr "فقط انواع پست های انتخاب شده در صفحه محتوا در دسترس خواهند بود."
+
+#: modules/premium/admin-content.php:125 modules/premium/admin-content.php:239
+msgid "Enable private library mode"
+msgstr "حالت کتابخانه خصوصی را فعال کنید"
+
+#: modules/premium/admin-content.php:126
+msgid ""
+"When enabled, the content page will only show content created by or uploaded "
+"by the currently logged in user. This includes folders.."
+msgstr ""
+"هنگامی که فعال است ، صفحه محتوا فقط محتوای ایجاد شده توسط همان کاربر یا "
+"کاربران وارد شده  را نشان می دهد. این شامل پوشه ها .."
+
+#: modules/premium/admin-content.php:166
+msgid "Admin 2020 content page disabled for"
+msgstr "صفحه محتوای یوآی‌پرس غیر فعال شد برای"
+
+#: modules/premium/admin-content.php:167
+msgid ""
+"Admin 2020 Content Page will be disabled for any users or roles you select"
+msgstr ""
+"صفحه محتوای یوآی‌پرس برای هر کاربر یا نقشی که انتخاب کنید غیر فعال خواهد شد"
+
+#: modules/premium/admin-content.php:225
+msgid "Select Post Types"
+msgstr "انتخاب نوع پست‌ها"
+
+#: modules/premium/admin-content.php:240
+msgid ""
+"When enabled, the content page will only show content created by or uploaded "
+"by the currently logged in user. This includes folders."
+msgstr ""
+"هنگامی که فعال است ، صفحه محتوا فقط محتوای ایجاد شده توسط همان کاربر یا "
+"کاربران وارد شده  را نشان می دهد. این شامل پوشه ها هم میشود."
+
+#: modules/premium/admin-content.php:344
+msgid "Original Title / Value"
+msgstr "عنوان اصلی / ارزش"
+
+#: modules/premium/admin-content.php:352 modules/premium/admin-content.php:2831
+msgid "Date Created"
+msgstr "تاریخ ایجاد"
+
+#: modules/premium/admin-content.php:356
+msgid "File Extension (attachments only)"
+msgstr "پسوند فایل (فقط پیوست ها)"
+
+#: modules/premium/admin-content.php:360
+msgid "Sequence Number"
+msgstr "شماره ترتیب"
+
+#: modules/premium/admin-content.php:364
+msgid "Meta Value"
+msgstr "ارزش متا"
+
+#: modules/premium/admin-content.php:368
+msgid "Find and Replace"
+msgstr "پیدا کنید و جایگزین کنید"
+
+#: modules/premium/admin-content.php:438 modules/premium/admin-content.php:446
+#: modules/premium/admin-content.php:1573
+msgid "Unable to save attachment"
+msgstr "پیوست ذخیره نمی شود"
+
+#: modules/premium/admin-content.php:455
+msgid "Image Saved"
+msgstr "تصویر ذخیره شد"
+
+#: modules/premium/admin-content.php:491
+msgid "Failed to upload file"
+msgstr "فایل بارگذاری نشد"
+
+#: modules/premium/admin-content.php:526
+msgid "Items uploaded"
+msgstr "موارد بارگذاری شده"
+
+#: modules/premium/admin-content.php:553
+msgid "Views updated"
+msgstr "بازدیدها به روز شد"
+
+#: modules/premium/admin-content.php:607
+msgid "Items duplicated succesffuly"
+msgstr "موارد تکراری موفقیت آمیز"
+
+#: modules/premium/admin-content.php:610
+msgid "Itms couldn't be duplicated"
+msgstr "موارد تکرار نمیشوند"
+
+#: modules/premium/admin-content.php:656 modules/premium/admin-content.php:710
+msgid "No Meta Key provided"
+msgstr "کلید متا ارائه نشده است"
+
+#: modules/premium/admin-content.php:759
+msgid "Attributes Updated"
+msgstr "ویژگی ها به روز شد"
+
+#: modules/premium/admin-content.php:999
+msgid "Items deleted succesffuly"
+msgstr "موارد به طور موفقیت آمیزی حذف می شوند"
+
+#: modules/premium/admin-content.php:1002
+msgid "Itms couldn't be deleted"
+msgstr "موارد حذف نشد"
+
+#: modules/premium/admin-content.php:1125 modules/premium/admin-folders.php:287
+msgid "Title is required"
+msgstr "عنوان الزامی است"
+
+#: modules/premium/admin-content.php:1131 modules/premium/admin-folders.php:293
+msgid "Colour is required"
+msgstr "رنگ مورد نیاز است"
+
+#: modules/premium/admin-content.php:1158 modules/premium/admin-folders.php:320
+msgid "Folder created"
+msgstr "پوشه ایجاد شد"
+
+#: modules/premium/admin-content.php:1203 modules/premium/admin-folders.php:200
+msgid "Folder updated"
+msgstr "پوشه به روز شد"
+
+#: modules/premium/admin-content.php:1223 modules/premium/admin-folders.php:104
+msgid "Unable to move folder into itself"
+msgstr "پوشه را به خود منتقل نمی کند"
+
+#: modules/premium/admin-content.php:1240 modules/premium/admin-folders.php:121
+msgid "Unable to move folder"
+msgstr "قادر به انتقال پوشه نیست"
+
+#: modules/premium/admin-content.php:1275 modules/premium/admin-folders.php:156
+msgid "Folder moved"
+msgstr "پوشه نقل مکان کرد"
+
+#: modules/premium/admin-content.php:1297 modules/premium/admin-folders.php:70
+msgid "No content to move"
+msgstr "نبود محتوا برای جابجایی"
+
+#: modules/premium/admin-content.php:1312 modules/premium/admin-folders.php:85
+msgid "Content moved"
+msgstr "محتوا نقل مکان کرد"
+
+#: modules/premium/admin-content.php:1333 modules/premium/admin-folders.php:221
+msgid "No folder to delete"
+msgstr "پوشه ای برای حذف وجود ندارد"
+
+#: modules/premium/admin-content.php:1343 modules/premium/admin-folders.php:231
+msgid "Unable to delete the folder"
+msgstr "قادر به حذف پوشه نیست"
+
+#: modules/premium/admin-content.php:1374 modules/premium/admin-folders.php:262
+msgid "Folder deleted"
+msgstr "پوشه حذف شد"
+
+#: modules/premium/admin-content.php:1548
+msgid "Unable to update item"
+msgstr "مورد به روز نمی شود"
+
+#: modules/premium/admin-content.php:1589
+msgid "Item updated"
+msgstr "مورد به روز شد"
+
+#: modules/premium/admin-content.php:1638
+msgid "Items updated"
+msgstr "موارد به روز شد"
+
+#: modules/premium/admin-content.php:2056
+msgid "Update Tags and Categories"
+msgstr "برچسب ها و دسته ها را به روز کنید"
+
+#: modules/premium/admin-content.php:2063
+#: modules/premium/admin-content.php:2476
+#: modules/premium/admin-content.php:2480
+#: modules/premium/admin-content.php:2864
+#: modules/premium/admin-content.php:2867
+msgid "Categories"
+msgstr "دسته ها"
+
+#: modules/premium/admin-content.php:2064
+#: modules/premium/admin-content.php:2481
+#: modules/premium/admin-content.php:2868
+msgid "Search categories..."
+msgstr "جستجو در دسته بندی ..."
+
+#: modules/premium/admin-content.php:2069
+msgid "Keep existing categories"
+msgstr "دسته های موجود را حفظ کنید"
+
+#: modules/premium/admin-content.php:2078
+#: modules/premium/admin-content.php:2487
+#: modules/premium/admin-content.php:2491
+#: modules/premium/admin-content.php:2875
+#: modules/premium/admin-content.php:2878
+msgid "Tags"
+msgstr "برچسب ها"
+
+#: modules/premium/admin-content.php:2079
+#: modules/premium/admin-content.php:2492
+#: modules/premium/admin-content.php:2879
+msgid "Search tags..."
+msgstr "جستجوی برچسب ها ..."
+
+#: modules/premium/admin-content.php:2084
+msgid "Keep existing tags"
+msgstr "برچسب های موجود را نگه دارید"
+
+#: modules/premium/admin-content.php:2092
+#: modules/premium/admin-content.php:2501
+#: modules/premium/admin-content.php:2751 modules/premium/admin-folders.php:931
+msgid "Update"
+msgstr "به روز رسانی"
+
+#: modules/premium/admin-content.php:2112
+#: modules/premium/admin-content.php:3362
+msgid "Batch Rename"
+msgstr "تغییر نام دسته ای"
+
+#: modules/premium/admin-content.php:2122
+msgid "Attribute to rename"
+msgstr "ویژگی تغییر نام"
+
+#: modules/premium/admin-content.php:2127
+#: modules/premium/admin-content.php:2669
+#: modules/premium/admin-content.php:3084 modules/premium/admin-folders.php:849
+#: modules/premium/admin-menu-creator.php:755
+#: modules/premium/admin-menu-creator.php:1198
+#: modules/premium/admin-menu-creator.php:1199
+msgid "Name"
+msgstr "نام"
+
+#: modules/premium/admin-content.php:2128
+msgid "Meta Key"
+msgstr "کلید متا"
+
+#: modules/premium/admin-content.php:2129
+msgid "Alt Tag (Attachments only)"
+msgstr "برچسب Alt (فقط پیوست ها)"
+
+#: modules/premium/admin-content.php:2134
+msgid "Meta Key Name"
+msgstr "نام کلید متا"
+
+#: modules/premium/admin-content.php:2145
+msgid "Filename Structure"
+msgstr "ساختار نام فایل"
+
+#: modules/premium/admin-content.php:2150
+msgid "Rename Item"
+msgstr "تغییر نام مورد"
+
+#: modules/premium/admin-content.php:2158
+msgid "Add"
+msgstr "اضافه کردن"
+
+#: modules/premium/admin-content.php:2182
+msgid "New Text"
+msgstr "متن جدید"
+
+#: modules/premium/admin-content.php:2184
+msgid "Date Format"
+msgstr "فرمت تاریخ"
+
+#: modules/premium/admin-content.php:2186
+msgid "Start Number"
+msgstr "شماره شروع"
+
+#: modules/premium/admin-content.php:2188
+msgid "Meta key Name"
+msgstr "نام کلید متا"
+
+#: modules/premium/admin-content.php:2190
+msgid "Find"
+msgstr "پیدا کردن"
+
+#: modules/premium/admin-content.php:2194
+msgid "Replace"
+msgstr "جایگزین کردن"
+
+#: modules/premium/admin-content.php:2221
+msgid "Current"
+msgstr "جاری"
+
+#: modules/premium/admin-content.php:2222
+#: modules/premium/admin-menu-creator.php:740
+msgid "New"
+msgstr "جدید"
+
+#: modules/premium/admin-content.php:2237
+msgid "Rename"
+msgstr "تغییر نام دهید"
+
+#: modules/premium/admin-content.php:2264
+#: modules/premium/admin-content.php:2766 modules/premium/admin-folders.php:946
+#: modules/premium/admin-overview.php:599
+msgid "All"
+msgstr "همه"
+
+#: modules/premium/admin-content.php:2303
+msgid "Upload"
+msgstr "بارگذاری"
+
+#: modules/premium/admin-content.php:2350
+msgid "Back to content"
+msgstr "بازگشت به محتوا"
+
+#: modules/premium/admin-content.php:2366
+msgid "Details"
+msgstr "جزئیات"
+
+#: modules/premium/admin-content.php:2370
+#: modules/premium/admin-content.php:3092
+msgid "Author"
+msgstr "نویسنده"
+
+#: modules/premium/admin-content.php:2374
+msgid "Created On"
+msgstr "ایجاد شده در"
+
+#: modules/premium/admin-content.php:2378
+msgid "Last modified on"
+msgstr "آخرین تغییر در"
+
+#: modules/premium/admin-content.php:2392
+msgid "Dimensions"
+msgstr "ابعاد"
+
+#: modules/premium/admin-content.php:2397
+msgid "File Size"
+msgstr "حجم فایل"
+
+#: modules/premium/admin-content.php:2402
+msgid "File Name"
+msgstr "نام فایل"
+
+#: modules/premium/admin-content.php:2416
+#: modules/premium/admin-content.php:2417
+msgid "Title"
+msgstr "عنوان"
+
+#: modules/premium/admin-content.php:2423
+msgid "Alt Text"
+msgstr "متن جایگزین"
+
+#: modules/premium/admin-content.php:2424
+msgid "Alt"
+msgstr "Alt"
+
+#: modules/premium/admin-content.php:2428
+#: modules/premium/admin-content.php:2429
+msgid "Caption"
+msgstr "زیرنویس"
+
+#: modules/premium/admin-content.php:2433
+#: modules/premium/admin-content.php:2434
+msgid "Description"
+msgstr "شرح"
+
+#: modules/premium/admin-content.php:2444
+msgid "Meta Data"
+msgstr "متا دیتا"
+
+#: modules/premium/admin-content.php:2464
+#: modules/premium/admin-content.php:2469
+#: modules/premium/admin-content.php:3100
+#: modules/premium/admin-menu-creator.php:759
+#: modules/premium/admin-menu-creator.php:892
+#: modules/premium/admin-woocommerce.php:627
+msgid "Status"
+msgstr "وضعیت"
+
+#: modules/premium/admin-content.php:2470
+msgid "Search status..."
+msgstr "وضعیت جستجو ..."
+
+#: modules/premium/admin-content.php:2500
+#: modules/premium/admin-content.php:3295
+#: modules/premium/admin-menu-creator.php:835
+msgid "Delete"
+msgstr "حذف"
+
+#: modules/premium/admin-content.php:2514
+msgid "Edit Image"
+msgstr "ویرایش تصویر"
+
+#: modules/premium/admin-content.php:2566
+msgid "Filters"
+msgstr "فیلترها"
+
+#: modules/premium/admin-content.php:2578
+msgid "List Mode"
+msgstr "حالت لیست"
+
+#: modules/premium/admin-content.php:2585
+msgid "Grid Mode"
+msgstr "حالت شبکه"
+
+#: modules/premium/admin-content.php:2595
+msgid "Items Per Page"
+msgstr "موارد در هر صفحه"
+
+#: modules/premium/admin-content.php:2605
+msgid "Columns"
+msgstr "ستون ها"
+
+#: modules/premium/admin-content.php:2616
+msgid "Search..."
+msgstr "جستجو کردن..."
+
+#: modules/premium/admin-content.php:2626
+msgid "of"
+msgstr "از"
+
+#: modules/premium/admin-content.php:2629
+msgid "items"
+msgstr "موارد"
+
+#: modules/premium/admin-content.php:2654 modules/premium/admin-folders.php:681
+#: modules/premium/admin-folders.php:834
+msgid "New Folder"
+msgstr "پوشه جدید"
+
+#: modules/premium/admin-content.php:2660 modules/premium/admin-folders.php:840
+msgid "Delete Folder"
+msgstr "حذف پوشه"
+
+#: modules/premium/admin-content.php:2668
+#: modules/premium/admin-content.php:2714
+#: modules/premium/admin-content.php:2715 modules/premium/admin-folders.php:848
+#: modules/premium/admin-folders.php:894 modules/premium/admin-folders.php:895
+msgid "Folder Name"
+msgstr "نام پوشه"
+
+#: modules/premium/admin-content.php:2673
+#: modules/premium/admin-content.php:2719 modules/premium/admin-folders.php:853
+#: modules/premium/admin-folders.php:899
+msgid "Folder Colour"
+msgstr "رنگ پوشه"
+
+#: modules/premium/admin-content.php:2689
+#: modules/premium/admin-content.php:2735 modules/premium/admin-folders.php:869
+#: modules/premium/admin-folders.php:915
+msgid "Custom"
+msgstr "سفارشی"
+
+#: modules/premium/admin-content.php:2695
+#: modules/premium/admin-content.php:2741 modules/premium/admin-folders.php:875
+#: modules/premium/admin-folders.php:921
+msgid "Custom (hex)"
+msgstr "سفارشی (شش ضلعی)"
+
+#: modules/premium/admin-content.php:2777 modules/premium/admin-folders.php:957
+msgid "No folder"
+msgstr "پوشه ای وجود ندارد"
+
+#: modules/premium/admin-content.php:2809
+#: modules/premium/admin-content.php:2812
+msgid "Post Types"
+msgstr "انواع پست"
+
+#: modules/premium/admin-content.php:2813
+msgid "Search Post Types..."
+msgstr "جستجوی انواع پست ..."
+
+#: modules/premium/admin-content.php:2820
+#: modules/premium/admin-content.php:2823
+msgid "Post Status"
+msgstr "وضعیت پست"
+
+#: modules/premium/admin-content.php:2824
+msgid "Search Post Statuses..."
+msgstr "جستجوی وضعیت پست ..."
+
+#: modules/premium/admin-content.php:2837
+msgid "Posted On"
+msgstr "نوشته شده در"
+
+#: modules/premium/admin-content.php:2838
+msgid "Posted After"
+msgstr "ارسال شده پس از"
+
+#: modules/premium/admin-content.php:2839
+msgid "Posted Before"
+msgstr "ارسال شده قبل از"
+
+#: modules/premium/admin-content.php:2853
+#: modules/premium/admin-content.php:2856
+msgid "Media Types"
+msgstr "انواع رسانه ها"
+
+#: modules/premium/admin-content.php:2857
+msgid "Search Media Types..."
+msgstr "Search Media Types..."
+
+#: modules/premium/admin-content.php:2883
+msgid "Clear Filters"
+msgstr "پاک کردن فیلترها"
+
+#: modules/premium/admin-content.php:2884
+msgid "Save as view"
+msgstr "ذخیره به عنوان نمای"
+
+#: modules/premium/admin-content.php:2931
+msgid "Posted"
+msgstr "ارسال شده"
+
+#: modules/premium/admin-content.php:3088
+msgid "Type"
+msgstr "تایپ کنید"
+
+#: modules/premium/admin-content.php:3096
+#: modules/premium/admin-menu-creator.php:763
+msgid "Date"
+msgstr "تاریخ"
+
+#: modules/premium/admin-content.php:3190
+#: modules/premium/admin-content.php:3277
+msgid "Quick Edit"
+msgstr "ویرایش سریع"
+
+#: modules/premium/admin-content.php:3196
+#: modules/premium/admin-menu-creator.php:814
+msgid "Duplicate"
+msgstr "تکراری"
+
+#: modules/premium/admin-content.php:3207
+msgid "Delete Item"
+msgstr "حذف آیتم"
+
+#: modules/premium/admin-content.php:3316
+msgid "Load More"
+msgstr "بارگذاری بیشتر"
+
+#: modules/premium/admin-content.php:3325
+msgid "No content found"
+msgstr "محتوا یافت نشد"
+
+#: modules/premium/admin-content.php:3350
+msgid "items selected"
+msgstr "موارد انتخاب شده"
+
+#: modules/premium/admin-content.php:3368
+msgid "Categories & Tags"
+msgstr "دسته بندی ها و برچسب ها"
+
+#: modules/premium/admin-content.php:3374
+msgid "Delete selected"
+msgstr "انتخاب شده را پاک کن"
+
+#: modules/premium/admin-content.php:3385
+msgid "Clear Selection"
+msgstr "پاک کردن انتخاب"
+
+#: modules/premium/admin-content.php:3415
+msgid "Create New View"
+msgstr "ایجاد نمای جدید"
+
+#: modules/premium/admin-content.php:3422
+msgid "View name"
+msgstr "مشاهده نام"
+
+#: modules/premium/admin-content.php:3425
+msgid "View Name"
+msgstr "مشاهده نام"
+
+#: modules/premium/admin-folders.php:527 modules/premium/admin-folders.php:732
+msgid "Folders"
+msgstr "پوشه ها"
+
+#: modules/premium/admin-folders.php:529
+msgid "Creates the folder system for the content page and media page / modals."
+msgstr "سیستم پوشه را برای صفحه محتوا و صفحه رسانه / ماژول‌هاا ایجاد می کند."
+
+#: modules/premium/admin-folders.php:547 modules/premium/admin-folders.php:579
+msgid "Folders Disabled for"
+msgstr "پوشه ها غیرفعال برای"
+
+#: modules/premium/admin-folders.php:548
+msgid "Folder system will be disabled for any users or roles you select"
+msgstr "سیستم پوشه برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/premium/admin-folders.php:580
+msgid "Folders will be disabled for any users or roles you select"
+msgstr "پوشه ها برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/premium/admin-folders.php:680
+msgid "Add New Folder"
+msgstr "افزودن پوشه جدید"
+
+#: modules/premium/admin-folders.php:682
+msgid "Edit Folder"
+msgstr "ویرایش پوشه"
+
+#: modules/premium/admin-folders.php:683
+msgid "View Folder"
+msgstr "مشاهده پوشه"
+
+#: modules/premium/admin-folders.php:684
+msgid "All Folders"
+msgstr "همه پوشه ها"
+
+#: modules/premium/admin-folders.php:685
+msgid "Search Folders"
+msgstr "پوشه ها را جستجو کنید"
+
+#: modules/premium/admin-folders.php:686
+msgid "No Folders found."
+msgstr "پوشه ای یافت نشد."
+
+#: modules/premium/admin-folders.php:687
+msgid "No Folders found in Trash."
+msgstr "پوشه ای در حذف شده ها پیدا نشد."
+
+#: modules/premium/admin-folders.php:691
+#: modules/premium/admin-menu-creator.php:208
+#: modules/premium/admin-pages.php:269
+msgid "Description."
+msgstr "شرح."
+
+#: modules/premium/admin-menu-creator.php:197
+msgid "Add New Admin Menu"
+msgstr "افزودن منوی مدیریت جدید"
+
+#: modules/premium/admin-menu-creator.php:198
+msgid "New Admin Menu"
+msgstr "منوی مدیریت جدید"
+
+#: modules/premium/admin-menu-creator.php:199
+msgid "Edit Admin Menu"
+msgstr "ویرایش منوی مدیریت"
+
+#: modules/premium/admin-menu-creator.php:200
+msgid "View Admin Menu"
+msgstr "مشاهده منوی مدیریت"
+
+#: modules/premium/admin-menu-creator.php:201
+msgid "All Admin Menus"
+msgstr "همه منوهای مدیریت"
+
+#: modules/premium/admin-menu-creator.php:202
+msgid "Search Admin Menus"
+msgstr "جستجوی منوهای مدیریت"
+
+#: modules/premium/admin-menu-creator.php:203
+msgid "No Admin Menus found."
+msgstr "منوی مدیریتی یافت نشد."
+
+#: modules/premium/admin-menu-creator.php:204
+msgid "No Admin Menus found in Trash."
+msgstr "منوی مدیریتی در حذف شده ها یافت نشد."
+
+#: modules/premium/admin-menu-creator.php:295
+msgid "Status Updated"
+msgstr "وضعیت به روز شد"
+
+#: modules/premium/admin-menu-creator.php:322
+msgid "You don't have permission to delete this"
+msgstr "شما اجازه حذف این مورد را ندارید"
+
+#: modules/premium/admin-menu-creator.php:330
+msgid "Unable to delete menu"
+msgstr "حذف منو امکان پذیر نیست"
+
+#: modules/premium/admin-menu-creator.php:336
+msgid "Menu deleted"
+msgstr "منو حذف شد"
+
+#: modules/premium/admin-menu-creator.php:363
+msgid "Unable to duplicate menu, menu is corrupted"
+msgstr "منو را نمی توان تکراری کرد ، منو خراب است"
+
+#: modules/premium/admin-menu-creator.php:369
+msgid "(copy)"
+msgstr "(کپی)"
+
+#: modules/premium/admin-menu-creator.php:378
+msgid "Unable to duplicate menu"
+msgstr "منو تکراری نمی شود"
+
+#: modules/premium/admin-menu-creator.php:389
+msgid "Menu duplicated"
+msgstr "منو تکراری"
+
+#: modules/premium/admin-menu-creator.php:421
+msgid "Unable to save, menu is corrupted"
+msgstr "ذخیره نمی شود ، منو خراب است"
+
+#: modules/premium/admin-menu-creator.php:442
+msgid "Unable to save menu"
+msgstr "ذخیره منو امکان پذیر نیست"
+
+#: modules/premium/admin-menu-creator.php:453
+msgid "Menu Saved"
+msgstr "منو ذخیره شد"
+
+#: modules/premium/admin-menu-creator.php:589
+#: modules/premium/admin-menu-creator.php:696
+#: modules/premium/admin-menu-creator.php:735
+#: modules/premium/admin-menu-creator.php:1236
+msgid "Menu Creator"
+msgstr "خالق منو"
+
+#: modules/premium/admin-menu-creator.php:591
+msgid ""
+"Creates the menu creator and allows for rearanging, renaming and removal of "
+"menu items."
+msgstr ""
+"سازنده منو را ایجاد می کند و امکان تنظیم مجدد ، تغییر نام و حذف موارد منو را "
+"فراهم می کند."
+
+#: modules/premium/admin-menu-creator.php:609
+#: modules/premium/admin-menu-editor.php:127
+msgid "Menu Editor disabled for"
+msgstr "ویرایشگر منو غیرفعال برای"
+
+#: modules/premium/admin-menu-creator.php:610
+#: modules/premium/admin-menu-editor.php:128
+msgid "UiPress menu editor will be disabled for any users or roles you select."
+msgstr ""
+"ویرایشگر منوی UiPress برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود."
+
+#: modules/premium/admin-menu-creator.php:746
+msgid "Looks like you haven't created any admin menus yet"
+msgstr "به نظر می رسد هنوز هیچ منوی سرپرستی ایجاد نکرده اید"
+
+#: modules/premium/admin-menu-creator.php:747
+msgid "Create your first admin menu"
+msgstr "اولین منوی مدیریت خود را ایجاد کنید"
+
+#: modules/premium/admin-menu-creator.php:821
+#: modules/premium/admin-menu-creator.php:1259
+msgid "Export"
+msgstr "برون‌ریزی تنظیمات"
+
+#: modules/premium/admin-menu-creator.php:872
+msgid ""
+"Menu creator isn't optimised for mobile devices. For best results switch to "
+"a larger screen"
+msgstr ""
+"سازنده منو برای دستگاه های تلفن همراه بهینه نشده است. برای بهترین نتایج ، به "
+"صفحه بزرگتر بروید"
+
+#: modules/premium/admin-menu-creator.php:900
+#: modules/premium/admin-menu-creator.php:901
+msgid "Menu Name"
+msgstr "نام منو"
+
+#: modules/premium/admin-menu-creator.php:906
+msgid "Menu Applies to"
+msgstr "منو مربوط به"
+
+#: modules/premium/admin-menu-creator.php:911
+msgid "Inclusive"
+msgstr "شامل"
+
+#: modules/premium/admin-menu-creator.php:915
+msgid "Exclusive"
+msgstr "انحصاری"
+
+#: modules/premium/admin-menu-creator.php:919
+msgid ""
+"In Inclusive mode, this menu will load for all Usernames and roles selected "
+"below."
+msgstr ""
+"در حالت فراگیر ، این منو برای همه نام های کاربری و نقش های انتخاب شده در زیر "
+"بارگیری می شود."
+
+#: modules/premium/admin-menu-creator.php:920
+msgid ""
+"In Exclusive mode, this menu will load for every user except those Usernames "
+"and roles selected below."
+msgstr ""
+"در حالت انحصاری ، این منو برای همه کاربران بارگذاری می شود به جز نام های "
+"کاربری و نقش های انتخاب شده در زیر."
+
+#: modules/premium/admin-menu-creator.php:923
+msgid "Choose users or roles..."
+msgstr "انتخاب کاربران یا نقش ها ..."
+
+#: modules/premium/admin-menu-creator.php:925
+msgid "Search roles and users..."
+msgstr "جستجوی نقش ها و کاربران ..."
+
+#: modules/premium/admin-menu-creator.php:936
+msgid "Add Custom..."
+msgstr "افزودن سفارشی ..."
+
+#: modules/premium/admin-menu-creator.php:940
+msgid "Divider"
+msgstr "تقسیم کننده"
+
+#: modules/premium/admin-menu-creator.php:941
+msgid "Custom Link"
+msgstr "پیوند سفارشی"
+
+#: modules/premium/admin-menu-creator.php:945
+msgid "Available Menu Items"
+msgstr "موارد منوی موجود"
+
+#: modules/premium/admin-menu-creator.php:950
+msgid "Search menu items"
+msgstr "جستجوی موارد منو"
+
+#: modules/premium/admin-menu-creator.php:975
+#: modules/premium/admin-menu-creator.php:993
+msgid "add"
+msgstr "اضافه کردن"
+
+#: modules/premium/admin-menu-creator.php:1064
+msgid "Add some menu items from the left toolbar to get started"
+msgstr "برای شروع ، برخی از موارد منو را از نوار ابزار سمت چپ اضافه کنید"
+
+#: modules/premium/admin-menu-creator.php:1081
+msgid "Seperator"
+msgstr "جدا کننده"
+
+#: modules/premium/admin-menu-creator.php:1193
+msgid "Edit Menu Item"
+msgstr "ویرایش مورد منو"
+
+#: modules/premium/admin-menu-creator.php:1203
+#: modules/premium/admin-menu-creator.php:1204
+msgid "Link"
+msgstr "لینک"
+
+#: modules/premium/admin-menu-creator.php:1208
+#: modules/premium/admin-menu-creator.php:1209
+msgid "Icon"
+msgstr "آیکون"
+
+#: modules/premium/admin-menu-creator.php:1213
+msgid "Change Icon..."
+msgstr "تغییر آیکون..."
+
+#: modules/premium/admin-menu-creator.php:1241
+msgid "Back to all menus"
+msgstr "بازگشت به همه منوها"
+
+#: modules/premium/admin-menu-creator.php:1267
+#: modules/premium/admin-menu-editor.php:271
+msgid "Import Menu"
+msgstr "درون‌ریزی منو"
+
+#: modules/premium/admin-menu-editor.php:107
+#: modules/premium/admin-menu-editor.php:254
+msgid "Menu Editor"
+msgstr "ویرایشگر منو"
+
+#: modules/premium/admin-menu-editor.php:109
+msgid ""
+"Creates the menu editor and allows for rearanging, renaming and removal of "
+"menu items."
+msgstr ""
+"ویرایشگر منو را ایجاد می کند و امکان تنظیم مجدد ، تغییر نام و حذف موارد منو "
+"را فراهم می کند."
+
+#: modules/premium/admin-menu-editor.php:205
+msgid "Menu Editor (UiPress)"
+msgstr "ویرایشگر منو (UiPress)"
+
+#: modules/premium/admin-menu-editor.php:225
+msgid ""
+"Edit each menu item's name, link, icon and visibility. Drag and drop to "
+"rearange the menu. Changes will take effect after page refresh."
+msgstr ""
+"نام ، پیوند ، نماد و قابلیت مشاهده هر مورد منو را ویرایش کنید. برای تنظیم "
+"مجدد منو ، آن را بکشید و رها کنید. تغییرات پس از ریفرش کردن صفحه اعمال می "
+"شوند."
+
+#: modules/premium/admin-menu-editor.php:229
+msgid ""
+"If you have admin 2020 menu component disabled, icons and label dividers "
+"won't change."
+msgstr ""
+"اگر اجزای منوی UiPress غیرفعال شده اید ، نمادها و تقسیم کننده های برچسب "
+"تغییر نمی کنند."
+
+#: modules/premium/admin-menu-editor.php:264
+msgid "Export Menu"
+msgstr "برون‌ریزی منو"
+
+#: modules/premium/admin-menu-editor.php:271
+msgid "Imports Admin 2020 menu from JSON"
+msgstr "درون‌ریزی یو‌آی‌پرس از فایل JSON"
+
+#: modules/premium/admin-menu-editor.php:276
+msgid "Reset Menu"
+msgstr "بازنشانی منو"
+
+#: modules/premium/admin-menu-editor.php:283
+msgid ""
+"Are you sure you want to reset your menu back to default? There is no undo"
+msgstr ""
+"آیا مطمئن هستید که می خواهید منوی خود را به حالت پیش فرض بازگردانید؟ برگشت "
+"وجود ندارد"
+
+#: modules/premium/admin-menu-editor.php:363
+msgid "Separator"
+msgstr "جدا کننده"
+
+#: modules/premium/admin-menu-editor.php:371
+#: modules/premium/admin-menu-editor.php:498
+#: modules/premium/admin-menu-editor.php:631
+msgid "Rename as"
+msgstr "تغییر نام به"
+
+#: modules/premium/admin-menu-editor.php:372
+#: modules/premium/admin-menu-editor.php:499
+#: modules/premium/admin-menu-editor.php:632
+msgid "New name..."
+msgstr "نام جدید ..."
+
+#: modules/premium/admin-menu-editor.php:377
+#: modules/premium/admin-menu-editor.php:504
+#: modules/premium/admin-menu-editor.php:637
+msgid "Hidden For Roles"
+msgstr "پنهان برا نقشها"
+
+#: modules/premium/admin-menu-editor.php:487
+msgid "Sub Menu"
+msgstr "منوی فرعی"
+
+#: modules/premium/admin-menu-editor.php:535
+#: modules/premium/admin-menu-editor.php:670
+msgid "Change Link"
+msgstr "تغییر پیوند"
+
+#: modules/premium/admin-menu-editor.php:536
+#: modules/premium/admin-menu-editor.php:671
+msgid "New Link..."
+msgstr "پیوند جدید ..."
+
+#: modules/premium/admin-menu-editor.php:540
+msgid "Set custom icon"
+msgstr "تنظیم نماد سفارشی"
+
+#: modules/premium/admin-menu-editor.php:542
+msgid "Choose Icon"
+msgstr "نماد را انتخاب کنید"
+
+#: modules/premium/admin-menu-editor.php:563
+msgid "No sub menu items"
+msgstr "هیچ مورد زیر منو وجود ندارد"
+
+#: modules/premium/admin-menu-editor.php:698
+msgid "Icons"
+msgstr "نمادها"
+
+#: modules/premium/admin-menu-editor.php:706
+msgid "Use Default"
+msgstr "استفاده به طور پیش فرض"
+
+#: modules/premium/admin-menu-editor.php:887
+msgid "Select"
+msgstr "انتخاب کنید"
+
+#: modules/premium/admin-menu-editor.php:1352
+msgid "Settings saved"
+msgstr "تنظیمات ذخیره شد"
+
+#: modules/premium/admin-menu-editor.php:1510
+msgid "Menu Imported"
+msgstr "منو وارد شد"
+
+#: modules/premium/admin-overview-cards.php:25
+msgid "Total Posts"
+msgstr "مجموع پست ها"
+
+#: modules/premium/admin-overview-cards.php:26
+msgid "Total Pages"
+msgstr "کل صفحات"
+
+#: modules/premium/admin-overview-cards.php:27
+msgid "Total Comments"
+msgstr "مجموع نظرات"
+
+#: modules/premium/admin-overview-cards.php:28
+msgid "Recent Comments"
+msgstr "نظرات اخیر"
+
+#: modules/premium/admin-overview-cards.php:29
+msgid "System Info"
+msgstr "اطلاعات سیستم"
+
+#: modules/premium/admin-overview-cards.php:30
+msgid "Recently Published"
+msgstr "اخیراً منتشر شده"
+
+#: modules/premium/admin-overview-cards.php:91
+#: modules/premium/admin-overview-cards.php:150
+#: modules/premium/admin-overview-cards.php:207
+msgid "In the last "
+msgstr "در آخر "
+
+#: modules/premium/admin-overview-cards.php:261
+msgid "No comments for date range"
+msgstr "هیچ نظری برای این محدوده تاریخ وجود ندارد"
+
+#: modules/premium/admin-overview-cards.php:278
+#: modules/premium/admin-overview-cards.php:428
+msgid "ago"
+msgstr "پیش"
+
+#: modules/premium/admin-overview-cards.php:319
+msgid "on"
+msgstr "در"
+
+#: modules/premium/admin-overview-cards.php:352
+msgid "WordPress version"
+msgstr "نسخه وردپرس"
+
+#: modules/premium/admin-overview-cards.php:356
+msgid "PHP version"
+msgstr "PHP version"
+
+#: modules/premium/admin-overview-cards.php:416
+msgid "No posts for date range"
+msgstr "هیچ پستی برای این محدوده تاریخ وجود ندارد"
+
+#: modules/premium/admin-overview-cards.php:435
+msgid "by"
+msgstr "توسط"
+
+#: modules/premium/admin-overview.php:74
+msgid ""
+"Creates the overview page. If this is disabled, you will not be able to see "
+"analytics cards or woocommerce cards."
+msgstr ""
+"صفحه نمای کلی را ایجاد می کند. اگر این مورد غیرفعال باشد ، نمی توانید کارت "
+"های تجزیه و تحلیل یا کارت های woocommerce را مشاهده کنید."
+
+#: modules/premium/admin-overview.php:92
+msgid "Overview Disabled for"
+msgstr "نمای کلی غیرفعال شده برای"
+
+#: modules/premium/admin-overview.php:93
+msgid "Overview page will be disabled for any users or roles you select"
+msgstr "صفحه مرور برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/premium/admin-overview.php:100
+msgid "Custom welcome message"
+msgstr "پیام خوش آمد گویی سفارشی"
+
+#: modules/premium/admin-overview.php:101
+msgid "Add a custom welcome message here to displayed on the overview page"
+msgstr ""
+"یک پیام خوش آمد گویی سفارشی را در اینجا اضافه کنید تا در صفحه نمای کلی نمایش "
+"داده شود"
+
+#: modules/premium/admin-overview.php:221
+#: modules/premium/admin-overview.php:824
+msgid "Make Primary"
+msgstr "در اولویت قرار دهید"
+
+#: modules/premium/admin-overview.php:226
+#: modules/premium/admin-overview.php:829
+msgid "Make Default"
+msgstr "پیش فرض کنید"
+
+#: modules/premium/admin-overview.php:242
+#: modules/premium/admin-overview.php:845
+msgid "Hide"
+msgstr "پنهان شدن"
+
+#: modules/premium/admin-overview.php:285
+msgid "Unable to connect account"
+msgstr "اتصال حساب امکان پذیر نیست"
+
+#: modules/premium/admin-overview.php:298
+msgid "Analytics account connected"
+msgstr "حساب تجزیه و تحلیل متصل شد"
+
+#: modules/premium/admin-overview.php:331
+msgid "Analytics account removed"
+msgstr "حساب تجزیه و تحلیل حذف شد"
+
+#: modules/premium/admin-overview.php:372
+msgid "No Card supplied to save"
+msgstr "هیچ کارت برای ذخیره ارائه نشده است"
+
+#: modules/premium/admin-overview.php:414
+#: modules/premium/admin-overview.php:476
+msgid "Card options saved"
+msgstr "گزینه های کارت ذخیره شد"
+
+#: modules/premium/admin-overview.php:417
+#: modules/premium/admin-overview.php:479
+msgid "Unable to save card preferences"
+msgstr "تنظیمات برگزیده کارت ذخیره نمی شود"
+
+#: modules/premium/admin-overview.php:439
+msgid "No Card supplied to hide"
+msgstr "هیچ کارت برای مخفی کردن ارائه نشده است"
+
+#: modules/premium/admin-overview.php:680
+msgid "Hello"
+msgstr "سلام"
+
+#: modules/premium/admin-overview.php:704
+msgid "Active Cards"
+msgstr "کارت های فعال"
+
+#: modules/premium/admin-overview.php:757
+msgid "Disconnect google account"
+msgstr "حساب Google را قطع کنید"
+
+#: modules/premium/admin-pages.php:100
+msgid "Admin Pages"
+msgstr "صفحات مدیریت"
+
+#: modules/premium/admin-pages.php:102
+msgid ""
+"Creates the admin pages editor, allowing you to create new top level admin "
+"pages and their content"
+msgstr ""
+"ایجاد ویرایشگر صفحات سرپرست ، به شما امکان می دهد صفحات سرپرست جدید و محتوای "
+"آنها را ایجاد کنید"
+
+#: modules/premium/admin-pages.php:126
+msgid "Admin Pages Disabled for"
+msgstr "صفحات مدیریت غیرفعال شده است"
+
+#: modules/premium/admin-pages.php:127
+msgid ""
+"Admin 2020 admin pages will be disabled for any users or roles you select"
+msgstr ""
+"صفحات مدیریت UiPress برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/premium/admin-pages.php:141
+#: modules/premium/admin-woocommerce.php:116
+msgid "Super Admin"
+msgstr "سوپر ادمین"
+
+#: modules/premium/admin-pages.php:258
+msgid "Add New Admin Page"
+msgstr "افزودن صفحه مدیریت جدید"
+
+#: modules/premium/admin-pages.php:259
+msgid "New Admin Page"
+msgstr "صفحه مدیریت جدید"
+
+#: modules/premium/admin-pages.php:260
+msgid "Edit Admin Page"
+msgstr "ویرایش صفحه مدیریت"
+
+#: modules/premium/admin-pages.php:261
+msgid "View Admin Page"
+msgstr "مشاهده صفحه مدیریت"
+
+#: modules/premium/admin-pages.php:262
+msgid "All Admin Pages"
+msgstr "همه صفحات مدیریت"
+
+#: modules/premium/admin-pages.php:263
+msgid "Search Admin Pages"
+msgstr "جستجو در صفحات مدیریت"
+
+#: modules/premium/admin-pages.php:264
+msgid "No Admin Pages found."
+msgstr "هیچ صفحه مدیریتی یافت نشد."
+
+#: modules/premium/admin-pages.php:265
+msgid "No Admin Pages found in Trash."
+msgstr "هیچ صفحه مدیریتی در حذف شده ها یافت نشد."
+
+#: modules/premium/admin-woocommerce.php:73
+msgid "WooCommerce"
+msgstr "ووکامرس"
+
+#: modules/premium/admin-woocommerce.php:75
+msgid "Creates the woocommerce cards for the overview page."
+msgstr "کارت های ووکامرس را برای صفحه نمای کلی ایجاد می کند."
+
+#: modules/premium/admin-woocommerce.php:101
+msgid "WooCommerce Cards"
+msgstr "کارت های ووکامرس"
+
+#: modules/premium/admin-woocommerce.php:102
+msgid "WooCommerce cards will be disabled for any users or roles you select"
+msgstr ""
+"کارت های ووکامرس برای هر کاربر یا نقشی که انتخاب می کنید غیرفعال می شود"
+
+#: modules/premium/admin-woocommerce.php:187
+#: modules/premium/admin-woocommerce.php:312
+msgid "Total Sales"
+msgstr "مجموع فروش"
+
+#: modules/premium/admin-woocommerce.php:188
+#: modules/premium/admin-woocommerce.php:431
+msgid "Total Orders"
+msgstr "مجموع سفارشات"
+
+#: modules/premium/admin-woocommerce.php:189
+msgid "Average Order Value"
+msgstr "میانگین ارزش سفارش"
+
+#: modules/premium/admin-woocommerce.php:190
+msgid "Popular Products"
+msgstr "محصولات محبوب"
+
+#: modules/premium/admin-woocommerce.php:191
+msgid "Recent Orders"
+msgstr "سفارشات اخیر"
+
+#: modules/premium/admin-woocommerce.php:329
+#: modules/premium/admin-woocommerce.php:448
+#: modules/premium/admin-woocommerce.php:564
+#: modules/premium/admin-woocommerce.php:619
+#: modules/premium/admin-woocommerce.php:740
+msgid "No sales data available for dates"
+msgstr "هیچ اطلاعات فروش برایاین تاریخها موجود نیست"
+
+#: modules/premium/admin-woocommerce.php:337
+#: modules/premium/admin-woocommerce.php:457
+msgid "In the last"
+msgstr "در آخر"
+
+#: modules/premium/admin-woocommerce.php:573
+msgid "For given date period"
+msgstr "برای دوره تاریخ معین"
+
+#: modules/premium/admin-woocommerce.php:625
+msgid "Order"
+msgstr "سفارش"
+
+#: modules/premium/admin-woocommerce.php:626
+msgid "Customer"
+msgstr "مشتری"
+
+#: modules/premium/admin-woocommerce.php:628
+#: modules/premium/admin-woocommerce.php:703
+msgid "Value"
+msgstr "مقدار"
+
+#: modules/premium/admin-woocommerce.php:649
+msgid "View Order"
+msgstr "دیدن سفارش"
+
+#: modules/premium/admin-woocommerce.php:652
+msgid "View Customer"
+msgstr "مشاهده مشتری"
+
+#: modules/premium/admin-woocommerce.php:701
+msgid "Product"
+msgstr "محصول"
+
+#: modules/premium/admin-woocommerce.php:702
+msgid "Sold"
+msgstr "فروخته شد"

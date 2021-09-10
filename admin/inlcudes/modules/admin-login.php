@@ -64,11 +64,34 @@ class Admin_2020_module_admin_login
 		$optionname = $info['option_name'];
 		$redirect = $this->utils->get_option($optionname,'login-redirect');
 		
-		if($redirect == 'true'){
-			return admin_url() . "admin.php?page=admin_2020_overview";
-		} else {
-			return $redirect_to;
+		$redirectCustom = $this->utils->get_option($optionname,'login-redirect-custom');
+		
+		if($redirect == 'true' && !$redirectCustom){
+			$redirect_to = admin_url() . "admin.php?page=uip-overview";
 		}
+		
+		if($redirectCustom && $redirectCustom != ''){
+			
+			if($this->isAbsoluteUrl($redirectCustom)){
+				$redirect_to = $redirectCustom;
+			} else {
+				$redirect_to = admin_url() . $redirectCustom;
+			}
+			
+			
+		}
+		
+		return $redirect_to;
+	}
+	
+	public function isAbsoluteUrl($url)
+	{
+		$pattern = "/^(?:ftp|https?|feed)?:?\/\/(?:(?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*
+		(?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@)?(?:
+		(?:[a-z0-9\-\.]|%[0-9a-f]{2})+|(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\]))(?::[0-9]+)?(?:[\/|\?]
+		(?:[\w#!:\.\?\+\|=&@$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})*)?$/xi";
+
+		return (bool) preg_match($pattern, $url);
 	}
 	
 	/**
@@ -84,88 +107,57 @@ class Admin_2020_module_admin_login
 		return $data;
 		
 	}
+	
 	/**
-	 * Returns settings for module
-	 * @since 1.4
+	 * Returns settings options for settings page
+	 * @since 2.1
 	 */
-	 public function render_settings(){
-		 
-		 wp_enqueue_media();
-		 
-		 $info = $this->component_info();
-		 $optionname = $info['option_name'];
-		 
-		 $background = $this->utils->get_option($optionname,'login-background');
-		 $dark_enabled = $this->utils->get_option($optionname,'dark-enabled');
-		 $redirect = $this->utils->get_option($optionname,'login-redirect');
-		 
-		 ?>
-		 <div class="uk-grid" id="a2020_login_settings" uk-grid>
-			 <!-- LOGO SETTINGS -->
-			 <div class="uk-width-1-1@ uk-width-1-3@m">
-				 <div class="uk-h5 "><?php _e('Login Background Image','admin2020')?></div>
-				 <div class="uk-text-meta"><?php _e("Sets an optional background image for the login page.",'admin2020') ?></div>
-			 </div>
-			 <div class="uk-width-1-1@ uk-width-1-3@m">
-				 
-				 <input class="uk-input uk-margin-bottom a2020_setting" id="login-background" 
-				 module-name="<?php echo $optionname?>" 
-				 name="login-background" 
-				 placeholder="<?php _e('Login background url','admin2020')?>"
-				 value="<?php echo $background?>">
-				 
-				 <button class="uk-button uk-button-default" type="button" id="a2020_select_login_background"><?php _e('Select login background','admin2020')?></button>
-				 <img class="uk-image uk-margin-left" id="a2020_login_background_preview" src="<?php echo $background?>" style="height:40px;">
-			 </div>	
-			 <div class="uk-width-1-1@ uk-width-1-3@m">
-			 </div>
-			 
-			 
-			 <!-- DARK MODE -->
-			 <div class="uk-width-1-1@ uk-width-1-3@m">
-				 <div class="uk-h5 "><?php _e('Dark Mode','admin2020')?></div>
-				 <div class="uk-text-meta"><?php _e("Login style will match dark theme if enabled",'admin2020') ?></div>
-			 </div>
-			 <div class="uk-width-1-1@ uk-width-2-3@m">
-				 
-				 <?php
-				 $checked = '';
-				 if($dark_enabled == 'true'){
-					 $checked = 'checked';
-				 }
-				 ?>
-				 
-				 <label class="admin2020_switch uk-margin-left">
-					 <input class="a2020_setting" name="dark-enabled" module-name="<?php echo $optionname?>" type="checkbox" <?php echo $checked ?>>
-					 <span class="admin2020_slider constant_dark"></span>
-				 </label>
-				 
-			 </div>	
-			 
-			 <!-- REDIRECT LOGIN -->
-			  <div class="uk-width-1-1@ uk-width-1-3@m">
-				  <div class="uk-h5 "><?php _e('Redirect to overview page','admin2020')?></div>
-				  <div class="uk-text-meta"><?php _e("If enabled, after logging in users will be redirected to the overview page",'admin2020') ?></div>
-			  </div>
-			  <div class="uk-width-1-1@ uk-width-2-3@m">
-				  
-				  <?php
-				  $checked = '';
-				  if($redirect == 'true'){
-					  $checked = 'checked';
-				  }
-				  ?>
-				  
-				  <label class="admin2020_switch uk-margin-left">
-					  <input class="a2020_setting" name="login-redirect" module-name="<?php echo $optionname?>" type="checkbox" <?php echo $checked ?>>
-					  <span class="admin2020_slider constant_dark"></span>
-				  </label>
-				  
-			  </div>	
-		 </div>	
-		 
-		 <?php
-	 }
+	public function get_settings_options(){
+		
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
+		
+		$settings = array();
+		
+		
+		$temp = array();
+		$temp['name'] = __('Background Image','admin2020');
+		$temp['description'] = __("Sets an optional background image for the login page.",'admin2020');
+		$temp['type'] = 'image';
+		$temp['optionName'] = 'login-background'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		
+		$temp = array();
+		$temp['name'] = __('Dark Mode','admin2020');
+		$temp['description'] = __("Login style will match dark theme if enabled.",'admin2020');
+		$temp['type'] = 'switch';
+		$temp['optionName'] = 'dark-enabled'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Redirect to overview page','admin2020');
+		$temp['description'] = __("If enabled, after logging in users will be redirected to the overview page",'admin2020');
+		$temp['type'] = 'switch';
+		$temp['optionName'] = 'login-redirect'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		$temp = array();
+		$temp['name'] = __('Redirect to custom page','admin2020');
+		$temp['description'] = __("If enabled, after logging in users will be redirected to entered link. For admin pages use a relative URL (path after /wp-admin/), for other pages use an absolute URL",'admin2020');
+		$temp['type'] = 'text';
+		$temp['optionName'] = 'login-redirect-custom'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
+		
+		
+		return $settings;
+		
+	}
+	
     /**
      * Adds admin bar styles
      * @since 1.0

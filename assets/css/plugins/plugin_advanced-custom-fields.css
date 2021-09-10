@@ -1,3 +1,7 @@
+.acf-admin-field-groups .tablenav.top {
+  display: inherit;
+}
+
 .a2020_admin_theme.a2020_night_mode .acf-admin-toolbar,
 .a2020_admin_theme.a2020_night_mode .acf-field-object {
   filter: contrast(2) invert(1) hue-rotate(180deg);

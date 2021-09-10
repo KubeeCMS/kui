@@ -88,166 +88,65 @@ class Admin_2020_module_admin_menu
 		return $data;
 		
 	}
+	
 	/**
-	 * Returns settings for module
-	 * @since 1.4
+	 * Returns settings options for settings page
+	 * @since 2.1
 	 */
-	 public function render_settings(){
-		  
-		wp_enqueue_media();
+	public function get_settings_options(){
 		
 		$info = $this->component_info();
 		$optionname = $info['option_name'];
 		
-		$light_background = $this->utils->get_option($optionname,'light-background');
-		$dark_background = $this->utils->get_option($optionname,'dark-background');
-		$search_enabled = $this->utils->get_option($optionname,'search-enabled');
-		$shrunk_enabled = $this->utils->get_option($optionname,'shrunk-enabled');
-		///GET POST TYPES
-		$args = array('public'   => true);
-		$output = 'objects'; 
-		$post_types = get_post_types( $args, $output );
+		$settings = array();
 		
-		$disabled_for = $this->utils->get_option($optionname,'disabled-for');
-		if($disabled_for == ""){
-			$disabled_for = array();
-		}
 		
-		?>
-		<div class="uk-grid" id="a2020_menu_settings" uk-grid>
-		  
-		<!-- BACKGROUND COLOUR -->
-		<div class="uk-width-1-1@ uk-width-1-3@m">
-		  <div class="uk-h5 "><?php _e('Background Color','admin2020')?></div>
-		  <div class="uk-text-meta"><?php _e("Sets a background colour for the admin menu.",'admin2020') ?></div>
-		</div>
-		<div class="uk-width-1-1@ uk-width-1-3@m">
-		  <div class="uk-h5"><?php _e('Light','admin2020')?></div>
-		  
-		  <input class=" a2020_setting" id="light-background" 
-		  module-name="<?php echo $optionname?>" 
-		  name="light-background" 
-		  type="text"
-		  data-default-color="#fff"
-		  value="<?php echo $light_background?>">
-		  
-		</div>	
+		$temp = array();
+		$temp['name'] = __('Menu Disabled for','admin2020');
+		$temp['description'] = __("UiPress menu will be disabled for any users or roles you select",'admin2020');
+		$temp['type'] = 'user-role-select';
+		$temp['optionName'] = 'disabled-for'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName'], true);
+		$settings[] = $temp;
 		
-		<script>
-		  jQuery(document).ready(function($){
-			  $('#a2020_menu_settings #light-background').wpColorPicker();
-		  });
-		</script>
+		$temp = array();
+		$temp['name'] = __('Background Color (Light Mode)','admin2020');
+		$temp['description'] = __("Sets a background colour for the admin menu in light mode.",'admin2020');
+		$temp['type'] = 'color';
+		$temp['optionName'] = 'light-background'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
 		
-		<div class="uk-width-1-1@ uk-width-1-3@m">
-		  <div class="uk-h5"><?php _e('Dark','admin2020')?></div>
-		  
-		  <input class="a2020_setting" id="dark-background" 
-		  module-name="<?php echo $optionname?>" 
-		  name="dark-background" 
-		  type="text"
-		  data-default-color="#111"
-		  value="<?php echo $dark_background?>">
-		  
-		</div>	
+		$temp = array();
+		$temp['name'] = __('Background Color (Dark Mode)','admin2020');
+		$temp['description'] = __("Sets a background colour for the admin menu in dark mode.",'admin2020');
+		$temp['type'] = 'color';
+		$temp['optionName'] = 'dark-background'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
 		
-		<script>
-		  jQuery(document).ready(function($){
-			  $('#a2020_menu_settings #dark-background').wpColorPicker();
-		  });
-		</script>
 		
-		<div class="uk-width-1-1">
-		  <hr >
-		</div>
+		$temp = array();
+		$temp['name'] = __('Disable Search','admin2020');
+		$temp['description'] = __("Disables admin menu search.",'admin2020');
+		$temp['type'] = 'switch';
+		$temp['optionName'] = 'search-enabled'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
 		
-		<!-- LOCKED FOR USERS / ROLES -->
-		<div class="uk-width-1-1@ uk-width-1-3@m">
-		  <div class="uk-h5 "><?php _e('Menu Disabled for','admin2020')?></div>
-		  <div class="uk-text-meta"><?php _e("Admin 2020 menu will be disabled for any users or roles you select",'admin2020') ?></div>
-		</div>
-		<div class="uk-width-1-1@ uk-width-1-3@m">
-		  
-		  
-		  <select class="a2020_setting" id="a2020-role-types" name="disabled-for" module-name="<?php echo $optionname?>" multiple>
-			  
-			<?php
-			foreach($disabled_for as $disabled) {
-				
-				?>
-				<option value="<?php echo $disabled ?>" selected><?php echo $disabled ?></option>
-				<?php
-				
-			} 
-			?>
-			
-		  </select>
-		  
-		  <script>
-			  jQuery('#a2020_menu_settings #a2020-role-types').tokenize2({
-				  placeholder: '<?php _e('Select roles or users','admin2020') ?>',
-				  dataSource: function (term, object) {
-					  a2020_get_users_and_roles(term, object);
-				  },
-				  debounce: 1000,
-			  });
-		  </script>
-		  
-		</div>
-		<div class="uk-width-1-1@ uk-width-1-3@m">
-		</div>
+		$temp = array();
+		$temp['name'] = __('Set collapsed menu as default','admin2020');
+		$temp['description'] = __("If enabled, the menu will default to the shrunk menu for users that haven't set a preference..",'admin2020');
+		$temp['type'] = 'switch';
+		$temp['optionName'] = 'shrunk-enabled'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName']);
+		$settings[] = $temp;
 		
-		<!-- DISABLE MENU SEARCH -->
-		<div class="uk-width-1-1@ uk-width-1-3@m">
-		  <div class="uk-h5 "><?php _e('Disable Search','admin2020')?></div>
-		  <div class="uk-text-meta"><?php _e("Disables admin menu search",'admin2020') ?></div>
-		</div>
-		<div class="uk-width-1-1@ uk-width-2-3@m">
-		  
-		  <?php
-		  $checked = '';
-		  if($search_enabled == 'true'){
-			  $checked = 'checked';
-		  }
-		  ?>
-		  
-		  <label class="admin2020_switch uk-margin-left">
-			  <input class="a2020_setting" name="search-enabled" module-name="<?php echo $optionname?>" type="checkbox" <?php echo $checked ?>>
-			  <span class="admin2020_slider constant_dark"></span>
-		  </label>
-		  
-		</div>	
 		
-		<!-- COLLAPSED MENU -->
-		<div class="uk-width-1-1@ uk-width-1-3@m">
-		  <div class="uk-h5 "><?php _e('Set collapsed menu as default','admin2020')?></div>
-		  <div class="uk-text-meta"><?php _e("If enabled, the menu will default to the shrunk menu for users that haven't set a preference.",'admin2020') ?></div>
-		</div>
-		<div class="uk-width-1-1@ uk-width-2-3@m">
-		  
-		  <?php
-		  $checked = '';
-		  if($shrunk_enabled == 'true'){
-			  $checked = 'checked';
-		  }
-		  ?>
-		  
-		  <label class="admin2020_switch uk-margin-left">
-			  <input class="a2020_setting" name="shrunk-enabled" module-name="<?php echo $optionname?>" type="checkbox" <?php echo $checked ?>>
-			  <span class="admin2020_slider constant_dark"></span>
-		  </label>
-		  
-		</div>	
-		  
-		  	
-		</div>	
+		return $settings;
 		
-		<?php
-	  }
-    /**
-     * Adds admin bar styles
-     * @since 1.0
-     */
+	}
+	
 
     public function add_styles()
     {
@@ -291,12 +190,19 @@ class Admin_2020_module_admin_menu
 		$this->admin_menu;
 		$this->admin_sub_menu;
 		
+		$custommenu = array();
+		$usergenerated = apply_filters( 'uipress_get_custom_menu', $custommenu );
 		
-		$newmenu = $this->a2020_format_admin_menu($this->admin_menu, $this->admin_sub_menu);
+		if(is_array($usergenerated) && count($usergenerated) > 0){
+			$formattedMenu = $this->format_custom_menu($usergenerated);
+		} else {
+			$newmenu = $this->a2020_format_admin_menu($this->admin_menu, $this->admin_sub_menu);
+			$formattedMenu = $this->build_top_level_menu_items($newmenu);
+		}
 		
-		//echo '<pre>' . print_r( $newmenu['submenu'], true ) . '</pre>';
 		
-		$formattedMenu = $this->build_top_level_menu_items($newmenu);
+		//echo '<pre>' . print_r( $formattedMenu, true ) . '</pre>';
+		
 		$favs = $this->utils->get_user_preference('a2020_menu_favs');
 		$search = $this->utils->get_user_preference('a2020_menu_search');
 		$icons = $this->utils->get_user_preference('a2020_menu_icons');
@@ -326,6 +232,35 @@ class Admin_2020_module_admin_menu
 			$menuState = 'true';
 		}
 		
+		
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
+		$light_background = $this->utils->get_option($optionname,'light-background');
+		$dark_background = $this->utils->get_option($optionname,'dark-background');
+		$forceDark_lightmode = 'false';
+		$forceLight_darkmode = 'false';
+		
+		if($light_background != ""){
+			
+			$light_without_hex = str_replace('#', '', $light_background);
+			$hexRGB = $light_without_hex;
+			if(hexdec(substr($hexRGB,0,2))+hexdec(substr($hexRGB,2,2))+hexdec(substr($hexRGB,4,2))< 381){
+				$forceDark_lightmode = 'true';
+			}
+			
+		}
+		if($dark_background != ""){
+			
+			$light_without_hex = str_replace('#', '', $dark_background);
+			$hexRGB = $light_without_hex;
+			if(hexdec(substr($hexRGB,0,2))+hexdec(substr($hexRGB,2,2))+hexdec(substr($hexRGB,4,2))> 381){
+				$forceLight_darkmode = 'true';
+			}
+		}
+		
+		
+		
+		
 		$preferences['favourites'] = $favs; 
 		$preferences['menuSearch'] = $search;
 		$preferences['menuIcons'] = $icons;
@@ -333,6 +268,8 @@ class Admin_2020_module_admin_menu
 		$preferences['menuShrunk'] = $menuState;
 		$preferences['favsOn'] = $favsOn;
 		$preferences['darkMode'] = $darkmode;
+		$preferences['forcedarkMode'] = $forceDark_lightmode;
+		$preferences['forcelightmode'] = $forceLight_darkmode;
 		
 		if(!$favs){
 			$favs = array();
@@ -349,6 +286,112 @@ class Admin_2020_module_admin_menu
 			'masterPrefs' => json_encode($master),
 		));
 	  
+	}
+	
+	public function format_custom_menu($custommenu){
+		
+		global $self, $parent_file, $submenu_file, $plugin_page, $typenow;
+		
+		$formatted = array();
+		
+		foreach ($custommenu as $item){
+			
+			if($item['type'] == 'submenu'){
+				$item['type'] = 'menu';
+			}
+			
+			if($item['type'] == 'sep'){
+				$formatted[] = $item;
+				continue;
+			}
+			
+			$submen_items = array();
+			if(isset($item['submenu'])){
+				$submen_items = $item['submenu'];
+			}
+			
+			if(isset($item['originalclasses'])){
+				$classes = $item['originalclasses'];
+			} else {
+				$classes = 'menu-top';
+			}
+			$item['active'] = false;
+			
+			if ( ( $parent_file && $item['baselink'] === $parent_file ) || ( empty( $typenow ) && $self === $item['baselink'] ) ) {
+				if ( ! empty( $submenu_items ) ) {
+					$item['active'] = true;
+				} else {
+					$item['active'] = true;
+				}
+			} 
+			
+			if(is_array($submen_items) && count($submen_items) > 0){
+				$classes = $classes . ' wp-has-submenu';
+				if($item['active'] == true){
+					$classes = $classes . ' ' . 'uk-active uk-open wp-menu-open wp-has-current-submenu';
+				}
+			} else {
+				if($item['active'] == true){
+					$classes = $classes . ' ' . 'uk-active current';
+				}
+				//$classes = $classes . ' ' . $this->check_if_single_active($menu_item);
+			}
+			
+			$item['classes'] = $classes;
+			
+			$formattedsub = array();
+			
+			
+			if(is_array($submen_items) && count($submen_items) > 0){
+				foreach($submen_items as $sub){
+					
+					$sub['active'] = false;
+	
+	
+					$menu_file = $item['baselink'];
+					$pos       = strpos( $menu_file, '?' );
+	
+					if ( false !== $pos ) {
+						$menu_file = substr( $menu_file, 0, $pos );
+					}
+	
+					// Handle current for post_type=post|page|foo pages, which won't match $self.
+					$self_type = ! empty( $typenow ) ? $self . '?post_type=' . $typenow : 'nothing';
+	
+					if ( isset( $submenu_file ) ) {
+						if ( $submenu_file === $sub['baselink'] ) {
+							$sub['active'] = true;
+						}
+						// If plugin_page is set the parent must either match the current page or not physically exist.
+						// This allows plugin pages with the same hook to exist under different parents.
+					} elseif (
+						( ! isset( $plugin_page ) && $self === $sub['baselink'] )
+						|| ( isset( $plugin_page ) && $plugin_page === $sub['baselink']
+							&& ( $item['baselink'] === $self_type || $item['baselink'] === $self || file_exists( $menu_file ) === false ) )
+					) {
+						$sub['active'] = true;
+					}
+					
+					if($sub['active']){
+						$sub['classes'] = 'uk-active current';
+					}
+					
+					$formattedsub[] = $sub;
+					
+					
+				}
+				$item['submenu'] = $formattedsub;
+				
+				
+			}
+			
+			$formatted[] = $item;
+		}
+		
+		
+		
+		return $formatted;
+		
 	}
 	
 	/**
@@ -369,24 +412,7 @@ class Admin_2020_module_admin_menu
 		wp_enqueue_style('admin-menu');
 		
 	}
-	/**
-	* Scans admin directory for menu links
-	* @since 1.4
-	*/
-	public function get_admin_files(){
-		
-		$absolutepath = ABSPATH . '/wp-admin'."/";
-		$files = array_diff(scandir($absolutepath), array('.', '..'));
-
-		if (is_multisite()){
-		  $pathtonetwork = ABSPATH . '/wp-admin'."/network/";
-		  $networkfiles = array_diff(scandir($pathtonetwork), array('.', '..'));
-		  $files = array_merge($files,$networkfiles);
-		}
-		
-		return $files;
-		
-	}
+	
 	
 	/**
 	* Builds new admin menu
@@ -451,6 +477,7 @@ class Admin_2020_module_admin_menu
 			?>
 			<style type="text/css">
 			.a2020_night_mode .admin2020_menu {background:<?php echo $dark_background?>;}
+			.a2020_night_mode .admin2020_menu .a2020-settings-panel{background:<?php echo $dark_background?>;}
 			.a2020_night_mode .admin2020_menu .uk-dropdown {background:<?php echo $dark_background?>;}
 			.admin2020_menu .uk-dropdown::after {background:<?php echo $dark_background?>;}
 			</style>
@@ -458,10 +485,13 @@ class Admin_2020_module_admin_menu
 		}
 		?>
 		
-		<div id="a2020-menu-app">
+		<div id="a2020-menu-app" >
 			
-			<?php $this->build_mobile_menu();?>
-			<?php $this->build_desktop_menu();?>
+			<span :class="{'force-dark-mode' : menuPrefs.forceDarkMode, 'force-light-mode' : menuPrefs.forceLightMode, }">
+				<?php $this->build_mobile_menu();?>
+				<?php $this->build_desktop_menu();?>
+			</span>
+			
 			
 		</div>
 		
@@ -480,10 +510,8 @@ class Admin_2020_module_admin_menu
 		
 		?>
 		<!--MOBILE MENU -->
-		<!--MOBILE MENU -->
-		<!--MOBILE MENU -->
-		<template v-if="isSmallScreen()" id="a2020-desktop-menu">
-			<div id="a2020-mobile-nav" uk-offcanvas="overlay: true;mode:slide;container:#adminmenu" >
+		<template v-if="isSmallScreen()" id="a2020-mobile-menu" >
+			<div id="a2020-mobile-nav" uk-offcanvas="overlay: true;mode:slide;container:#adminmenu" :class="{'force-dark-mode' : menuPrefs.forceDarkMode, 'force-light-mode' : menuPrefs.forceLightMode, }">
 				<div class="uk-offcanvas-bar uk-padding-remove uk-height-viewport uk-overflow-auto" style="padding-top: 61px !important;">
 			
 			
@@ -494,7 +522,7 @@ class Admin_2020_module_admin_menu
 							
 							
 							<div v-if="menuPrefs.searchBar && !master.search" class="uk-padding-small" 
-							:class="{ 'extra-padding' : menuPrefs.favsOn}">
+							:class="{ 'extra-padding' : menuPrefs.favsOn}" style="padding-bottom:0;">
 								
 								<li  class="a2020_menu_searcher_wrap" >
 									<div class="uk-inline uk-width-1-1 a2020_menu_search">
@@ -513,6 +541,7 @@ class Admin_2020_module_admin_menu
 								
 								<template v-if="menuPrefs.favsOn">
 									
+									<li v-if="favourites.length > 0" class="uk-nav-divider"></li>
 									
 									<template v-for="item in favourites">
 										
@@ -559,11 +588,11 @@ class Admin_2020_module_admin_menu
 									
 									
 									<!--TOP LEVEL MENU ITEM -->
-									<li v-if="menuItem.type == 'menu'" :class="[menuItem.classes, {'uk-open' : menuItem.open }]" :id="menuItem.id">
+									<li v-if="menuItem.type == 'menu'" :class="[menuItem.classes, menuItem.userClasses, {'uk-open' : menuItem.open }]" :id="menuItem.id">
 										<div class="uk-flex uk-flex-between ">
 											
 											
-											<a class="menu-icon-generic" :class="menuItem.classes" :href="menuItem.href">
+											<a class="menu-icon-generic" :class="menuItem.classes" :href="menuItem.href" :target="hrefTarget(menuItem.blankPage)">
 												
 												<span v-if="!menuPrefs.icons" v-html="menuItem.icon" ></span>
 												<span class="a2020-menu-title wp-menu-name" v-html="menuItem.name"></span>
@@ -595,11 +624,11 @@ class Admin_2020_module_admin_menu
 											<ul v-if="menuItem.open" class="uk-nav-sub wp-submenu wp-submenu-wrap">
 												
 												<template v-for="sub in menuItem.submenu">
-													<li :class="sub.classes">
+													<li :class="[sub.classes, sub.userClasses]">
 														
 														<div class="uk-flex uk-flex-between">
 															
-															<a :class="sub.classes" :href="sub.href" v-html="sub.name"></a>
+															<a :class="sub.classes" :href="sub.href" v-html="sub.name" :target="hrefTarget(sub.blankPage)"></a>
 															
 															<span v-if="menuPrefs.favsEditingMode" style="cursor: pointer;">
 																<span v-if="!isIn(sub.id, menuPrefs.favourites)"class="material-icons-outlined uk-margin-small-right" 
@@ -623,12 +652,12 @@ class Admin_2020_module_admin_menu
 									
 									<!--SEP WITH NAME -->
 									<template v-if="menuItem.type == 'sep' && menuItem.name">
-										<li class="uk-nav-header uk-text-bold uk-margin-small-bottom" style="text-transform: none">{{menuItem.name}}</li>
+										<li :class="menuItem.userClasses" class="uk-nav-header uk-text-bold uk-margin-small-bottom" style="text-transform: none">{{menuItem.name}}</li>
 										<li class="uk-nav-divider divider-placeholder"></li>
 									</template> 
 									
 									<!-- SEP NO NAME -->
-									<li v-if="menuItem.type == 'sep'" class="uk-nav-divider"></li>
+									<li v-if="menuItem.type == 'sep'" class="uk-nav-divider" :class="menuItem.userClasses"></li>
 									
 								</template>
 							
@@ -661,91 +690,7 @@ class Admin_2020_module_admin_menu
 		
 		
 		<!--DESKTOP MENU -->
-		<!--DESKTOP MENU -->
 		<template v-if="!isSmallScreen()" id="a2020-desktop-menu">
-		
-			<div v-if="!menuPrefs.shrunk" 
-			class="admin2020_menu loader a2020_dark_anchor uk-background-default uk-height-1-1 uk-padding-small uk-padding-remove-horizontal" 
-			:class="{'hidden' : !loading}">
-			<!--LOADING -->
-				<ul  class="uk-nav-default uk-nav-parent-icon uk-nav loading" uk-nav="" style="padding-bottom: 0">
-					
-					<li class="menu-top ">
-						<div class="uk-flex uk-flex-between">
-							
-							<a class="menu-icon-generic" href="#">
-								
-								<span class="a2020-menu-icon" ></span>
-								<span class="a2020-menu-title wp-menu-name" style="width: 80%"></span>
-								
-							</a>
-							
-						</div>
-						
-						<ul class="uk-nav-sub wp-submenu wp-submenu-wrap">
-							
-							<li><a class="sub-item"></a></li>
-							
-							<li><a class="sub-item" style="width: 45%"></a></li>
-							
-							<li><a class="sub-item" style="width: 53%"></a></li>
-							
-						</ul>
-						
-					</li>
-
-
-					<li class="menu-top ">
-						<div class="uk-flex uk-flex-between">
-							
-							<a class="menu-icon-generic" href="#">
-								
-								<span class="a2020-menu-icon" ></span>
-								<span class="a2020-menu-title wp-menu-name" style="width:70%"></span>
-								
-							</a>
-							
-						</div>
-						
-						<ul class="uk-nav-sub wp-submenu wp-submenu-wrap">
-							
-							<li><a class="sub-item" style="width: 30%"></a></li>
-							
-							<li><a class="sub-item" style="width: 70%"></a></li>
-							
-							<li><a class="sub-item" style="width: 40%"></a></li>
-							
-						</ul>
-						
-					</li>
-					
-					<li class="menu-top ">
-						<div class="uk-flex uk-flex-between">
-							
-							<a class="menu-icon-generic" href="#">
-								
-								<span class="a2020-menu-icon" ></span>
-								<span class="a2020-menu-title wp-menu-name"  style="width: 83%"></span>
-								
-							</a>
-							
-						</div>
-						
-						<ul class="uk-nav-sub wp-submenu wp-submenu-wrap">
-							
-							<li><a class="sub-item"></a></li>
-							
-							<li><a class="sub-item" style="width: 45%"></a></li>
-							
-							<li><a class="sub-item" style="width: 53%"></a></li>
-							
-						</ul>
-						
-					</li>
-										
-				</ul>
-				<!--LOADING -->
-			</div>
 			
 			<div 
 			class="admin2020_menu a2020_dark_anchor uk-background-default uk-height-1-1 uk-padding-small uk-padding-remove-horizontal show-after-load"
@@ -754,11 +699,12 @@ class Admin_2020_module_admin_menu
 				
 				
 				<div v-if="menuPrefs.searchBar && !menuPrefs.shrunk && !master.search" class="uk-padding-small" 
-				:class="{ 'extra-padding' : menuPrefs.favsOn}">
+				:class="{ 'extra-padding' : menuPrefs.favsOn}" style="padding-bottom:0;">
 					
 					<li  class="a2020_menu_searcher_wrap" >
 						<div class="uk-inline uk-width-1-1 a2020_menu_search">
-							<span class="uk-form-icon material-icons-outlined " style="font-size: 18px;width: 30px;">manage_search</span>
+							<span class="uk-form-icon material-icons-outlined " 
+							style="font-size: 18px;width: 30px;padding-left:5px;">manage_search</span>
 							<input class="uk-input uk-form-small"
 							v-model="search" 
 							style="padding-left: 32px !important;"
@@ -773,6 +719,7 @@ class Admin_2020_module_admin_menu
 					
 					<template v-if="menuPrefs.favsOn && !menuPrefs.shrunk">
 						
+						<li v-if="favourites.length > 0" class="uk-nav-divider"></li>
 						
 						<template v-for="item in favourites">
 							
@@ -795,14 +742,14 @@ class Admin_2020_module_admin_menu
 						<li v-if="menuPrefs.favsEditingMode == true">
 							<div class="uk-grid uk-grid-small uk-margin-small-top">
 								<div class="uk-width-1-2">
-									<button class="uk-button uk-button-small uk-width-1-1" @click="cancelFavourites()" type="button"><?php _e('Cancel','admin2020')?></button>
+									<button class="uk-button uk-button-default uk-button-small uk-width-1-1" @click="cancelFavourites()" type="button"><?php _e('Cancel','admin2020')?></button>
 								</div>
 								<div class="uk-width-1-2">
 									<button class="uk-button uk-button-secondary uk-button-small uk-width-1-1" @click="saveFavourites()" type="button"><?php _e('Save','admin2020')?></button>
 								</div>
 								
 								<div class="uk-width-1-1 uk-margin-small-top">
-									<button class="uk-button uk-button-small uk-text-danger uk-width-1-1" 
+									<button class="uk-button uk-button-default uk-button-small uk-text-danger uk-width-1-1" 
 									@click="clearFavourites()" type="button"><?php _e('Clear Favourites','admin2020')?></button>
 								</div>
 							</div>
@@ -819,11 +766,11 @@ class Admin_2020_module_admin_menu
 						
 						
 						<!--TOP LEVEL MENU ITEM -->
-						<li v-if="menuItem.type == 'menu'" :class="[menuItem.classes, {'uk-open' : menuItem.open }]" :id="menuItem.id">
+						<li v-if="menuItem.type == 'menu'" :class="[menuItem.classes, menuItem.userClasses, {'uk-open' : menuItem.open }]" :id="menuItem.id">
 							<div class="uk-flex uk-flex-between uk-flex-middle">
 								
 								
-								<a class="menu-icon-generic uk-flex uk-flex-middle"  :class="menuItem.classes" :href="menuItem.href">
+								<a class="menu-icon-generic uk-flex uk-flex-middle"  :class="menuItem.classes" :href="menuItem.href" :target="hrefTarget(menuItem.blankPage)">
 									
 									<span v-if="!menuPrefs.icons || menuPrefs.shrunk" v-html="menuItem.icon" ></span>
 									<span v-if="!menuPrefs.shrunk" class="a2020-menu-title wp-menu-name" v-html="menuItem.name"></span>
@@ -855,11 +802,11 @@ class Admin_2020_module_admin_menu
 								<ul v-if="menuItem.open && !menuPrefs.subHover && !menuPrefs.shrunk" class="uk-nav-sub wp-submenu wp-submenu-wrap">
 									
 									<template v-for="sub in menuItem.submenu">
-										<li :class="sub.classes">
+										<li :class="[sub.classes, sub.userClasses]">
 											
 											<div class="uk-flex uk-flex-between">
 												
-												<a :class="sub.classes" :href="sub.href" v-html="sub.name"></a>
+												<a :class="sub.classes" :href="sub.href" v-html="sub.name" :target="hrefTarget(sub.blankPage)"></a>
 												
 												<span v-if="menuPrefs.favsEditingMode" style="cursor: pointer;">
 													<span v-if="!isIn(sub.id, menuPrefs.favourites)"class="material-icons-outlined uk-margin-small-right" 
@@ -883,7 +830,7 @@ class Admin_2020_module_admin_menu
 									<ul class="uk-nav-sub wp-submenu wp-submenu-wrap" style="padding: 0;margin-bottom: 0;">
 										
 										
-										<li   class="uk-margin-small-bottom">
+										<li   class="uk-margin-small-bottom" :class="menuItem.userClasses">
 											<a class="menu-icon-generic" :class="menuItem.classes" :href="menuItem.href">
 												
 												<span v-if="!menuPrefs.icons" v-html="menuItem.icon" ></span>
@@ -893,8 +840,8 @@ class Admin_2020_module_admin_menu
 										</li>
 										
 										<template v-for="sub in menuItem.submenu">
-											<li class="uk-flex uk-flex-between" :class="sub.classes">
-												<a :class="sub.classes" :href="sub.href" v-html="sub.name"></a>
+											<li class="uk-flex uk-flex-between" :class="[sub.classes, sub.userClasses]" >
+												<a :class="sub.classes" :href="sub.href" v-html="sub.name" :target="hrefTarget(sub.blankPage)"></a>
 												
 												<span v-if="menuPrefs.favsEditingMode" style="cursor: pointer;">
 													<span v-if="!isIn(sub.id, menuPrefs.favourites)"class="material-icons-outlined uk-margin-small-right" 
@@ -916,19 +863,22 @@ class Admin_2020_module_admin_menu
 						</li>
 						
 						<!--SEP WITH NAME -->
-						<template v-if="menuItem.type == 'sep' && menuItem.name">
-							<li class="uk-nav-header uk-text-bold uk-margin-small-bottom" style="text-transform: none">{{menuItem.name}}</li>
+						<template v-if="menuItem.type == 'sep' && menuItem.name && !menuPrefs.shrunk">
+							<li :class="menuItem.userClasses" class="uk-nav-header uk-text-bold uk-margin-small-bottom" style="text-transform: none">{{menuItem.name}}</li>
 							<li class="uk-nav-divider divider-placeholder"></li>
 						</template> 
 						
 						<!-- SEP NO NAME -->
-						<li v-if="menuItem.type == 'sep'" class="uk-nav-divider"></li>
+						<li :class="menuItem.userClasses" v-if="menuItem.type == 'sep' && menuItem.name && menuPrefs.shrunk" class="uk-nav-divider"></li>
+						
+						<!-- SEP NO NAME -->
+						<li :class="menuItem.userClasses" v-if="menuItem.type == 'sep' && !menuItem.name" class="uk-nav-divider"></li>
 						
 					</template>
 				
 				</ul>
 				
-				<div class="uk-position-bottom  a2020-border top  right uk-background-default a2020-settings-panel"  style="padding: 10px 15px;bottom: 0;">
+				<div class="uk-position-bottom  a2020-border top  right  a2020-settings-panel"  style="padding: 10px 15px;bottom: 0;">
 					<div class="uk-flex uk-flex-between">
 						<a href="#" class="uk-link-muted">
 							<span class="material-icons-outlined" style="font-size: 18px;" @click="switchMenu()">menu_open</span>
@@ -1001,7 +951,7 @@ class Admin_2020_module_admin_menu
 									</div>
 									
 									<div v-if="menuPrefs.favsOn" class="uk-margin">
-											<button class="uk-button uk-button-small uk-width-1-1" 
+											<button class="uk-button uk-button-default uk-button-small uk-width-1-1" 
 											@click="setFavourites()" type="button"><?php _e('Set Favourites','admin2020')?></button>
 									</div>
 								
@@ -1087,7 +1037,9 @@ class Admin_2020_module_admin_menu
 			$tempMenu['name'] = $menu_name;
 			$tempMenu['icon'] = $this->get_icon($menu_item);
 			$tempMenu['classes'] = $classes;
+			$tempMenu['originalclasses'] = $menu_item[4];
 			$tempMenu['href'] = $link;
+			$tempMenu['baselink'] = $menu_item[2];
 			$tempMenu['type'] = 'menu';
 			$tempMenu['open'] = false;
 			
@@ -1111,84 +1063,7 @@ class Admin_2020_module_admin_menu
 	
 	
 	
-	/**
-	* Gets correct link for menu item
-	* @since 1.4
-	*/
 	
-	public function get_menu_link($menu_item){
-		
-		$menu_link = $menu_item[2];
-		
-		$gen_link = "";
-		$gen_link = menu_page_url($menu_item[2],false);
-		
-		return json_encode($menu_item);
-		
-		if($gen_link != ""){
-			return $gen_link;
-		} else {
-		
-			$files = $this->get_admin_files();
-			$this->files = $files;
-			
-			if (strpos($menu_link, 'admin.php') !== false) {
-				$link = $menu_link;
-			} 
-			else if (strpos($menu_link, '.php') !== false) {
-				
-				$link = $menu_link;
-				if (strpos($menu_link, '/') !== false) {
-					$pieces = explode("/", $menu_link);
-					if (strpos($pieces[0], '.php') !== true || !file_exists(get_admin_url().$menu_link)) {
-						$link = 'admin.php?page=' . $menu_link;
-					}
-				}
-			
-				$querypieces = explode("?", $link);
-				$temp = $querypieces[0];
-				
-				if( !in_array( $temp ,$files )){
-					$link = 'admin.php?page=' . $menu_link;
-				}
-			
-			}  else {
-				
-				$link = 'admin.php?page=' . $menu_link;
-			
-			}
-			
-			if (strpos($menu_link, "/wp-content/") !== false) {
-				
-				$link = 'admin.php?page=' . $menu_link;
-				
-			}
-			
-			//CHECK IF INTERNAL URL
-			if (strpos($menu_link, get_site_url()) !== false) {
-				
-				$link = $menu_link;
-				
-			}
-			
-			///CHECK IF EXTERNAL LINK
-			if(strpos($menu_link, 'https://') !== false || strpos($menu_link, 'http://') !== false) {
-				
-				$link = $menu_link;
-				
-			}
-			
-			///UPDRAFT PLUS WORKAROUND
-			if($link == 'admin.php?page=updraftplus'){
-				
-				$link = 'options-general.php?page=updraftplus';
-				
-			}
-			
-			return $link;
-		}
-		
-	}
 	
 	
 	public function a2020_format_admin_menu( $menu, $submenu, $submenu_as_parent = true ) {
@@ -1248,39 +1123,33 @@ class Admin_2020_module_admin_menu
 				$is_separator = true;
 			}
 	
-			/*
-			 * If the string 'none' (previously 'div') is passed instead of a URL, don't output
-			 * the default menu image so an icon can be added to div.wp-menu-image as background
-			 * with CSS. Dashicons and base64-encoded data:image/svg_xml URIs are also handled
-			 * as special cases.
-			 */
-			if ( ! empty( $item[6] ) ) {
-				$img = '<img src="' . $item[6] . '" alt="" />';
-	
-				if ( 'none' === $item[6] || 'div' === $item[6] ) {
-					$img = '<br />';
-				} elseif ( 0 === strpos( $item[6], 'data:image/svg+xml;base64,' ) ) {
-					$img       = '<br />';
-					$img_style = ' style="background-image:url(\'' . esc_attr( $item[6] ) . '\')"';
-					$img_class = ' svg';
-				} elseif ( 0 === strpos( $item[6], 'dashicons-' ) ) {
-					$img       = '<br />';
-					$img_class = ' dashicons-before ' . sanitize_html_class( $item[6] );
-				}
-			}
-			$arrow = '<div class="wp-menu-arrow"><div></div></div>';
 	
 			$title = wptexturize( $item[0] );
 	
 			// Hide separators from screen readers.
 			if ( $is_separator ) {
 				$aria_hidden = ' aria-hidden="true"';
+				
+				$item['type'] = 'sep';
+				
+				if(isset($menu_item['name'])){
+					
+					$item['name'] = $item['name'];
+					
+				}
+				
+				
 			}
-	
-			//echo "\n\t<li$class$id$aria_hidden>";
+			
+			
+			//$classes = $this->get_menu_clases($menu_item,$thesubmenu);
+			
+			
+			
+			
 	
 			if ( $is_separator ) {
-				//echo '<div class="separator"></div>';
+				
 			} elseif ( $submenu_as_parent && ! empty( $submenu_items ) ) {
 				$submenu_items = array_values( $submenu_items );  // Re-index.
 				$menu_hook     = get_plugin_page_hook( $submenu_items[0][2], $item[2] );
@@ -1297,10 +1166,8 @@ class Admin_2020_module_admin_menu
 						&& ! file_exists( ABSPATH . "/wp-admin/$menu_file" ) )
 				) {
 					$admin_is_parent = true;
-					//echo "<a href='admin.php?page={$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>$title</div></a>";
 					$item['url'] = 'admin.php?page='.$submenu_items[0][2];
 				} else {
-					//echo "\n\t<a href='{$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>$title</div></a>";
 					$item['url'] = $submenu_items[0][2];
 				}
 			} elseif ( ! empty( $item[2] ) && current_user_can( $item[1] ) ) {
@@ -1318,21 +1185,15 @@ class Admin_2020_module_admin_menu
 						&& ! file_exists( ABSPATH . "/wp-admin/$menu_file" ) )
 				) {
 					$admin_is_parent = true;
-					//echo "\n\t<a href='admin.php?page={$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>{$item[0]}</div></a>";
 					$item['url'] = 'admin.php?page='.$item[2];
 				} else {
-					//echo "\n\t<a href='{$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>{$item[0]}</div></a>";
 					$item['url'] = $item[2];
 				}
 			}
 	
 			if ( ! empty( $submenu_items ) ) {
-				//echo "\n\t<ul class='wp-submenu wp-submenu-wrap'>";
-				//echo "<li class='wp-submenu-head' aria-hidden='true'>{$item[0]}</li>";
 	
 				$first = true;
-	
-				// 0 = menu_title, 1 = capability, 2 = menu_slug, 3 = page_title, 4 = classes.
 				$tempsub = array();
 				
 				foreach ( $submenu_items as $sub_key => $sub_item ) {
@@ -1466,128 +1327,11 @@ class Admin_2020_module_admin_menu
 		
 	}
 	
-	/**
-	* Checks if we are on an active link or sub link
-	* @since 1.4
-	*/
 	
-	public function check_if_active($menu_item,$sub_menu){
-		
-		if(!is_array($sub_menu)){
-			return "";
-		}
-		
-		if($menu_item['active'] == true){
-			
-		}
-		
-		global $pagenow;
-		
-		$currentquery = $_SERVER['QUERY_STRING'];
-		if ($currentquery) {
-			$currentquery = '?' . $currentquery;
-		}
-		$wholestring = $pagenow . $currentquery;
-		$visibility = 'hidden';
-		$open = 'wp-not-current-submenu';
-		$files = $this->files;
-		
-		foreach ($sub_menu as $sub) {
-			if (strpos($sub[2], '.php') !== false) {
-				$link = $sub[2];
-
-				$querypieces = explode("?", $link);
-				$temp = $querypieces[0];
-
-				if( !in_array( $temp ,$files )){
-					$link = 'admin.php?page=' . $sub[2];
-				}
-				
-			} else {
-				$link = 'admin.php?page=' . $sub[2];
-			}
-
-			$linkclass = '';
-			if ($wholestring == $link) {
-				$linkclass = "wp-has-current-submenu wp-menu-open";
-				$open = 'uk-active uk-open wp-menu-open wp-has-current-submenu';
-				$visibility = '';
-				break;
-			}
-		}
-		
-		return $open;
-		
-	}
 	
-	/**
-	* Checks if we are on an active link or sub link
-	* @since 1.4
-	*/
 	
-	public function check_if_single_active($sub_menu_item){
-		
-		global $pagenow;
-		
-		$currentquery = $_SERVER['QUERY_STRING'];
-		if ($currentquery) {
-			$currentquery = '?' . $currentquery;
-		}
-		$wholestring = $pagenow . $currentquery;
-		$visibility = 'hidden';
-		$open = 'wp-not-current-submenu';
-		$files = $this->files;
-		
-		if (strpos($sub_menu_item[2], '.php') !== false) {
-			$link = $sub_menu_item[2];
 	
-			$querypieces = explode("?", $link);
-			$temp = $querypieces[0];
 	
-			if( !in_array( $temp ,$files )){
-				$link = 'admin.php?page=' . $sub_menu_item[2];
-			}
-			
-		} else {
-			$link = 'admin.php?page=' . $sub_menu_item[2];
-		}
-	
-		$linkclass = '';
-		if ($wholestring == $link) {
-			$linkclass = "uk-active current";
-		}
-		
-		
-		return $linkclass;
-	
-	}
-	
-	/**
-	* Builds nav dividers
-	* @since 1.4
-	*/
-	
-	public function handle_divider($divider){
-		
-		
-		if(isset($divider['name'])){
-			
-			?>
-			
-			<li class="uk-nav-header uk-text-bold uk-margin-small-bottom" style="text-transform: none"><?php echo $divider['name'] ?></li>
-			<li class="uk-nav-divider divider-placeholder"></li>
-			
-			<?php
-			
-		} else {
-			?>
-			
-			<li class="uk-nav-divider"></li>
-			
-			<?php
-		}
-		
-	}
 	
 	/**
 	* Gets top level menu item icon
@@ -1681,6 +1425,7 @@ class Admin_2020_module_admin_menu
 			$tempsub['name'] = $sub_menu_name; 
 			$tempsub['classes'] = $class;
 			$tempsub['href'] = $link;
+			$tempsub['baselink'] = $sub_item[2];
 			$tempsub['type'] = 'submenu';
 			$tempsub['id'] = $parentid . $link;
 			

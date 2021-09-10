@@ -5,6 +5,7 @@ const wpteams = {
     return {
       loading: true,
       upload: false,
+      masterLoader: false,
       contentTable: {
         content: [],
         total: 0,
@@ -101,6 +102,7 @@ const wpteams = {
       ///TIMED FUNCTIONS
     }, 15000);
     self = this;
+    this.masterLoader = true;
     ////SETUP FILE POND
     jQuery.fn.filepond.registerPlugin(FilePondPluginFileEncode);
     jQuery.fn.filepond.registerPlugin(FilePondPluginFileValidateSize);
@@ -963,9 +965,9 @@ const wpteams = {
 };
 
 ///BUILD VUE APP
-const app = a2020Vue.createApp(wpteams);
+const contentPageApp = a2020Vue.createApp(wpteams);
 
-app.component("multi-select", {
+contentPageApp.component("multi-select", {
   data: function () {
     return {
       thisSearchInput: "",
@@ -1060,7 +1062,7 @@ app.component("multi-select", {
 	  ',
 });
 
-app.component("a2020-checkbox", {
+contentPageApp.component("a2020-checkbox", {
   props: {
     themodel: Array,
     thevalue: Number,
@@ -1085,7 +1087,7 @@ app.component("a2020-checkbox", {
     ',
 });
 
-app.component("folder-template", {
+contentPageApp.component("folder-template", {
   props: {
     folder: Object,
     open: Array,
@@ -1256,4 +1258,4 @@ app.component("folder-template", {
     ',
 });
 
-app.mount("#a2020-content-app");
+contentPageApp.mount("#a2020-content-app");

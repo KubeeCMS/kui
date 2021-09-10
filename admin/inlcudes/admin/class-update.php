@@ -88,8 +88,14 @@ class Admin_2020_update {
 			$state = delete_transient($this->transient);
 			
 			$key = $this->utils->get_key('activation','key');
+			$instance = $this->utils->get_key('activation','instance');
 			$domain = get_home_url();
-			$update_url = 'https://admintwentytwenty.com/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain;
+			
+			$update_url = 'https://uipress.co/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain;
+			
+			if($this->productid == 'lemonsqueezy' && $instance != ''){
+				$update_url = 'https://uipress.co/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain.'&instance='.$instance;
+			}
 	 
 			// info.json is the file with the actual plugin information on your server
 			$remote = wp_remote_get( $update_url, array(
@@ -158,8 +164,13 @@ class Admin_2020_update {
 	 
 			// info.json is the file with the actual plugin information on your server
 			$key = $this->utils->get_key('activation','key');
+			$instance = $this->utils->get_key('activation','instance');
 			$domain = get_home_url();
-			$update_url = 'https://admintwentytwenty.com/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain;
+			$update_url = 'https://uipress.co/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain;
+			
+			if($this->productid == 'lemonsqueezy' && $instance != ''){
+				$update_url = 'https://uipress.co/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain.'&instance='.$instance;
+			}
 			
 			$remote = wp_remote_get( $update_url, array(
 				'timeout' => 10,
@@ -234,8 +245,13 @@ class Admin_2020_update {
 		if( false == $remote = get_transient( $this->transient ) ) {
 			
 			$key = $this->utils->get_key('activation','key');
+			$instance = $this->utils->get_key('activation','instance');
 			$domain = get_home_url();
-			$update_url = 'https://admintwentytwenty.com/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain;
+			$update_url = 'https://uipress.co/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain;
+			
+			if($this->productid == 'lemonsqueezy' && $instance != ''){
+				$update_url = 'https://uipress.co/validate/update.php?id='.$this->productid.'&k='.$key.'&d='.$domain.'&instance='.$instance;
+			}
 	 
 			// info.json is the file with the actual plugin information on your server
 			$remote = wp_remote_get( $update_url, array(
@@ -251,7 +267,7 @@ class Admin_2020_update {
 	 
 		}
 	 
-		if( $remote ) {
+		if( $remote && !is_wp_error( $remote )) {
 	 
 			$remote = json_decode( $remote['body'] );
 			$state = $remote->state;

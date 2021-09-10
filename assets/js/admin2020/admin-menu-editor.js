@@ -24,6 +24,29 @@ jQuery(document).ready(function ($) {
   });
 });
 
+function a2020_get_users_and_roles(term, object) {
+  jQuery.ajax({
+    url: admin2020_admin_menu_editor_ajax.ajax_url,
+    type: "post",
+    data: {
+      action: "a2020_get_users_and_roles_me",
+      security: admin2020_admin_menu_editor_ajax.security,
+      search: term,
+    },
+    success: function (response) {
+      if (response) {
+        data = JSON.parse(response);
+
+        if (data) {
+          object.trigger("tokenize:dropdown:clear");
+          object.trigger("tokenize:dropdown:show");
+          object.trigger("tokenize:dropdown:fill", [data]);
+        }
+      }
+    },
+  });
+}
+
 function a2020_save_menu_editor() {
   var menuSettings = {};
   jQuery(".a2020_menu_item").each(function (index, element) {

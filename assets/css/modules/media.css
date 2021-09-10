@@ -3,7 +3,7 @@
 }
 
 .view-switch a {
-  background: #f8f8f8;
+  background: #f3f3f3;
   border-radius: 4px;
   transition: all 0.3s ease-in-out;
   height: 25px;
@@ -11,7 +11,7 @@
   margin-right: 5px;
 }
 .view-switch a:hover {
-  background: #ebebeb;
+  background: #e6e6e6;
 }
 
 table.media .column-title .media-icon img {
@@ -202,7 +202,7 @@ table.media .column-title .media-icon img {
   border-color: rgba(255, 255, 255, 0.2);
 }
 .a2020_night_mode .attachment-info .filename {
-  color: #f8f8f8;
+  color: #f3f3f3;
 }
 .a2020_night_mode .wp-core-ui .attachment.details {
   box-shadow: inset 0 0 0 3px rgba(56, 56, 56, 0.36), inset 0 0 0 7px var(--a2020-primary);

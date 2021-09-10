@@ -19,6 +19,8 @@ const a2020menu = {
         searchBar: a2020menuPrefs.menuSearch == "true",
         shrunk: a2020menuPrefs.menuShrunk == "true",
         darkMode: a2020menuPrefs.darkMode == "true",
+        forceDarkMode: a2020menuPrefs.forcedarkMode == "true",
+        forceLightMode: a2020menuPrefs.forcelightmode == "true",
       },
       master: {
         search: a2020menuMaster.search == "true",
@@ -138,6 +140,9 @@ const a2020menu = {
     },
   },
   methods: {
+    hrefTarget(blankpage) {
+      return blankpage ? "_blank" : "_self";
+    },
     getScreenWidth() {
       this.screenWidth = window.innerWidth;
     },

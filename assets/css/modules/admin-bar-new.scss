@@ -1,0 +1,164 @@
+// Import default variables and available mixins.
+@import "../variables.scss";
+$bar-text-color: #888;
+$bar-text-color-hover: #333;
+$bar-text-size: 0.875rem;
+
+///REMOVE POSITIONING FOR DEFAULT WP BAR
+html.wp-toolbar {
+  padding-top: 0px !important;
+}
+
+html:not(.wp-toolbar) body.wp-admin {
+  #uip-admin-bar {
+    display: none !important;
+  }
+}
+
+body.a2020_admin_bar {
+  #uip-admin-bar {
+    .admin2020_legacy_admin {
+      #wpadminbar {
+        font-family: inherit;
+        background: none;
+        position: relative;
+        width: auto;
+        font-weight: 600;
+        * {
+          font-family: inherit;
+          font-weight: 600;
+        }
+        #wp-admin-bar-menu-toggle,
+        #wp-admin-bar-wp-logo,
+        #wp-admin-bar-site-name,
+        #wp-admin-bar-updates,
+        #wp-admin-bar-my-account {
+          display: none;
+        }
+        .wp-ui-notification {
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          text-align: center;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+        }
+        .ab-top-secondary {
+          float: left;
+        }
+        li {
+          .ab-item {
+            display: flex;
+            color: $bar-text-color;
+            align-items: center;
+            &::before {
+              color: $bar-text-color;
+            }
+            &:before {
+              color: $bar-text-color;
+            }
+            .ab-icon {
+              color: $bar-text-color;
+              font-size: $bar-text-size;
+              &::before {
+                color: $bar-text-color;
+              }
+              &:before {
+                color: $bar-text-color;
+              }
+            }
+            .ab-label {
+              color: $bar-text-color;
+              font-size: $bar-text-size;
+              opacity: 1;
+            }
+          }
+          &:hover {
+            .ab-item {
+              background: none;
+              &::before {
+                color: $bar-text-color-hover;
+              }
+              &:before {
+                color: $bar-text-color-hover;
+              }
+              .ab-icon {
+                color: $bar-text-color-hover;
+                &::before {
+                  color: $bar-text-color-hover;
+                }
+              }
+              .ab-label {
+                color: $bar-text-color-hover;
+              }
+            }
+          }
+          .ab-sub-wrapper {
+            background: white;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+            border: 1px solid $global-border;
+            border-radius: 4px;
+            a.ab-item,
+            .ab-item {
+              color: $bar-text-color;
+              font-size: $bar-text-size;
+              &:hover {
+                color: $bar-text-color-hover;
+              }
+            }
+          }
+        }
+
+        .menupop {
+          &.hover,
+          &:hover {
+            .ab-item {
+              background: none;
+              .ab-icon {
+                color: $bar-text-color-hover;
+                &::before {
+                  color: $bar-text-color-hover;
+                }
+              }
+              .ab-label {
+                color: $bar-text-color-hover;
+              }
+            }
+          }
+        }
+        #wp-admin-bar-new-content .ab-icon::before {
+          content: "add_circle_outline";
+          font-family: "Material Icons Outlined";
+          font-style: normal;
+          font-weight: 400;
+          top: 0;
+        }
+        #wp-admin-bar-comments .ab-icon::before {
+          content: "chat_bubble_outline";
+          font-family: "Material Icons Outlined";
+          font-style: normal;
+          font-weight: 400;
+          top: 0;
+        }
+      }
+    }
+  }
+}
+
+body.a2020_admin_bar.a2020_night_mode {
+  #uip-admin-bar {
+    .admin2020_legacy_admin {
+      #wpadminbar {
+        .ab-sub-wrapper {
+          border: 1px solid $inverse-global-border;
+        }
+      }
+    }
+  }
+}
+
+#wp-admin-bar-wpcss-css-hero-go a,
+#wp-admin-bar-wpcss-css-hero-go:hover a {
+  width: auto !important;
+}

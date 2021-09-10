@@ -530,6 +530,33 @@ class Admin_2020_module_admin_folders
 		return $data;
 		
 	}
+	
+	/**
+	 * Returns settings options for settings page
+	 * @since 2.1
+	 */
+	public function get_settings_options(){
+		
+		$info = $this->component_info();
+		$optionname = $info['option_name'];
+		
+		$settings = array();
+		
+		
+		$temp = array();
+		$temp['name'] = __('Folders Disabled for','admin2020');
+		$temp['description'] = __("Folder system will be disabled for any users or roles you select",'admin2020');
+		$temp['type'] = 'user-role-select';
+		$temp['optionName'] = 'disabled-for'; 
+		$temp['value'] = $this->utils->get_option($optionname,$temp['optionName'], true);
+		$settings[] = $temp;
+		
+		
+		
+		return $settings;
+		
+	}
+	
 	/**
 	 * Returns settings for module
 	 * @since 1.4
@@ -624,6 +651,12 @@ class Admin_2020_module_admin_folders
 				'security' => wp_create_nonce('admin2020-admin-folder-security-nonce'),
 				'screen' => $theid,
 			));
+			
+			$list = 'enqueued';
+			
+			if (!wp_script_is( 'a2020-vue-build', $list )) {
+				wp_enqueue_script('a2020-vue-build', $this->path . 'assets/js/vuejs/vue-global-dev.js', array('jquery'),  $this->version);
+			} 
 		  
 	  }
 	  

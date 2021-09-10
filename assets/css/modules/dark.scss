@@ -1,6 +1,7 @@
 @import "../variables.scss";
 
-.a2020_night_mode {
+.a2020_night_mode,
+.a2020_night_mode #uip-admin-bar {
   .uk-background-default,
   .uk-dropdown,
   .uk-modal-dialog,
@@ -66,5 +67,8 @@
         color: #fff;
       }
     }
+  }
+  .uk-button.uk-button-primary.uk-forever-primary {
+    background: $global-primary-background;
   }
 }
