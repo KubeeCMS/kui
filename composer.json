@@ -3,7 +3,7 @@
     "name": "kubeecms/kui",
     "description": "Admin skin...",
     "keywords": ["kcms-kui", "kui", "skin", "kubeecms", "network", "administration", "menu", "kcms", "kubee"],
-    "type": "wordpress-plugin",
+    "type": "wordpress-muplugin",
     "config": {
 		"sort-packages": true,
 		"process-timeout": 0
