@@ -31,9 +31,6 @@
 	"autoload": {
 		"classmap": [
 			"admin/classes"
-		],
-		"psr-4": {
-			"Admin\\": "admin"
-		}
+		]
 	}
 }

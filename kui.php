@@ -3,7 +3,7 @@
 Plugin Name: KUI
 Plugin URI: https://github.com/KubeeCMS/kui/
 Description: Admin extension with a streamlined dashboard, intuitive media library, dark mode and much more.
-Version: 2.3.1.7.1
+Version: 2.3.1.7.2
 Author: Kubee
 Text Domain: uipress
 Domain Path: /admin/languages
