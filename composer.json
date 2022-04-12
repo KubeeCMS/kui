@@ -30,7 +30,11 @@
 	},
 	"autoload": {
 		"classmap": [
-			"admin/classes"
-		]
+			"admin/classes",
+			"admin/uipress_controller.php"
+		],
+		"psr-4": {
+			"Admin\\": "admin"
+		}
 	}
 }

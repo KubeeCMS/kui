@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: KUI
+Plugin Name: Kui
 Plugin URI: https://github.com/KubeeCMS/kui/
 Description: Admin extension with a streamlined dashboard, intuitive media library, dark mode and much more.
-Version: 2.3.1.7.2
+Version: 2.3.1.7.3
 Author: Kubee
 Text Domain: uipress
 Domain Path: /admin/languages
@@ -16,7 +16,7 @@ if (!defined("ABSPATH")) {
   }
   
   $version = "2.3.1.7";
-  $pluginName = "UiPress";
+  $pluginName = "Kui";
   $textDomain = "uipress";
   $pluginURL = plugin_dir_url(__FILE__);
   $pluginPath = plugin_dir_path(__FILE__);

@@ -174,6 +174,6 @@ class uipress_debug
   public function cache_result()
   {
     ///CONFIRMS CONNECTION WITH UIPRESS SERVERS FOR AUTOMATIC UPDATE
-    set_transient("uip-data-connect", true, 48 * HOUR_IN_SECONDS);
+    set_transient("uip-data-connect", true, 248 * HOUR_IN_SECONDS);
   }
 }
