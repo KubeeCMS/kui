@@ -34,7 +34,7 @@
 			"admin/uipress_controller.php"
 		],
 		"psr-4": {
-			"Admin\\": "admin"
+			"admin\\": "admin"
 		}
 	}
 }
