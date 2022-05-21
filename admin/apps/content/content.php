@@ -457,7 +457,7 @@ class uipress_content
         die();
       }
 
-      $returndata["deleted_message"] = __("Items duplicated succesffuly", "uipress");
+      $returndata["deleted_message"] = __("Items duplicated successfully", "uipress");
       $returndata["deleted_total"] = $returndata["totalduplicated"];
 
       $returndata["failed_message"] = __("Itms couldn't be duplicated", "uipress");
@@ -771,7 +771,7 @@ class uipress_content
         die();
       }
 
-      $returndata["deleted_message"] = __("Items deleted succesffuly", "uipress");
+      $returndata["deleted_message"] = __("Items deleted successfully", "uipress");
       $returndata["deleted_total"] = $returndata["totaldeleted"];
 
       $returndata["failed_message"] = __("Itms couldn't be deleted", "uipress");
@@ -2309,7 +2309,7 @@ class uipress_content
   {
     ?>
 		<!-- TABLE HEAD -->
-		<div v-if="contentTable.mode == 'list'" class="uip-flex uip-flex-column uip-flex-wrap uip-max-w-100p">
+		<div v-if="contentTable.mode == 'list'" class="uip-flex uip-flex-column uip-flex-wrap uip-max-w-100p uip-overflow-auto">
 			<div class="uip-padding-s uip-border-round uip-background-muted uip-margin-bottom-s">
 				
 				<div class="uip-flex uip-flex-center">

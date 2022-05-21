@@ -190,60 +190,12 @@ class uipress_settings
 		<div id="uip-settings" class="uip-body-font">
 			<div class="uip-flex uip-flex-wrap">
         
-        
-				<!--<div class="uip-w-200 uip-padding-m">
-          
-         
-          
-          <div class="uip-margin-bottom-s">
-					 <settings-menu :activemodule="currentModule" :updatemodule="activeModule" :translations="translations" :alloptions="formattedSettings"></settings-menu>
-          </div>
-          
-          <div class="uip-flex uip-margin-bottom-xs">
-            <button class="uip-button-primary uip-flex-grow"
-            type="button" @click="saveSettings()"><?php _e("Save", "uipress"); ?></button>
-          </div>
-          
-          <div class="uip-flex uip-margin-bottom-xs">  
-            <template v-if="masterPrefs.dataConnect == true">
-              
-              <div class="uip-w-50p uip-padding-right-xs">
-                <label class="uip-button-default uip-display-block uip-text-center">
-                  <?php _e("Import", "uipress"); ?>
-                  <input hidden accept=".json" type="file" single="" id="uip-import-settings" @change="importSettings()">
-                </label>
-              </div>
-              
-              <button class="uip-button-default uip-w-50p"
-              type="button" @click="exportSettings()"><?php _e("Export", "uipress"); ?></button>
-              <a href="#" class="uip-hidden" id="uip-export-settings"></a>
-            
-            </template>
-            
-            <template v-else >
-              
-              <a href="https://uipress.co/pricing/" target="_BLANK" class="uip-no-underline uip-border-round uip-background-primary-wash uip-text-bold uip-text-emphasis" style="padding: var(--uip-padding-button)">
-                <div class="uip-flex">
-                  <span class="material-icons-outlined uip-margin-right-xs">redeem</span> 
-                  <span><?php _e("Unlock Export and Import features with pro", "uipress"); ?></span>
-                </div> 
-              </a>
-              
-            </template>
-            
-          </div>
-          
-          <button class="uip-button-danger uip-w-100p"
-          type="button" @click="confirmResetSettings()"><?php _e("Reset Settings", "uipress"); ?></button>
-          
-          
-          <?php $settingsUpdater->update_a2020_settings_menu(); ?>
-          
-				</div>-->
+         <?php $settingsUpdater->update_a2020_settings_menu(); ?>
 				
 				<div class="uip-flex-grow uip-flex uip-h-viewport uip-background-default">
-					
-					<div class="uip-max-w-1300 uip-flex-grow uip-margin-auto uip-padding-m">
+          
+          <div class="uip-w-300 uip-padding-s uip-margin-right-m" style="padding-left:20px;" v-if="!isSmallScreen()">
+            
             <div class="uip-flex uip-flex-center uip-margin-bottom-m">
               <div class="uip-margin-right-s">
                 <?php if ($appicon != "" && $appicon != false) {
@@ -261,10 +213,69 @@ class uipress_settings
                 </div>
               </div>
             </div>
-            <h1 class="uip-margin-bottom-m uip-text-emphasis uip-text-xxl"><?php _e("Settings", "uipress"); ?></h1>
             
-            <div  id="uip-settings-menu" class="uip-flex uip-flex-row uip-flex-wrap uip-margin-bottom-m">
-              <settings-menu-alt :activemodule="currentModule" :updatemodule="activeModule" :translations="translations" :alloptions="formattedSettings"></settings-menu>
+            <settings-menu-vertical :activemodule="currentModule" :updatemodule="activeModule" :translations="translations" :alloptions="formattedSettings"></settings-menu-vertical>
+          </div>
+					
+					<div class="uip-max-w-1300 uip-flex-grow  uip-padding-m uip-padding-top-s">
+            
+            <div class="uip-flex uip-flex-between uip-flex-start">
+              
+              <div class="uip-flex uip-gap-s">
+                <uip-offcanvas  v-if="isSmallScreen()" :translations="translations"  icon="menu_open"  buttonsize="medium">
+                  <settings-menu-vertical :activemodule="currentModule" :updatemodule="activeModule" :translations="translations" :alloptions="formattedSettings"></settings-menu-vertical>
+                </uip-offcanvas>
+                
+                <h1 class="uip-margin-bottom-m uip-text-emphasis uip-text-xxl uip-margin-top-remove"><?php _e("Settings", "uipress"); ?></h1>
+              </div>
+              <div class="uip-flex uip-gap-xs">
+                <button class="uip-button-primary uip-flex-grow"
+                type="button" @click="saveSettings()"><?php _e("Save settings", "uipress"); ?></button>
+                
+                <uip-dropdown-new type="icon" icon="more_horiz" pos="botton-left" buttonSize="normal">
+                  <div class="uip-padding-s">
+                    
+                    <div class="uip-flex uip-flex-column uip-row-gap-s">  
+                      
+                      
+                      <template v-if="masterPrefs.dataConnect == true">
+                        
+                        <div>
+                          <label class="uip-button-default uip-display-block uip-text-center">
+                            <?php _e("Import", "uipress"); ?>
+                            <input hidden accept=".json" type="file" single="" id="uip-import-settings" @change="importSettings()">
+                          </label>
+                        </div>
+                        
+                        <button class="uip-button-default"
+                        type="button" @click="exportSettings()"><?php _e("Export", "uipress"); ?></button>
+                        <a href="#" class="uip-hidden" id="uip-export-settings"></a>
+                      
+                      </template>
+                      
+                      <template v-else >
+                        
+                        <a href="https://uipress.co/pricing/" target="_BLANK" class="uip-no-underline uip-border-round uip-background-primary-wash uip-text-bold uip-text-emphasis" style="padding: var(--uip-padding-button)">
+                          <div class="uip-flex">
+                            <span class="material-icons-outlined uip-margin-right-xs">redeem</span> 
+                            <span><?php _e("Unlock Export and Import features with pro", "uipress"); ?></span>
+                          </div> 
+                        </a>
+                        
+                      </template>
+                      
+                      <button class="uip-button-danger"
+                      type="button" @click="confirmResetSettings()"><?php _e("Reset Settings", "uipress"); ?></button>
+                      
+                    </div>
+                    
+                  </div>
+                </uip-dropdown-new>
+              </div>
+            </div>
+            
+            <div  id="uip-settings-menu" class="uip-flex uip-flex-row uip-flex-wrap uip-margin-bottom-m" v-if="1 == 2">
+              <settings-menu-alt :activemodule="currentModule" :updatemodule="activeModule" :translations="translations" :alloptions="formattedSettings"></settings-menu-alt>
             </div>
             
 						<output-options :activemodule="currentModule" :translations="translations" :alloptions="formattedSettings"></output-options>
@@ -274,55 +285,7 @@ class uipress_settings
 			</div>
       
       
-      <div class="uip-padding-s uip-position-fixed uip-left-menu uip-right-0 uip-bottom-0 uip-flex uip-flex-middle" id="uip-settings-bar">
-        
-        <div class="uip-flex uip-flex-row uip-flex-right uip-w-900 uip-max-w-1300 uip-background-default uip-border uip-padding-s uip-border-round">
-          
-          
-          <div class="uip-flex uip-flex-grow">  
-            
-            <button class="uip-button-danger uip-margin-right-xs"
-            type="button" @click="confirmResetSettings()"><?php _e("Reset Settings", "uipress"); ?></button>
-            
-            
-            <template v-if="masterPrefs.dataConnect == true">
-              
-              <div class=" uip-margin-right-xs">
-                <label class="uip-button-default uip-display-block uip-text-center">
-                  <?php _e("Import", "uipress"); ?>
-                  <input hidden accept=".json" type="file" single="" id="uip-import-settings" @change="importSettings()">
-                </label>
-              </div>
-              
-              <button class="uip-button-default uip-margin-right-xs"
-              type="button" @click="exportSettings()"><?php _e("Export", "uipress"); ?></button>
-              <a href="#" class="uip-hidden" id="uip-export-settings"></a>
-            
-            </template>
-            
-            <template v-else >
-              
-              <a href="https://uipress.co/pricing/" target="_BLANK" class="uip-no-underline uip-border-round uip-background-primary-wash uip-text-bold uip-text-emphasis" style="padding: var(--uip-padding-button)">
-                <div class="uip-flex">
-                  <span class="material-icons-outlined uip-margin-right-xs">redeem</span> 
-                  <span><?php _e("Unlock Export and Import features with pro", "uipress"); ?></span>
-                </div> 
-              </a>
-              
-            </template>
-            
-          </div>
-          
-          <div class="uip-flex uip-margin-left-xs">
-            <button class="uip-button-primary uip-flex-grow"
-            type="button" @click="saveSettings()"><?php _e("Save settings", "uipress"); ?></button>
-          </div>
-          
-          
-        
-        </div>
-        
-      </div>
+      
       
       
 		</div>

@@ -161,6 +161,7 @@ const uipressOverviewArgs = {
           self.globalDataObject = data;
           self.uipOverview.data.globalDataObject.data = data;
           self.uipOverview.data.globalDataObject.loading = false;
+          console.log(self.globalDataObject);
           self.log_dev_messages("Finsihed global data fetch", "message");
         },
       });
@@ -1046,6 +1047,172 @@ uipressOverviewApp.component("connect-google-analytics", {
     </a>',
 });
 
+uipressOverviewApp.component("connect-matomo-analytics", {
+  emits: ["account-connected"],
+  props: {
+    translations: Object,
+  },
+  data: function () {
+    return {
+      imgloading: false,
+      authToken: "",
+      matomoURL: "",
+      siteID: "",
+    };
+  },
+  mounted: function () {},
+  computed: {
+    returnHoverImg() {
+      return this.googliconHover;
+    },
+    returnNoHoverImg() {
+      return this.googliconNoHover;
+    },
+    isLoading() {
+      return this.imgloading;
+    },
+  },
+  methods: {
+    saveMatomoDetails(anadata) {
+      let self = this;
+
+      if (self.authToken == "" || self.matomoURL == "" || self.siteID == "") {
+        return;
+      }
+
+      jQuery.ajax({
+        url: uipress_overview_ajax.ajax_url,
+        type: "post",
+        data: {
+          action: "uipress_save_matomo_account",
+          security: uipress_overview_ajax.security,
+          authToken: self.authToken,
+          matomoURL: self.matomoURL,
+          siteID: self.siteID,
+        },
+        success: function (response) {
+          data = JSON.parse(response);
+
+          if (data.error) {
+            ///SOMETHING WENT WRONG
+            uipNotification(data.error, { pos: "bottom-left", status: "danger" });
+            self.loading = false;
+            return;
+          }
+
+          self.$root.analyticsAcountConnected();
+          //this.$root.$emit("account-connected");
+          uipNotification(data.message, { pos: "bottom-left", status: "success" });
+          self.loading = false;
+        },
+      });
+    },
+  },
+  template:
+    '<div class="uip-background-green-wash uip-padding-xs uip-border-round uip-margin-bottom-s">{{translations.nomatomoaccount}}</div>\
+    <loading-placeholder v-if="isLoading == true"></loading-placeholder>\
+    <div class="uip-flex"><uip-offcanvas type="text" :buttonText="translations.connectMatomo" :title="translations.connectMatomo" :translations="translations" icon="add" :tooltip="true" :tooltiptext="translations.connectMatomo">\
+      <div class="uip-margin-bottom-s">\
+        <div class="uip-text-muted uip-margin-bottom-xs">{{translations.authToken}}</div> \
+        <input v-model="authToken" class="uip-w-100p uip-standard-input" type="text" :placeholder="translations.authToken" style="padding: 5px 8px;">\
+      </div>\
+      <div class="uip-margin-bottom-s">\
+        <div class="uip-text-muted uip-margin-bottom-xs">{{translations.matomoURL}}</div> \
+        <input v-model="matomoURL" class="uip-w-100p uip-standard-input" type="text" :placeholder="translations.matomoURL" style="padding: 5px 8px;">\
+      </div>\
+      <div class="uip-margin-bottom-m">\
+        <div class="uip-text-muted uip-margin-bottom-xs">{{translations.siteID}}</div>\
+        <input v-model="siteID" class="uip-w-100p uip-standard-input" type="text" :placeholder="translations.siteID" style="padding: 5px 8px;">\
+      </div>\
+      <div>\
+        <button @click="saveMatomoDetails()" class="uip-button-primary uip-w-100p uip-text-center">{{translations.save}}</button>\
+      </div>\
+    </uip-offcanvas></div>',
+});
+
+uipressOverviewApp.component("change-matomo-analytics", {
+  emits: ["account-connected"],
+  props: {
+    translations: Object,
+  },
+  data: function () {
+    return {
+      imgloading: false,
+      authToken: "",
+      matomoURL: "",
+      siteID: "",
+    };
+  },
+  mounted: function () {},
+  computed: {
+    returnHoverImg() {
+      return this.googliconHover;
+    },
+    returnNoHoverImg() {
+      return this.googliconNoHover;
+    },
+    isLoading() {
+      return this.imgloading;
+    },
+  },
+  methods: {
+    saveMatomoDetails(anadata) {
+      let self = this;
+
+      if (self.authToken == "" || self.matomoURL == "" || self.siteID == "") {
+        return;
+      }
+
+      jQuery.ajax({
+        url: uipress_overview_ajax.ajax_url,
+        type: "post",
+        data: {
+          action: "uipress_save_matomo_account",
+          security: uipress_overview_ajax.security,
+          authToken: self.authToken,
+          matomoURL: self.matomoURL,
+          siteID: self.siteID,
+        },
+        success: function (response) {
+          data = JSON.parse(response);
+
+          if (data.error) {
+            ///SOMETHING WENT WRONG
+            uipNotification(data.error, { pos: "bottom-left", status: "danger" });
+            self.loading = false;
+            return;
+          }
+
+          self.$root.analyticsAcountConnected();
+          //this.$root.$emit("account-connected");
+          uipNotification(data.message, { pos: "bottom-left", status: "success" });
+          self.loading = false;
+        },
+      });
+    },
+  },
+  template:
+    '<div class="uip-background-green-wash uip-padding-xs uip-border-round uip-margin-bottom-s">{{translations.changeMatomoLong}}</div>\
+    <loading-placeholder v-if="isLoading == true"></loading-placeholder>\
+    <div class="uip-flex"><uip-offcanvas type="text" :buttonText="translations.changeMatomo" :title="translations.connectMatomo" :translations="translations" icon="add" :tooltip="true" :tooltiptext="translations.connectMatomo">\
+      <div class="uip-margin-bottom-s">\
+        <div class="uip-text-muted uip-margin-bottom-xs">{{translations.authToken}}</div> \
+        <input v-model="authToken" class="uip-w-100p uip-standard-input" type="text" :placeholder="translations.authToken" style="padding: 5px 8px;">\
+      </div>\
+      <div class="uip-margin-bottom-s">\
+        <div class="uip-text-muted uip-margin-bottom-xs">{{translations.matomoURL}}</div> \
+        <input v-model="matomoURL" class="uip-w-100p uip-standard-input" type="text" :placeholder="translations.matomoURL" style="padding: 5px 8px;">\
+      </div>\
+      <div class="uip-margin-bottom-m">\
+        <div class="uip-text-muted uip-margin-bottom-xs">{{translations.siteID}}</div>\
+        <input v-model="siteID" class="uip-w-100p uip-standard-input" type="text" :placeholder="translations.siteID" style="padding: 5px 8px;">\
+      </div>\
+      <div>\
+        <button @click="saveMatomoDetails()" class="uip-button-primary uip-w-100p uip-text-center">{{translations.save}}</button>\
+      </div>\
+    </uip-offcanvas></div>',
+});
+
 uipressOverviewApp.component("card-options", {
   emits: ["remove-card", "card-change"],
   props: {
@@ -1249,7 +1416,7 @@ uipressOverviewApp.component("col-editor", {
       <div class=" uip-padding-s uip-border-bottom-bottom" >\
         <div class="uip-flex uip-flex-center uip-flex-right">\
           <div class="uip-position-relative uip-margin-left-xs uip-margin-right-xs">\
-            <uip-offcanvas :translations="translations" icon="add" buttonsize="small" :tooltip="true" :tooltiptext="translations.addNewCard">\
+            <uip-offcanvas :translations="translations" :title="translations.availableCards" icon="add" buttonsize="small" :tooltip="true" :tooltiptext="translations.addNewCard">\
               <card-selector :premium="premium" @card-added="columnUpdated($event)" :theColumn="theColumn" :translations="translations" :modules="modules"></card-selector>\
             </uip-offcanvas>\
           </div>\
@@ -1322,6 +1489,9 @@ uipressOverviewApp.component("uip-offcanvas", {
     buttonsize: String,
     tooltip: Boolean,
     tooltiptext: String,
+    type: String,
+    buttonText: String,
+    title: String,
   },
   data: function () {
     return {
@@ -1352,6 +1522,8 @@ uipressOverviewApp.component("uip-offcanvas", {
     '<div class="">\
         <uip-tooltip v-if="tooltip" :tooltiptext="tooltiptext">\
           <div @click="openOffcanvas()" :class="returnButtonSize()" type="button"\
+          class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer" v-if="type == \'text\'" >{{buttonText}}</div>\
+          <div v-else @click="openOffcanvas()" :class="returnButtonSize()" type="button"\
           class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer material-icons-outlined" >{{icon}}</div>\
         </uip-tooltip>\
         <div v-else @click="openOffcanvas()" :class="returnButtonSize()" type="button"\
@@ -1367,7 +1539,7 @@ uipressOverviewApp.component("uip-offcanvas", {
             <div  style="max-height: 100vh;">\
               <!-- OFFCANVAS TITLE -->\
               <div class="uip-flex uip-margin-bottom-s">\
-                <div class="uip-text-xl uip-text-bold uip-flex-grow">{{translations.availableCards}}</div>\
+                <div class="uip-text-xl uip-text-bold uip-flex-grow">{{title}}</div>\
                 <div class="">\
                    <span @click="closeOffcanvas()"\
                     class="material-icons-outlined uip-background-muted uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer">\
@@ -2425,6 +2597,49 @@ uipressOverviewApp.component("uip-country-chart", {
     },
   },
   template: '<canvas class="uip-margin-bottom-m" height="200" :dat-sd="dates.startDate" :dat-sed="dates.endDate"></canvas>',
+});
+
+uipressOverviewApp.component("uip-hover-dropdown", {
+  props: {},
+  data: function () {
+    return {
+      modelOpen: false,
+    };
+  },
+  mounted: function () {
+    this.getTop;
+  },
+  computed: {
+    getTop() {
+      self = this;
+      returnDatat = 0;
+      ///SET TOP
+      let POStop = self.$el.getBoundingClientRect().top;
+      let POSbottom = self.$el.getBoundingClientRect().bottom + 50;
+      let POSright = self.$el.getBoundingClientRect().right;
+      let POSleft = self.$el.getBoundingClientRect().POSleft;
+      returnDatat = POStop + "px";
+
+      //CHECK FOR OFFSCREEN
+
+      submenu = self.$el.getElementsByClassName("uip-hover-dropdown")[0];
+      let rect = submenu.getBoundingClientRect();
+
+      submenu.setAttribute("style", "top:" + POStop + "px;left:" + POSleft + "px;");
+
+      return;
+
+      if (rect.bottom > (window.innerHeight - 50 || document.documentElement.clientHeight - 50)) {
+        // Bottom is out of viewport
+        submenu.setAttribute("style", "top: " + (POStop - rect.height) + "px;" + "left:" + POSleft + "px");
+      }
+    },
+  },
+  methods: {},
+  template:
+    '<div class="uip-position-absolute"><div class="uip-position-fixed uip-padding-m uip-background-default uip-border-round uip-shadow uip-w-250 uip-hover-dropdown" >\
+          <slot></slot>\
+      </div></div>',
 });
 
 uipressOverviewApp.component("draggable", vuedraggable);

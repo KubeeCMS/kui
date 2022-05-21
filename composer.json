@@ -1,39 +1,36 @@
-
 {
     "name": "kubeecms/kui",
     "description": "Admin skin...",
     "keywords": ["kcms-kui", "kui", "skin", "kubeecms", "network", "administration", "menu", "kcms", "kubee"],
-    "type": "wordpress-muplugin",
+    "type": "wordpress-plugin",
     "config": {
-		"sort-packages": true,
-		"process-timeout": 0
-	},
+        "sort-packages": true,
+        "process-timeout": 0
+    },
     "homepage": "https://github.com/KubeeCMS/kui/",
     "license": "GPL-2.0-or-later",
-    "authors": [
-        {
-          "name": "KubeeCMS",
-          "homepage": "https://github.com/KubeeCMS/kui/",
-          "role": "Developer"
-        }
-    ],
+    "authors": [{
+        "name": "KubeeCMS",
+        "homepage": "https://github.com/KubeeCMS/kui/",
+        "role": "Developer"
+    }],
     "support": {
         "issues": "https://github.com/KubeeCMS/kui/issues/",
         "source": "https://github.com/KubeeCMS/kui/"
     },
-    "minimum-stability": "dev",    
-	"require": {
-		"php": "^8"
-	},
-	"require-dev": {
-		"php": "^7 || ^8"
-	},
-	"autoload": {
-		"classmap": [
-			"admin/classes"
-		],
-		"psr-4": {
-			"admin\\": "admin/"
-		}
-	}
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8"
+    },
+    "require-dev": {
+        "php": "^7 || ^8"
+    },
+    "autoload": {
+        "classmap": [
+            "admin/classes"
+        ],
+        "psr-4": {
+            "admin\\": "admin/"
+        }
+    }
 }

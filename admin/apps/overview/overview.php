@@ -828,6 +828,20 @@ class uipress_overview
     $translations["inTheLastx"] = __("In the last", "uipress");
     $translations["daysMultiple"] = __("days", "uipress");
     $translations["somethingWrong"] = __("Something has gone wrong", "uipress");
+    $translations["nomatomoaccount"] = __("Connect your matomo site to use this card", "uipress");
+    $translations["connectMatomo"] = __("Connect Matomo Analytics", "uipress");
+    $translations["authToken"] = __("Auth Token", "uipress");
+    $translations["matomoURL"] = __("Matomo Url", "uipress");
+    $translations["siteID"] = __("Matomo Site ID", "uipress");
+    $translations["save"] = __("Save", "uipress");
+    $translations["changeMatomoLong"] = __("Click below to change matomo account", "uipress");
+    $translations["changeMatomo"] = __("Change account", "uipress");
+    $translations["city"] = __("City", "uipress");
+    $translations["averagePageLoad"] = __("Average Page Load", "uipress");
+    $translations["bounceRate"] = __("Bounce Rate", "uipress");
+    $translations["exitRate"] = __("Exit Rate", "uipress");
+    $translations["averageTimeOnPage"] = __("Average Time On Page", "uipress");
+    $translations["referer"] = __("Referer", "uipress");
 
     return $translations;
   }
@@ -1180,7 +1194,7 @@ class uipress_overview
         class="uip-button-primary uip-margin-right-xs"><?php _e("Save changes", "uipress"); ?></button>
         
         <button  @click="uipOverview.data.ui.editingMode = false;"
-        class="uip-button-default material-icons-outlined">close</button>
+        class="uip-button-default"><span class="material-icons-outlined">close</span></button>
         
 				
 		</div>
@@ -1298,14 +1312,14 @@ class uipress_overview
   public function build_categories()
   {
     ?>
-    <div  v-if="!uipOverview.data.ui.editingMode" class="uip-flex uip-flex-row uip-gap-xs uip-margin-bottom-m">
-      <div class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer uip-padding-xs uip-text-muted uip-text-bold"
+    <div  v-if="!uipOverview.data.ui.editingMode && categoriesWithUID.length > 1" class="uip-flex uip-flex-row uip-gap-xs uip-margin-bottom-m uip-flex-wrap">
+      <div class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer uip-padding-xs uip-text-muted uip-text-bold uip-no-wrap"
       :class="{'uip-background-dark uip-text-inverse hover:uip-background-secondary' : uipOverview.data.ui.activeTab == 'Home'}"
       @click="uipOverview.data.ui.activeTab = 'Home'">
         <?php _e("Home", "uipress"); ?>
       </div>
       <template v-for='(category, index) in categoriesWithUID'>
-        <div class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer uip-padding-xs uip-text-muted uip-text-bold"
+        <div class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer uip-padding-xs uip-text-muted uip-text-bold uip-no-wrap"
         :class="{'uip-background-dark uip-text-inverse hover:uip-background-secondary' : uipOverview.data.ui.activeTab == category.uid}"
         @click="uipOverview.data.ui.activeTab = category.uid">
           {{category.name}}

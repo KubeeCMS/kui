@@ -32,6 +32,8 @@ class uipress_styles extends uipress_app
     //AJAX
     add_action("wp_ajax_uip_get_styles", [$this, "uip_get_styles"]);
     add_action("wp_ajax_uip_save_styles", [$this, "uip_save_styles"]);
+    add_action("wp_ajax_uip_get_themes", [$this, "uip_get_themes"]);
+    add_action("wp_ajax_uip_love_theme", [$this, "uip_love_theme"]);
 
     //MENU ITEM
     add_action("admin_menu", [$this, "add_menu_item"]);
@@ -180,6 +182,76 @@ class uipress_styles extends uipress_app
   }
 
   /**
+   * Gets uip themes
+   * @since 2.2
+   */
+  public function uip_get_themes()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      $debug = new uipress_debug();
+      $string = $debug->get_string("key");
+      $instanceid = $debug->get_string_local("instance");
+      $domain = get_home_url();
+
+      $uip_query = "?key=" . $string;
+      $uip_query = $uip_query . "&instance=" . $instanceid;
+      $uip_query = $uip_query . "&d=" . $domain;
+
+      //error_log("https://analytics.uipress.co/view.php?" . $uip_query);
+      $remote = wp_remote_get("https://api.uipress.co/themes/" . $uip_query, [
+        "timeout" => 10,
+        "headers" => [
+          "Accept" => "application/json",
+        ],
+      ]);
+
+      if (!is_wp_error($remote) && isset($remote["response"]["code"]) && $remote["response"]["code"] == 200 && !empty($remote["body"])) {
+        $data = [];
+        echo $remote["body"];
+      } else {
+        $returndata["error"] = true;
+        $returndata["message"] = __("Unable to fetch themes at this moment. Please try again later", "uipress");
+        echo $returndata;
+      }
+    }
+    die();
+  }
+
+  /**
+   * Gets uip themes
+   * @since 2.2
+   */
+  public function uip_love_theme()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+      $themeid = $utils->clean_ajax_input($_POST["id"]);
+      $domain = get_home_url();
+
+      $uip_query = "?&d=" . $domain;
+      $uip_query = $uip_query . "&id=" . $themeid;
+
+      //error_log("https://analytics.uipress.co/view.php?" . $uip_query);
+      $remote = wp_remote_get("https://api.uipress.co/themes/love/" . $uip_query, [
+        "timeout" => 10,
+        "headers" => [
+          "Accept" => "application/json",
+        ],
+      ]);
+
+      if (!is_wp_error($remote) && isset($remote["response"]["code"]) && $remote["response"]["code"] == 200 && !empty($remote["body"])) {
+        $data = [];
+        echo $remote["body"];
+      } else {
+        $returndata["error"] = true;
+        $returndata["message"] = __("Unable to like theme at this moment. Please try again later", "uipress");
+        echo json_encode($returndata);
+      }
+    }
+    die();
+  }
+
+  /**
    * Gets uip settings object
    * @since 2.2
    */
@@ -266,7 +338,7 @@ class uipress_styles extends uipress_app
           }
 
           $formattedfont = "'" . $font[0] . "', " . $font[1];
-          $fontURL = str_replace(" ", "%20", "https://fonts.googleapis.com/css2?family=" . $font[0] . "&display=swap");
+          $fontURL = str_replace(" ", "%20", "https://fonts.googleapis.com/css2?family=" . $font[0] . ":wght@300;400;700&display=swap");
           $importurl = "@import url('" . $fontURL . "');";
           $generalStyles = $generalStyles . $stylename . ":" . $formattedfont . "!important;";
           continue;
@@ -360,18 +432,18 @@ class uipress_styles extends uipress_app
   							<?php echo __("Version", "uipress") . " " . $this->version; ?>
   						</div>
   					</div>
-  					<div class="uip-flex">
+  					<div class="uip-flex uip-flex-row uip-gap-xs">
   						<button class="uip-button-primary"
   						type="button" @click="saveSettings()"><?php _e("Save", "uipress"); ?></button>
               
               <template v-if="masterPrefs.dataConnect == true">
               
-                <label class="uip-button-default uip-margin-left-xs">
-                  <?php _e("Import", "uipress"); ?>
+                <label class="uip-button-default uip-flex uip-flex-center">
+                  <span><?php _e("Import", "uipress"); ?></span>
                   <input hidden accept=".json" type="file" single="" id="uip-import-settings" @change="importSettings()">
                 </label>
                 
-                <button class="uip-button-default uip-margin-left-xs"
+                <button class="uip-button-default "
                 type="button" @click="exportSettings()"><?php _e("Export", "uipress"); ?></button>
                 <a href="#" class="uip-hidden" id="uip-export-styles"></a>
               
@@ -379,16 +451,21 @@ class uipress_styles extends uipress_app
               
               <template v-else >
                 
-                <a href="https://uipress.co/pricing/" target="_BLANK" class="uip-no-underline uip-border-round uip-background-primary-wash uip-text-bold uip-text-emphasis uip-margin-left-xs" style="padding: var(--uip-padding-button)">
+                <a href="https://uipress.co/pricing/" target="_BLANK" class="uip-no-underline uip-border-round uip-background-primary-wash uip-text-bold uip-text-emphasis " style="padding: var(--uip-padding-button)">
                   <div class="uip-flex">
-                    <span class="material-icons-outlined uip-margin-right-xs">redeem</span> 
+                    <span class="material-icons-outlined ">redeem</span> 
                     <span><?php _e("Unlock Export and Import features with pro", "uipress"); ?></span>
                   </div> 
                 </a>
                 
               </template>
               
-              <button class="uip-button-danger uip-margin-left-xs"
+              
+              <uip-offcanvas :translations="translations" :title="translations.themeLibrary" :buttontext="translations.library" icon="book"  buttonsize="medium" :tooltip="true" :tooltiptext="translations.themeLibrary">
+                <theme-selector  @import-theme="themImport($event)" :translations="translations" ></theme-selector>
+              </uip-offcanvas>
+              
+              <button class="uip-button-danger "
               type="button" @click="clearSettings()"><?php _e("Clear All", "uipress"); ?></button>
   					</div>
   				</div>
@@ -928,9 +1005,20 @@ class uipress_styles extends uipress_app
     $styles[$optionname]["label"] = $label;
 
     $temp = [];
-    $temp["name"] = __("Search Input colour", "uipress");
+    $temp["name"] = __("Search Input background colour", "uipress");
     $temp["type"] = "color";
     $temp["cssVariable"] = "--uip-menu-search-background";
+    $temp["optionName"] = $temp["cssVariable"];
+    $temp["value"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["light"];
+    $temp["darkValue"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["dark"];
+    $temp["global"] = false;
+    $styles[$optionname]["options"][] = $temp;
+    $styles[$optionname]["label"] = $label;
+
+    $temp = [];
+    $temp["name"] = __("Search Input text colour", "uipress");
+    $temp["type"] = "color";
+    $temp["cssVariable"] = "--uip-menu-search-color";
     $temp["optionName"] = $temp["cssVariable"];
     $temp["value"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["light"];
     $temp["darkValue"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["dark"];

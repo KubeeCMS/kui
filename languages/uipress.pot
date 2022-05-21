@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: UiPress\n"
-"POT-Creation-Date: 2022-03-09 12:28+0000\n"
+"POT-Creation-Date: 2022-05-16 20:41+0100\n"
 "PO-Revision-Date: 2022-03-09 12:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,121 +21,121 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: admin/apps/admin-pages/admin-pages.php:109
+#: admin/apps/admin-pages/admin-pages.php:110
 #: admin/apps/menu-creator/menu-creator.php:1304
 msgid "Apply to subsites"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:120
+#: admin/apps/admin-pages/admin-pages.php:121
 msgid "Menu Icon"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:130
+#: admin/apps/admin-pages/admin-pages.php:131
 msgid "Manually add to menu?"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:243
+#: admin/apps/admin-pages/admin-pages.php:244
 msgid "Admin Pages - Beta"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:244
+#: admin/apps/admin-pages/admin-pages.php:245
 msgid "Creates custom admin pages."
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:248
+#: admin/apps/admin-pages/admin-pages.php:249
 msgid "Disable custom admin pages?"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:249
+#: admin/apps/admin-pages/admin-pages.php:250
 msgid "If disabled, the admin pages will not be available to any users."
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:256
+#: admin/apps/admin-pages/admin-pages.php:257
 msgid "Admin Page Slug"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:257
+#: admin/apps/admin-pages/admin-pages.php:258
 msgid ""
 "This defaults to admin-pages. Changes to this will need you to resave "
 "permalink structure."
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:264
+#: admin/apps/admin-pages/admin-pages.php:265
 msgid "Who can edit and create admin pages?"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:265
+#: admin/apps/admin-pages/admin-pages.php:266
 msgid ""
 "Editing and creation of admin pages will be disabled for the users or roles "
 "you select"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:273
+#: admin/apps/admin-pages/admin-pages.php:274
 msgid "Who can see admin pages?"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:274
+#: admin/apps/admin-pages/admin-pages.php:275
 msgid "UiPress will only show admin pages for the users or roles you select"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:313
+#: admin/apps/admin-pages/admin-pages.php:314
 msgctxt "post type general name"
 msgid "Admin Page"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:314
+#: admin/apps/admin-pages/admin-pages.php:315
 msgctxt "post type singular name"
 msgid "Admin Page"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:315
+#: admin/apps/admin-pages/admin-pages.php:316
 msgctxt "admin menu"
 msgid "Admin Pages"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:316
+#: admin/apps/admin-pages/admin-pages.php:317
 msgctxt "add new on admin bar"
 msgid "Admin Page"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:317
+#: admin/apps/admin-pages/admin-pages.php:318
 msgctxt "Admin Page"
 msgid "Add New"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:318
+#: admin/apps/admin-pages/admin-pages.php:319
 msgid "Add New Admin Page"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:319
+#: admin/apps/admin-pages/admin-pages.php:320
 msgid "New Admin Page"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:320
+#: admin/apps/admin-pages/admin-pages.php:321
 msgid "Edit Admin Page"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:321
+#: admin/apps/admin-pages/admin-pages.php:322
 msgid "View Admin Page"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:322
+#: admin/apps/admin-pages/admin-pages.php:323
 msgid "All Admin Pages"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:323
+#: admin/apps/admin-pages/admin-pages.php:324
 msgid "Search Admin Pages"
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:324
+#: admin/apps/admin-pages/admin-pages.php:325
 msgid "No Admin Pages found."
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:325
+#: admin/apps/admin-pages/admin-pages.php:326
 msgid "No Admin Pages found in Trash."
 msgstr ""
 
-#: admin/apps/admin-pages/admin-pages.php:329
+#: admin/apps/admin-pages/admin-pages.php:330
 #: admin/apps/menu-creator/menu-creator.php:667
 msgid "Description."
 msgstr ""
@@ -188,7 +188,7 @@ msgstr ""
 msgid "Original Title / Value"
 msgstr ""
 
-#: admin/apps/content/content.php:188 admin/classes/styles.php:594
+#: admin/apps/content/content.php:188 admin/classes/styles.php:671
 msgid "Text"
 msgstr ""
 
@@ -212,18 +212,18 @@ msgstr ""
 msgid "Find and Replace"
 msgstr ""
 
-#: admin/apps/content/content.php:266 admin/classes/uipress-app.php:1545
-#: admin/classes/uipress-app.php:1887
+#: admin/apps/content/content.php:266 admin/classes/uipress-app.php:1588
+#: admin/classes/uipress-app.php:1930
 msgid "No preferences supplied to save"
 msgstr ""
 
-#: admin/apps/content/content.php:288 admin/classes/uipress-app.php:1556
-#: admin/classes/uipress-app.php:1909
+#: admin/apps/content/content.php:288 admin/classes/uipress-app.php:1599
+#: admin/classes/uipress-app.php:1952
 msgid "Preferences saved"
 msgstr ""
 
-#: admin/apps/content/content.php:291 admin/classes/uipress-app.php:1560
-#: admin/classes/uipress-app.php:1912
+#: admin/apps/content/content.php:291 admin/classes/uipress-app.php:1603
+#: admin/classes/uipress-app.php:1955
 msgid "Unable to save user preferences"
 msgstr ""
 
@@ -255,12 +255,12 @@ msgstr ""
 #: admin/apps/menu-creator/menu-creator.php:814
 #: admin/apps/menu-creator/menu-creator.php:867
 #: admin/apps/menu-creator/menu-creator.php:936 admin/classes/folders.php:481
-#: admin/classes/settings.php:348 admin/classes/uipress-app.php:1178
+#: admin/classes/settings.php:311 admin/classes/uipress-app.php:1214
 msgid "Something went wrong"
 msgstr ""
 
 #: admin/apps/content/content.php:460
-msgid "Items duplicated succesffuly"
+msgid "Items duplicated successfully"
 msgstr ""
 
 #: admin/apps/content/content.php:463
@@ -276,7 +276,7 @@ msgid "Attributes Updated"
 msgstr ""
 
 #: admin/apps/content/content.php:774
-msgid "Items deleted succesffuly"
+msgid "Items deleted successfully"
 msgstr ""
 
 #: admin/apps/content/content.php:777
@@ -311,7 +311,7 @@ msgstr ""
 
 #: admin/apps/content/content.php:1362
 #: admin/apps/menu-creator/menu-creator.php:1096
-#: admin/classes/uipress-app.php:1146
+#: admin/classes/uipress-app.php:1182
 msgid "Pro Feature"
 msgstr ""
 
@@ -359,7 +359,7 @@ msgid "Keep existing tags"
 msgstr ""
 
 #: admin/apps/content/content.php:1448 admin/apps/content/content.php:1686
-#: admin/classes/uipress-app.php:1194
+#: admin/classes/uipress-app.php:1230
 msgid "Update"
 msgstr ""
 
@@ -375,7 +375,7 @@ msgstr ""
 #: admin/apps/menu-creator/menu-creator.php:1151
 #: admin/apps/menu-creator/menu-creator.php:1651
 #: admin/apps/menu-creator/menu-creator.php:1652
-#: admin/classes/uipress-app.php:1192
+#: admin/classes/uipress-app.php:1228
 msgid "Name"
 msgstr ""
 
@@ -491,7 +491,7 @@ msgstr ""
 #: admin/apps/content/content.php:2339
 #: admin/apps/menu-creator/menu-creator.php:1155
 #: admin/apps/menu-creator/menu-creator.php:1294
-#: admin/classes/uipress-app.php:968
+#: admin/classes/uipress-app.php:1004
 msgid "Status"
 msgstr ""
 
@@ -585,7 +585,7 @@ msgstr ""
 
 #: admin/apps/content/content.php:2335
 #: admin/apps/menu-creator/menu-creator.php:1159
-#: admin/apps/overview/overview.php:887
+#: admin/apps/overview/overview.php:902
 msgid "Date"
 msgstr ""
 
@@ -597,13 +597,13 @@ msgstr ""
 msgid "No content found"
 msgstr ""
 
-#: admin/apps/content/content.php:2511 admin/classes/uipress-app.php:1148
+#: admin/apps/content/content.php:2511 admin/classes/uipress-app.php:1184
 msgid "View"
 msgstr ""
 
 #: admin/apps/content/content.php:2518
 #: admin/apps/menu-creator/menu-creator.php:1203
-#: admin/classes/uipress-app.php:1149
+#: admin/classes/uipress-app.php:1185
 msgid "Edit"
 msgstr ""
 
@@ -649,8 +649,8 @@ msgid "View Name"
 msgstr ""
 
 #: admin/apps/content/content.php:2623
-#: admin/apps/menu-creator/menu-creator.php:1709 admin/classes/settings.php:204
-#: admin/classes/styles.php:365
+#: admin/apps/menu-creator/menu-creator.php:1709
+#: admin/apps/overview/overview.php:836 admin/classes/styles.php:437
 msgid "Save"
 msgstr ""
 
@@ -775,17 +775,17 @@ msgstr ""
 msgid "Menu Saved"
 msgstr ""
 
-#: admin/apps/menu-creator/menu-creator.php:962 admin/classes/settings.php:368
+#: admin/apps/menu-creator/menu-creator.php:962 admin/classes/settings.php:331
 msgid "User"
 msgstr ""
 
 #: admin/apps/menu-creator/menu-creator.php:977
-#: admin/apps/menu-creator/menu-creator.php:988 admin/classes/settings.php:383
-#: admin/classes/settings.php:394
+#: admin/apps/menu-creator/menu-creator.php:988 admin/classes/settings.php:346
+#: admin/classes/settings.php:357
 msgid "Role"
 msgstr ""
 
-#: admin/apps/menu-creator/menu-creator.php:995 admin/classes/settings.php:401
+#: admin/apps/menu-creator/menu-creator.php:995 admin/classes/settings.php:364
 msgid "Nothing found for term:"
 msgstr ""
 
@@ -807,8 +807,8 @@ msgid "Create your first admin menu"
 msgstr ""
 
 #: admin/apps/menu-creator/menu-creator.php:1217
-#: admin/apps/menu-creator/menu-creator.php:1718 admin/classes/settings.php:218
-#: admin/classes/settings.php:298 admin/classes/styles.php:375
+#: admin/apps/menu-creator/menu-creator.php:1718 admin/classes/settings.php:251
+#: admin/classes/styles.php:447
 msgid "Export"
 msgstr ""
 
@@ -924,243 +924,242 @@ msgstr ""
 msgid "Import Menu"
 msgstr ""
 
-#: admin/apps/menu-creator/menu-creator.php:1736 admin/classes/settings.php:237
-#: admin/classes/settings.php:285
+#: admin/apps/menu-creator/menu-creator.php:1736 admin/classes/settings.php:268
 msgid "Reset Settings"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:73
+#: admin/apps/overview/analytics.php:74
 msgid "Analytics account removed"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:92
+#: admin/apps/overview/analytics.php:93
 msgid "Unable to connect account"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:105
+#: admin/apps/overview/analytics.php:106
 msgid "Analytics account connected"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:309 admin/apps/overview/analytics.php:717
+#: admin/apps/overview/analytics.php:310 admin/apps/overview/analytics.php:718
 #: admin/apps/overview/overview.php:761
 msgid "Site Users"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:317 admin/apps/overview/overview.php:762
+#: admin/apps/overview/analytics.php:318 admin/apps/overview/overview.php:762
 msgid "Site Users (comparison period)"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:382 admin/apps/overview/analytics.php:699
+#: admin/apps/overview/analytics.php:383 admin/apps/overview/analytics.php:700
 #: admin/apps/overview/overview.php:759
 msgid "Page Views"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:390
+#: admin/apps/overview/analytics.php:391
 msgid "Page Views (comparison period)"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:607 admin/apps/overview/analytics.php:708
+#: admin/apps/overview/analytics.php:608 admin/apps/overview/analytics.php:709
 msgid "Page Speed"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:615
+#: admin/apps/overview/analytics.php:616
 msgid "Page Speed (comparison period)"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:662 admin/apps/overview/analytics.php:702
-#: admin/apps/overview/analytics.php:711 admin/apps/overview/analytics.php:720
-#: admin/apps/overview/analytics.php:729 admin/apps/overview/analytics.php:738
-#: admin/apps/overview/analytics.php:747 admin/apps/overview/analytics.php:756
-#: admin/apps/overview/analytics.php:765 admin/apps/overview/analytics.php:774
-#: admin/apps/overview/analytics.php:783 admin/apps/overview/analytics.php:792
-#: admin/apps/overview/analytics.php:801 admin/apps/overview/analytics.php:810
-#: admin/apps/overview/analytics.php:819 admin/apps/overview/analytics.php:828
-#: admin/apps/overview/analytics.php:837 admin/apps/overview/analytics.php:846
-#: admin/apps/overview/analytics.php:855 admin/apps/overview/analytics.php:864
-#: admin/apps/overview/analytics.php:873 admin/apps/overview/analytics.php:882
+#: admin/apps/overview/analytics.php:663 admin/apps/overview/analytics.php:703
+#: admin/apps/overview/analytics.php:712 admin/apps/overview/analytics.php:721
+#: admin/apps/overview/analytics.php:730 admin/apps/overview/analytics.php:739
+#: admin/apps/overview/analytics.php:748 admin/apps/overview/analytics.php:757
+#: admin/apps/overview/analytics.php:766 admin/apps/overview/analytics.php:775
+#: admin/apps/overview/analytics.php:784 admin/apps/overview/analytics.php:793
+#: admin/apps/overview/analytics.php:802 admin/apps/overview/analytics.php:811
+#: admin/apps/overview/analytics.php:820 admin/apps/overview/analytics.php:829
+#: admin/apps/overview/analytics.php:838 admin/apps/overview/analytics.php:847
+#: admin/apps/overview/analytics.php:856 admin/apps/overview/analytics.php:865
+#: admin/apps/overview/analytics.php:874 admin/apps/overview/analytics.php:883
 msgid "Analytics"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:664
+#: admin/apps/overview/analytics.php:665
 msgid "Creates the google analytics cards for the overview page."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:680
+#: admin/apps/overview/analytics.php:681
 msgid "Google Analytics disabled for"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:681
+#: admin/apps/overview/analytics.php:682
 msgid ""
 "Analytics will be disabled on the overview page for any users or roles you "
 "select"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:701
+#: admin/apps/overview/analytics.php:702
 msgid "Display website page views within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:710
+#: admin/apps/overview/analytics.php:711
 msgid "Display website page speed within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:719
+#: admin/apps/overview/analytics.php:720
 msgid "Display website users within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:726
+#: admin/apps/overview/analytics.php:727
 msgid "Site visits by device"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:728
+#: admin/apps/overview/analytics.php:729
 msgid "Display site usage by device within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:735
+#: admin/apps/overview/analytics.php:736 admin/apps/overview/overview.php:841
 msgid "Bounce Rate"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:737
+#: admin/apps/overview/analytics.php:738
 msgid "Display site bounce rate within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:744
+#: admin/apps/overview/analytics.php:745
 msgid "Session Duration"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:746
+#: admin/apps/overview/analytics.php:747
 msgid "Display site session duration within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:753
+#: admin/apps/overview/analytics.php:754
 msgid "Visits by Country"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:755
+#: admin/apps/overview/analytics.php:756
 msgid "Displays country user data within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:762
+#: admin/apps/overview/analytics.php:763
 msgid "Traffic Sources"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:764
+#: admin/apps/overview/analytics.php:765
 msgid "Displays traffic source info within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:771
+#: admin/apps/overview/analytics.php:772
 msgid "Visits By Page"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:773
+#: admin/apps/overview/analytics.php:774
 msgid "Displays traffic for most popular site pages within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:780
+#: admin/apps/overview/analytics.php:781
 msgid "Event Count By Event Name"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:782
+#: admin/apps/overview/analytics.php:783
 msgid "Display list of events within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:789
+#: admin/apps/overview/analytics.php:790
 msgid "Sessions by channel grouping"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:791
+#: admin/apps/overview/analytics.php:792
 msgid "Display sessions by channel grouping within the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:798
+#: admin/apps/overview/analytics.php:799
 msgid "User in the last 30 minutes"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:800
+#: admin/apps/overview/analytics.php:801
 msgid "Displays active users from the last 30 minutes."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:807
+#: admin/apps/overview/analytics.php:808
 msgid "Engagement Rate"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:809
+#: admin/apps/overview/analytics.php:810
 msgid "Displays average angagement rate for date range"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:816 admin/apps/overview/overview.php:783
+#: admin/apps/overview/analytics.php:817 admin/apps/overview/overview.php:783
 msgid "Site Revenue"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:818
+#: admin/apps/overview/analytics.php:819
 msgid ""
 "Displays site revenue for date range. The sum of revenue from purchases, "
 "subscriptions, and advertising."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:825
+#: admin/apps/overview/analytics.php:826
 msgid "New vs Returning Users"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:827
+#: admin/apps/overview/analytics.php:828
 msgid "Displays new vs returning users for the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:834
+#: admin/apps/overview/analytics.php:835
 msgid "Top Cities"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:836
+#: admin/apps/overview/analytics.php:837
 msgid "Displays page views by city for the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:843 admin/apps/overview/overview.php:785
+#: admin/apps/overview/analytics.php:844 admin/apps/overview/overview.php:785
 msgid "Ecommerce Overview"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:845
+#: admin/apps/overview/analytics.php:846
 msgid "Displays add to cart, checkout and purchase data for the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:852 admin/apps/overview/overview.php:781
+#: admin/apps/overview/analytics.php:853 admin/apps/overview/overview.php:781
 #: admin/apps/overview/overview.php:782
 msgid "Conversion Rate"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:854
+#: admin/apps/overview/analytics.php:855
 msgid ""
 "The percentage of active users who made their first purchase for the date "
 "range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:861
+#: admin/apps/overview/analytics.php:862
 msgid "Top Products"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:863
+#: admin/apps/overview/analytics.php:864
 msgid "Products with the most sales for for the date range."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:870
+#: admin/apps/overview/analytics.php:871
 msgid "Conversions in the last 30 minutes"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:872
+#: admin/apps/overview/analytics.php:873
 msgid "Conversions logged in the last 30 minutes."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:879
+#: admin/apps/overview/analytics.php:880
 msgid "Page Views in the last 30 minutes"
 msgstr ""
 
-#: admin/apps/overview/analytics.php:881
+#: admin/apps/overview/analytics.php:882
 msgid "Page views in the last 30 minutes."
 msgstr ""
 
-#: admin/apps/overview/analytics.php:1012
+#: admin/apps/overview/analytics.php:1013
 msgid "Unable to fetch analytics data at this moment. Please try again later"
 msgstr ""
 
-#: admin/apps/overview/overview.php:106 admin/apps/overview/overview.php:1133
+#: admin/apps/overview/overview.php:106 admin/apps/overview/overview.php:1148
 msgid "Overview"
 msgstr ""
 
@@ -1408,7 +1407,7 @@ msgstr ""
 msgid "Pro"
 msgstr ""
 
-#: admin/apps/overview/overview.php:716 admin/apps/overview/overview.php:905
+#: admin/apps/overview/overview.php:716 admin/apps/overview/overview.php:920
 msgid "Shortcode"
 msgstr ""
 
@@ -1536,11 +1535,11 @@ msgstr ""
 msgid "WooCommerce is required to use this card"
 msgstr ""
 
-#: admin/apps/overview/overview.php:749 admin/classes/uipress-app.php:1200
+#: admin/apps/overview/overview.php:749 admin/classes/uipress-app.php:1236
 msgid "Please select a valid JSON file"
 msgstr ""
 
-#: admin/apps/overview/overview.php:750 admin/classes/uipress-app.php:1201
+#: admin/apps/overview/overview.php:750 admin/classes/uipress-app.php:1237
 msgid "File is to big"
 msgstr ""
 
@@ -1608,11 +1607,11 @@ msgstr ""
 msgid "Custom Range"
 msgstr ""
 
-#: admin/apps/overview/overview.php:770 admin/classes/uipress-app.php:1217
+#: admin/apps/overview/overview.php:770 admin/classes/uipress-app.php:1253
 msgid "Today"
 msgstr ""
 
-#: admin/apps/overview/overview.php:771 admin/classes/uipress-app.php:1218
+#: admin/apps/overview/overview.php:771 admin/classes/uipress-app.php:1254
 msgid "Yesterday"
 msgstr ""
 
@@ -1632,11 +1631,11 @@ msgstr ""
 msgid "Last 90 days"
 msgstr ""
 
-#: admin/apps/overview/overview.php:776 admin/classes/uipress-app.php:1215
+#: admin/apps/overview/overview.php:776 admin/classes/uipress-app.php:1251
 msgid "This Month"
 msgstr ""
 
-#: admin/apps/overview/overview.php:777 admin/classes/uipress-app.php:1216
+#: admin/apps/overview/overview.php:777 admin/classes/uipress-app.php:1252
 msgid "Last Month"
 msgstr ""
 
@@ -1708,7 +1707,7 @@ msgstr ""
 msgid "Hide card title"
 msgstr ""
 
-#: admin/apps/overview/overview.php:801 admin/apps/overview/overview.php:878
+#: admin/apps/overview/overview.php:801 admin/apps/overview/overview.php:893
 msgid "Site Health"
 msgstr ""
 
@@ -1776,9 +1775,9 @@ msgstr ""
 msgid "Add New Card"
 msgstr ""
 
-#: admin/apps/overview/overview.php:820 admin/apps/overview/overview.php:1232
+#: admin/apps/overview/overview.php:820 admin/apps/overview/overview.php:1247
 #: admin/classes/settings.php:78 admin/classes/settings.php:91
-#: admin/classes/settings.php:264
+#: admin/classes/settings.php:229 admin/classes/uipress-app.php:1262
 msgid "Settings"
 msgstr ""
 
@@ -1814,160 +1813,212 @@ msgstr ""
 msgid "In the last"
 msgstr ""
 
-#: admin/apps/overview/overview.php:851
+#: admin/apps/overview/overview.php:830
+msgid "Something has gone wrong"
+msgstr ""
+
+#: admin/apps/overview/overview.php:831
+msgid "Connect your matomo site to use this card"
+msgstr ""
+
+#: admin/apps/overview/overview.php:832
+msgid "Connect Matomo Analytics"
+msgstr ""
+
+#: admin/apps/overview/overview.php:833
+msgid "Auth Token"
+msgstr ""
+
+#: admin/apps/overview/overview.php:834
+msgid "Matomo Url"
+msgstr ""
+
+#: admin/apps/overview/overview.php:835
+msgid "Matomo Site ID"
+msgstr ""
+
+#: admin/apps/overview/overview.php:837
+msgid "Click below to change matomo account"
+msgstr ""
+
+#: admin/apps/overview/overview.php:838
+msgid "Change account"
+msgstr ""
+
+#: admin/apps/overview/overview.php:839
+msgid "City"
+msgstr ""
+
+#: admin/apps/overview/overview.php:840
+msgid "Average Page Load"
+msgstr ""
+
+#: admin/apps/overview/overview.php:842
+msgid "Exit Rate"
+msgstr ""
+
+#: admin/apps/overview/overview.php:843
+msgid "Average Time On Page"
+msgstr ""
+
+#: admin/apps/overview/overview.php:844
+msgid "Referer"
+msgstr ""
+
+#: admin/apps/overview/overview.php:866
 msgid "Recently Published"
 msgstr ""
 
-#: admin/apps/overview/overview.php:853
+#: admin/apps/overview/overview.php:868
 msgid "Display posts, pages and CPTs published within the date range."
 msgstr ""
 
-#: admin/apps/overview/overview.php:854 admin/apps/overview/overview.php:863
-#: admin/apps/overview/overview.php:872 admin/apps/overview/overview.php:881
-#: admin/apps/overview/overview.php:890 admin/apps/overview/overview.php:899
-#: admin/apps/overview/overview.php:908 admin/apps/overview/overview.php:917
-#: admin/apps/overview/overview.php:926 admin/apps/overview/overview.php:935
-#: admin/classes/uipress-app.php:2340
+#: admin/apps/overview/overview.php:869 admin/apps/overview/overview.php:878
+#: admin/apps/overview/overview.php:887 admin/apps/overview/overview.php:896
+#: admin/apps/overview/overview.php:905 admin/apps/overview/overview.php:914
+#: admin/apps/overview/overview.php:923 admin/apps/overview/overview.php:932
+#: admin/apps/overview/overview.php:941 admin/apps/overview/overview.php:950
+#: admin/classes/uipress-app.php:2383
 msgid "General"
 msgstr ""
 
-#: admin/apps/overview/overview.php:860
+#: admin/apps/overview/overview.php:875
 msgid "Recent Comments"
 msgstr ""
 
-#: admin/apps/overview/overview.php:862
+#: admin/apps/overview/overview.php:877
 msgid ""
 "Displays total comments and recent comments published within the date range."
 msgstr ""
 
-#: admin/apps/overview/overview.php:869
+#: admin/apps/overview/overview.php:884
 msgid "System Info"
 msgstr ""
 
-#: admin/apps/overview/overview.php:871
+#: admin/apps/overview/overview.php:886
 msgid "Displays info our about your cms and server setup."
 msgstr ""
 
-#: admin/apps/overview/overview.php:880
+#: admin/apps/overview/overview.php:895
 msgid "Displays info our about your sites health."
 msgstr ""
 
-#: admin/apps/overview/overview.php:889
+#: admin/apps/overview/overview.php:904
 msgid "Displays current time and date"
 msgstr ""
 
-#: admin/apps/overview/overview.php:896
+#: admin/apps/overview/overview.php:911
 msgid "Video"
 msgstr ""
 
-#: admin/apps/overview/overview.php:898
+#: admin/apps/overview/overview.php:913
 msgid "Displays a custom video"
 msgstr ""
 
-#: admin/apps/overview/overview.php:907
+#: admin/apps/overview/overview.php:922
 msgid "Outputs a WordPress shortcode to the card"
 msgstr ""
 
-#: admin/apps/overview/overview.php:914
+#: admin/apps/overview/overview.php:929
 msgid "Custom HTML"
 msgstr ""
 
-#: admin/apps/overview/overview.php:916
+#: admin/apps/overview/overview.php:931
 msgid "Outputs custom HTML to the card"
 msgstr ""
 
-#: admin/apps/overview/overview.php:923
+#: admin/apps/overview/overview.php:938
 msgid "Quote of the day"
 msgstr ""
 
-#: admin/apps/overview/overview.php:925
+#: admin/apps/overview/overview.php:940
 msgid "Shows a random quote of the day"
 msgstr ""
 
-#: admin/apps/overview/overview.php:932
+#: admin/apps/overview/overview.php:947
 msgid "To do list"
 msgstr ""
 
-#: admin/apps/overview/overview.php:934
+#: admin/apps/overview/overview.php:949
 msgid "A simple todo list card"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1021
+#: admin/apps/overview/overview.php:1036
 msgid "Hello"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1170
+#: admin/apps/overview/overview.php:1185
 msgid "Clear Layout"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1174 admin/apps/overview/overview.php:1217
+#: admin/apps/overview/overview.php:1189 admin/apps/overview/overview.php:1232
 msgid "New Section"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1179 admin/apps/overview/overview.php:1220
+#: admin/apps/overview/overview.php:1194 admin/apps/overview/overview.php:1235
 msgid "Save changes"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1223
+#: admin/apps/overview/overview.php:1238
 msgid "Exit edit mode"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1236
+#: admin/apps/overview/overview.php:1251
 msgid "Editing Mode"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1248
+#: admin/apps/overview/overview.php:1263
 msgid "Disconnect Analytics"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1258
+#: admin/apps/overview/overview.php:1273
 msgid "Export Layout"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1267
+#: admin/apps/overview/overview.php:1282
 msgid "Import Layout"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1281 admin/classes/settings.php:228
-#: admin/classes/settings.php:308 admin/classes/styles.php:385
+#: admin/apps/overview/overview.php:1296 admin/classes/settings.php:261
+#: admin/classes/styles.php:457
 msgid "Unlock Export and Import features with pro"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1304
+#: admin/apps/overview/overview.php:1319
 msgid "Home"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1352
+#: admin/apps/overview/overview.php:1367
 msgid "It's a little quiet around here"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1354
+#: admin/apps/overview/overview.php:1369
 msgid ""
 "Looks like you haven't created a dashboard yet. Enter edit mode to get "
 "started or import a default template"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1357
+#: admin/apps/overview/overview.php:1372
 msgid "Import default template"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1358
+#: admin/apps/overview/overview.php:1373
 msgid "Enter edit mode"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1402
+#: admin/apps/overview/overview.php:1417
 msgid "Match Column Height"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1410
+#: admin/apps/overview/overview.php:1425
 msgid "Hide section title"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1418
+#: admin/apps/overview/overview.php:1433
 msgid "Section Width"
 msgstr ""
 
-#: admin/apps/overview/overview.php:1435
+#: admin/apps/overview/overview.php:1450
 msgid "Remove Section"
 msgstr ""
 
@@ -2033,16 +2084,16 @@ msgstr ""
 msgid "No products sold during the date range."
 msgstr ""
 
-#: admin/classes/debug.php:131 admin/classes/debug.php:137
-#: admin/classes/debug.php:159
+#: admin/classes/debug.php:133 admin/classes/debug.php:139
+#: admin/classes/debug.php:161
 msgid "Unable to register UiPress at this time"
 msgstr ""
 
-#: admin/classes/debug.php:150
+#: admin/classes/debug.php:152
 msgid "UiPress succesfully activated"
 msgstr ""
 
-#: admin/classes/folders.php:84 admin/classes/uipress-app.php:1188
+#: admin/classes/folders.php:84 admin/classes/uipress-app.php:1224
 msgid "Folders"
 msgstr ""
 
@@ -2125,7 +2176,7 @@ msgstr ""
 msgid "Unable to save user settings"
 msgstr ""
 
-#: admin/classes/settings.php:150 admin/classes/uipress-app.php:1179
+#: admin/classes/settings.php:150 admin/classes/uipress-app.php:1215
 msgid "Settings saved"
 msgstr ""
 
@@ -2133,1047 +2184,1129 @@ msgstr ""
 msgid "Settings reset"
 msgstr ""
 
-#: admin/classes/settings.php:212 admin/classes/settings.php:292
-#: admin/classes/styles.php:370
-msgid "Import"
-msgstr ""
-
-#: admin/classes/settings.php:260 admin/classes/styles.php:360
+#: admin/classes/settings.php:212 admin/classes/styles.php:432
 msgid "Version"
 msgstr ""
 
-#: admin/classes/settings.php:318
+#: admin/classes/settings.php:233
 msgid "Save settings"
 msgstr ""
 
-#: admin/classes/settings.php:453
+#: admin/classes/settings.php:245 admin/classes/styles.php:442
+msgid "Import"
+msgstr ""
+
+#: admin/classes/settings.php:416
 msgid "No licence key provided"
 msgstr ""
 
-#: admin/classes/settings.php:485
+#: admin/classes/settings.php:448
 msgid "Licence removed"
 msgstr ""
 
-#: admin/classes/styles.php:136 admin/classes/styles.php:149
-#: admin/classes/styles.php:358
+#: admin/classes/styles.php:138 admin/classes/styles.php:151
+#: admin/classes/styles.php:430
 msgid "Styles"
 msgstr ""
 
-#: admin/classes/styles.php:194
+#: admin/classes/styles.php:213
+msgid "Unable to fetch themes at this moment. Please try again later"
+msgstr ""
+
+#: admin/classes/styles.php:247
+msgid "Unable to like theme at this moment. Please try again later"
+msgstr ""
+
+#: admin/classes/styles.php:266
 msgid "Unable to save styles"
 msgstr ""
 
-#: admin/classes/styles.php:220
+#: admin/classes/styles.php:292
 msgid "Styles saved"
 msgstr ""
 
-#: admin/classes/styles.php:339
+#: admin/classes/styles.php:411
 msgid ""
 "Uipress styles isn't optimised for mobile devices. Switch to a larger screen "
 "to modify UiPress Styles"
 msgstr ""
 
-#: admin/classes/styles.php:392
+#: admin/classes/styles.php:469
 msgid "Clear All"
 msgstr ""
 
-#: admin/classes/styles.php:456
+#: admin/classes/styles.php:533
 msgid "Global"
 msgstr ""
 
-#: admin/classes/styles.php:459
+#: admin/classes/styles.php:536
 msgid "Body Background"
 msgstr ""
 
-#: admin/classes/styles.php:470
+#: admin/classes/styles.php:547
 msgid "Default Background"
 msgstr ""
 
-#: admin/classes/styles.php:481
+#: admin/classes/styles.php:558
 msgid "Muted Background"
 msgstr ""
 
-#: admin/classes/styles.php:492
+#: admin/classes/styles.php:569
 msgid "Muted Background Accent"
 msgstr ""
 
-#: admin/classes/styles.php:503
+#: admin/classes/styles.php:580
 msgid "Primary Color"
 msgstr ""
 
-#: admin/classes/styles.php:514
+#: admin/classes/styles.php:591
 msgid "Primary Color Wash"
 msgstr ""
 
-#: admin/classes/styles.php:525
+#: admin/classes/styles.php:602
 msgid "Primary Color Hover"
 msgstr ""
 
-#: admin/classes/styles.php:536
+#: admin/classes/styles.php:613
 msgid "Font"
 msgstr ""
 
-#: admin/classes/styles.php:547
+#: admin/classes/styles.php:624
 msgid "Border Width"
 msgstr ""
 
-#: admin/classes/styles.php:558
+#: admin/classes/styles.php:635
 msgid "Border Radius"
 msgstr ""
 
-#: admin/classes/styles.php:569
+#: admin/classes/styles.php:646
 msgid "Border Colour"
 msgstr ""
 
-#: admin/classes/styles.php:580
+#: admin/classes/styles.php:657
 msgid "Notification Background"
 msgstr ""
 
-#: admin/classes/styles.php:597 admin/classes/styles.php:898
-#: admin/classes/styles.php:983
+#: admin/classes/styles.php:674 admin/classes/styles.php:975
+#: admin/classes/styles.php:1093
 msgid "Text Color"
 msgstr ""
 
-#: admin/classes/styles.php:608
+#: admin/classes/styles.php:685
 msgid "Text Emphasis Color"
 msgstr ""
 
-#: admin/classes/styles.php:619
+#: admin/classes/styles.php:696
 msgid "Text Muted Color"
 msgstr ""
 
-#: admin/classes/styles.php:635
+#: admin/classes/styles.php:712
 msgid "Buttons"
 msgstr ""
 
-#: admin/classes/styles.php:638
+#: admin/classes/styles.php:715
 msgid "Button Border Radius"
 msgstr ""
 
-#: admin/classes/styles.php:650
+#: admin/classes/styles.php:727
 msgid "Button Border Width"
 msgstr ""
 
-#: admin/classes/styles.php:662
+#: admin/classes/styles.php:739
 msgid "Default Button Border Colour"
 msgstr ""
 
-#: admin/classes/styles.php:674
+#: admin/classes/styles.php:751
 msgid "Default Button Background Colour"
 msgstr ""
 
-#: admin/classes/styles.php:686
+#: admin/classes/styles.php:763
 msgid "Default Button Hover Background Colour"
 msgstr ""
 
-#: admin/classes/styles.php:698
+#: admin/classes/styles.php:775
 msgid "Default Button Text Colour"
 msgstr ""
 
-#: admin/classes/styles.php:711
+#: admin/classes/styles.php:788
 msgid "Primary Button Border Colour"
 msgstr ""
 
-#: admin/classes/styles.php:723
+#: admin/classes/styles.php:800
 msgid "Primary Button Background Colour"
 msgstr ""
 
-#: admin/classes/styles.php:735
+#: admin/classes/styles.php:812
 msgid "Primary Button Hover Background Colour"
 msgstr ""
 
-#: admin/classes/styles.php:747
+#: admin/classes/styles.php:824
 msgid "Primary Button Text Colour"
 msgstr ""
 
-#: admin/classes/styles.php:760
+#: admin/classes/styles.php:837
 msgid "Danger Button Border Colour"
 msgstr ""
 
-#: admin/classes/styles.php:772
+#: admin/classes/styles.php:849
 msgid "Danger Button Background Colour"
 msgstr ""
 
-#: admin/classes/styles.php:784
+#: admin/classes/styles.php:861
 msgid "Danger Button Hover Background Colour"
 msgstr ""
 
-#: admin/classes/styles.php:796
+#: admin/classes/styles.php:873
 msgid "Danger Button Text Colour"
 msgstr ""
 
-#: admin/classes/styles.php:809
+#: admin/classes/styles.php:886
 msgid "Page Action Button Border Colour"
 msgstr ""
 
-#: admin/classes/styles.php:821
+#: admin/classes/styles.php:898
 msgid "Page Action Button Background Colour"
 msgstr ""
 
-#: admin/classes/styles.php:833
+#: admin/classes/styles.php:910
 msgid "Page Action Button Hover Background Colour"
 msgstr ""
 
-#: admin/classes/styles.php:845
+#: admin/classes/styles.php:922
 msgid "Page Action Button Text Colour"
 msgstr ""
 
-#: admin/classes/styles.php:863 admin/classes/uipress-app.php:2456
+#: admin/classes/styles.php:940 admin/classes/uipress-app.php:2526
 msgid "Menu"
 msgstr ""
 
-#: admin/classes/styles.php:865
+#: admin/classes/styles.php:942
 msgid "Background Color"
 msgstr ""
 
-#: admin/classes/styles.php:876 admin/classes/styles.php:1005
+#: admin/classes/styles.php:953 admin/classes/styles.php:1115
 msgid "Secondary background Color"
 msgstr ""
 
-#: admin/classes/styles.php:887
+#: admin/classes/styles.php:964
 msgid "Button Hover background Color"
 msgstr ""
 
-#: admin/classes/styles.php:909
+#: admin/classes/styles.php:986
 msgid "Active Text Color"
 msgstr ""
 
-#: admin/classes/styles.php:920
+#: admin/classes/styles.php:997
+msgid "Active Top Level Item background colour"
+msgstr ""
+
+#: admin/classes/styles.php:1008
+msgid "Search Input background colour"
+msgstr ""
+
+#: admin/classes/styles.php:1019
+msgid "Search Input text colour"
+msgstr ""
+
+#: admin/classes/styles.php:1030
 msgid "Submenu Active Text Color"
 msgstr ""
 
-#: admin/classes/styles.php:931
+#: admin/classes/styles.php:1041
 msgid "Width"
 msgstr ""
 
-#: admin/classes/styles.php:943
+#: admin/classes/styles.php:1053
 msgid "Padding"
 msgstr ""
 
-#: admin/classes/styles.php:955
+#: admin/classes/styles.php:1065
 msgid "Logo Height"
 msgstr ""
 
-#: admin/classes/styles.php:969 admin/classes/uipress-app.php:2560
+#: admin/classes/styles.php:1079 admin/classes/uipress-app.php:2630
 msgid "Toolbar"
 msgstr ""
 
-#: admin/classes/styles.php:972
+#: admin/classes/styles.php:1082
 msgid "Toolbar Background Color"
 msgstr ""
 
-#: admin/classes/styles.php:994
+#: admin/classes/styles.php:1104
 msgid "Link Hover Text Color"
 msgstr ""
 
-#: admin/classes/styles.php:1018
+#: admin/classes/styles.php:1128
 msgid "Cards"
 msgstr ""
 
-#: admin/classes/styles.php:1021 admin/classes/styles.php:1105
+#: admin/classes/styles.php:1131 admin/classes/styles.php:1215
 msgid "Background color"
 msgstr ""
 
-#: admin/classes/styles.php:1033
+#: admin/classes/styles.php:1143
 msgid "Border color"
 msgstr ""
 
-#: admin/classes/styles.php:1045
+#: admin/classes/styles.php:1155
 msgid "Border radius"
 msgstr ""
 
-#: admin/classes/styles.php:1057
+#: admin/classes/styles.php:1167
 msgid "Shadow spread"
 msgstr ""
 
-#: admin/classes/styles.php:1069
+#: admin/classes/styles.php:1179
 msgid "Shadow blur"
 msgstr ""
 
-#: admin/classes/styles.php:1081
+#: admin/classes/styles.php:1191
 msgid "Shadow color"
 msgstr ""
 
-#: admin/classes/styles.php:1102 admin/classes/uipress-app.php:2723
+#: admin/classes/styles.php:1212 admin/classes/uipress-app.php:2793
 msgid "Login"
 msgstr ""
 
-#: admin/classes/uipress-app.php:253
+#: admin/classes/uipress-app.php:264
 msgctxt "post type general name"
 msgid "Folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:254
+#: admin/classes/uipress-app.php:265
 msgctxt "post type singular name"
 msgid "folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:255
+#: admin/classes/uipress-app.php:266
 msgctxt "admin menu"
 msgid "Folders"
 msgstr ""
 
-#: admin/classes/uipress-app.php:256
+#: admin/classes/uipress-app.php:267
 msgctxt "add new on admin bar"
 msgid "Folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:257
+#: admin/classes/uipress-app.php:268
 msgctxt "folder"
 msgid "Add New"
 msgstr ""
 
-#: admin/classes/uipress-app.php:258 admin/classes/uipress-app.php:269
+#: admin/classes/uipress-app.php:269 admin/classes/uipress-app.php:280
 msgid "Add New Folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:259 admin/classes/uipress-app.php:1189
+#: admin/classes/uipress-app.php:270 admin/classes/uipress-app.php:1225
 msgid "New Folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:260 admin/classes/uipress-app.php:1193
+#: admin/classes/uipress-app.php:271 admin/classes/uipress-app.php:1229
 msgid "Edit Folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:261
+#: admin/classes/uipress-app.php:272
 msgid "View Folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:262
+#: admin/classes/uipress-app.php:273
 msgid "All Folders"
 msgstr ""
 
-#: admin/classes/uipress-app.php:263
+#: admin/classes/uipress-app.php:274
 msgid "Search Folders"
 msgstr ""
 
-#: admin/classes/uipress-app.php:264
+#: admin/classes/uipress-app.php:275
 msgid "No Folders found."
 msgstr ""
 
-#: admin/classes/uipress-app.php:265
+#: admin/classes/uipress-app.php:276
 msgid "No Folders found in Trash."
 msgstr ""
 
-#: admin/classes/uipress-app.php:984
+#: admin/classes/uipress-app.php:1020
 msgid "active"
 msgstr ""
 
-#: admin/classes/uipress-app.php:988
+#: admin/classes/uipress-app.php:1024
 msgid "inactive"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1141
+#: admin/classes/uipress-app.php:1177
 msgid "Menu Preferences"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1142
+#: admin/classes/uipress-app.php:1178
 msgid "Hide search bar"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1143
+#: admin/classes/uipress-app.php:1179
 msgid "Hide Icons"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1144
+#: admin/classes/uipress-app.php:1180
 msgid "Show submenu on hover"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1145
+#: admin/classes/uipress-app.php:1181
 msgid "Search Menu"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1147
+#: admin/classes/uipress-app.php:1183
 msgid "Search"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1150
+#: admin/classes/uipress-app.php:1186
 msgid "Show more"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1151
+#: admin/classes/uipress-app.php:1187
 msgid "other matches"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1152 admin/classes/uipress-app.php:1180
+#: admin/classes/uipress-app.php:1188 admin/classes/uipress-app.php:1216
 msgid "Nothing found"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1153 admin/classes/uipress-app.php:1158
+#: admin/classes/uipress-app.php:1189 admin/classes/uipress-app.php:1194
 msgid "View Site"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1154
+#: admin/classes/uipress-app.php:1190
 msgid "Dashboard"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1155
+#: admin/classes/uipress-app.php:1191
 msgid "Search Site"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1156
+#: admin/classes/uipress-app.php:1192
 msgid "Create"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1157
+#: admin/classes/uipress-app.php:1193
 msgid "Create New"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1159
+#: admin/classes/uipress-app.php:1195
 msgid "Updates"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1160
+#: admin/classes/uipress-app.php:1196
 msgid "Preferences"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1161
+#: admin/classes/uipress-app.php:1197
 msgid "Dark mode"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1162
+#: admin/classes/uipress-app.php:1198
 msgid "Show screen options toggle"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1163
+#: admin/classes/uipress-app.php:1199
 msgid "Screen options"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1164
+#: admin/classes/uipress-app.php:1200
 msgid "Hide admin bar links (left)"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1165
+#: admin/classes/uipress-app.php:1201
 msgid "Logout"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1166
+#: admin/classes/uipress-app.php:1202
 msgid "Notifications"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1167
+#: admin/classes/uipress-app.php:1203
 msgid "Hide notification"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1168
+#: admin/classes/uipress-app.php:1204
 msgid "hidden notifications"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1169
+#: admin/classes/uipress-app.php:1205
 msgid "show all"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1170
+#: admin/classes/uipress-app.php:1206
 msgid "Notifiction Hidden"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1171
+#: admin/classes/uipress-app.php:1207
 msgid "Toggle Menu"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1172
+#: admin/classes/uipress-app.php:1208
 msgid "Choose users or roles"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1173
+#: admin/classes/uipress-app.php:1209
 msgid "Search users and roles"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1174
+#: admin/classes/uipress-app.php:1210
 msgid "Choose Image"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1175
+#: admin/classes/uipress-app.php:1211
 msgid "Choose Post Types"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1176 admin/classes/uipress-app.php:1177
+#: admin/classes/uipress-app.php:1212 admin/classes/uipress-app.php:1213
 msgid "Searach Post Types"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1181
+#: admin/classes/uipress-app.php:1217
 msgid "Default"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1182
+#: admin/classes/uipress-app.php:1218
 msgid "Add File"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1183
+#: admin/classes/uipress-app.php:1219
 msgid "URL to file"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1184
+#: admin/classes/uipress-app.php:1220
 msgid "Remove"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1185 admin/classes/uipress-app.php:1186
+#: admin/classes/uipress-app.php:1221 admin/classes/uipress-app.php:1222
 msgid "All media"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1187
+#: admin/classes/uipress-app.php:1223
 msgid "No folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1190
+#: admin/classes/uipress-app.php:1226
 msgid "Folder Name"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1191
+#: admin/classes/uipress-app.php:1227
 msgid "Colour"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1195
+#: admin/classes/uipress-app.php:1231
 msgid "1 File"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1196
-msgid "You havn't created a folder yet"
+#: admin/classes/uipress-app.php:1232
+msgid "You haven't created a folder yet"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1197
+#: admin/classes/uipress-app.php:1233
 msgid "Remove from folder"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1198
+#: admin/classes/uipress-app.php:1234
 msgid ""
 "Upgrade to pro to unlock the notification center. View, edit and organise "
 "all your plugin and theme notifications in one place"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1199
+#: admin/classes/uipress-app.php:1235
 msgid ""
 "Upgrade to pro to gain full control of search results and included post types"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1202
+#: admin/classes/uipress-app.php:1238
 msgid "Styles Imported"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1203
+#: admin/classes/uipress-app.php:1239
 msgid "Settings Imported"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1204
+#: admin/classes/uipress-app.php:1240
 msgid "Remove Licence"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1205
+#: admin/classes/uipress-app.php:1241
 #, php-format
 msgid "%s Pro is active"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1206
+#: admin/classes/uipress-app.php:1242
 #, php-format
 msgid "%s Pro"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1207
+#: admin/classes/uipress-app.php:1243
 msgid "Activate"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1208
+#: admin/classes/uipress-app.php:1244
 msgid "Add a pro licence to unlock pro features."
 msgstr ""
 
-#: admin/classes/uipress-app.php:1209
+#: admin/classes/uipress-app.php:1245
 msgid "Choose Icon"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1210
+#: admin/classes/uipress-app.php:1246
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1211
+#: admin/classes/uipress-app.php:1247
 msgid "Import started"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1212
+#: admin/classes/uipress-app.php:1248
 msgid "Are you sure you want to reset the settings?"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1213
+#: admin/classes/uipress-app.php:1249
 msgid "Last 7 Days"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1214
+#: admin/classes/uipress-app.php:1250
 msgid "Last 30 Days"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1219
+#: admin/classes/uipress-app.php:1255
 msgid "selected"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1664
+#: admin/classes/uipress-app.php:1256
+msgid "Theme Library"
+msgstr ""
+
+#: admin/classes/uipress-app.php:1257
+msgid "Library"
+msgstr ""
+
+#: admin/classes/uipress-app.php:1258
+msgid "Import Theme"
+msgstr ""
+
+#: admin/classes/uipress-app.php:1259
+msgid "Pro template"
+msgstr ""
+
+#: admin/classes/uipress-app.php:1260
+msgid "Theme Imported"
+msgstr ""
+
+#: admin/classes/uipress-app.php:1261
+msgid "Made by"
+msgstr ""
+
+#: admin/classes/uipress-app.php:1707
 msgid "Unkown Post Type"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1667
+#: admin/classes/uipress-app.php:1710
 msgid "Unkown"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1805
+#: admin/classes/uipress-app.php:1848
 msgid "Core"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1811
+#: admin/classes/uipress-app.php:1854
 msgid "Themes"
 msgstr ""
 
-#: admin/classes/uipress-app.php:1817
+#: admin/classes/uipress-app.php:1860
 msgid "Plugins"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2341
+#: admin/classes/uipress-app.php:2384
 msgid "General options"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2346
+#: admin/classes/uipress-app.php:2389
 msgid "Network Override"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2347
+#: admin/classes/uipress-app.php:2390
 msgid "If enabled, all settings applied here will be pushed to subsites."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2356
+#: admin/classes/uipress-app.php:2399
 msgid "Set Dark Mode as Default"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2357
+#: admin/classes/uipress-app.php:2400
 msgid ""
 "If enabled, dark mode will default to true for users that haven't set a "
 "preference."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2365
+#: admin/classes/uipress-app.php:2408
+msgid "Set Dark Mode according to prefers color scheme"
+msgstr ""
+
+#: admin/classes/uipress-app.php:2409
+msgid "UiPress will detetct the OS color scheme and update accordingly"
+msgstr ""
+
+#: admin/classes/uipress-app.php:2417
 msgid "Disable dark mode"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2366
+#: admin/classes/uipress-app.php:2418
 msgid "If enabled, dark mode switch will not be available."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2374
+#: admin/classes/uipress-app.php:2426
 msgid "Set overview page as homepage"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2375
+#: admin/classes/uipress-app.php:2427
 msgid ""
 "If enabled, the overview page will be the homepage when logging in and when "
 "accessing the admin area."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2383
+#: admin/classes/uipress-app.php:2435
 msgid "Set custom page as homepage"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2385
+#: admin/classes/uipress-app.php:2437
 msgid ""
 "If enabled, the page you choose will be the homepage when logging in and "
 "when accessing the admin area. For admin pages use a relative URL (path "
 "after /wp-admin/), for other pages use an absolute URL"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2395
+#: admin/classes/uipress-app.php:2447
 #, php-format
 msgid "Rename %s"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2396
+#: admin/classes/uipress-app.php:2448
 #, php-format
 msgid "White label %s by changing the name displayed."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2404
+#: admin/classes/uipress-app.php:2456
+#, php-format
+msgid "Rename %s plugin author"
+msgstr ""
+
+#: admin/classes/uipress-app.php:2457
+#, php-format
+msgid "White label %s by changing the author in the plugin table."
+msgstr ""
+
+#: admin/classes/uipress-app.php:2465
+#, php-format
+msgid "Change %s plugin URL"
+msgstr ""
+
+#: admin/classes/uipress-app.php:2466
+#, php-format
+msgid "White label %s by changing the plugin URL in the plugin table."
+msgstr ""
+
+#: admin/classes/uipress-app.php:2474
 msgid "App Icon"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2405
+#: admin/classes/uipress-app.php:2475
 #, php-format
 msgid "Replace %s plugin icon with your own"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2413
+#: admin/classes/uipress-app.php:2483
 msgid "Admin Favicon"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2414
+#: admin/classes/uipress-app.php:2484
 msgid "Add an image to be used as the site favicon for admin pages."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2422
+#: admin/classes/uipress-app.php:2492
 #, php-format
 msgid "Hide %s from plugin table"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2423
+#: admin/classes/uipress-app.php:2493
 #, php-format
 msgid "If enabled, %s will be hidden from the plugin table"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2431
+#: admin/classes/uipress-app.php:2501
 msgid "Hide Footer"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2432
+#: admin/classes/uipress-app.php:2502
 msgid "Hide the footer text that shows at the bottom of every admin page"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2440
+#: admin/classes/uipress-app.php:2510
 msgid "Footer Text"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2441
+#: admin/classes/uipress-app.php:2511
 msgid "Text entered here will be present at the bottom of admin pages"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2457 admin/classes/uipress-app.php:2462
+#: admin/classes/uipress-app.php:2527 admin/classes/uipress-app.php:2532
 msgid "Creates new admin menu."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2461
+#: admin/classes/uipress-app.php:2531
 msgid "Disable Admin Menu Module"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2469
+#: admin/classes/uipress-app.php:2539
 msgid "Menu Disabled for"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2470
+#: admin/classes/uipress-app.php:2540
 #, php-format
 msgid "%s menu will be disabled for any users or roles you select"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2478
+#: admin/classes/uipress-app.php:2548
 msgid "Logo Light Mode"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2479
+#: admin/classes/uipress-app.php:2549
 msgid "Sets the logo for the admin bar in light mode."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2486
+#: admin/classes/uipress-app.php:2556
 msgid "Logo Dark Mode"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2487
+#: admin/classes/uipress-app.php:2557
 msgid "Optional dark mode logo for admin bar."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2494
+#: admin/classes/uipress-app.php:2564
 #, php-format
 msgid "Load %s Menu on front end"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2495
+#: admin/classes/uipress-app.php:2565
 #, php-format
 msgid ""
 "If enabled, %s menu will load on the front end. Please note, this will not "
 "work on all themes and styling will vary"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2503
+#: admin/classes/uipress-app.php:2573
 #, php-format
 msgid "Only Load %s Menu on front end for"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2504
+#: admin/classes/uipress-app.php:2574
 msgid "Only load front end menu for selected roles and usernames"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2512
+#: admin/classes/uipress-app.php:2582
 msgid "Collapsed Menu Logo Light Mode"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2513
+#: admin/classes/uipress-app.php:2583
 msgid "Optional logo for when the menu is collapsed."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2520
+#: admin/classes/uipress-app.php:2590
 msgid "Collapsed Menu Logo Dark Mode"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2521
+#: admin/classes/uipress-app.php:2591
 msgid "Optional dark nmode logo for when the menu is collapsed."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2528
+#: admin/classes/uipress-app.php:2598
 msgid "Show site title in menu"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2529
+#: admin/classes/uipress-app.php:2599
 msgid ""
 "If enabled, the site title will be displayed in the menu next to the logo"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2536 admin/classes/uipress-app.php:2590
+#: admin/classes/uipress-app.php:2606 admin/classes/uipress-app.php:2660
 msgid "Disable Search"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2537
+#: admin/classes/uipress-app.php:2607
 msgid "Disables admin menu search."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2544
+#: admin/classes/uipress-app.php:2614
 msgid "Set collapsed menu as default"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2545
+#: admin/classes/uipress-app.php:2615
 msgid ""
 "If enabled, the menu will default to the shrunk menu for users that haven't "
 "set a preference.."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2561
+#: admin/classes/uipress-app.php:2631
 msgid "Creates new admin toolbar."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2565
+#: admin/classes/uipress-app.php:2635
 msgid "Disable ToolBar Module?"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2566
+#: admin/classes/uipress-app.php:2636
 msgid ""
 "Creates new admin bar, adds user off canvas menu, builds global search and "
 "notification center."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2573
+#: admin/classes/uipress-app.php:2643
 msgid "Admin Bar Disabled For"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2574
+#: admin/classes/uipress-app.php:2644
 #, php-format
 msgid "%s toolbar module will be disabled for any users or roles you select"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2582
+#: admin/classes/uipress-app.php:2652
 msgid "Hide admin bar links (left side)"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2583
+#: admin/classes/uipress-app.php:2653
 msgid ""
 "Disables legacy links on left side of admin bar for all users. Also hides "
 "the user preference."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2591
+#: admin/classes/uipress-app.php:2661
 msgid "Disables search icon and global search function from admin bar."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2598
+#: admin/classes/uipress-app.php:2668
 msgid "Disable Create Button"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2599
+#: admin/classes/uipress-app.php:2669
 msgid "Disables the 'create' button in the admin bar."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2606
+#: admin/classes/uipress-app.php:2676
 msgid "Open View Website in new tab"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2607
+#: admin/classes/uipress-app.php:2677
 msgid ""
 "When enabled, clicking on view website or the home button will open in a new "
 "browser tab"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2614
+#: admin/classes/uipress-app.php:2684
 msgid "Disable View Website Button"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2615
+#: admin/classes/uipress-app.php:2685
 msgid "Disables the view website link button in the admin bar."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2622
+#: admin/classes/uipress-app.php:2692
 #, php-format
 msgid "Load %s admin bar on front end"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2623
+#: admin/classes/uipress-app.php:2693
 #, php-format
 msgid ""
 "If enabled, %s toolbar will load on the front end. Please note, this will "
 "not work on all themes and styling will vary"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2631
+#: admin/classes/uipress-app.php:2701
 msgid "Hide admin bar on front end"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2632
+#: admin/classes/uipress-app.php:2702
 msgid "If enabled, front end admin bar will not load."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2640
+#: admin/classes/uipress-app.php:2710
 msgid "Disable Notification Center"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2641
+#: admin/classes/uipress-app.php:2711
 msgid "If disabled, notifcations will show in the normal way"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2649
+#: admin/classes/uipress-app.php:2719
 msgid "Post Types available in Search"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2650
+#: admin/classes/uipress-app.php:2720
 msgid "The global search will only search the selected post types."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2658
+#: admin/classes/uipress-app.php:2728
 msgid "Post Types available in create button (new)"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2659
+#: admin/classes/uipress-app.php:2729
 msgid "Only the selected post types will show up in the create dropdown."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2667
-msgid "Only show notifcations to"
+#: admin/classes/uipress-app.php:2737
+msgid "Only show notifications to"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2668
+#: admin/classes/uipress-app.php:2738
 #, php-format
 msgid ""
 "%s will hide all notifications from all users except those selected below"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2676
+#: admin/classes/uipress-app.php:2746
 msgid "Only show updates to"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2677
+#: admin/classes/uipress-app.php:2747
 #, php-format
 msgid "%s will hide all updates from all users except those selected below"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2693
+#: admin/classes/uipress-app.php:2763
 msgid "Theme"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2694 admin/classes/uipress-app.php:2724
-#: admin/classes/uipress-app.php:2779
+#: admin/classes/uipress-app.php:2764 admin/classes/uipress-app.php:2794
+#: admin/classes/uipress-app.php:2849
 msgid "Styles page content."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2698
+#: admin/classes/uipress-app.php:2768
 msgid "Disable Admin Theme Module"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2699
+#: admin/classes/uipress-app.php:2769
 msgid "When the theme is disabled, pages will be styles in the original way."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2706
+#: admin/classes/uipress-app.php:2776
 msgid "Theme Disabled for"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2707
+#: admin/classes/uipress-app.php:2777
 msgid ""
 "When the theme is disabled, pages will be styles in the original way for "
 "selected users or roles."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2728
+#: admin/classes/uipress-app.php:2798
 msgid "Disable Login Module"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2729
+#: admin/classes/uipress-app.php:2799
 msgid ""
 "When the login module is disabled, the login page will be displayed in the "
 "original way."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2737
+#: admin/classes/uipress-app.php:2807
 msgid "Dark Mode"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2738
+#: admin/classes/uipress-app.php:2808
 msgid "Puts the login page in dark mode for all users."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2745
+#: admin/classes/uipress-app.php:2815
 msgid "Disable Language Selector"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2746
+#: admin/classes/uipress-app.php:2816
 msgid "Removes the language selector added to the login page"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2753
+#: admin/classes/uipress-app.php:2823
 msgid "Login Logo"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2754
+#: admin/classes/uipress-app.php:2824
 msgid "Sets the logo for the login page"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2761
+#: admin/classes/uipress-app.php:2831
 msgid "Login Background"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2762
+#: admin/classes/uipress-app.php:2832
 msgid "Sets an optional background image on the login page."
 msgstr ""
 
-#: admin/classes/uipress-app.php:2778
+#: admin/classes/uipress-app.php:2848
 msgid "Advanced"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2783
+#: admin/classes/uipress-app.php:2853
 msgid "Advanced Disabled For"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2784
+#: admin/classes/uipress-app.php:2854
 msgid "Code added here will not load for any users or roles you select"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2792
+#: admin/classes/uipress-app.php:2862
 msgid "Enqueue scripts"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2793
+#: admin/classes/uipress-app.php:2863
 msgid "Add scripts to the head of every admin page and login page"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2801
+#: admin/classes/uipress-app.php:2871
 msgid "Enqueue styles"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2802
+#: admin/classes/uipress-app.php:2872
 msgid "Add stylesheets to the head of every admin page and login page"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2810
+#: admin/classes/uipress-app.php:2880
 msgid "Admin CSS"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2811
+#: admin/classes/uipress-app.php:2881
 msgid ""
 "CSS added here will be loaded on every admin page as well as the login page"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2820
+#: admin/classes/uipress-app.php:2890
 msgid "Admin JavaScript"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2821
+#: admin/classes/uipress-app.php:2891
 msgid ""
 "JavaScript added here will be loaded on every admin page as well as the "
 "login page"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2830
+#: admin/classes/uipress-app.php:2900
 msgid "HTML for document head"
 msgstr ""
 
-#: admin/classes/uipress-app.php:2831
+#: admin/classes/uipress-app.php:2901
 msgid ""
 "Add HTML here to be added to every admin page and login page head section"
+msgstr ""
+
+#: admin/classes/uipress-app.php:2910
+msgid "Safe Mode Key"
+msgstr ""
+
+#: admin/classes/uipress-app.php:2912
+msgid ""
+"Add a private key to allow you to disable uipress on specific pages with "
+"query paramaters. For example, add '?no_uip=your_key' to a URL and it wil "
+"stop uipress from loading on that page."
 msgstr ""
 
 #: admin/classes/update.php:75
@@ -3227,6 +3360,7 @@ msgid "UiPress"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
 msgid "https://uipress.co"
 msgstr ""
 
@@ -3239,8 +3373,4 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "Admin 2020"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "https://uipress.com"
 msgstr ""

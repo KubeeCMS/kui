@@ -560,9 +560,9 @@ UIPmenu.component("build-menu", {
 	  <div v-if="showSearch()" class="uip-margin-bottom-m uip-padding-xxs uip-menu-search-background uip-border-round">\
 	  	<div class="uip-flex uip-flex-center">\
   			<span class="uip-margin-right-xs uip-text-normal">\
-  			  <span class="material-icons-outlined">manage_search</span>\
+  			  <span class="material-icons-outlined uip-menu-search-text">manage_search</span>\
   			</span> \
-  			<input type="search" :placeholder="translations.searchMenu" class="uip-blank-input uip-min-width-0 uip-flex-grow uip-text-emphasis uip-input-color"  v-model="searchString">\
+  			<input type="search" :placeholder="translations.searchMenu" class="uip-blank-input uip-min-width-0 uip-flex-grow uip-menu-search-text"  v-model="searchString">\
   		</div>\
 	  </div>\
 	  <div>\
@@ -582,8 +582,8 @@ UIPmenu.component("build-menu", {
 						v-if="!isShrunkMenu()" v-html="item.name" :target="hrefTarget(item.blankPage)"></a>\
 						<span v-if="item.submenu && item.submenu.length > 0 && !isShrunkMenu() && (!preferences.showSubmenuHover || appDefaults.mobile == true)" \
             @click="makeActive(item)" class="uip-cursor-pointer uip-flex-grow uip-text-right" :class="{\'uip-text-emphasis \' : item.active}">\
-							<span v-if="!item.active" class="material-icons-outlined">chevron_left</span>\
-							<span v-if="item.active" class="material-icons-outlined">expand_more</span>\
+							<span v-if="!item.active" class="material-icons-outlined uip-margin-left-auto">chevron_left</span>\
+							<span v-if="item.active" class="material-icons-outlined uip-margin-left-auto">expand_more</span>\
 						</span>\
             <span v-if="item.submenu && item.submenu.length > 0 && !isShrunkMenu() && preferences.showSubmenuHover && appDefaults.mobile != true" \
             @click="makeActive(item)" class="uip-cursor-pointer uip-flex-grow uip-text-right" :class="{\'uip-text-emphasis \' : item.active}">\
@@ -600,13 +600,15 @@ UIPmenu.component("build-menu", {
 						</div>\
 					</template>\
 				</div>\
-				<!-- HOVER MENU -->\
+				<!-- HOVER MENU  -->\
         <uip-menu-dropdown v-if="showHoverSub(item)" >\
-          <template v-for="subitem in item.submenu">\
-            <div class="uip-margin-bottom-xxs" :class="subitem.userClasses">\
-              <a :target="hrefTarget(subitem.blankPage)" :href="getItemUrl(subitem)" :class="{\'uip-text-emphasis uip-text-bold\' : subitem.active}" class="uip-link-muted" v-html="subitem.name"></a>\
-            </div>\
-          </template>\
+          <div class="uip-flex uip-gap-xxs uip-flex-column">\
+            <template v-for="subitem in item.submenu">\
+              <div class="" :class="subitem.userClasses">\
+                <a :target="hrefTarget(subitem.blankPage)" :href="getItemUrl(subitem)" :class="{\'uip-text-emphasis uip-text-bold\' : subitem.active}" class="uip-link-muted" v-html="subitem.name"></a>\
+              </div>\
+            </template>\
+          </div>\
         </uip-menu-dropdown>\
       </li>\
 		</template>\
@@ -629,8 +631,8 @@ UIPmenu.component("uip-menu-dropdown", {
       self = this;
       returnDatat = 0;
       ///SET TOP
-      let POStop = self.$el.getBoundingClientRect().top;
-      let POSright = self.$el.getBoundingClientRect().right + 10;
+      let POStop = self.$el.getBoundingClientRect().top - 32;
+      let POSright = self.$el.getBoundingClientRect().right;
       returnDatat = POStop + "px";
 
       //CHECK FOR OFFSCREEN
@@ -649,7 +651,7 @@ UIPmenu.component("uip-menu-dropdown", {
   methods: {},
   template:
     '<div class="uip-w-100p uip-min-w-28">\
-      <div class="uip-position-absolute uip-padding-s uip-background-default uip-border-round uip-shadow uip-drop-right uip-w-150 uip-sub-menu" >\
+      <div class="uip-position-absolute uip-padding-s uip-background-default uip-border-round uip-shadow uip-w-150 uip-sub-menu" >\
           <slot></slot>\
       </div>\
     </div>',

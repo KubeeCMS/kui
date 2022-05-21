@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2022-03-09 12:28+0000\n"
-"PO-Revision-Date: 2022-03-10 14:01+0000\n"
+"PO-Revision-Date: 2022-04-21 14:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: cs_CZ\n"
@@ -25,41 +25,31 @@ msgid "Menu Icon"
 msgstr "Ikona menu"
 
 #: admin/apps/admin-pages/admin-pages.php:130
-#, fuzzy
 msgid "Manually add to menu?"
 msgstr "Ruční přidání do nabídky?"
 
 #: admin/apps/admin-pages/admin-pages.php:243
-#, fuzzy
-#| msgid "Admin Pages"
 msgid "Admin Pages - Beta"
 msgstr "Správcovské stránky"
 
 #: admin/apps/admin-pages/admin-pages.php:244
-#, fuzzy
-#| msgid "Creates custom admin menus."
 msgid "Creates custom admin pages."
 msgstr "Vytváří vlastní nabídky správce."
 
 #: admin/apps/admin-pages/admin-pages.php:248
 msgid "Disable custom admin pages?"
-msgstr ""
+msgstr "Deaktivovat vlastní stránky správce?"
 
 #: admin/apps/admin-pages/admin-pages.php:249
-#, fuzzy
-#| msgid "If disabled, the content page will not be available to any users."
 msgid "If disabled, the admin pages will not be available to any users."
 msgstr ""
 "Pokud je zakázáno, stránka s obsahem nebude dostupná pro žádné uživatele."
 
 #: admin/apps/admin-pages/admin-pages.php:256
-#, fuzzy
-#| msgid "Admin Pages"
 msgid "Admin Page Slug"
 msgstr "Správcovské stránky"
 
 #: admin/apps/admin-pages/admin-pages.php:257
-#, fuzzy
 msgid ""
 "This defaults to admin-pages. Changes to this will need you to resave "
 "permalink structure."
@@ -68,15 +58,10 @@ msgstr ""
 "nutné znovu uložit strukturu odkazů."
 
 #: admin/apps/admin-pages/admin-pages.php:264
-#, fuzzy
-#| msgid "Who can edit the overview page?"
 msgid "Who can edit and create admin pages?"
 msgstr "Kdo může upravovat stránku s přehledem?"
 
 #: admin/apps/admin-pages/admin-pages.php:265
-#, fuzzy
-#| msgid ""
-#| "Admin 2020 admin pages will be disabled for any users or roles you select"
 msgid ""
 "Editing and creation of admin pages will be disabled for the users or roles "
 "you select"
@@ -85,14 +70,10 @@ msgstr ""
 "role, které vyberete"
 
 #: admin/apps/admin-pages/admin-pages.php:273
-#, fuzzy
-#| msgid "Who can edit the overview page?"
 msgid "Who can see admin pages?"
 msgstr "Kdo může upravovat stránku s přehledem?"
 
 #: admin/apps/admin-pages/admin-pages.php:274
-#, fuzzy
-#| msgid "UiPress menu will be disabled for any users or roles you select"
 msgid "UiPress will only show admin pages for the users or roles you select"
 msgstr ""
 "Nabídka bude deaktivována pro všechny uživatele nebo role, které vyberete"
@@ -710,15 +691,11 @@ msgid "Admin Menu"
 msgstr "Menu Administrace"
 
 #: admin/apps/menu-creator/menu-creator.php:652
-#, fuzzy
-#| msgid "New Admin Menu"
 msgctxt "post type singular name"
 msgid "admin menu"
-msgstr "Vytvoří nové administrátorské menu."
+msgstr "vytvoří nové administrátorské menu"
 
 #: admin/apps/menu-creator/menu-creator.php:653
-#, fuzzy
-#| msgid "All Admin Menus"
 msgctxt "admin menu"
 msgid "Admin Menus"
 msgstr "VÅ¡echny nabÃ­dky sprÃ¡vce"
@@ -820,16 +797,13 @@ msgid "Role"
 msgstr "Role"
 
 #: admin/apps/menu-creator/menu-creator.php:995 admin/classes/settings.php:401
-#, fuzzy
-#| msgid "Nothing found"
 msgid "Nothing found for term:"
-msgstr "Nic nalezeno"
+msgstr "Nic nalezeno :"
 
 #: admin/apps/menu-creator/menu-creator.php:1044
-#, fuzzy, php-format
-#| msgid "Menu Creator"
+#, php-format
 msgid "%s Menu Creator"
-msgstr "Tvůrce menu"
+msgstr "%s Tvůrce menu"
 
 #: admin/apps/menu-creator/menu-creator.php:1099
 msgid "Upgrade to UiPress Pro to unlock the menu creator"
@@ -907,8 +881,6 @@ msgid "Search roles and users..."
 msgstr "Hledat role a uživatele..."
 
 #: admin/apps/menu-creator/menu-creator.php:1351
-#, fuzzy
-#| msgid "Add custom Item"
 msgid "Custom Items"
 msgstr "Přidat vlastní položku"
 
@@ -1105,58 +1077,43 @@ msgstr ""
 "Zobrazuje návštěvnost nejoblíbenějších stránek webu v daném časovém období."
 
 #: admin/apps/overview/analytics.php:780
-#, fuzzy
 msgid "Event Count By Event Name"
 msgstr "Počet událostí podle názvu události"
 
 #: admin/apps/overview/analytics.php:782
-#, fuzzy
-#| msgid "Display website users within the date range."
 msgid "Display list of events within the date range."
 msgstr "Zobrazit uživatele webu v daném časovém období."
 
 #: admin/apps/overview/analytics.php:789
-#, fuzzy
 msgid "Sessions by channel grouping"
 msgstr "Relace podle seskupení kanálů"
 
 #: admin/apps/overview/analytics.php:791
-#, fuzzy
-#| msgid "Display site session duration within the date range."
 msgid "Display sessions by channel grouping within the date range."
 msgstr "Zobrazit dobu trvání návštěvy webu v daném časovém období."
 
 #: admin/apps/overview/analytics.php:798
-#, fuzzy
 msgid "User in the last 30 minutes"
 msgstr "Uživatel v posledních 30 minutách"
 
 #: admin/apps/overview/analytics.php:800
-#, fuzzy
-#| msgid "Display website users within the date range."
 msgid "Displays active users from the last 30 minutes."
 msgstr "Zobrazit uživatele webu v daném časovém období."
 
 #: admin/apps/overview/analytics.php:807
-#, fuzzy
 msgid "Engagement Rate"
 msgstr "Míra zapojení"
 
 #: admin/apps/overview/analytics.php:809
-#, fuzzy
-#| msgid "Display average order value in your store within the date range."
 msgid "Displays average angagement rate for date range"
 msgstr ""
-"Zobrazte průměrnou hodnotu objednávky ve vašem obchodě v daném časovém "
-"období."
+"Zobrazte průměrnou hodnotu objednávky ve vašem obchodě v daném časovém období"
 
 #: admin/apps/overview/analytics.php:816 admin/apps/overview/overview.php:783
-#, fuzzy
 msgid "Site Revenue"
 msgstr "Příjmy z webu"
 
 #: admin/apps/overview/analytics.php:818
-#, fuzzy
 msgid ""
 "Displays site revenue for date range. The sum of revenue from purchases, "
 "subscriptions, and advertising."
@@ -1165,13 +1122,10 @@ msgstr ""
 "reklamy."
 
 #: admin/apps/overview/analytics.php:825
-#, fuzzy
 msgid "New vs Returning Users"
 msgstr "Noví vs. vracející se uživatelé"
 
 #: admin/apps/overview/analytics.php:827
-#, fuzzy
-#| msgid "Display website users within the date range."
 msgid "Displays new vs returning users for the date range."
 msgstr "Zobrazit uživatele webu v daném časovém období."
 
@@ -1180,20 +1134,14 @@ msgid "Top Cities"
 msgstr "Top města"
 
 #: admin/apps/overview/analytics.php:836
-#, fuzzy
-#| msgid "Display website page views within the date range."
 msgid "Displays page views by city for the date range."
 msgstr "Zobrazit zobrazení webové stránky v daném časovém období."
 
 #: admin/apps/overview/analytics.php:843 admin/apps/overview/overview.php:785
-#, fuzzy
-#| msgid "UiPress Overview"
 msgid "Ecommerce Overview"
-msgstr "Přehled uživatelského rozhraní."
+msgstr "Přehled uživatelského rozhraní"
 
 #: admin/apps/overview/analytics.php:845
-#, fuzzy
-#| msgid "Displays country user data within the date range."
 msgid "Displays add to cart, checkout and purchase data for the date range."
 msgstr "Zobrazuje údaje o uživatelích v dané zemi."
 
@@ -1203,7 +1151,6 @@ msgid "Conversion Rate"
 msgstr "Konverzní poměr"
 
 #: admin/apps/overview/analytics.php:854
-#, fuzzy
 msgid ""
 "The percentage of active users who made their first purchase for the date "
 "range."
@@ -1215,33 +1162,26 @@ msgid "Top Products"
 msgstr "TOP Nejlepší produkty"
 
 #: admin/apps/overview/analytics.php:863
-#, fuzzy
-#| msgid "No products sold during the date range."
 msgid "Products with the most sales for for the date range."
 msgstr "V daném časovém období nebyly prodány žádné produkty."
 
 #: admin/apps/overview/analytics.php:870
-#, fuzzy
 msgid "Conversions in the last 30 minutes"
 msgstr "Převody za posledních 30 minut"
 
 #: admin/apps/overview/analytics.php:872
-#, fuzzy
 msgid "Conversions logged in the last 30 minutes."
 msgstr "Konverze zaznamenané za posledních 30 minut."
 
 #: admin/apps/overview/analytics.php:879
-#, fuzzy
 msgid "Page Views in the last 30 minutes"
 msgstr "Zobrazení stránky za posledních 30 minut"
 
 #: admin/apps/overview/analytics.php:881
-#, fuzzy
 msgid "Page views in the last 30 minutes."
 msgstr "Zobrazení stránky za posledních 30 minut."
 
 #: admin/apps/overview/analytics.php:1012
-#, fuzzy
 msgid "Unable to fetch analytics data at this moment. Please try again later"
 msgstr "V tuto chvíli nelze načíst analytická data. Zkuste to prosím později"
 
@@ -1258,8 +1198,6 @@ msgid "Disable Overview Page?"
 msgstr "Zakázat stránku s přehledem?"
 
 #: admin/apps/overview/overview.php:112
-#, fuzzy
-#| msgid "Overview page will be disaplyed when this option is activated."
 msgid "Overview page will be hidden when this option is activated."
 msgstr "Když je tato možnost aktivována, stránka s přehledem se nezobrazuje."
 
@@ -1286,12 +1224,10 @@ msgstr ""
 "přehledem. Pokud žádný nevyberete, vrátí se pouze administrátorům"
 
 #: admin/apps/overview/overview.php:137
-#, fuzzy
 msgid "Default report start date"
 msgstr "Výchozí datum zahájení hlášení"
 
 #: admin/apps/overview/overview.php:138
-#, fuzzy
 msgid ""
 "By default the overview date range will start 7 days before current date. "
 "Add a number of days between 1 and 90 to change length of date range"
@@ -1300,12 +1236,10 @@ msgstr ""
 "Chcete-li změnit délku rozsahu dat, přidejte počet dní v rozmezí 1 až 90"
 
 #: admin/apps/overview/overview.php:146
-#, fuzzy
 msgid "Default report end date offset"
 msgstr "Výchozí posun data ukončení sestavy"
 
 #: admin/apps/overview/overview.php:147
-#, fuzzy
 msgid ""
 "By default the overview date range will end on the current day (0). To end "
 "the report on yesterday for example, enter 1"
@@ -1314,12 +1248,10 @@ msgstr ""
 "li přehled ukončit například včera, zadejte 1"
 
 #: admin/apps/overview/overview.php:155
-#, fuzzy
 msgid "Reporting Currency Symbol"
 msgstr "Symbol měny pro vykazování"
 
 #: admin/apps/overview/overview.php:156
-#, fuzzy
 msgid ""
 "If you are using google analytics commerce reports, enter the currency "
 "symbol your reports are in here"
@@ -1396,8 +1328,6 @@ msgid "Installed Themes"
 msgstr "Nainstalované motivy"
 
 #: admin/apps/overview/overview.php:532
-#, fuzzy
-#| msgid "Unable to delete the folder"
 msgid "Unable to fetch quote of the day"
 msgstr "Složku nelze odstranit"
 
@@ -1491,8 +1421,6 @@ msgid "xlarge (1/1)"
 msgstr "1/1"
 
 #: admin/apps/overview/overview.php:709
-#, fuzzy
-#| msgid "I am an empty columnm. Drag cards into me."
 msgid "I am an empty column. Drag cards into me."
 msgstr "Jsem prázdný sloupec. Táhni do mě karty."
 
@@ -1529,13 +1457,10 @@ msgid "Embed Type"
 msgstr "Typ vložení"
 
 #: admin/apps/overview/overview.php:719
-#, fuzzy
-#| msgid "UiPress Pro is active"
 msgid "UiPress Pro feature"
 msgstr "UI Pro je aktivní"
 
 #: admin/apps/overview/overview.php:720
-#, fuzzy
 msgid "Upgrade to one of our premium plans to unlock this feature."
 msgstr ""
 "Chcete-li tuto funkci odemknout, přejděte na některý z našich prémiových "
@@ -1618,8 +1543,6 @@ msgid "Hide Map"
 msgstr "Skrýt mapu"
 
 #: admin/apps/overview/overview.php:740
-#, fuzzy
-#| msgid "Connect analytics account to view site statistics"
 msgid "Connect your account to use this card"
 msgstr "Chcete-li zobrazit statistiky webu, připojte účet Analytics"
 
@@ -1668,10 +1591,6 @@ msgid "Unable to import layout"
 msgstr "Layout nelze importovat"
 
 #: admin/apps/overview/overview.php:753
-#, fuzzy
-#| msgid ""
-#| "Are you sure you want to reset the overview page to the default layout? "
-#| "There is no undo."
 msgid "Are you sure you want to clear the current layout? There is no undo."
 msgstr ""
 "Opravdu chcete stránku s přehledem obnovit na výchozí rozložení? Není možné "
@@ -1698,8 +1617,6 @@ msgid "Sessions"
 msgstr "Relace"
 
 #: admin/apps/overview/overview.php:760
-#, fuzzy
-#| msgid "Page Views (comparison period)"
 msgid "Page Views  (comparison period)"
 msgstr "ZobrazenÃ­ strÃ¡nky (srovnÃ¡vacÃ­ obdobÃ­)"
 
@@ -1716,7 +1633,6 @@ msgid "Date Range"
 msgstr "Rozmezí dat"
 
 #: admin/apps/overview/overview.php:766
-#, fuzzy
 msgid "Custom Comparison Dates"
 msgstr "Vlastní porovnání dat"
 
@@ -1725,13 +1641,10 @@ msgid "Apply"
 msgstr "Použít"
 
 #: admin/apps/overview/overview.php:768
-#, fuzzy
 msgid "vs"
 msgstr "vs"
 
 #: admin/apps/overview/overview.php:769
-#, fuzzy
-#| msgid "Custom classes"
 msgid "Custom Range"
 msgstr "Vlastní třídy"
 
@@ -1752,7 +1665,6 @@ msgid "Last 30 days"
 msgstr "Posledních 30 dní"
 
 #: admin/apps/overview/overview.php:774
-#, fuzzy
 msgid "Last 60 days"
 msgstr "Posledních 60 dní"
 
@@ -1777,14 +1689,10 @@ msgid "Added to cart"
 msgstr "Přidáno do objednávky"
 
 #: admin/apps/overview/overview.php:780
-#, fuzzy
-#| msgid "Import started"
 msgid "Checkout started"
 msgstr "Import byl zahájen"
 
 #: admin/apps/overview/overview.php:784
-#, fuzzy
-#| msgid "Site Users (comparison period)"
 msgid "Site Revenue (comparison)"
 msgstr "Uživatelé webu (srovnávací období)"
 
@@ -1793,8 +1701,6 @@ msgid "Visits By Device"
 msgstr "Návštěvy podle zařízení"
 
 #: admin/apps/overview/overview.php:787
-#, fuzzy
-#| msgid "Category"
 msgid "Device Category"
 msgstr "Kategorie"
 
@@ -1811,7 +1717,6 @@ msgid "Sales"
 msgstr "Výprodeje"
 
 #: admin/apps/overview/overview.php:792
-#, fuzzy
 msgid "Quantity Sold"
 msgstr "Prodané množství"
 
@@ -1820,37 +1725,26 @@ msgid "Revenue"
 msgstr "Výnosy"
 
 #: admin/apps/overview/overview.php:794
-#, fuzzy
-#| msgid "Column Added"
 msgid "Column Removed"
 msgstr "Sloupec přidán"
 
 #: admin/apps/overview/overview.php:795
-#, fuzzy
-#| msgid "Section added"
 msgid "Section Removed"
 msgstr "Sekce přidána"
 
 #: admin/apps/overview/overview.php:796
-#, fuzzy
-#| msgid "View name"
 msgid "View Plans"
 msgstr "Zobrazit jméno náhledu"
 
 #: admin/apps/overview/overview.php:797
-#, fuzzy
 msgid "Unable to fetch analytics data, please try again later"
 msgstr "Nelze načíst analytická data, zkuste to prosím později"
 
 #: admin/apps/overview/overview.php:798
-#, fuzzy
-#| msgid "Card Background colour"
 msgid "Column background colour"
 msgstr "Barva pozadí karty"
 
 #: admin/apps/overview/overview.php:800
-#, fuzzy
-#| msgid "Hide Chart"
 msgid "Hide card title"
 msgstr "Skrýt graf"
 
@@ -1863,12 +1757,10 @@ msgid "Conversions"
 msgstr "Konverzí"
 
 #: admin/apps/overview/overview.php:803
-#, fuzzy
 msgid "This card only works with google analytics 4 accounts"
 msgstr "Tato karta funguje pouze s účty Google Analytics 4"
 
 #: admin/apps/overview/overview.php:804
-#, fuzzy
 msgid "This card only works with universal analytics propeties."
 msgstr "Tato karta funguje pouze s univerzálními analytickými proprietami."
 
@@ -1877,41 +1769,30 @@ msgid "Orders"
 msgstr "Objednávky"
 
 #: admin/apps/overview/overview.php:806
-#, fuzzy
-#| msgid "Site Users (comparison period)"
 msgid "Orders (comparison period)."
 msgstr "Uživatelé webu (srovnávací období)"
 
 #: admin/apps/overview/overview.php:808
-#, fuzzy
-#| msgid "Page Speed (comparison period)"
 msgid "Revenue (comparison period)."
 msgstr "Rychlost stránky (srovnávací období)"
 
 #: admin/apps/overview/overview.php:809
-#, fuzzy
-#| msgid "Current"
 msgid "Current Period"
 msgstr "Aktuální"
 
 #: admin/apps/overview/overview.php:810
-#, fuzzy
-#| msgid "Site Users (comparison period)"
 msgid "Comparison Period"
 msgstr "Uživatelé webu (srovnávací období)"
 
 #: admin/apps/overview/overview.php:811
-#, fuzzy
 msgid "Match Card Height"
 msgstr "Výška karty zápasu"
 
 #: admin/apps/overview/overview.php:813
-#, fuzzy
 msgid "What would you like to do?"
 msgstr "Co byste chtěli dělat?"
 
 #: admin/apps/overview/overview.php:814
-#, fuzzy
 msgid "To do"
 msgstr "Chcete-li"
 
@@ -1932,8 +1813,6 @@ msgid "Custom CSS class"
 msgstr "Vlastí CSS třída"
 
 #: admin/apps/overview/overview.php:819
-#, fuzzy
-#| msgid "Add card"
 msgid "Add New Card"
 msgstr "Přidat kartu"
 
@@ -1944,24 +1823,18 @@ msgid "Settings"
 msgstr "Nastavení"
 
 #: admin/apps/overview/overview.php:821
-#, fuzzy
-#| msgid "Settings"
 msgid "Card Settings"
 msgstr "Nastavení"
 
 #: admin/apps/overview/overview.php:822
-#, fuzzy
 msgid "Move Column Down"
 msgstr "Přesunutí sloupce dolů"
 
 #: admin/apps/overview/overview.php:823
-#, fuzzy
 msgid "Move Column Up"
 msgstr "Přesunutí sloupce nahoru"
 
 #: admin/apps/overview/overview.php:824
-#, fuzzy
-#| msgid "Add New Column"
 msgid "Add new column"
 msgstr "Přidat nový sloupec"
 
@@ -1970,7 +1843,6 @@ msgid "Section Settings"
 msgstr "Nastavení oddílu"
 
 #: admin/apps/overview/overview.php:826
-#, fuzzy
 msgid "Toggle section visibility"
 msgstr "Přepínání viditelnosti sekcí"
 
@@ -2047,22 +1919,18 @@ msgid "Outputs custom HTML to the card"
 msgstr "Výstup vlastního HTML na kartu"
 
 #: admin/apps/overview/overview.php:923
-#, fuzzy
 msgid "Quote of the day"
 msgstr "Citát dne"
 
 #: admin/apps/overview/overview.php:925
-#, fuzzy
 msgid "Shows a random quote of the day"
 msgstr "Zobrazí náhodný citát dne"
 
 #: admin/apps/overview/overview.php:932
-#, fuzzy
 msgid "To do list"
 msgstr "Seznam úkolů"
 
 #: admin/apps/overview/overview.php:934
-#, fuzzy
 msgid "A simple todo list card"
 msgstr "Jednoduchá karta se seznamem úkolů"
 
@@ -2071,8 +1939,6 @@ msgid "Hello"
 msgstr "Ahoj"
 
 #: admin/apps/overview/overview.php:1170
-#, fuzzy
-#| msgid "Clear Favourites"
 msgid "Clear Layout"
 msgstr "Vymazat oblíbené položky"
 
@@ -2114,12 +1980,10 @@ msgid "Home"
 msgstr "Domů"
 
 #: admin/apps/overview/overview.php:1352
-#, fuzzy
 msgid "It's a little quiet around here"
 msgstr "Je tu trochu ticho"
 
 #: admin/apps/overview/overview.php:1354
-#, fuzzy
 msgid ""
 "Looks like you haven't created a dashboard yet. Enter edit mode to get "
 "started or import a default template"
@@ -2128,29 +1992,22 @@ msgstr ""
 "a začněte nebo importujte výchozí šablonu"
 
 #: admin/apps/overview/overview.php:1357
-#, fuzzy
 msgid "Import default template"
 msgstr "Import výchozí šablony"
 
 #: admin/apps/overview/overview.php:1358
-#, fuzzy
-#| msgid "Exit edit mode"
 msgid "Enter edit mode"
 msgstr "Ukončete režim úprav"
 
 #: admin/apps/overview/overview.php:1402
-#, fuzzy
 msgid "Match Column Height"
 msgstr "Shoda výšky sloupce"
 
 #: admin/apps/overview/overview.php:1410
-#, fuzzy
 msgid "Hide section title"
 msgstr "Skrýt název sekce"
 
 #: admin/apps/overview/overview.php:1418
-#, fuzzy
-#| msgid "Section added"
 msgid "Section Width"
 msgstr "Sekce přidána"
 
@@ -2165,13 +2022,10 @@ msgid "Woocommerce is required for this widget"
 msgstr "Pro tento widget je vyžadován woocommerce"
 
 #: admin/apps/overview/woocommerce.php:74
-#, fuzzy
 msgid "Total Revenue"
 msgstr "Celkové příjmy"
 
 #: admin/apps/overview/woocommerce.php:76
-#, fuzzy
-#| msgid "Display total sales in your store within the date range."
 msgid "Display total sales revenue in your store within the date range."
 msgstr "Zobrazte celkové prodeje ve vašem obchodě v daném časovém období."
 
@@ -2220,8 +2074,6 @@ msgstr ""
 "Zobrazte nejprodávanější produkty z vašeho obchodu v daném časovém období."
 
 #: admin/apps/overview/woocommerce.php:191
-#, fuzzy
-#| msgid "No comments during the date range."
 msgid "No orders during the date range."
 msgstr "Žádné komentáře během časového období."
 
@@ -2232,7 +2084,7 @@ msgstr "V daném časovém období nebyly prodány žádné produkty."
 #: admin/classes/debug.php:131 admin/classes/debug.php:137
 #: admin/classes/debug.php:159
 msgid "Unable to register UiPress at this time"
-msgstr "V tuto chvíli nelze zaregistrovat uživatelské rozhraní."
+msgstr "V tuto chvíli nelze zaregistrovat uživatelské rozhraní"
 
 #: admin/classes/debug.php:150
 msgid "UiPress succesfully activated"
@@ -2251,8 +2103,6 @@ msgid "Disable Folders?"
 msgstr "Zakázat složky?"
 
 #: admin/classes/folders.php:90
-#, fuzzy
-#| msgid "No media folders will be disaplyed when this option is activated."
 msgid "No media folders will be displayed when this option is activated."
 msgstr "Při aktivaci této možnosti nebudou zobrazeny žádné složky médií."
 
@@ -2261,11 +2111,10 @@ msgid "Folders Disabled For"
 msgstr "Složky zakázány pro"
 
 #: admin/classes/folders.php:98
-#, fuzzy, php-format
-#| msgid "UiPress folders will be disabled for any users or roles you select"
+#, php-format
 msgid "%s folders will be disabled for any users or roles you select"
 msgstr ""
-"Složky uživatelského rozhraní  budou zakázány pro všechny uživatele nebo "
+"%s Složky uživatelského rozhraní  budou zakázány pro všechny uživatele nebo "
 "role, které vyberete"
 
 #: admin/classes/folders.php:134
@@ -2405,8 +2254,6 @@ msgid "Primary Color"
 msgstr "Základní barva"
 
 #: admin/classes/styles.php:514
-#, fuzzy
-#| msgid "Primary Color"
 msgid "Primary Color Wash"
 msgstr "Základní barva"
 
@@ -2440,14 +2287,10 @@ msgid "Text Color"
 msgstr "Barva textu"
 
 #: admin/classes/styles.php:608
-#, fuzzy
-#| msgid "Text Color"
 msgid "Text Emphasis Color"
 msgstr "Barva textu"
 
 #: admin/classes/styles.php:619
-#, fuzzy
-#| msgid "Text Color"
 msgid "Text Muted Color"
 msgstr "Barva textu"
 
@@ -2464,96 +2307,66 @@ msgid "Button Border Width"
 msgstr "Šířka ohraničení tlačítka"
 
 #: admin/classes/styles.php:662
-#, fuzzy
-#| msgid "Border Colour"
 msgid "Default Button Border Colour"
 msgstr "Barva ohraničení"
 
 #: admin/classes/styles.php:674
-#, fuzzy
-#| msgid "Default Background"
 msgid "Default Button Background Colour"
 msgstr "Výchozí pozadí"
 
 #: admin/classes/styles.php:686
-#, fuzzy
-#| msgid "Hover background Color"
 msgid "Default Button Hover Background Colour"
 msgstr "Barva pozadí ukazatele myši"
 
 #: admin/classes/styles.php:698
-#, fuzzy
 msgid "Default Button Text Colour"
 msgstr "Výchozí barva textu tlačítka"
 
 #: admin/classes/styles.php:711
-#, fuzzy
-#| msgid "Border Colour"
 msgid "Primary Button Border Colour"
 msgstr "Barva ohraničení"
 
 #: admin/classes/styles.php:723
-#, fuzzy
-#| msgid "Card Background colour"
 msgid "Primary Button Background Colour"
 msgstr "Barva pozadí karty"
 
 #: admin/classes/styles.php:735
-#, fuzzy
-#| msgid "Hover background Color"
 msgid "Primary Button Hover Background Colour"
 msgstr "Barva pozadí ukazatele myši"
 
 #: admin/classes/styles.php:747
-#, fuzzy
-#| msgid "Primary Color"
 msgid "Primary Button Text Colour"
 msgstr "Základní barva"
 
 #: admin/classes/styles.php:760
-#, fuzzy
-#| msgid "Border Colour"
 msgid "Danger Button Border Colour"
 msgstr "Barva ohraničení"
 
 #: admin/classes/styles.php:772
-#, fuzzy
-#| msgid "Card Background colour"
 msgid "Danger Button Background Colour"
 msgstr "Barva pozadí karty"
 
 #: admin/classes/styles.php:784
-#, fuzzy
-#| msgid "Hover background Color"
 msgid "Danger Button Hover Background Colour"
 msgstr "Barva pozadí ukazatele myši"
 
 #: admin/classes/styles.php:796
-#, fuzzy
-#| msgid "Toolbar Text Color"
 msgid "Danger Button Text Colour"
 msgstr "Barva textu panelu nástrojů"
 
 #: admin/classes/styles.php:809
-#, fuzzy
 msgid "Page Action Button Border Colour"
 msgstr "Barva rámečku tlačítka akce stránky"
 
 #: admin/classes/styles.php:821
-#, fuzzy
-#| msgid "Secondary background Color"
 msgid "Page Action Button Background Colour"
 msgstr "Sekundární barva pozadí"
 
 #: admin/classes/styles.php:833
-#, fuzzy
-#| msgid "Hover background Color"
 msgid "Page Action Button Hover Background Colour"
 msgstr "Barva pozadí ukazatele myši"
 
 #: admin/classes/styles.php:845
-#, fuzzy
-#| msgid "Active Text Color"
 msgid "Page Action Button Text Colour"
 msgstr "Barva aktivního textu"
 
@@ -2570,8 +2383,6 @@ msgid "Secondary background Color"
 msgstr "Sekundární barva pozadí"
 
 #: admin/classes/styles.php:887
-#, fuzzy
-#| msgid "Hover background Color"
 msgid "Button Hover background Color"
 msgstr "Barva pozadí ukazatele myši"
 
@@ -2580,8 +2391,6 @@ msgid "Active Text Color"
 msgstr "Barva aktivního textu"
 
 #: admin/classes/styles.php:920
-#, fuzzy
-#| msgid "Active Text Color"
 msgid "Submenu Active Text Color"
 msgstr "Barva aktivního textu"
 
@@ -2606,8 +2415,6 @@ msgid "Toolbar Background Color"
 msgstr "Barva pozadí panelu nástrojů"
 
 #: admin/classes/styles.php:994
-#, fuzzy
-#| msgid "Active Text Color"
 msgid "Link Hover Text Color"
 msgstr "Barva aktivního textu"
 
@@ -2908,13 +2715,12 @@ msgid "Remove Licence"
 msgstr "Odebrat licenci"
 
 #: admin/classes/uipress-app.php:1205
-#, fuzzy, php-format
-#| msgid "UiPress Pro is active"
+#, php-format
 msgid "%s Pro is active"
-msgstr "UI Pro je aktivní"
+msgstr "%s UI Pro je aktivní"
 
 #: admin/classes/uipress-app.php:1206
-#, fuzzy, php-format
+#, php-format
 msgid "%s Pro"
 msgstr "%s Pro"
 
@@ -3002,14 +2808,10 @@ msgstr ""
 "režim výchozí."
 
 #: admin/classes/uipress-app.php:2365
-#, fuzzy
-#| msgid "Disable ToolBar Module?"
 msgid "Disable dark mode"
-msgstr "Zakázat modul ToolBar?"
+msgstr "Zakázat modul ToolBar"
 
 #: admin/classes/uipress-app.php:2366
-#, fuzzy
-#| msgid "If disabled, the menu creator will not be available to any users."
 msgid "If enabled, dark mode switch will not be available."
 msgstr "Pokud je zakázáno, tvůrce menu nebude dostupný pro žádné uživatele."
 
@@ -3041,13 +2843,12 @@ msgstr ""
 "URL"
 
 #: admin/classes/uipress-app.php:2395
-#, fuzzy, php-format
-#| msgid "Rename as"
+#, php-format
 msgid "Rename %s"
-msgstr "Přejmenovat jako"
+msgstr "Přejmenovat jako  %s"
 
 #: admin/classes/uipress-app.php:2396
-#, fuzzy, php-format
+#, php-format
 msgid "White label %s by changing the name displayed."
 msgstr "Bílé označení %s změnou zobrazeného názvu."
 
@@ -3056,29 +2857,26 @@ msgid "App Icon"
 msgstr "Ikona aplikace"
 
 #: admin/classes/uipress-app.php:2405
-#, fuzzy, php-format
+#, php-format
 msgid "Replace %s plugin icon with your own"
 msgstr "Nahraďte ikonu zásuvného modulu %s svou vlastní ikonou"
 
 #: admin/classes/uipress-app.php:2413
-#, fuzzy
-#| msgid "Admin JavaScript"
 msgid "Admin Favicon"
 msgstr "Admin JavaScript"
 
 #: admin/classes/uipress-app.php:2414
-#, fuzzy
 msgid "Add an image to be used as the site favicon for admin pages."
 msgstr ""
 "Přidání obrázku, který se použije jako favicon webu pro stránky správce."
 
 #: admin/classes/uipress-app.php:2422
-#, fuzzy, php-format
+#, php-format
 msgid "Hide %s from plugin table"
 msgstr "Skrýt %s z tabulky zásuvných modulů"
 
 #: admin/classes/uipress-app.php:2423
-#, fuzzy, php-format
+#, php-format
 msgid "If enabled, %s will be hidden from the plugin table"
 msgstr "Pokud je povoleno, %s bude z tabulky zásuvných modulů skryto"
 
@@ -3113,11 +2911,10 @@ msgid "Menu Disabled for"
 msgstr "Nabídka zakázána z nabídky"
 
 #: admin/classes/uipress-app.php:2470
-#, fuzzy, php-format
-#| msgid "UiPress menu will be disabled for any users or roles you select"
+#, php-format
 msgid "%s menu will be disabled for any users or roles you select"
 msgstr ""
-"Nabídka bude deaktivována pro všechny uživatele nebo role, které vyberete"
+"%s Nabídka bude deaktivována pro všechny uživatele nebo role, které vyberete"
 
 #: admin/classes/uipress-app.php:2478
 msgid "Logo Light Mode"
@@ -3136,35 +2933,28 @@ msgid "Optional dark mode logo for admin bar."
 msgstr "Volitelné logo tmavého režimu pro administrátorskou lištu."
 
 #: admin/classes/uipress-app.php:2494
-#, fuzzy, php-format
-#| msgid "Load UIPress admin bar on front end"
+#, php-format
 msgid "Load %s Menu on front end"
-msgstr "Načtěte panel pro správu uživatelského rozhraní  na přední straně"
+msgstr "Načtěte  %s panel pro správu uživatelského rozhraní  na přední straně"
 
 #: admin/classes/uipress-app.php:2495
-#, fuzzy, php-format
-#| msgid ""
-#| "If enabled, UiPress admin bar will load on the front end. Please note, "
-#| "this will not work on all themes and styling will vary"
+#, php-format
 msgid ""
 "If enabled, %s menu will load on the front end. Please note, this will not "
 "work on all themes and styling will vary"
 msgstr ""
-"Pokud je tato možnost povolena, načte se do frontendu panel správy "
+"Pokud je tato možnost povolena, načte se do frontendu %s  panel správy "
 "uživatelského rozhraní. Upozorňujeme, že to nebude fungovat u všech témat a "
 "styl se bude lišit"
 
 #: admin/classes/uipress-app.php:2503
-#, fuzzy, php-format
-#| msgid "Load UIPress admin bar on front end"
+#, php-format
 msgid "Only Load %s Menu on front end for"
-msgstr "Načtěte panel pro správu uživatelského rozhraní  na přední straně"
+msgstr "Načtěte  %s panel pro správu uživatelského rozhraní  na přední straně"
 
 #: admin/classes/uipress-app.php:2504
-#, fuzzy
-#| msgid "Custom CSS and JS will not load for the selected roles and users."
 msgid "Only load front end menu for selected roles and usernames"
-msgstr "Vlastní CSS a JS se pro vybrané role a uživatele nenačtou."
+msgstr "Načíst pouze frontendovou nabídku pro vybrané role a uživatelská jména"
 
 #: admin/classes/uipress-app.php:2512
 msgid "Collapsed Menu Logo Light Mode"
@@ -3232,13 +3022,10 @@ msgid "Admin Bar Disabled For"
 msgstr "Administrátorská lišta deaktivována pro"
 
 #: admin/classes/uipress-app.php:2574
-#, fuzzy, php-format
-#| msgid ""
-#| "UiPress admin bar module will be disabled for any users or roles you "
-#| "select"
+#, php-format
 msgid "%s toolbar module will be disabled for any users or roles you select"
 msgstr ""
-"Modul administrátorské lišty bude deaktivován pro všechny uživatele nebo "
+"%s Modul administrátorské lišty bude deaktivován pro všechny uživatele nebo "
 "role, které vyberete"
 
 #: admin/classes/uipress-app.php:2582
@@ -3268,13 +3055,10 @@ msgid "Disables the 'create' button in the admin bar."
 msgstr "Deaktivuje tlačítko 'vytvořit' na panelu administrátora."
 
 #: admin/classes/uipress-app.php:2606
-#, fuzzy
-#| msgid "Opens in new tab?"
 msgid "Open View Website in new tab"
-msgstr "Otevře se na nové kartě?"
+msgstr "Otevře se na nové kartě"
 
 #: admin/classes/uipress-app.php:2607
-#, fuzzy
 msgid ""
 "When enabled, clicking on view website or the home button will open in a new "
 "browser tab"
@@ -3291,21 +3075,17 @@ msgid "Disables the view website link button in the admin bar."
 msgstr "Deaktivuje tlačítko odkazu na webovou stránku na panelu správce."
 
 #: admin/classes/uipress-app.php:2622
-#, fuzzy, php-format
-#| msgid "Load UIPress admin bar on front end"
+#, php-format
 msgid "Load %s admin bar on front end"
-msgstr "Načtěte panel pro správu uživatelského rozhraní  na přední straně"
+msgstr "Načtěte  %s panel pro správu uživatelského rozhraní  na přední straně"
 
 #: admin/classes/uipress-app.php:2623
-#, fuzzy, php-format
-#| msgid ""
-#| "If enabled, UiPress admin bar will load on the front end. Please note, "
-#| "this will not work on all themes and styling will vary"
+#, php-format
 msgid ""
 "If enabled, %s toolbar will load on the front end. Please note, this will "
 "not work on all themes and styling will vary"
 msgstr ""
-"Pokud je tato možnost povolena, načte se do frontendu panel správy "
+"Pokud je tato možnost povolena, načte se do frontendu  %s panel správy "
 "uživatelského rozhraní. Upozorňujeme, že to nebude fungovat u všech témat a "
 "styl se bude lišit"
 
@@ -3347,28 +3127,21 @@ msgid "Only show notifcations to"
 msgstr "Zobrazovat upozornění pouze pro"
 
 #: admin/classes/uipress-app.php:2668
-#, fuzzy, php-format
-#| msgid ""
-#| "UiPress will hide all notifications from all users except those selected "
-#| "below"
+#, php-format
 msgid ""
 "%s will hide all notifications from all users except those selected below"
 msgstr ""
-"Uživatelské rozhraní skryje všechna oznámení od všech uživatelů kromě těch, "
-"kteří jsou vybráni níže"
+"%s  skryje všechna oznámení od všech uživatelů kromě těch, kteří jsou "
+"vybráni níže"
 
 #: admin/classes/uipress-app.php:2676
 msgid "Only show updates to"
 msgstr "Zobrazovat aktualizace pouze pro"
 
 #: admin/classes/uipress-app.php:2677
-#, fuzzy, php-format
-#| msgid ""
-#| "UiPress will hide all updates from all users except those selected below"
+#, php-format
 msgid "%s will hide all updates from all users except those selected below"
-msgstr ""
-"Uživatelské rozhraní skryje všechny aktualizace před všemi uživateli kromě "
-"níže vybraných"
+msgstr "%s skryje všechny aktualizace od všech uživatelů kromě níže vybraných"
 
 #: admin/classes/uipress-app.php:2693
 msgid "Theme"
@@ -3400,16 +3173,10 @@ msgstr ""
 "uživatele nebo role."
 
 #: admin/classes/uipress-app.php:2728
-#, fuzzy
-#| msgid "Disable Admin Menu Module"
 msgid "Disable Login Module"
 msgstr "Zakázat modul nabídky správce"
 
 #: admin/classes/uipress-app.php:2729
-#, fuzzy
-#| msgid ""
-#| "When the login module is disabled, the login page will be displayed in "
-#| "the original way for selected users or roles."
 msgid ""
 "When the login module is disabled, the login page will be displayed in the "
 "original way."
@@ -3426,14 +3193,10 @@ msgid "Puts the login page in dark mode for all users."
 msgstr "Přepne přihlašovací stránku do tmavého režimu pro všechny uživatele."
 
 #: admin/classes/uipress-app.php:2745
-#, fuzzy
-#| msgid "Disable Menu Creator?"
 msgid "Disable Language Selector"
-msgstr "Zakázat Tvůrce nabídek?"
+msgstr "Zakázat Tvůrce nabídek"
 
 #: admin/classes/uipress-app.php:2746
-#, fuzzy
-#| msgid "Sets the logo for the login page"
 msgid "Removes the language selector added to the login page"
 msgstr "Nastaví logo pro přihlašovací stránku"
 
@@ -3458,14 +3221,10 @@ msgid "Advanced"
 msgstr "Pokročilé"
 
 #: admin/classes/uipress-app.php:2783
-#, fuzzy
-#| msgid "Advanced Disabled for"
 msgid "Advanced Disabled For"
 msgstr "Advanced Disabled for"
 
 #: admin/classes/uipress-app.php:2784
-#, fuzzy
-#| msgid "Admin 2020 theme will be disabled for any users or roles you select"
 msgid "Code added here will not load for any users or roles you select"
 msgstr ""
 "Téma Správce 2020 bude deaktivováno pro všechny uživatele nebo role, které "
@@ -3476,8 +3235,6 @@ msgid "Enqueue scripts"
 msgstr "Zařaďte skripty do fronty"
 
 #: admin/classes/uipress-app.php:2793
-#, fuzzy
-#| msgid "Add scripts to the <head> of every admin page and login page"
 msgid "Add scripts to the head of every admin page and login page"
 msgstr ""
 "Přidejte skripty do <head> každé stránky správce a přihlašovací stránky"
@@ -3487,8 +3244,6 @@ msgid "Enqueue styles"
 msgstr "Styly fronty"
 
 #: admin/classes/uipress-app.php:2802
-#, fuzzy
-#| msgid "Add stylesheets to the <head> of every admin page and login page"
 msgid "Add stylesheets to the head of every admin page and login page"
 msgstr ""
 "Přidejte šablony stylů do <head> každé stránky správce a přihlašovací stránky"
@@ -3517,16 +3272,10 @@ msgstr ""
 "přihlašovací stránce"
 
 #: admin/classes/uipress-app.php:2830
-#, fuzzy
-#| msgid "HTML for <head>"
 msgid "HTML for document head"
 msgstr "HTML pro <head>"
 
 #: admin/classes/uipress-app.php:2831
-#, fuzzy
-#| msgid ""
-#| "Add HTML here to be added to every admin page and login page <head> "
-#| "section"
 msgid ""
 "Add HTML here to be added to every admin page and login page head section"
 msgstr ""
@@ -3580,18 +3329,14 @@ msgid "Settings imported"
 msgstr "Nastavení importováno"
 
 #. Plugin Name of the plugin/theme
-#, fuzzy
-#| msgid "UiPress Overview"
 msgid "UiPress"
-msgstr "Upgradujte na Pro, abyste odemkli tvÅ¯rce menu"
+msgstr "Upgradujte na Pro, abyste odemkli tvůrce menu"
 
 #. Plugin URI of the plugin/theme
-#, fuzzy
 msgid "https://uipress.co"
 msgstr "https://uipress.co"
 
 #. Description of the plugin/theme
-#, fuzzy
 msgid ""
 "Powerful WordPress admin extension with a streamlined dashboard, Google "
 "Analytics & WooCommerce Integration, intuitive media library, dark mode and "
@@ -3602,13 +3347,10 @@ msgstr ""
 "režimem a mnoha dalšími funkcemi."
 
 #. Author of the plugin/theme
-#, fuzzy
-#| msgid "Admin CSS"
 msgid "Admin 2020"
 msgstr "V tuto chvíli nelze zaregistrovat správce 2020"
 
 #. Author URI of the plugin/theme
-#, fuzzy
 msgid "https://uipress.com"
 msgstr "https://uipress.com"
 

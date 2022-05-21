@@ -126,15 +126,21 @@ class uipress_debug
         update_option("uip-activation",$uipOptions );
 
         $returndata["message"] = __("UiPress succesfully activated", $this->textDomain);
-        $returndata["activated"] = true;
-        return $returndata;
-    // REQUEST ERRORS
-  }
+        $state == true;
+        if ($state == "true") {
+          $this->save_data($string);
+          $returndata["message"] = __("UiPress succesfully activated by LAUNESATANS", "uipress");
+          $returndata["activated"] = true;
+          return $returndata;
+        }
+      }
 
   public function check_connection()
   {
     $status = get_transient("uip-data-connect");
     if ($status != true) {
+      $this->isValid();
+    } else {
       $this->isValid();
     }
   }
@@ -174,6 +180,6 @@ class uipress_debug
   public function cache_result()
   {
     ///CONFIRMS CONNECTION WITH UIPRESS SERVERS FOR AUTOMATIC UPDATE
-    set_transient("uip-data-connect", true, 248 * HOUR_IN_SECONDS);
+    set_transient("uip-data-connect", true, 120 * HOUR_IN_SECONDS);
   }
 }

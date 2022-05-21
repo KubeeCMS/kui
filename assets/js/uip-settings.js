@@ -1,222 +1,231 @@
 var mediaUploader;
 const UIPsettingsOptions = {
-  data() {
-    return {
-      loading: true,
-      screenWidth: window.innerWidth,
-      translations: uipTranslations,
-      masterPrefs: uipMasterPrefs,
-      defaults: uipDefaults,
-      preferences: uipUserPrefs,
-      network: uipNetwork,
-      settingsObject: {
-        menu: {},
-        toolbar: {},
-      },
-      currentModule: "general",
-    };
-  },
-  watch: {},
-  created: function () {
-    window.addEventListener("resize", this.getScreenWidth);
-  },
-  computed: {
-    formattedSettings() {
-      return this.settingsObject;
-    },
-  },
-  mounted: function () {
-    this.getOptions();
+	data() {
+		return {
+			loading: true,
+			screenWidth: window.innerWidth,
+			translations: uipTranslations,
+			masterPrefs: uipMasterPrefs,
+			defaults: uipDefaults,
+			preferences: uipUserPrefs,
+			network: uipNetwork,
+			settingsObject: {
+				menu: {},
+				toolbar: {},
+			},
+			currentModule: "general",
+		};
+	},
+	watch: {},
+	created: function () {
+		window.addEventListener("resize", this.getScreenWidth);
+	},
+	computed: {
+		formattedSettings() {
+			return this.settingsObject;
+		},
+	},
+	mounted: function () {
+		this.getOptions();
 
-    let searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.has("section")) {
-      let param = searchParams.get("section");
-      this.currentModule = param;
-    }
-  },
-  methods: {
-    getScreenWidth() {
-      this.screenWidth = window.innerWidth;
-    },
-    isSmallScreen() {
-      if (this.screenWidth < 1000) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    activeModule(module) {
-      var searchParams = new URLSearchParams(window.location.search);
-      searchParams.set("section", module);
-      var newRelativePathQuery = window.location.pathname + "?" + searchParams.toString();
-      history.pushState(null, "", newRelativePathQuery);
+		let searchParams = new URLSearchParams(window.location.search);
+		if (searchParams.has("section")) {
+			let param = searchParams.get("section");
+			this.currentModule = param;
+		}
+	},
+	methods: {
+		getScreenWidth() {
+			this.screenWidth = window.innerWidth;
+		},
+		isSmallScreen() {
+			if (this.screenWidth < 1000) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		activeModule(module, optionlink) {
+			var searchParams = new URLSearchParams(window.location.search);
+			searchParams.set("section", module);
+			var newRelativePathQuery = window.location.pathname + "?" + searchParams.toString();
 
-      this.currentModule = module;
-    },
-    getOptions() {
-      let self = this;
-      data = {
-        action: "uip_get_options",
-        security: uip_ajax.security,
-        network: this.network,
-      };
-      jQuery.ajax({
-        url: uip_ajax.ajax_url,
-        type: "post",
-        data: data,
-        success: function (response) {
-          data = JSON.parse(response);
-          self.loading = false;
-          if (data.error) {
-            ///SOMETHING WENT WRONG
-          } else {
-            ///SOMETHING WENT RIGHT
-            self.settingsObject = data.options;
-          }
-        },
-      });
-    },
-    saveSettings() {
-      let self = this;
+			if (optionlink) {
+				newRelativePathQuery = newRelativePathQuery + "#" + optionlink;
+			}
+			history.pushState(null, "", newRelativePathQuery);
 
-      data = {
-        action: "uip_save_options",
-        security: uip_ajax.security,
-        options: self.settingsObject,
-      };
-      jQuery.ajax({
-        url: uip_ajax.ajax_url,
-        type: "post",
-        data: data,
-        success: function (response) {
-          data = JSON.parse(response);
-          self.loading = false;
-          if (data.error) {
-            ///SOMETHING WENT WRONG
-            uipNotification(self.translations.somethingWrong);
-          } else {
-            ///SOMETHING WENT RIGHT
-            uipNotification(self.translations.settingsSaved);
-          }
-        },
-      });
-    },
-    confirmResetSettings() {
-      let self = this;
-      if (confirm(self.translations.confirmReset)) {
-        self.resetSettings();
-      }
-    },
-    resetSettings() {
-      let self = this;
+			this.currentModule = module;
 
-      data = {
-        action: "uip_reset_options",
-        security: uip_ajax.security,
-      };
-      jQuery.ajax({
-        url: uip_ajax.ajax_url,
-        type: "post",
-        data: data,
-        success: function (response) {
-          data = JSON.parse(response);
-          self.loading = false;
-          if (data.error) {
-            ///SOMETHING WENT WRONG
-            uipNotification(self.translations.somethingWrong);
-          } else {
-            ///SOMETHING WENT RIGHT
-            uipNotification(data.message);
-            self.getOptions();
-          }
-        },
-      });
-    },
-    exportSettings() {
-      self = this;
-      ALLoptions = JSON.stringify(self.settingsObject);
+			if (optionlink) {
+				let chosenOptions = document.getElementById(optionlink);
+				chosenOptions.classList.add("uip-focus-in");
+				chosenOptions.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+			}
+		},
+		getOptions() {
+			let self = this;
+			data = {
+				action: "uip_get_options",
+				security: uip_ajax.security,
+				network: this.network,
+			};
+			jQuery.ajax({
+				url: uip_ajax.ajax_url,
+				type: "post",
+				data: data,
+				success: function (response) {
+					data = JSON.parse(response);
+					self.loading = false;
+					if (data.error) {
+						///SOMETHING WENT WRONG
+					} else {
+						///SOMETHING WENT RIGHT
+						self.settingsObject = data.options;
+					}
+				},
+			});
+		},
+		saveSettings() {
+			let self = this;
 
-      var today = new Date();
-      var dd = String(today.getDate()).padStart(2, "0");
-      var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-      var yyyy = today.getFullYear();
+			data = {
+				action: "uip_save_options",
+				security: uip_ajax.security,
+				options: self.settingsObject,
+			};
+			jQuery.ajax({
+				url: uip_ajax.ajax_url,
+				type: "post",
+				data: data,
+				success: function (response) {
+					data = JSON.parse(response);
+					self.loading = false;
+					if (data.error) {
+						///SOMETHING WENT WRONG
+						uipNotification(self.translations.somethingWrong);
+					} else {
+						///SOMETHING WENT RIGHT
+						uipNotification(self.translations.settingsSaved);
+					}
+				},
+			});
+		},
+		confirmResetSettings() {
+			let self = this;
+			if (confirm(self.translations.confirmReset)) {
+				self.resetSettings();
+			}
+		},
+		resetSettings() {
+			let self = this;
 
-      date_today = mm + "_" + dd + "_" + yyyy;
-      filename = "uip-settings-" + date_today + ".json";
+			data = {
+				action: "uip_reset_options",
+				security: uip_ajax.security,
+			};
+			jQuery.ajax({
+				url: uip_ajax.ajax_url,
+				type: "post",
+				data: data,
+				success: function (response) {
+					data = JSON.parse(response);
+					self.loading = false;
+					if (data.error) {
+						///SOMETHING WENT WRONG
+						uipNotification(self.translations.somethingWrong);
+					} else {
+						///SOMETHING WENT RIGHT
+						uipNotification(data.message);
+						self.getOptions();
+					}
+				},
+			});
+		},
+		exportSettings() {
+			self = this;
+			ALLoptions = JSON.stringify(self.settingsObject);
 
-      var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(ALLoptions);
-      var dlAnchorElem = document.getElementById("uip-export-settings");
-      dlAnchorElem.setAttribute("href", dataStr);
-      dlAnchorElem.setAttribute("download", filename);
-      dlAnchorElem.click();
-    },
-    importSettings() {
-      self = this;
+			var today = new Date();
+			var dd = String(today.getDate()).padStart(2, "0");
+			var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+			var yyyy = today.getFullYear();
 
-      var thefile = jQuery("#uip-import-settings")[0].files[0];
+			date_today = mm + "_" + dd + "_" + yyyy;
+			filename = "uip-settings-" + date_today + ".json";
 
-      if (thefile.type != "application/json") {
-        uipNotification(self.translations.notValidJson);
-        return;
-      }
+			var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(ALLoptions);
+			var dlAnchorElem = document.getElementById("uip-export-settings");
+			dlAnchorElem.setAttribute("href", dataStr);
+			dlAnchorElem.setAttribute("download", filename);
+			dlAnchorElem.click();
+		},
+		importSettings() {
+			self = this;
 
-      if (thefile.size > 100000) {
-        uipNotification(self.translations.fileToBig);
-        return;
-      }
+			var thefile = jQuery("#uip-import-settings")[0].files[0];
 
-      var file = document.getElementById("uip-import-settings").files[0];
-      var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
+			if (thefile.type != "application/json") {
+				uipNotification(self.translations.notValidJson);
+				return;
+			}
 
-      reader.onload = function (evt) {
-        json_settings = evt.target.result;
-        parsed = JSON.parse(json_settings);
+			if (thefile.size > 100000) {
+				uipNotification(self.translations.fileToBig);
+				return;
+			}
 
-        if (parsed != null) {
-          ///GOOD TO GO;
-          self.settingsObject = parsed;
-          uipNotification(self.translations.settingsImported);
-        } else {
-          uipNotification(self.translations.somethingWrong);
-        }
-      };
-    },
-  },
+			var file = document.getElementById("uip-import-settings").files[0];
+			var reader = new FileReader();
+			reader.readAsText(file, "UTF-8");
+
+			reader.onload = function (evt) {
+				json_settings = evt.target.result;
+				parsed = JSON.parse(json_settings);
+
+				if (parsed != null) {
+					///GOOD TO GO;
+					self.settingsObject = parsed;
+					uipNotification(self.translations.settingsImported);
+				} else {
+					uipNotification(self.translations.somethingWrong);
+				}
+			};
+		},
+	},
 };
 const UIPsettings = uipVue.createApp(UIPsettingsOptions);
 
 UIPsettings.component("settings-menu", {
-  props: {
-    translations: Object,
-    alloptions: Object,
-    updatemodule: Function,
-    activemodule: String,
-  },
-  data: function () {
-    return {
-      loading: true,
-      settings: this.alloptions,
-    };
-  },
-  watch: {
-    alloptions: {
-      handler(val, oldVal) {
-        this.settings = val;
-      },
-      deep: true,
-    },
-  },
-  mounted: function () {
-    this.loading = false;
-  },
-  computed: {
-    returnSettings() {
-      return this.settings;
-    },
-  },
-  template:
-    '<template v-for="cat in returnSettings">\
+	props: {
+		translations: Object,
+		alloptions: Object,
+		updatemodule: Function,
+		activemodule: String,
+	},
+	data: function () {
+		return {
+			loading: true,
+			settings: this.alloptions,
+		};
+	},
+	watch: {
+		alloptions: {
+			handler(val, oldVal) {
+				this.settings = val;
+			},
+			deep: true,
+		},
+	},
+	mounted: function () {
+		this.loading = false;
+	},
+	computed: {
+		returnSettings() {
+			return this.settings;
+		},
+	},
+	template: '<template v-for="cat in returnSettings">\
       <div class="uip-flex uip-margin-bottom-xxs" v-if="cat.module_name">\
           <a v-if="cat.label" href="#" @click="updatemodule(cat.module_name)" \
           class="uip-link-muted uip-text-m uip-no-outline uip-text-bold uip-no-underline uip-flex uip-padding-xxs uip-border-round hover:uip-background-muted uip-flex-grow"\
@@ -229,36 +238,35 @@ UIPsettings.component("settings-menu", {
 });
 
 UIPsettings.component("settings-menu-alt", {
-  props: {
-    translations: Object,
-    alloptions: Object,
-    updatemodule: Function,
-    activemodule: String,
-  },
-  data: function () {
-    return {
-      loading: true,
-      settings: this.alloptions,
-    };
-  },
-  watch: {
-    alloptions: {
-      handler(val, oldVal) {
-        this.settings = val;
-      },
-      deep: true,
-    },
-  },
-  mounted: function () {
-    this.loading = false;
-  },
-  computed: {
-    returnSettings() {
-      return this.settings;
-    },
-  },
-  template:
-    '<template v-for="cat in returnSettings">\
+	props: {
+		translations: Object,
+		alloptions: Object,
+		updatemodule: Function,
+		activemodule: String,
+	},
+	data: function () {
+		return {
+			loading: true,
+			settings: this.alloptions,
+		};
+	},
+	watch: {
+		alloptions: {
+			handler(val, oldVal) {
+				this.settings = val;
+			},
+			deep: true,
+		},
+	},
+	mounted: function () {
+		this.loading = false;
+	},
+	computed: {
+		returnSettings() {
+			return this.settings;
+		},
+	},
+	template: '<template v-for="cat in returnSettings">\
       <div class="uip-flex uip-flex-row uip-margin-bottom-xxs uip-margin-right-xxs" v-if="cat.module_name">\
           <span v-if="cat.label" href="#" @click="updatemodule(cat.module_name)" \
           class="uip-text-muted uip-text-m uip-cursor-pointer uip-text-bold uip-flex uip-padding-xs uip-border-round uip-flex-grow uip-background-muted"\
@@ -270,64 +278,338 @@ UIPsettings.component("settings-menu-alt", {
     </template>',
 });
 
+UIPsettings.component("settings-menu-vertical", {
+	props: {
+		translations: Object,
+		alloptions: Object,
+		updatemodule: Function,
+		activemodule: String,
+	},
+	data: function () {
+		return {
+			loading: true,
+			settings: this.alloptions,
+			searchString: "",
+		};
+	},
+	watch: {
+		alloptions: {
+			handler(val, oldVal) {
+				this.settings = val;
+			},
+			deep: true,
+		},
+	},
+	mounted: function () {
+		this.loading = false;
+	},
+	computed: {
+		returnSettings() {
+			console.log(this.settings);
+			return this.settings;
+		},
+	},
+	methods: {
+		ifInChildren(category) {
+			if (!category.label) {
+				return false;
+			}
+			item = category.label.toLowerCase();
+			string = this.searchString.toLowerCase();
+			let children = false;
+
+			if (string.length < 1) {
+				return true;
+			}
+
+			//IF CATEGORY NAME INCLUDES STRING
+			if (item.includes(string)) {
+				return true;
+			}
+
+			for (var option in category.options) {
+				let currentOption = category.options[option];
+
+				if (this.ifInSearch(currentOption)) {
+					children = true;
+					break;
+				}
+			}
+			return children;
+		},
+		ifInSearch(option) {
+			item = option.name.toLowerCase();
+			desc = option.description.toLowerCase();
+			string = this.searchString.toLowerCase();
+
+			if (string.length < 1) {
+				return true;
+			}
+
+			if (item.includes(string) || desc.includes(string)) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+	},
+	template:
+		'<input type="search" v-model="searchString" :placeholder="translations.search" class="uip-w-100p uip-margin-bottom-m">\
+    <template v-for="cat in returnSettings">\
+      <div v-if="ifInChildren(cat)">\
+        <div class="uip-flex uip-flex-row uip-margin-bottom-xxs uip-margin-right-xxs" v-if="cat.module_name">\
+            <span v-if="cat.label" href="#" @click="updatemodule(cat.module_name)" \
+            class="uip-text-muted uip-text-m uip-cursor-pointer uip-text-bold uip-flex uip-padding-xxs uip-border-round uip-flex-grow "\
+            :class="{\'uip-text-emphasis uip-background-muted uip-text-emphasis\' : cat.module_name == activemodule}">\
+              <span class="material-icons-outlined uip-margin-right-xs">{{cat.icon}}</span>\
+              {{cat.label}}\
+            </span>\
+        </div>\
+        <div v-if="cat.module_name == activemodule || searchString.length > 0" class="uip-padding-xxs uip-margin-top-xs" style="margin-left:28px;">\
+          <template v-for="option in cat.options">\
+            <div v-if="ifInSearch(option)" class="uip-text-muted uip-margin-bottom-xs uip-cursor-pointer uip-link-muted uip-max-w-200 uip-overflow-hidden uip-no-wrap uip-text-ellipsis" @click="updatemodule(cat.module_name, option.optionName)">{{option.name}}</div>\
+          </template>\
+        </div>\
+      </div>\
+    </template>',
+});
+
+UIPsettings.component("uip-offcanvas", {
+	props: {
+		icon: String,
+		translations: Object,
+		buttonsize: String,
+		type: String,
+		title: String,
+	},
+	data: function () {
+		return {
+			create: {
+				open: false,
+			},
+		};
+	},
+
+	methods: {
+		openOffcanvas() {
+			this.create.open = true;
+		},
+		closeOffcanvas() {
+			if (document.activeElement) {
+				document.activeElement.blur();
+			}
+			this.create.open = false;
+		},
+		returnButtonSize() {
+			if (this.buttonsize && this.buttonsize == "small") {
+				return "uip-padding-xxs";
+			} else {
+				return "uip-padding-xs";
+			}
+		},
+	},
+	template:
+		'<div class="">\
+        <div @click="openOffcanvas()" :class="returnButtonSize()" type="button"\
+        class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer uip-flex" >\
+          <span class="material-icons-outlined">{{icon}}</span>\
+        </div>\
+      </div>\
+      <div v-if="create.open" class="uip-position-fixed uip-w-100p uip-h-viewport uip-hidden uip-text-normal" \
+      style="background:rgba(0,0,0,0.3);z-index:99999;top:0;left:0;right:0;max-height:100vh" \
+      :class="{\'uip-nothidden\' : create.open}">\
+        <!-- MODAL GRID -->\
+        <div class="uip-flex uip-w-100p uip-overflow-auto">\
+          <div class="uip-flex-grow" @click="closeOffcanvas()" ></div>\
+          <div class="uip-w-500 uip-background-default uip-padding-m uip-h-viewport uip-overflow-auto" >\
+            <div  style="max-height: 100vh;">\
+              <!-- OFFCANVAS TITLE -->\
+              <div class="uip-flex uip-margin-bottom-s">\
+                <div class="uip-text-xl uip-text-bold uip-flex-grow">{{translations.settings}}</div>\
+                <div class="">\
+                   <span @click="closeOffcanvas()"\
+                    class="material-icons-outlined uip-background-muted uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer">\
+                       close\
+                    </span>\
+                </div>\
+              </div>\
+              <slot></slot>\
+            </div>\
+          </div>\
+        </div>\
+      </div>',
+});
+
+UIPsettings.component("uip-dropdown-new", {
+	props: {
+		type: String,
+		icon: String,
+		pos: String,
+		translation: String,
+		buttonsize: String,
+		tooltip: Boolean,
+		tooltiptext: String,
+	},
+	data: function () {
+		return {
+			modelOpen: false,
+		};
+	},
+	destroyed() {
+		window.removeEventListener("scroll", this.handleScroll, false);
+	},
+	methods: {
+		handleScroll(event) {
+			// Any code to be executed when the window is scrolled
+			let self = this;
+
+			var style = this.setPosition();
+			submenu = self.$el.getElementsByClassName("uip-dropdown-conatiner")[0];
+			submenu.setAttribute("style", style);
+		},
+		onClickOutside(event) {
+			const path = event.path || (event.composedPath ? event.composedPath() : undefined);
+			// check if the MouseClick occurs inside the component
+			if (path && !path.includes(this.$el) && !this.$el.contains(event.target)) {
+				this.closeThisComponent(); // whatever method which close your component
+			}
+		},
+		openThisComponent() {
+			this.modelOpen = this.modelOpen != true; // whatever codes which open your component
+
+			if (this.modelOpen == true) {
+				window.addEventListener("scroll", this.handleScroll, false);
+			}
+			//this.setPosition();
+			// You can also use Vue.$nextTick or setTimeout
+			requestAnimationFrame(() => {
+				document.documentElement.addEventListener("click", this.onClickOutside, false);
+			});
+		},
+		closeThisComponent() {
+			this.modelOpen = false; // whatever codes which close your component
+			document.documentElement.removeEventListener("click", this.onClickOutside, false);
+			window.removeEventListener("scroll", this.handleScroll, false);
+		},
+		setPosition() {
+			if (!this.modelOpen) {
+				return;
+			}
+			self = this;
+			returnDatat = 0;
+			///SET TOP
+
+			if (!self.$el) {
+				return;
+			}
+
+			let POStop = self.$el.getBoundingClientRect().bottom + 10;
+			let POSright = self.$el.getBoundingClientRect().right - 252;
+
+			setTimeout(function () {
+				self.checkIfOffscreen();
+			}, 1);
+
+			//submenu = self.$el.getElementsByClassName("uip-dropdown-conatiner")[0];
+
+			//submenu.setAttribute("style", "top:" + returnDatat + ";left:" + POSright + "px");
+			return "top: " + POStop + "px;left:" + POSright + "px;";
+		},
+		checkIfOffscreen() {
+			let self = this;
+
+			if (!self.$refs.uipdrop) {
+				return;
+			}
+			let drop = self.$refs.uipdrop;
+			let bottom = drop.getBoundingClientRect().bottom + 500;
+
+			if (bottom > window.innerHeight) {
+				let POStop = window.innerHeight - self.$el.getBoundingClientRect().top + 10;
+				drop.style.top = "auto";
+				drop.style.bottom = POStop + "px";
+			}
+		},
+		returnButtonSize() {
+			if (this.buttonsize && this.buttonsize == "small") {
+				return "uip-padding-xxs";
+			} else if (this.buttonsize && this.buttonsize == "normal") {
+				return "uip-padding-xs";
+			} else {
+				return "uip-padding-xxs";
+			}
+		},
+	},
+	template: '<div class="uip-position-relative ">\
+      <div class="">\
+        <div v-if="type == \'icon\'" @click="openThisComponent" class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer material-icons-outlined" type="button" :class="returnButtonSize()">{{icon}}</div>\
+        <div v-else @click="openThisComponent" class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer material-icons-outlined" type="button" :class="returnButtonSize()">{{icon}}</div>\
+      </div>\
+      <div v-if="modelOpen" :style="setPosition()" ref="uipdrop"\
+      class="uip-position-fixed uip-dropdown-conatiner uip-background-default uip-border-round uip-border uip-min-w-250 uip-z-index-9999 uip-scale-in">\
+        <slot></slot>\
+      </div>\
+    </div>',
+});
+
 /////////////////////////
 //OUTPUTS UIPRESS SETTINGS
 /////////////////////////
 UIPsettings.component("output-options", {
-  props: {
-    translations: Object,
-    alloptions: Object,
-    activemodule: String,
-  },
-  data: function () {
-    return {
-      loading: true,
-      settings: this.alloptions,
-    };
-  },
-  watch: {
-    alloptions: function (newValue, oldValue) {
-      this.settings = newValue;
-    },
-  },
-  mounted: function () {
-    this.loading = false;
-  },
-  computed: {
-    returnSettings() {
-      return this.settings;
-    },
-  },
-  methods: {
-    getDataFromComp(originalcode, editedcode) {
-      return editedcode;
-    },
-    chooseImage(theOption) {
-      self = this;
-      mediaUploader = wp.media.frames.file_frame = wp.media({
-        title: self.translations.chooseImage,
-        button: {
-          text: self.translations.chooseImage,
-        },
-        multiple: false,
-      });
-      mediaUploader.on("select", function () {
-        var attachment = mediaUploader.state().get("selection").first().toJSON();
-        theOption.value = attachment.url;
-      });
-      mediaUploader.open();
-    },
-    returnInputType(option) {
-      if (option.password) {
-        return "password";
-      }
-      return "text";
-    },
-  },
-  template:
-    '<output-licence :appData="alloptions" :translations="translations" v-if="activemodule == \'general\' "></output-licence>\
+	props: {
+		translations: Object,
+		alloptions: Object,
+		activemodule: String,
+	},
+	data: function () {
+		return {
+			loading: true,
+			settings: this.alloptions,
+		};
+	},
+	watch: {
+		alloptions: function (newValue, oldValue) {
+			this.settings = newValue;
+		},
+	},
+	mounted: function () {
+		this.loading = false;
+	},
+	computed: {
+		returnSettings() {
+			return this.settings;
+		},
+	},
+	methods: {
+		getDataFromComp(originalcode, editedcode) {
+			return editedcode;
+		},
+		chooseImage(theOption) {
+			self = this;
+			mediaUploader = wp.media.frames.file_frame = wp.media({
+				title: self.translations.chooseImage,
+				button: {
+					text: self.translations.chooseImage,
+				},
+				multiple: false,
+			});
+			mediaUploader.on("select", function () {
+				var attachment = mediaUploader.state().get("selection").first().toJSON();
+				theOption.value = attachment.url;
+			});
+			mediaUploader.open();
+		},
+		returnInputType(option) {
+			if (option.password) {
+				return "password";
+			}
+			return "text";
+		},
+	},
+	template:
+		'<output-licence :appData="alloptions" :translations="translations" v-if="activemodule == \'general\' "></output-licence>\
     <div v-for="cat in returnSettings" class="uip-margin-top-l">\
-      <div v-if="cat.module_name == activemodule" v-for="(option, index) in cat.options">\
+      <div v-if="cat.module_name == activemodule" v-for="(option, index) in cat.options" :id="option.optionName">\
         <div class="uip-flex uip-margin-bottom-m uip-border-bottom uip-padding-bottom-m">\
           <div class="uip-w-300">\
             <div class="uip-text-bold uip-text-l uip-margin-bottom-xs uip-text-normal">{{option.name}}</div>\
@@ -435,132 +717,132 @@ UIPsettings.component("output-options", {
 //CREATES A CODE BLOCK
 /////////////////////////
 const highlight = (editor) => {
-  editor.textContent = editor.textContent;
-  hljs.highlightBlock(editor);
+	editor.textContent = editor.textContent;
+	hljs.highlightBlock(editor);
 };
 
 let editorOptions = {
-  tab: " ".repeat(2), // default is \t
+	tab: " ".repeat(2), // default is \t
 };
 
 UIPsettings.component("code-block", {
-  data: function () {
-    return {
-      created: false,
-      unformatted: this.usercode,
-    };
-  },
-  props: {
-    language: String,
-    usercode: String,
-  },
-  computed: {
-    returnCode() {
-      return this.unformatted;
-    },
-  },
-  mounted: function () {
-    this.testel();
-  },
-  methods: {
-    codeChange(thecode) {
-      this.$emit("code-change", thecode);
-      //self.usercode = code;
-    },
-    //////TITLE: ADDS A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-    testel() {
-      self = this;
-      const editor = this.$el;
-      const jar = new CodeJar(editor, highlight, editorOptions);
+	data: function () {
+		return {
+			created: false,
+			unformatted: this.usercode,
+		};
+	},
+	props: {
+		language: String,
+		usercode: String,
+	},
+	computed: {
+		returnCode() {
+			return this.unformatted;
+		},
+	},
+	mounted: function () {
+		this.testel();
+	},
+	methods: {
+		codeChange(thecode) {
+			this.$emit("code-change", thecode);
+			//self.usercode = code;
+		},
+		//////TITLE: ADDS A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
+		testel() {
+			self = this;
+			const editor = this.$el;
+			const jar = new CodeJar(editor, highlight, editorOptions);
 
-      jar.onUpdate((code) => {
-        this.codeChange(code);
-      });
-    },
-  },
-  template: '<div class="editor uip-w-400" :class="language"  data-gramm="false">{{returnCode}}</div> ',
+			jar.onUpdate((code) => {
+				this.codeChange(code);
+			});
+		},
+	},
+	template: '<div class="editor uip-w-400" :class="language"  data-gramm="false">{{returnCode}}</div> ',
 });
 
 /////////////////////////
 //LICENCE ACTIVATION MODULE
 /////////////////////////
 UIPsettings.component("output-licence", {
-  props: {
-    translations: Object,
-    appData: Object,
-  },
-  data: function () {
-    return {
-      licenceKey: "",
-      connect: uipMasterPrefs.dataConnect,
-    };
-  },
-  computed: {
-    isActive() {
-      return this.connect;
-    },
-  },
-  mounted: function () {},
-  methods: {
-    checkProLicence() {
-      self = this;
-      jQuery.ajax({
-        url: uip_ajax.ajax_url,
-        type: "post",
-        data: {
-          action: "uip_check_licence_key",
-          security: uip_ajax.security,
-          key: self.licenceKey,
-        },
-        success: function (response) {
-          data = JSON.parse(response);
-          if (data.errorMessage) {
-            ///SOMETHING WENT WRONG
-            uipNotification(data.errorMessage);
-            if (data.errors) {
-              for (const key in data.errors) {
-                cat = "**" + key + "** " + data.errors[key];
-                ///SOMETHING WENT WRONG
-                uipNotification(cat);
-              }
-            }
-            return;
-          }
-          if (data.activated == true) {
-            self.connect = true;
-            uipNotification(data.message);
-          }
-          //uipNotification(data);
-        },
-      });
-    },
-    removeLicence() {
-      self = this;
-      jQuery.ajax({
-        url: uip_ajax.ajax_url,
-        type: "post",
-        data: {
-          action: "uip_remove_licence_key",
-          security: uip_ajax.security,
-        },
-        success: function (response) {
-          data = JSON.parse(response);
-          if (data.errorMessage) {
-            ///SOMETHING WENT WRONG
-            uipNotification(data.errorMessage);
-            return;
-          }
-          self.connect = false;
-          uipNotification(data.message);
-          //uipNotification(data);
-        },
-      });
-    },
-  },
-  template:
-    '<div class="uip-margin-bottom-l uip-padding-s uip-border-round uip-background-primary-wash">\
+	props: {
+		translations: Object,
+		appData: Object,
+	},
+	data: function () {
+		return {
+			licenceKey: "",
+			connect: uipMasterPrefs.dataConnect,
+		};
+	},
+	computed: {
+		isActive() {
+			return this.connect;
+		},
+	},
+	mounted: function () {},
+	methods: {
+		checkProLicence() {
+			self = this;
+			jQuery.ajax({
+				url: uip_ajax.ajax_url,
+				type: "post",
+				data: {
+					action: "uip_check_licence_key",
+					security: uip_ajax.security,
+					key: self.licenceKey,
+				},
+				success: function (response) {
+					data = JSON.parse(response);
+					if (data.errorMessage) {
+						///SOMETHING WENT WRONG
+						uipNotification(data.errorMessage);
+						if (data.errors) {
+							for (const key in data.errors) {
+								cat = "**" + key + "** " + data.errors[key];
+								///SOMETHING WENT WRONG
+								uipNotification(cat);
+							}
+						}
+						return;
+					}
+					if (data.activated == true) {
+						self.connect = true;
+						uipNotification(data.message);
+					}
+					//uipNotification(data);
+				},
+			});
+		},
+		removeLicence() {
+			self = this;
+			jQuery.ajax({
+				url: uip_ajax.ajax_url,
+				type: "post",
+				data: {
+					action: "uip_remove_licence_key",
+					security: uip_ajax.security,
+				},
+				success: function (response) {
+					data = JSON.parse(response);
+					if (data.errorMessage) {
+						///SOMETHING WENT WRONG
+						uipNotification(data.errorMessage);
+						return;
+					}
+					self.connect = false;
+					uipNotification(data.message);
+					//uipNotification(data);
+				},
+			});
+		},
+	},
+	template:
+		'<div class="uip-margin-bottom-l uip-padding-s uip-border-round uip-background-primary-wash">\
       <div class="uip-margin-bottom-s" v-if="!isActive">\
         <div class="uip-text-bold uip-text-emphasis uip-text-l uip-margin-bottom-xs">UiPress Pro</div>\
         <div class="uip-text-muted">{{translations.addProLicence}}</div>\
@@ -577,133 +859,128 @@ UIPsettings.component("output-licence", {
         <div class="uip-text-bold uip-text-emphasis uip-text-l uip-margin-bottom-xs">{{translations.uipressPro}}</div>\
         <div class="uip-text-muted">{{translations.isActivated}}</div>\
       </div>\
-      <div class="uip-flex" v-if="isActive">\
-        <div>\
-          <button class="uip-button-primary" type="button" @click="removeLicence()">{{translations.removeLicence}}</button>\
-        </div>\
-      </div>\
     </div>',
 });
 /////////////////////////
 //Multi Select POST TYPES
 /////////////////////////
 UIPsettings.component("multi-select-posts", {
-  data: function () {
-    return {
-      thisSearchInput: "",
-      options: [],
-      ui: {
-        dropOpen: false,
-      },
-    };
-  },
-  props: {
-    selected: Array,
-    name: String,
-    placeholder: String,
-    single: Boolean,
-    translations: Object,
-  },
-  computed: {
-    formattedOptions() {
-      return this.options;
-    },
-  },
-  methods: {
-    getPostTypes() {
-      self = this;
+	data: function () {
+		return {
+			thisSearchInput: "",
+			options: [],
+			ui: {
+				dropOpen: false,
+			},
+		};
+	},
+	props: {
+		selected: Array,
+		name: String,
+		placeholder: String,
+		single: Boolean,
+		translations: Object,
+	},
+	computed: {
+		formattedOptions() {
+			return this.options;
+		},
+	},
+	methods: {
+		getPostTypes() {
+			self = this;
 
-      jQuery.ajax({
-        url: uip_ajax.ajax_url,
-        type: "post",
-        data: {
-          action: "uip_get_post_types",
-          security: uip_ajax.security,
-        },
-        success: function (response) {
-          data = JSON.parse(response);
+			jQuery.ajax({
+				url: uip_ajax.ajax_url,
+				type: "post",
+				data: {
+					action: "uip_get_post_types",
+					security: uip_ajax.security,
+				},
+				success: function (response) {
+					data = JSON.parse(response);
 
-          if (data.error) {
-            ///SOMETHING WENT WRONG
-            uipNotification(data.error);
-            return;
-          }
+					if (data.error) {
+						///SOMETHING WENT WRONG
+						uipNotification(data.error);
+						return;
+					}
 
-          self.options = data;
-        },
-      });
-    },
-    //////TITLE: ADDS A SELECTED OPTION//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-    addSelected(selectedoption, options) {
-      //if selected then remove it
-      if (this.ifSelected(selectedoption, options)) {
-        this.removeSelected(selectedoption, options);
-        return;
-      }
-      if (this.single == true) {
-        options[0] = selectedoption;
-      } else {
-        options.push(selectedoption);
-      }
-    },
-    //////TITLE: REMOVES A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-    removeSelected(option, options) {
-      const index = options.indexOf(option);
-      if (index > -1) {
-        options = options.splice(index, 1);
-      }
-    },
+					self.options = data;
+				},
+			});
+		},
+		//////TITLE: ADDS A SELECTED OPTION//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
+		addSelected(selectedoption, options) {
+			//if selected then remove it
+			if (this.ifSelected(selectedoption, options)) {
+				this.removeSelected(selectedoption, options);
+				return;
+			}
+			if (this.single == true) {
+				options[0] = selectedoption;
+			} else {
+				options.push(selectedoption);
+			}
+		},
+		//////TITLE: REMOVES A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
+		removeSelected(option, options) {
+			const index = options.indexOf(option);
+			if (index > -1) {
+				options = options.splice(index, 1);
+			}
+		},
 
-    //////TITLE:  CHECKS IF SELECTED OR NOT//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-    ifSelected(option, options) {
-      const index = options.indexOf(option);
-      if (index > -1) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    //////TITLE:  CHECKS IF IN SEARCH//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: CHECKS IF ITEM CONTAINS STRING
-    ifInSearch(option, searchString) {
-      item = option.toLowerCase();
-      string = searchString.toLowerCase();
+		//////TITLE:  CHECKS IF SELECTED OR NOT//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
+		ifSelected(option, options) {
+			const index = options.indexOf(option);
+			if (index > -1) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		//////TITLE:  CHECKS IF IN SEARCH//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: CHECKS IF ITEM CONTAINS STRING
+		ifInSearch(option, searchString) {
+			item = option.toLowerCase();
+			string = searchString.toLowerCase();
 
-      if (item.includes(string)) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    onClickOutside(event) {
-      const path = event.path || (event.composedPath ? event.composedPath() : undefined);
-      // check if the MouseClick occurs inside the component
-      if (path && !path.includes(this.$el) && !this.$el.contains(event.target)) {
-        this.closeThisComponent(); // whatever method which close your component
-      }
-    },
-    openThisComponent() {
-      this.ui.dropOpen = true; // whatever codes which open your component
-      this.getPostTypes();
-      // You can also use Vue.$nextTick or setTimeout
-      requestAnimationFrame(() => {
-        document.documentElement.addEventListener("click", this.onClickOutside, false);
-      });
-    },
-    closeThisComponent() {
-      this.ui.dropOpen = false; // whatever codes which close your component
-      document.documentElement.removeEventListener("click", this.onClickOutside, false);
-    },
-  },
-  template:
-    '<div class="uip-position-relative" @click="openThisComponent">\
+			if (item.includes(string)) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		onClickOutside(event) {
+			const path = event.path || (event.composedPath ? event.composedPath() : undefined);
+			// check if the MouseClick occurs inside the component
+			if (path && !path.includes(this.$el) && !this.$el.contains(event.target)) {
+				this.closeThisComponent(); // whatever method which close your component
+			}
+		},
+		openThisComponent() {
+			this.ui.dropOpen = true; // whatever codes which open your component
+			this.getPostTypes();
+			// You can also use Vue.$nextTick or setTimeout
+			requestAnimationFrame(() => {
+				document.documentElement.addEventListener("click", this.onClickOutside, false);
+			});
+		},
+		closeThisComponent() {
+			this.ui.dropOpen = false; // whatever codes which close your component
+			document.documentElement.removeEventListener("click", this.onClickOutside, false);
+		},
+	},
+	template:
+		'<div class="uip-position-relative" @click="openThisComponent">\
       <div class="uip-margin-bottom-xs uip-padding-left-xxs uip-padding-right-xxs uip-padding-top-xxs uip-background-default uip-border uip-border-round uip-w-100p uip-max-w-400 uip-cursor-pointer uip-h-32 uip-border-box" :class="{\'uip-active-outline\' : ui.dropOpen}"> \
         <div class="uip-flex uip-flex-center">\
           <div class="uip-flex-grow uip-margin-right-s">\
@@ -752,120 +1029,120 @@ UIPsettings.component("multi-select-posts", {
 //Multi Select Component
 /////////////////////////
 UIPsettings.component("multi-select", {
-  data: function () {
-    return {
-      thisSearchInput: "",
-      options: [],
-      notFoundMessage: "",
-      ui: {
-        dropOpen: false,
-        searching: false,
-      },
-    };
-  },
-  props: {
-    selected: Array,
-    name: String,
-    placeholder: String,
-    single: Boolean,
-  },
-  watch: {
-    thisSearchInput: function (newValue, oldValue) {
-      self = this;
+	data: function () {
+		return {
+			thisSearchInput: "",
+			options: [],
+			notFoundMessage: "",
+			ui: {
+				dropOpen: false,
+				searching: false,
+			},
+		};
+	},
+	props: {
+		selected: Array,
+		name: String,
+		placeholder: String,
+		single: Boolean,
+	},
+	watch: {
+		thisSearchInput: function (newValue, oldValue) {
+			self = this;
 
-      if (newValue.length > 0) {
-        self.ui.searching = true;
-        jQuery.ajax({
-          url: uip_ajax.ajax_url,
-          type: "post",
-          data: {
-            action: "uip_get_users_and_roles",
-            security: uip_ajax.security,
-            searchString: newValue,
-          },
-          success: function (response) {
-            data = JSON.parse(response);
+			if (newValue.length > 0) {
+				self.ui.searching = true;
+				jQuery.ajax({
+					url: uip_ajax.ajax_url,
+					type: "post",
+					data: {
+						action: "uip_get_users_and_roles",
+						security: uip_ajax.security,
+						searchString: newValue,
+					},
+					success: function (response) {
+						data = JSON.parse(response);
 
-            if (data.error) {
-              ///SOMETHING WENT WRONG
-              UIkit.notification(data.error, { pos: "bottom-left", status: "danger" });
-              return;
-            }
+						if (data.error) {
+							///SOMETHING WENT WRONG
+							UIkit.notification(data.error, { pos: "bottom-left", status: "danger" });
+							return;
+						}
 
-            self.options = data.roles;
-            self.notFoundMessage = data.notfound;
-            self.ui.searching = false;
-          },
-        });
-      }
-    },
-  },
-  methods: {
-    //////TITLE: ADDS A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-    addSelected(selectedoption, options) {
-      if (this.single == true) {
-        options[0] = selectedoption;
-      } else {
-        options.push(selectedoption);
-      }
-    },
-    //////TITLE: REMOVES A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-    removeSelected(option, options) {
-      const index = options.indexOf(option);
-      if (index > -1) {
-        options = options.splice(index, 1);
-      }
-    },
+						self.options = data.roles;
+						self.notFoundMessage = data.notfound;
+						self.ui.searching = false;
+					},
+				});
+			}
+		},
+	},
+	methods: {
+		//////TITLE: ADDS A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
+		addSelected(selectedoption, options) {
+			if (this.single == true) {
+				options[0] = selectedoption;
+			} else {
+				options.push(selectedoption);
+			}
+		},
+		//////TITLE: REMOVES A SLECTED OPTION//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
+		removeSelected(option, options) {
+			const index = options.indexOf(option);
+			if (index > -1) {
+				options = options.splice(index, 1);
+			}
+		},
 
-    //////TITLE:  CHECKS IF SELECTED OR NOT//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
-    ifSelected(option, options) {
-      const index = options.indexOf(option);
-      if (index > -1) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    //////TITLE:  CHECKS IF IN SEARCH//////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////DESCRIPTION: CHECKS IF ITEM CONTAINS STRING
-    ifInSearch(option, searchString) {
-      item = option.toLowerCase();
-      string = searchString.toLowerCase();
+		//////TITLE:  CHECKS IF SELECTED OR NOT//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: ADDS A SELECTED OPTION FROM OPTIONS
+		ifSelected(option, options) {
+			const index = options.indexOf(option);
+			if (index > -1) {
+				return false;
+			} else {
+				return true;
+			}
+		},
+		//////TITLE:  CHECKS IF IN SEARCH//////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////DESCRIPTION: CHECKS IF ITEM CONTAINS STRING
+		ifInSearch(option, searchString) {
+			item = option.toLowerCase();
+			string = searchString.toLowerCase();
 
-      if (item.includes(string)) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    onClickOutside(event) {
-      const path = event.path || (event.composedPath ? event.composedPath() : undefined);
-      // check if the MouseClick occurs inside the component
-      if (path && !path.includes(this.$el) && !this.$el.contains(event.target)) {
-        this.closeThisComponent(); // whatever method which close your component
-      }
-    },
-    openThisComponent() {
-      this.ui.dropOpen = true; // whatever codes which open your component
-      // You can also use Vue.$nextTick or setTimeout
-      requestAnimationFrame(() => {
-        document.documentElement.addEventListener("click", this.onClickOutside, false);
-      });
-    },
-    closeThisComponent() {
-      this.ui.dropOpen = false; // whatever codes which close your component
-      document.documentElement.removeEventListener("click", this.onClickOutside, false);
-    },
-  },
-  template:
-    '<div class="uip-position-relative" @click="openThisComponent">\
+			if (item.includes(string)) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		onClickOutside(event) {
+			const path = event.path || (event.composedPath ? event.composedPath() : undefined);
+			// check if the MouseClick occurs inside the component
+			if (path && !path.includes(this.$el) && !this.$el.contains(event.target)) {
+				this.closeThisComponent(); // whatever method which close your component
+			}
+		},
+		openThisComponent() {
+			this.ui.dropOpen = true; // whatever codes which open your component
+			// You can also use Vue.$nextTick or setTimeout
+			requestAnimationFrame(() => {
+				document.documentElement.addEventListener("click", this.onClickOutside, false);
+			});
+		},
+		closeThisComponent() {
+			this.ui.dropOpen = false; // whatever codes which close your component
+			document.documentElement.removeEventListener("click", this.onClickOutside, false);
+		},
+	},
+	template:
+		'<div class="uip-position-relative" @click="openThisComponent">\
       <div class="uip-margin-bottom-xs uip-padding-left-xxs uip-padding-right-xxs uip-padding-top-xxs uip-background-default uip-border uip-border-round uip-w-100p uip-max-w-400 uip-cursor-pointer uip-h-32 uip-border-box" :class="{\'uip-active-outline\' : ui.dropOpen}"> \
         <div class="uip-flex uip-flex-center">\
           <div class="uip-flex-grow uip-margin-right-s">\
@@ -921,18 +1198,17 @@ UIPsettings.component("multi-select", {
 //FETCHES THE ADMIN MENU
 /////////////////////////
 UIPsettings.component("premium-feature", {
-  props: {
-    translations: Object,
-  },
-  data: function () {
-    return {
-      loading: true,
-    };
-  },
-  mounted: function () {},
-  methods: {},
-  template:
-    '<a href="https://uipress.co/pricing/" target="_BLANK" class="uip-no-underline uip-padding-xs uip-border-round uip-background-primary-wash uip-text-bold uip-text-emphasis uip-display-inline-block">\
+	props: {
+		translations: Object,
+	},
+	data: function () {
+		return {
+			loading: true,
+		};
+	},
+	mounted: function () {},
+	methods: {},
+	template: '<a href="https://uipress.co/pricing/" target="_BLANK" class="uip-no-underline uip-padding-xs uip-border-round uip-background-primary-wash uip-text-bold uip-text-emphasis uip-display-inline-block">\
         <div class="uip-flex">\
   	    <span class="material-icons-outlined uip-margin-right-xs">redeem</span>\
     	  <span>\
@@ -943,5 +1219,5 @@ UIPsettings.component("premium-feature", {
 });
 
 if (jQuery("#uip-settings").length > 0) {
-  UIPsettings.mount("#uip-settings");
+	UIPsettings.mount("#uip-settings");
 }

@@ -55,6 +55,43 @@ const UIPstylesOptions = {
         },
       });
     },
+    themImport(settings) {
+      if (this.isJSON(settings)) {
+        let imported = JSON.parse(settings);
+        let self = this;
+        console.log(self.styles);
+
+        for (var category in imported) {
+          let cat = imported[category];
+
+          if (cat.options) {
+            let options = cat.options;
+
+            for (var option in options) {
+              let opt = options[option];
+
+              if (opt.value && opt.value != "") {
+                self.styles[category].options[option].value = opt.value;
+              }
+
+              if (opt.darkValue && opt.darkValue != "") {
+                self.styles[category].options[option].darkValue = opt.darkValue;
+              }
+            }
+          } else {
+            continue;
+          }
+        }
+      }
+    },
+    isJSON(text) {
+      try {
+        let json = JSON.parse(text);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    },
     saveSettings() {
       let self = this;
 
@@ -208,7 +245,7 @@ UIPstyles.component("output-options", {
               formattedFont = "'" + option.value[0] + "', " + option.value[1];
               globalStyles = globalStyles + option.cssVariable + ":" + formattedFont + "!important;";
 
-              fontURL = "https://fonts.googleapis.com/css2?family=" + option.value[0] + "&display=swap";
+              fontURL = "https://fonts.googleapis.com/css2?family=" + option.value[0] + ":wght@300;400;700&display=swap";
               formattedURL = fontURL.replace(" ", "%20");
               importurl = "@import url('" + formattedURL + "');";
             }
@@ -490,7 +527,7 @@ UIPstyles.component("font-select", {
 
       for (let index = 0; index < currentOptions.length; ++index) {
         currentFont = currentOptions[index];
-        var css = "@import url('https://fonts.googleapis.com/css2?family=" + currentFont.fontName + "&display=swap');";
+        var css = "@import url('https://fonts.googleapis.com/css2?family=" + currentFont.fontName + ":wght@300;400;700&display=swap');";
         jQuery("<style/>").append(css).appendTo(document.head);
       }
     },
@@ -638,6 +675,285 @@ UIPstyles.component("font-select", {
         </div>\
       </div>\
     </div>',
+});
+
+UIPstyles.component("uip-offcanvas", {
+  props: {
+    icon: String,
+    translations: Object,
+    buttonsize: String,
+    tooltip: Boolean,
+    tooltiptext: String,
+    type: String,
+    buttontext: String,
+    title: String,
+  },
+  data: function () {
+    return {
+      create: {
+        open: false,
+      },
+    };
+  },
+
+  methods: {
+    openOffcanvas() {
+      this.create.open = true;
+    },
+    closeOffcanvas() {
+      if (document.activeElement) {
+        document.activeElement.blur();
+      }
+      this.create.open = false;
+    },
+    returnButtonSize() {
+      if (this.buttonsize && this.buttonsize == "small") {
+        return "uip-padding-xxs";
+      } else {
+        return "uip-padding-xs";
+      }
+    },
+  },
+  template:
+    '<div class="">\
+        <div @click="openOffcanvas()" :class="returnButtonSize()" type="button"\
+        class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer uip-flex" >\
+          <span class="material-icons-outlined uip-margin-right-xxs">{{icon}}</span>\
+          <span >{{buttontext}}</span>\
+        </div>\
+      </div>\
+      <div v-if="create.open" class="uip-position-fixed uip-w-100p uip-h-viewport uip-hidden uip-text-normal" \
+      style="background:rgba(0,0,0,0.3);z-index:99999;top:0;left:0;right:0;max-height:100vh" \
+      :class="{\'uip-nothidden\' : create.open}">\
+        <!-- MODAL GRID -->\
+        <div class="uip-flex uip-w-100p uip-overflow-auto">\
+          <div class="uip-flex-grow" @click="closeOffcanvas()" ></div>\
+          <div class="uip-w-500 uip-background-default uip-padding-m uip-h-viewport uip-overflow-auto" >\
+            <div  style="max-height: 100vh;">\
+              <!-- OFFCANVAS TITLE -->\
+              <div class="uip-flex uip-margin-bottom-s">\
+                <div class="uip-text-xl uip-text-bold uip-flex-grow">{{title}}</div>\
+                <div class="">\
+                   <span @click="closeOffcanvas()"\
+                    class="material-icons-outlined uip-background-muted uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer">\
+                       close\
+                    </span>\
+                </div>\
+              </div>\
+              <slot></slot>\
+            </div>\
+          </div>\
+        </div>\
+      </div>',
+});
+
+UIPstyles.component("theme-selector", {
+  props: {
+    translations: Object,
+  },
+  data: function () {
+    return {
+      searchString: "",
+      themes: [],
+      loading: true,
+    };
+  },
+  mounted: function () {
+    datepicker = this;
+    this.getThemes();
+  },
+  computed: {
+    formattedThemes() {
+      return this.themes;
+    },
+  },
+  methods: {
+    getThemes() {
+      let self = this;
+      data = {
+        action: "uip_get_themes",
+        security: uip_ajax.security,
+      };
+      jQuery.ajax({
+        url: uip_ajax.ajax_url,
+        type: "post",
+        data: data,
+        success: function (response) {
+          data = JSON.parse(response);
+          self.loading = false;
+          if (data.error) {
+            ///SOMETHING WENT WRONG
+            console.log(data.message);
+          } else {
+            ///SOMETHING WENT RIGHT
+            self.themes = data;
+            console.log(self.themes);
+          }
+        },
+      });
+    },
+    heartTheme(theme) {
+      let self = this;
+      data = {
+        action: "uip_love_theme",
+        security: uip_ajax.security,
+        id: theme.id,
+      };
+      jQuery.ajax({
+        url: uip_ajax.ajax_url,
+        type: "post",
+        data: data,
+        success: function (response) {
+          data = JSON.parse(response);
+          console.log(data);
+          if (data.error) {
+            ///SOMETHING WENT WRONG
+            uipNotification(data.message);
+          } else if (data.state && data.state == "false") {
+            uipNotification(data.message);
+            theme.likes = parseInt(theme.likes) + 1;
+          } else {
+            ///SOMETHING WENT RIGHT
+            uipNotification(data.message);
+            theme.likes = parseInt(theme.likes) + 1;
+          }
+        },
+      });
+    },
+    importTheme(theme) {
+      let self = this;
+
+      this.$emit("import-theme", theme.json);
+      uipNotification(self.translations.themeImported, { pos: "bottom-left", status: "primary" });
+      //this.$emit("remove-col");
+    },
+    isInSearch(theme) {
+      thename = theme.theme_title.toLowerCase();
+      desc = theme.description.toLowerCase();
+      searchlc = this.searchString.toLowerCase();
+
+      if (thename.includes(searchlc) || desc.includes(searchlc)) {
+        return true;
+      }
+
+      return false;
+    },
+  },
+  template:
+    '<div style="padding-bottom:100px">\
+        <div class="uip-margin-bottom-m uip-padding-xs uip-background-muted uip-border-round">\
+          <div class="uip-flex uip-flex-center">\
+            <span class="uip-margin-right-xs uip-text-muted">\
+              <span class="material-icons-outlined">search</span>\
+            </span> \
+            <input type="search" :placeholder="translations.searchCards" class="uip-blank-input uip-flex-grow" \
+            v-model="searchString" autofocus>\
+          </div>\
+        </div>\
+        <div class="uip-w-100p uip-margin-padding-l">\
+          <div class="uip-grid uip-grid-small uip-inline-flex uip-flex-wrap uip-flex-row ">\
+            <loading-placeholder v-if="loading"></loading-placeholder>\
+            <template v-for="theme in formattedThemes" >\
+              <div v-if="isInSearch(theme)" class="uip-width-100p">\
+                <div class="uip-border-round uip-background-muted uip-padding-s uip-margin-bottom-m uip-flex uip-flex-column">\
+                  <img :src="theme.img" class="uip-w-100p uip-border-round uip-margin-bottom-s">\
+                  <div class="uip-flex uip-flex-row uip-margin-bottom-s">\
+                    <div class="uip-text-bold uip-text-emphasis  uip-flex-grow uip-text-l">{{theme.theme_title}}</div>\
+                    <div class="uip-flex uip-gap-xxs">\
+                      <span  v-for="type in theme.theme_type"\
+                      class="uip-background-primary-wash uip-border-round uip-padding-left-xxs uip-padding-right-xxs uip-text-bold uip-text-xs">\
+                        {{type}}\
+                      </span>\
+                    </div>\
+                  </div>\
+                  <div class="uip-text-default uip-margin-bottom-s">{{theme.description}}</div>\
+                  <div class="uip-flex uip-flex-center uip-gap-xs">\
+                    <div class="uip-flex uip-flex-end uip-flex-left uip-flex-grow">\
+                      <button @click="importTheme(theme)" v-if="!theme.locked" class="uip-button-secondary">{{translations.importTheme}}</button>\
+                      <a href="https://uipress.co/pricing" target="_BLANK" v-if="theme.locked" class="uip-button-primary uip-flex uip-no-underline">\
+                        <span class="material-icons-outlined uip-margin-right-xxs">lock</span>\
+                        <span> {{translations.proTemplate}}</span>\
+                      </a>\
+                    </div>\
+                    <div v-if="theme.created_by" class="uip-text-muted uip-flex uip-gap-xxs">\
+                     <span class="material-icons-outlined">person</span>\
+                     <span>{{theme.created_by}}</span>\
+                    </div>\
+                    <div  class="uip-text-muted uip-flex uip-gap-xxs" @click="heartTheme(theme)">\
+                     <span class="material-icons-outlined uip-cursor-pointer">favorite</span>\
+                     <span>{{theme.likes}}</span>\
+                    </div>\
+                  </div>\
+                </div>\
+              </div>\
+            </template>\
+          </div>\
+        </div>\
+    </div>',
+});
+
+UIPstyles.component("loading-placeholder", {
+  data: function () {
+    return {};
+  },
+  methods: {
+    doStuff() {},
+  },
+  template:
+    '<svg class="uip-w-100p uip-margin-bottom-m" role="img" width="340" height="84" aria-labelledby="loading-aria" viewBox="0 0 340 84" preserveAspectRatio="none">\
+      <title id="loading-aria">Loading...</title>\
+      <rect x="0" y="0" width="100%" height="100%" clip-path="url(#clip-path)" style=\'fill: url("#fill");\'></rect>\
+      <defs>\
+        <clipPath id="clip-path">\
+          <rect x="0" y="0" rx="3" ry="3" width="67" height="11" />\
+          <rect x="76" y="0" rx="3" ry="3" width="140" height="11" />\
+          <rect x="127" y="48" rx="3" ry="3" width="53" height="11" />\
+          <rect x="187" y="48" rx="3" ry="3" width="72" height="11" />\
+          <rect x="18" y="48" rx="3" ry="3" width="100" height="11" />\
+          <rect x="0" y="71" rx="3" ry="3" width="37" height="11" />\
+          <rect x="18" y="23" rx="3" ry="3" width="140" height="11" />\
+          <rect x="166" y="23" rx="3" ry="3" width="173" height="11" />\
+        </clipPath>\
+        <linearGradient id="fill">\
+          <stop offset="0.599964" stop-color="rgba(156, 155, 155, 13%)" stop-opacity="1">\
+            <animate attributeName="offset" values="-2; -2; 1" keyTimes="0; 0.25; 1" dur="2s" repeatCount="indefinite"></animate>\
+          </stop>\
+          <stop offset="1.59996" stop-color="rgba(156, 155, 155, 20%)" stop-opacity="1">\
+            <animate attributeName="offset" values="-1; -1; 2" keyTimes="0; 0.25; 1" dur="2s" repeatCount="indefinite"></animate>\
+          </stop>\
+          <stop offset="2.59996" stop-color="rgba(156, 155, 155, 13%)" stop-opacity="1">\
+            <animate attributeName="offset" values="0; 0; 3" keyTimes="0; 0.25; 1" dur="2s" repeatCount="indefinite"></animate>\
+          </stop>\
+        </linearGradient>\
+      </defs>\
+    </svg>\
+    <svg class="uip-w-100p" role="img" width="340" height="84" aria-labelledby="loading-aria" viewBox="0 0 340 84" preserveAspectRatio="none">\
+      <title id="loading-aria">Loading...</title>\
+      <rect x="0" y="0" width="100%" height="100%" clip-path="url(#clip-path)" style=\'fill: url("#fill");\'></rect>\
+      <defs>\
+        <clipPath id="clip-path">\
+          <rect x="0" y="0" rx="3" ry="3" width="67" height="11" />\
+          <rect x="76" y="0" rx="3" ry="3" width="140" height="11" />\
+          <rect x="127" y="48" rx="3" ry="3" width="53" height="11" />\
+          <rect x="187" y="48" rx="3" ry="3" width="72" height="11" />\
+          <rect x="18" y="48" rx="3" ry="3" width="100" height="11" />\
+          <rect x="0" y="71" rx="3" ry="3" width="37" height="11" />\
+          <rect x="18" y="23" rx="3" ry="3" width="140" height="11" />\
+          <rect x="166" y="23" rx="3" ry="3" width="173" height="11" />\
+        </clipPath>\
+        <linearGradient id="fill">\
+          <stop offset="0.599964" stop-color="rgba(156, 155, 155, 13%)" stop-opacity="1">\
+            <animate attributeName="offset" values="-2; -2; 1" keyTimes="0; 0.25; 1" dur="2s" repeatCount="indefinite"></animate>\
+          </stop>\
+          <stop offset="1.59996" stop-color="rgba(156, 155, 155, 20%)" stop-opacity="1">\
+            <animate attributeName="offset" values="-1; -1; 2" keyTimes="0; 0.25; 1" dur="2s" repeatCount="indefinite"></animate>\
+          </stop>\
+          <stop offset="2.59996" stop-color="rgba(156, 155, 155, 13%)" stop-opacity="1">\
+            <animate attributeName="offset" values="0; 0; 3" keyTimes="0; 0.25; 1" dur="2s" repeatCount="indefinite"></animate>\
+          </stop>\
+        </linearGradient>\
+      </defs>\
+    </svg>',
 });
 
 /////////////////////////

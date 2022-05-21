@@ -4,7 +4,7 @@
  * 50 |   @extend .uip-button-default;
  *    |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
  *    '
- *   /Volumes/Macintosh HD/Users/mark/Local Sites/overview/app/public/wp-content/plugins/uipress/assets/css/modules/theme.scss 50:3  root stylesheet */
+ *   /Users/mark/Local Sites/overview/app/public/wp-content/plugins/uipress/assets/css/modules/theme.scss 50:3  root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -14,5 +14,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: 'Error: The target selector was not found.\aUse "@extend .uip-button-default !optional" to avoid this error.\a    \2577 \a 50 \2502    @extend .uip-button-default;\a    \2502    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   /Volumes/Macintosh HD/Users/mark/Local Sites/overview/app/public/wp-content/plugins/uipress/assets/css/modules/theme.scss 50:3  root stylesheet';
+  content: 'Error: The target selector was not found.\aUse "@extend .uip-button-default !optional" to avoid this error.\a    \2577 \a 50 \2502    @extend .uip-button-default;\a    \2502    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   /Users/mark/Local Sites/overview/app/public/wp-content/plugins/uipress/assets/css/modules/theme.scss 50:3  root stylesheet';
 }

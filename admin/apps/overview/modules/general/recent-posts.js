@@ -80,14 +80,11 @@ export function moduleData() {
   			<div class="uip-flex uip-flex-center uip-padding-xxs hover:uip-background-muted uip-border-round" v-for="post in formattedPosts">\
           <div class="uip-flex-grow">\
     				<a :href="post.href" class="uip-link-default uip-text-bold uip-no-underline">{{post.title}}</a><br/>\
-    				<span class="uip-text-muted">{{post.author}}</span>\
+    				<span class="uip-text-muted">{{post.author}} - {{post.date}}</span>\
   			  </div>\
           <div class="uip-margin-left-xs">\
             <span class="uip-background-primary-wash uip-border-round uip-padding-left-xxs uip-padding-right-xxs uip-text-bold">{{post.type}}</span>\
           </div>\
-  			  <div class="uip-text-right uip-text-muted uip-margin-left-xs">\
-  				  {{post.date}}\
-  			  </div>\
   			</div>\
 		  </div>\
 		  <div class="uip-flex uip-margin-top-m" v-if="maxPage > 1">\

@@ -310,7 +310,7 @@ table.widefat {
     }
     th .comment-grey-bubble:before {
       content: "question_answer";
-      font-family: "Material Icons Outlined";
+      font-family: "Material Symbols Outlined";
     }
   }
   .row-actions {
@@ -433,7 +433,7 @@ body:not(.block-editor-page) {
 .sorting-indicator:before {
   left: 0;
   content: "expand_more" !important;
-  font-family: "Material Icons Outlined";
+  font-family: "Material Symbols Outlined";
 }
 th.desc:hover span.sorting-indicator:before {
   content: "expand_less" !important;
@@ -608,7 +608,7 @@ body {
 * POST BOXES / METABOXES
 */
 
-.postbox,
+.postbox:not(#kaliforms_forms_builder),
 .welcome-panel {
   a {
     color: var(--uip-color-primary);
@@ -690,7 +690,7 @@ div.updated {
   color: var(--uip-text-color-normal);
   .notice-dismiss:before {
     content: "cancel";
-    font-family: "Material Icons Outlined";
+    font-family: "Material Symbols Outlined";
   }
 }
 
@@ -713,7 +713,7 @@ div.updated,
 
 .update-message p:before {
   content: "update";
-  font-family: "Material Icons Outlined";
+  font-family: "Material Symbols Outlined";
 }
 
 /**
@@ -741,11 +741,11 @@ div.updated,
 }
 .view-switch .view-list:before {
   content: "format_list_bulleted";
-  font-family: "Material Icons Outlined";
+  font-family: "Material Symbols Outlined";
 }
 .view-switch .view-grid:before {
   content: "grid_view";
-  font-family: "Material Icons Outlined";
+  font-family: "Material Symbols Outlined";
 }
 .edit-attachment-frame .attachment-info {
   background-color: var(--uip-background-muted);
@@ -1189,5 +1189,9 @@ table.widefat {
   }
   #dashboard-widgets .meta-box-sortables {
     margin-right: 8px;
+  }
+  .tablenav.bottom .tablenav-pages {
+    margin-bottom: 15px;
+    display: inline-flex;
   }
 }

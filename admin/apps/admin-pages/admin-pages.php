@@ -21,13 +21,14 @@ class uipress_admin_pages
 
   public function run()
   {
+    ///REGISTER THIS COMPONENT
+    add_filter("uipress_register_settings", [$this, "admin_pages_settings_options"], 1, 2);
+
     $debug = new uipress_debug();
 
     if (!$debug->check_network_connection()) {
       return;
     }
-    ///REGISTER THIS COMPONENT
-    add_filter("uipress_register_settings", [$this, "admin_pages_settings_options"], 1, 2);
 
     $utils = new uipress_util();
     $creatorDisabled = $utils->get_option("admin-pages", "status");

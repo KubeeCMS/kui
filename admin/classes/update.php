@@ -521,7 +521,9 @@ class uipress_update
   {
     if ($options["action"] == "update" && $options["type"] === "plugin") {
       // just clean the cache when new plugin version is installed
-      delete_transient($this->upgrade_transient);
+      if (isset($this->upgrade_transient)) {
+        delete_transient($this->upgrade_transient);
+      }
     }
   }
 }

@@ -39,7 +39,11 @@ const UIPtoolbarOptions = {
       }
     },
     toggleMenu() {
-      jQuery("#adminmenumain").toggleClass("uip-mobile-menu");
+      if (jQuery("#uip-admin-menu-front-container").length > 0) {
+        jQuery("#uip-admin-menu-front-container").toggleClass("uip-mobile-menu");
+      } else {
+        jQuery("#adminmenumain").toggleClass("uip-mobile-menu");
+      }
     },
   },
 };
@@ -494,6 +498,7 @@ UIPtoolbar.component("toolbar-offcanvas", {
   },
   mounted: function () {
     this.loading = false;
+    this.detectDarkMode();
   },
   computed: {
     allUpdates() {
@@ -543,6 +548,17 @@ UIPtoolbar.component("toolbar-offcanvas", {
     },
   },
   methods: {
+    detectDarkMode() {
+      if (this.options.general.options["dark-prefers-color-scheme"].value && this.options.general.options["dark-prefers-color-scheme"].value == true) {
+        let userPrefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        if (userPrefersDark && this.prefs.darkmode != true) {
+          this.prefs.darkmode = true;
+        } else if (!userPrefersDark && this.prefs.darkmode == true) {
+          this.prefs.darkmode = false;
+        }
+      }
+    },
     uip_save_preferences(pref, value, notification = null) {
       if (pref == "") {
         return;

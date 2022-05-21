@@ -994,7 +994,7 @@ class uipress_analytics
     $uip_query = $uip_query . "&gafour=" . $gafour;
     $uip_query = $uip_query . "&uip_token=" . $access_token;
 
-    error_log("https://analytics.uipress.co/view.php?" . $uip_query);
+    //error_log("https://analytics.uipress.co/view.php?" . $uip_query);
     $remote = wp_remote_get("https://analytics.uipress.co/view.php?" . $uip_query, [
       "timeout" => 10,
       "headers" => [

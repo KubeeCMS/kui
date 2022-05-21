@@ -131,8 +131,16 @@ class uipress_app
       }
     }
 
+    ///FREESOUL DEACTIVATE PLUGINS
+    if (isset($_GET["page"])) {
+      if ($_GET["page"] == "eos_dp_menu") {
+        return true;
+      }
+    }
+
     return false;
   }
+
   /**
    * Changes name of UiPress in plugin table and hides if enabled
    * @since 2.3
@@ -142,24 +150,29 @@ class uipress_app
   {
     $utils = new uipress_util();
     $hidden = $utils->get_option("general", "hide-plugin");
+    $author = $utils->get_option("general", "rename-plugin-author");
+    $link = $utils->get_option("general", "rename-plugin-link");
 
-    $moddedList = [];
-    if (is_array($all_plugins)) {
-      foreach ($all_plugins as $key => $value) {
-        if (isset($value["Name"])) {
-          if ($value["Name"] == "UiPress") {
-            $value["Name"] = $this->pluginName;
-
-            if ($hidden != true) {
-              $moddedList[$key] = $value;
-            }
-          } else {
-            $moddedList[$key] = $value;
-          }
-        }
-      }
+    if ($hidden) {
+      unset($all_plugins["uipress/uipress.php"]);
+      return $all_plugins;
     }
-    return $moddedList;
+
+    $uip = $all_plugins["uipress/uipress.php"];
+
+    if ($author && $author != "") {
+      $uip["Author"] = $author;
+    }
+
+    if ($link && $link != "") {
+      $uip["AuthorURI"] = $link;
+      $uip["PluginURI"] = $link;
+    }
+
+    $uip["Name"] = $this->pluginName;
+
+    $all_plugins["uipress/uipress.php"] = $uip;
+    return $all_plugins;
   }
 
   /**
@@ -408,6 +421,7 @@ class uipress_app
       $styles = new uipress_styles($this->version, $this->pluginName, $this->path, "uipress", $this->pathURL);
       add_action("wp_body", [$styles, "add_user_styles"]);
       add_filter("language_attributes", [$this, "html_attributes_front"], 10, 2);
+      $this->add_custom_css_js();
     }
     if ($menuStatus) {
       add_filter("language_attributes", [$this, "html_attributes_front_menu"], 10, 2);
@@ -766,10 +780,10 @@ class uipress_app
       $logo = $this->pathURL . "assets/img/default_logo.svg";
     }
     ?>
-      <style type="text/css"> h1 a {  background-image:url('<?php echo $logo; ?>')  !important; } </style>
+      <style type="text/css"> body.uip-login h1 a {  background-image:url('<?php echo $logo; ?>')  !important; } </style>
       <?php
       if ($loginBg) { ?>
-      <style type="text/css"> body::before {  background-image:url('<?php echo $loginBg; ?>')  !important; } </style> 
+      <style type="text/css"> body.uip-login::before {  background-image:url('<?php echo $loginBg; ?>')  !important; } </style> 
       <?php }
 
       $this->add_custom_css_js();
@@ -877,7 +891,28 @@ class uipress_app
       }
     }
 
+    //$current_screen = get_current_screen();
+    //if (method_exists($current_screen, "is_block_editor") && $current_screen->is_block_editor()) {
+    //wp_enqueue_script("uip-block-editor", $this->pathURL . "assets/js/uip-block-editor.js", [], $this->version, true);
+    //add_filter("script_loader_tag", [$this, "add_type_attribute"], 10, 3);
+    //}
+
     $this->load_plugin_css();
+  }
+
+  /**
+   * Filters for block editor script
+   * @since 2.3.1.8
+   */
+  public function add_type_attribute($tag, $handle, $src)
+  {
+    // if not your script, do nothing and return original $tag
+    if ("uip-block-editor" !== $handle) {
+      return $tag;
+    }
+    // change the script tag by adding type="module" and return it.
+    $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
+    return $tag;
   }
 
   /**
@@ -1196,7 +1231,7 @@ class uipress_app
     $translations["editFolder"] = __("Edit Folder", "uipress");
     $translations["update"] = __("Update", "uipress");
     $translations["oneFile"] = __("1 File", "uipress");
-    $translations["noFolders"] = __("You havn't created a folder yet", "uipress");
+    $translations["noFolders"] = __("You haven't created a folder yet", "uipress");
     $translations["removeFromFolder"] = __("Remove from folder", "uipress");
     $translations["unlockNotificationCenter"] = __("Upgrade to pro to unlock the notification center. View, edit and organise all your plugin and theme notifications in one place", "uipress");
     $translations["unlockSearch"] = __("Upgrade to pro to gain full control of search results and included post types", "uipress");
@@ -1220,6 +1255,13 @@ class uipress_app
     $translations["today"] = __("Today", "uipress");
     $translations["yesterday"] = __("Yesterday", "uipress");
     $translations["selected"] = __("selected", "uipress");
+    $translations["themeLibrary"] = __("Theme Library", "uipress");
+    $translations["library"] = __("Library", "uipress");
+    $translations["importTheme"] = __("Import Theme", "uipress");
+    $translations["proTemplate"] = __("Pro template", "uipress");
+    $translations["themeImported"] = __("Theme Imported", "uipress");
+    $translations["madeBy"] = __("Made by", "uipress");
+    $translations["settings"] = __("Settings", "uipress");
 
     return $translations;
   }
@@ -2365,6 +2407,15 @@ class uipress_app
     $options[$temp["optionName"]] = $temp;
 
     $temp = [];
+    $temp["name"] = __("Set Dark Mode according to prefers color scheme", "uipress");
+    $temp["description"] = __("UiPress will detetct the OS color scheme and update accordingly", "uipress");
+    $temp["type"] = "switch";
+    $temp["optionName"] = "dark-prefers-color-scheme";
+    $temp["value"] = $this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"]);
+    $temp["premium"] = true;
+    $options[$temp["optionName"]] = $temp;
+
+    $temp = [];
     $temp["name"] = __("Disable dark mode", "uipress");
     $temp["description"] = __("If enabled, dark mode switch will not be available.", "uipress");
     $temp["type"] = "switch";
@@ -2399,6 +2450,24 @@ class uipress_app
     $temp["description"] = sprintf(__("White label %s by changing the name displayed.", "uipress"), $this->pluginName);
     $temp["type"] = "text";
     $temp["optionName"] = "rename-plugin";
+    $temp["value"] = $this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"]);
+    $temp["premium"] = true;
+    $options[$temp["optionName"]] = $temp;
+
+    $temp = [];
+    $temp["name"] = sprintf(__("Rename %s plugin author", "uipress"), $this->pluginName);
+    $temp["description"] = sprintf(__("White label %s by changing the author in the plugin table.", "uipress"), $this->pluginName);
+    $temp["type"] = "text";
+    $temp["optionName"] = "rename-plugin-author";
+    $temp["value"] = $this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"]);
+    $temp["premium"] = true;
+    $options[$temp["optionName"]] = $temp;
+
+    $temp = [];
+    $temp["name"] = sprintf(__("Change %s plugin URL", "uipress"), $this->pluginName);
+    $temp["description"] = sprintf(__("White label %s by changing the plugin URL in the plugin table.", "uipress"), $this->pluginName);
+    $temp["type"] = "text";
+    $temp["optionName"] = "rename-plugin-link";
     $temp["value"] = $this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"]);
     $temp["premium"] = true;
     $options[$temp["optionName"]] = $temp;
@@ -2667,7 +2736,7 @@ class uipress_app
     $options[$temp["optionName"]] = $temp;
 
     $temp = [];
-    $temp["name"] = __("Only show notifcations to", "uipress");
+    $temp["name"] = __("Only show notifications to", "uipress");
     $temp["description"] = sprintf(__("%s will hide all notifications from all users except those selected below", "uipress"), $this->pluginName);
     $temp["type"] = "user-role-select";
     $temp["optionName"] = "notifcations-disabled-for";

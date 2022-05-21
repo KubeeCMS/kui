@@ -17,7 +17,7 @@
   }
   input:checked + .uip-slider:before {
     content: "done";
-    font-family: "Material Icons Outlined";
+    font-family: "Material Symbols Outlined";
     font-size: 14px;
     line-height: 1.5;
     text-indent: 3px;
@@ -40,7 +40,7 @@
     &:before {
       position: absolute;
       content: "close";
-      font-family: "Material Icons Outlined";
+      font-family: "Material Symbols Outlined";
       font-size: 14px;
       line-height: 1.5;
       text-indent: 3px;

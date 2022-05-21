@@ -3,7 +3,7 @@
 Plugin Name: Kui
 Plugin URI: https://github.com/KubeeCMS/kui/
 Description: Admin extension with a streamlined dashboard, intuitive media library, dark mode and much more.
-Version: 2.3.1.7
+Version: 2.3.3
 Author: Kubee
 Text Domain: uipress
 Domain Path: /admin/languages
@@ -12,21 +12,21 @@ Author URI: https://github.com/KubeeCMS/
 
 // If this file is called directly, abort.
 if (!defined("ABSPATH")) {
-    exit();
-  }
-  
-  $version = "2.3.1.7";
-  $pluginName = "Kui";
-  $textDomain = "uipress";
-  $pluginURL = plugin_dir_url(__FILE__);
-  $pluginPath = plugin_dir_path(__FILE__);
-  
-  require $pluginPath . "admin/uipress-controller.php";
-  
-  $uipress = new uipress_controller($version, $pluginName, $pluginPath, $textDomain, $pluginURL);
-  $uipress->run();
-  
-  /// SHOW ERRORS
-  //ini_set('display_errors', 1);
-  //ini_set('display_startup_errors', 1);
-  //error_reporting(E_ALL);
+  exit();
+}
+
+$version = "2.3.3";
+$pluginName = "UiPress";
+$textDomain = "uipress";
+$pluginURL = plugin_dir_url(__FILE__);
+$pluginPath = plugin_dir_path(__FILE__);
+
+require $pluginPath . "admin/uipress-controller.php";
+
+$uipress = new uipress_controller($version, $pluginName, $pluginPath, $textDomain, $pluginURL);
+$uipress->run();
+
+/// SHOW ERRORS
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
