@@ -15,6 +15,7 @@ html {
   --uip-color-orange: #f96d41;
   --uip-color-orange-wash: rgba(250, 160, 90, 0.21);
   --uip-color-red: rgb(240, 80, 110);
+  --uip-color-dark-red: #d81a3f;
   --uip-color-red-wash: rgba(240, 80, 110, 0.21);
   --uip-color-red-mid-wash: rgba(240, 80, 110, 0.41);
   --uip-color-black: #222;
@@ -64,7 +65,7 @@ html {
   --uip-border-color: rgba(181, 181, 181, 35%);
   //APP SPECIFIC
   //TOOLBAR
-  --uip-toolbar-height: 64px;
+  --uip-toolbar-height: 32px;
   --uip-toolbar-background: var(--uip-background-default);
   --uip-toolbar-text-color: var(--uip-text-color-muted);
   --uip-toolbar-text-color-hover: var(--uip-text-color-emphasis);
@@ -150,6 +151,7 @@ html[data-theme="dark"] {
   --uip-text-color-muted: #ffffff80;
   --uip-checkbox-border: #444;
   --uip-menu-search-color: var(--uip-text-color-muted);
+  --uip-border-color: rgba(181, 181, 181, 19%);
 
   //COLOR
   --uip-color-black: #333;
@@ -176,6 +178,9 @@ html[data-theme="dark"] {
 }
 .uip-cursor-pointer {
   cursor: pointer;
+}
+.uip-cursor-drag {
+  cursor: grab;
 }
 .uip-position-relative {
   position: relative;
@@ -267,7 +272,9 @@ html[data-theme="dark"] {
 .uip-no-text-select {
   user-select: none;
 }
-
+.uip-border-collapse {
+  border-collapse: collapse;
+}
 .uip-display-table-cell {
   display: table-cell;
 }
@@ -435,6 +442,10 @@ html[data-theme="dark"] {
   height: 2px;
   min-height: 2px;
 }
+.uip-h-4 {
+  height: 4px;
+  min-height: 4px;
+}
 .uip-h-5 {
   height: 5px;
   min-height: 5px;
@@ -447,8 +458,20 @@ html[data-theme="dark"] {
   height: 18px;
   min-height: 18px;
 }
+.uip-h-20 {
+  height: 18px;
+  min-height: 18px;
+}
 .uip-h-22 {
   min-height: 22px;
+}
+.uip-h-24 {
+  height: 24px;
+  min-height: 24px;
+}
+.uip-h-26 {
+  height: 26px;
+  min-height: 26px;
 }
 .uip-h-28 {
   height: 28px;
@@ -466,11 +489,23 @@ html[data-theme="dark"] {
 .uip-h-40 {
   min-height: 40px;
 }
+.uip-h-48 {
+  min-height: 48px;
+}
 .uip-h-50 {
   min-height: 50px;
 }
+.uip-max-h-50 {
+  max-height: 50px;
+}
+.uip-h-70 {
+  min-height: 70px;
+}
 .uip-h-100 {
   min-height: 100px;
+}
+.uip-h-50p {
+  min-height: 50%;
 }
 .uip-h-100p {
   min-height: 100%;
@@ -524,11 +559,23 @@ html[data-theme="dark"] {
 /**
 * WIDTH CLASSES
 */
+.uip-w-2 {
+  width: 2px;
+}
+.uip-w-4 {
+  width: 4px;
+}
+.uip-w-5 {
+  width: 5px;
+}
 .uip-w-10 {
   width: 10px;
 }
 .uip-w-18 {
   width: 18px;
+}
+.uip-w-26 {
+  width: 26px;
 }
 .uip-w-28 {
   width: 28px;
@@ -550,6 +597,9 @@ html[data-theme="dark"] {
 }
 .uip-w-40 {
   width: 40px;
+}
+.uip-w-48 {
+  width: 48px;
 }
 .uip-w-50 {
   width: 50px;
@@ -573,6 +623,9 @@ html[data-theme="dark"] {
 }
 .uip-w-150 {
   width: 150px;
+}
+.uip-w-180 {
+  width: 180px;
 }
 .uip-w-200 {
   width: 200px;
@@ -608,6 +661,9 @@ html[data-theme="dark"] {
 .uip-w-600 {
   width: 600px;
 }
+.uip-max-w-600 {
+  max-width: 600px;
+}
 
 .uip-w-900 {
   width: 900px;
@@ -637,6 +693,12 @@ html[data-theme="dark"] {
 }
 .uip-max-w-32 {
   max-width: 32px;
+}
+.uip-max-w-150 {
+  max-width: 150px;
+}
+.uip-max-w-300 {
+  max-width: 300px;
 }
 .uip-max-w-900 {
   max-width: 900px;
@@ -848,6 +910,9 @@ html[data-theme="dark"] {
 .uip-background-red {
   background-color: var(--uip-color-red);
 }
+.uip-background-dark-red {
+  background-color: var(--uip-color-dark-red);
+}
 
 .uip-background-primary {
   background-color: var(--uip-background-primary);
@@ -870,6 +935,12 @@ html[data-theme="dark"] {
 */
 .uip-border-round {
   border-radius: var(--uip-border-radius);
+}
+.uip-border-round-left {
+  border-radius: var(--uip-border-radius) 0 0 var(--uip-border-radius);
+}
+.uip-border-round-top {
+  border-radius: var(--uip-border-radius) var(--uip-border-radius) 0 0;
 }
 .uip-border-circle {
   border-radius: 50%;
@@ -932,7 +1003,7 @@ html[data-theme="dark"] {
     background-color: var(--uip-color-primary-dark);
   }
 }
-.hover\:uip-background-primary-wwash {
+.hover\:uip-background-primary-wash {
   &:hover {
     background-color: var(--uip-color-primary-wash);
   }
@@ -1184,6 +1255,9 @@ html[data-theme="dark"] {
 .uip-padding-bottom-xs {
   padding-bottom: var(--uip-padding-xs);
 }
+.uip-padding-bottom-xxs {
+  padding-bottom: var(--uip-padding-xxs);
+}
 .uip-padding-bottom-s {
   padding-bottom: var(--uip-padding-s);
 }
@@ -1407,6 +1481,9 @@ html[data-theme="dark"] {
 .uip-flex-stretch {
   align-items: stretch;
 }
+.uip-flex-vertical-middle {
+  justify-content: center;
+}
 
 /**
 * POSITION CLASSES
@@ -1420,11 +1497,23 @@ html[data-theme="dark"] {
 .uip-right-0 {
   right: 0;
 }
+.uip-right--8 {
+  right: -8px;
+}
+.uip-top--8 {
+  top: -8px;
+}
 .uip-bottom-0 {
   bottom: 0;
 }
+.uip-right-100p {
+  right: 100%;
+}
 .uip-bottom-100p {
   bottom: 100%;
+}
+.uip-left-menu-width {
+  left: var(--uip-menu-width);
 }
 .uip-top-0 {
   top: 0;
@@ -1482,6 +1571,62 @@ html[data-theme="dark"] {
   animation-duration: 0.2s;
   transform-origin: top right;
 }
+.uip-scale-in-bottom {
+  animation-name: scale-in;
+  animation-duration: 0.2s;
+  transform-origin: bottom center;
+}
+.uip-scale-in-right {
+  animation-name: scale-in;
+  animation-duration: 0.2s;
+  transform-origin: right center;
+}
+
+////post folders
+
+.uip-post-folders {
+  position: fixed;
+  top: calc(var(--uip-toolbar-height) + 28px);
+  width: 250px;
+  left: calc(var(--uip-menu-width) + 20px);
+  z-index: 99999;
+  *:not(.material-icons-outlined) {
+    font-family: var(--uip-body-font-family);
+  }
+}
+
+html[uip-post-folders="true"] {
+  #wpcontent {
+    margin-left: calc(var(--uip-menu-width) + 280px) !important;
+  }
+  .column-uip_draggable {
+    width: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .uip-hidden-small {
+    display: none;
+  }
+  .mobile\:uip-w-100p {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1100px) {
+  html[uip-post-folders="true"] {
+    #wpcontent {
+      margin-left: calc(var(--uip-menu-width)) !important;
+      margin-top: 300px;
+    }
+  }
+  .uip-post-folders {
+    position: absolute;
+    top: -300px;
+    max-height: 300px;
+    overflow: auto;
+  }
+}
 
 /* we will explain what these classes do next! */
 .uip-remove-list-enter-active,
@@ -1493,6 +1638,21 @@ html[data-theme="dark"] {
 .uip-remove-list-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+
+///inline drop
+inline-drop {
+  position: relative;
+  drop-content {
+    display: none;
+    z-index: 1;
+  }
+  &:hover {
+    drop-content {
+      display: block;
+      position: absolute;
+    }
+  }
 }
 
 @keyframes scale-in {
@@ -1577,6 +1737,7 @@ html[data-theme="dark"] {
 @import "modules/login.scss";
 @import "modules/dark.scss";
 @import "plugins/compatability.scss";
+@import "uip-icons.css";
 
 html[uip-admin-theme="true"] {
   --wp-admin-theme-color: var(--uip-color-primary);

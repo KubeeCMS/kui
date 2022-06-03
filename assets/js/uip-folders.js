@@ -33,6 +33,41 @@ jQuery(document).on("dragstart", ".attachments-browser .attachments .attachment"
   jQuery(".uip-remove-folder").addClass("uip-nothidden");
 });
 
+jQuery(document).on("dragstart", ".uip-post-drag", function (ev) {
+  allIDS = [];
+  let thefiles = uipTranslations.oneFile;
+
+  if (jQuery("tbody .check-column input[type='checkbox']:checkbox:checked").length > 0) {
+    jQuery("tbody .check-column input[type='checkbox']:checked:checked").each(function (index) {
+      tempid = jQuery(this).attr("value");
+      allIDS.push(tempid);
+    });
+
+    ev.originalEvent.dataTransfer.setData("itemID", JSON.stringify(allIDS));
+
+    thefiles = allIDS.length + " " + uipTranslations.files;
+  } else {
+    theid = jQuery(ev.currentTarget).attr("data-id");
+    ev.originalEvent.dataTransfer.setData("itemID", JSON.stringify([theid]));
+  }
+
+  ev.originalEvent.dataTransfer.dropEffect = "move";
+  ev.originalEvent.dataTransfer.effectAllowed = "move";
+  ev.originalEvent.dataTransfer.setData("type", "content");
+
+  ///SET DRAG HANDLE
+
+  var elem = document.createElement("div");
+  elem.id = "uip-content-drag";
+  elem.innerHTML = thefiles;
+  elem.style.position = "absolute";
+  elem.style.top = "-1000px";
+  document.body.appendChild(elem);
+  ev.originalEvent.dataTransfer.setDragImage(elem, 0, 0);
+
+  jQuery(".uip-remove-folder").addClass("uip-nothidden");
+});
+
 jQuery(document).on("dragend", ".attachments-browser .attachments .attachment", function (ev) {
   jQuery(".uip-remove-folder").removeClass("uip-nothidden");
 });
@@ -88,12 +123,15 @@ function uip_build_folder_options(currentModal) {
           this.activeFolderObject = folderObject;
         }
 
-        if (typeof uipContentPage !== "undefined") {
+        if (typeof uipContentPage !== "undefined" && uipContentPage == true) {
           window.dispatchEvent(
             new CustomEvent("folder-change", {
               detail: { folder: folderID },
             })
           );
+          return;
+        } else if (typeof uipContentPage !== "undefined" && uipContentPage != true && uipContentPage != false) {
+          this.fetchContentRemote(folderID);
           return;
         }
 
@@ -102,6 +140,21 @@ function uip_build_folder_options(currentModal) {
         } else {
           wp.media.frame.content.get().collection.props.set({ folder_id: folderID });
         }
+      },
+      fetchContentRemote(folderID) {
+        let searchParams = new URLSearchParams(window.location.search);
+        let current = window.location.origin;
+        searchParams.set("uip_folder", folderID);
+        let newRelativePathQuery = current + window.location.pathname + "?" + searchParams.toString();
+
+        jQuery.ajax(newRelativePathQuery, {
+          success: function (data) {
+            jQuery("#wpbody-content").html(jQuery(data).find("#wpbody-content").html());
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            uipNotification(translations.failedfolders);
+          },
+        });
       },
       setOpenFolders(folderID) {
         if (this.openFolders.includes(folderID)) {
@@ -118,12 +171,15 @@ function uip_build_folder_options(currentModal) {
       getFolders() {
         let self = this;
 
-        contentPage = "false";
-        if (typeof uipContentPage !== "undefined") {
+        if (typeof uipContentPage !== "undefined" && uipContentPage == true) {
           contentPage = "true";
+        } else if (typeof uipContentPage !== "undefined" && uipContentPage == false) {
+          contentPage = "true";
+        } else if (typeof uipContentPage !== "undefined") {
+          contentPage = uipContentPage;
+        } else {
+          contentPage = "false";
         }
-
-        console.log(contentPage);
 
         data = {
           action: "uip_get_folders",
@@ -144,6 +200,10 @@ function uip_build_folder_options(currentModal) {
               self.folders = data.folders;
               self.mediaCount = data.mediaCount;
               self.noFolderCount = data.noFolderCount;
+
+              if (typeof uipContentPage !== "undefined" && uipContentPage != true && uipContentPage != false) {
+                self.fetchContentRemote(self.activeFolder);
+              }
             }
           },
         });
@@ -248,10 +308,22 @@ function uip_build_folder_options(currentModal) {
       },
       deleteFolder() {
         let self = this;
+
+        if (typeof uipContentPage !== "undefined" && uipContentPage == true) {
+          contentPage = "true";
+        } else if (typeof uipContentPage !== "undefined" && uipContentPage == false) {
+          contentPage = "true";
+        } else if (typeof uipContentPage !== "undefined") {
+          contentPage = uipContentPage;
+        } else {
+          contentPage = "false";
+        }
+
         data = {
           action: "uip_delete_folder",
           security: uip_ajax.security,
           activeFolder: self.activeFolder,
+          contentPage: contentPage,
         };
         jQuery.ajax({
           url: uip_ajax.ajax_url,
@@ -682,7 +754,7 @@ function uip_build_folder_options(currentModal) {
       @dragenter="addDropClass($event, folder)"\
       @dragleave="removeDropClass($event, folder)"\
       @dragover.prevent\
-      @dragenter.prevent draggable="true">\
+      @dragenter.prevent draggable="true" :folder-id="folder.id">\
         <span class="material-icons-outlined uip-margin-right-xxs" :style="{\'color\': folder.color}">folder</span>\
         <span class="uip-flex-grow uip-cursor-pointer" @click="folderUpdate(folder.id, folder)" >{{folder.title}}</span>\
         <span class="uip-border-round uip-background-primary-wash uip-padding-left-xxs uip-padding-right-xxs">{{folder.count}}</span>\

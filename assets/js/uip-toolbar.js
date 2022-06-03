@@ -8,6 +8,7 @@ const UIPtoolbarOptions = {
       defaults: uipDefaults,
       userPreferences: uipUserPrefs,
       uipToolbar: "",
+      floatingActive: false,
     };
   },
   watch: {},
@@ -22,6 +23,9 @@ const UIPtoolbarOptions = {
     this.loading = false;
   },
   methods: {
+    floatActive(state) {
+      this.floatingActive = state;
+    },
     showLegacy() {
       if (this.userPreferences.legacy_admin_links == true || this.masterPrefs.toolbar.options["legacy-admin"].value == true) {
         return false;
@@ -111,6 +115,181 @@ UIPtoolbar.component("toolbar-logo", {
     </div>',
 });
 
+UIPtoolbar.component("floating-toolbar", {
+  props: {
+    defaults: Object,
+    options: Object,
+    translations: Object,
+    preferences: Object,
+    updatefloat: Boolean,
+  },
+  data: function () {
+    return {
+      loading: true,
+      active: false,
+    };
+  },
+  mounted: function () {
+    this.loading = false;
+  },
+  methods: {
+    getLogo() {
+      if (this.options.menu.options["light-logo"].value) {
+        return this.options.menu.options["light-logo"].value;
+      } else {
+        return this.defaults.logo;
+      }
+    },
+    getDarkLogo() {
+      if (this.options.menu.options["dark-logo"].value) {
+        return this.options.menu.options["dark-logo"].value;
+      } else {
+        return this.defaults.darkLogo;
+      }
+    },
+    isTrue(thetest) {
+      if (thetest == "true" || thetest == true) {
+        return true;
+      }
+      if (thetest == "false" || thetest == false || thetest == "") {
+        return false;
+      }
+    },
+    showTitle() {
+      if (this.options.menu.options["show-site-logo"].value == true) {
+        return true;
+      }
+      return false;
+    },
+  },
+  template:
+    '<div class="uip-body-font">\
+        <vertical-actions v-if="updatefloat" :defaults="defaults" :options="options" :translations="translations" :preferences="preferences"></vertical-actions>\
+        <div id="uip-float-draghandle" class="uip-background-primary uip-shadow uip-border-round uip-cursor-drag uip-w-48 uip-h-48 uip-flex uip-flex-center uip-flex-middle">\
+            <span class="material-icons-outlined uip-text-inverse uip-no-text-select " style="font-size:1.4em">menu_open</span>\
+        </div>\
+    </div>',
+});
+UIPtoolbar.component("vertical-actions", {
+  props: {
+    defaults: Object,
+    options: Object,
+    translations: Object,
+    preferences: Object,
+  },
+  data: function () {
+    return {
+      loading: true,
+      screenWidth: window.innerWidth,
+    };
+  },
+  mounted: function () {
+    this.loading = false;
+    window.addEventListener("resize", this.getScreenWidth);
+  },
+  methods: {
+    isEnabled() {
+      search = this.options.toolbar.options["view-enabled"].value;
+
+      if (search == "true" || search === true) {
+        return false;
+      }
+
+      return true;
+    },
+    isfront() {
+      front = this.defaults.front;
+      if (front == "true" || front === true) {
+        return true;
+      }
+      return false;
+    },
+    getTarget() {
+      newtab = this.options.toolbar.options["view-new-tab"].value;
+
+      if (newtab == true || newtab == "true") {
+        return "_BLANK";
+      }
+
+      return "_self";
+    },
+    isCreateEnabled() {
+      search = this.options.toolbar.options["new-enabled"].value;
+
+      if (search == "true" || search === true) {
+        return false;
+      }
+
+      return true;
+    },
+    showScreenOptions() {
+      let screen = this.preferences.screen_options;
+      if (screen == "true" || screen === true) {
+        if (!this.isfront()) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      return false;
+    },
+    toggleScreenMeta() {
+      jQuery("#screen-meta").toggleClass("uip-show-so");
+    },
+    toggleMenu() {
+      if (jQuery("#uip-admin-menu-front-container").length > 0) {
+        jQuery("#uip-admin-menu-front-container").toggleClass("uip-mobile-menu");
+      } else {
+        jQuery("#adminmenumain").toggleClass("uip-mobile-menu");
+      }
+    },
+    isSmallScreen() {
+      if (this.screenWidth < 900) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    getScreenWidth() {
+      this.screenWidth = window.innerWidth;
+    },
+  },
+  template:
+    '<div class="uip-flex uip-flex-column uip-row-gap-xxs uip-position-absolute uip-bottom-100p uip-background-muted uip-shadow uip-padding-xs uip-scale-in-bottom uip-text-normal uip-border-round-top">\
+        <div class="uip-cursor-pointer uip-padding-bottom-xxs">\
+            <toolbar-offcanvas :defaults="defaults" :options="options" :translations="translations" :preferences="preferences"></toolbar-offcanvas>\
+        </div>\
+        <div v-if="showScreenOptions() && isfront()" class="uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer">\
+            <span @click="toggleScreenMeta()" class="material-icons-outlined">\
+              tune\
+            </span>\
+        </div>\
+        <div v-if="isCreateEnabled()" class="uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer">\
+            <toolbar-create :defaults="defaults" :options="options" :translations="translations" :preferences="preferences"></toolbar-create>\
+        </div>\
+        <div class="uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer">\
+            <toolbar-search :defaults="defaults" :options="options" :translations="translations" :preferences="preferences"></toolbar-search>\
+        </div>\
+        <div v-if="isEnabled() && !isfront()" class="uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer">\
+            <a :href="defaults.siteHome" :target="getTarget()"\
+            class="material-icons-outlined uip-toolbar-link uip-no-underline uip-no-outline uip-link-muted">\
+             house\
+            </a>\
+        </div>\
+        <div v-if="isEnabled() && isfront()" class="uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer">\
+            <a :href="defaults.adminHome"\
+            class="material-icons-outlined uip-toolbar-link uip-no-underline uip-no-outline uip-link-muted">\
+              dashboard\
+            </a>\
+        </div>\
+        <div v-if="isSmallScreen()" class="uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer">\
+            <span @click="toggleMenu()" class="material-icons-outlined">\
+              menu\
+            </span>\
+        </div>\
+    </div>',
+});
+
 UIPtoolbar.component("toolbar-search", {
   props: {
     defaults: Object,
@@ -121,6 +300,7 @@ UIPtoolbar.component("toolbar-search", {
   data: function () {
     return {
       loading: true,
+      floating: false,
       search: {
         open: false,
         term: "",
@@ -135,6 +315,7 @@ UIPtoolbar.component("toolbar-search", {
   },
   mounted: function () {
     this.loading = false;
+    this.areWeFloating();
   },
   computed: {
     searchedCats() {
@@ -142,6 +323,11 @@ UIPtoolbar.component("toolbar-search", {
     },
   },
   methods: {
+    areWeFloating() {
+      if (this.options.toolbar.options["flyout-toolbar"].value && this.options.toolbar.options["flyout-toolbar"].value == true) {
+        this.floating = true;
+      }
+    },
     masterSearch() {
       adminbar = this;
       searchString = this.search.term;
@@ -215,16 +401,20 @@ UIPtoolbar.component("toolbar-search", {
   },
   template:
     '<div v-if="isEnabled()" class="uip-flex uip-flex-center">\
-       <span @click="openSearch()"\
+       <span v-if="!floating" @click="openSearch()"\
        class="material-icons-outlined uip-background-icon uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer">\
           search\
        </span>\
+       <span v-if="floating" @click="openSearch()"\
+        class="material-icons-outlined uip-background-icon">\
+           search\
+        </span>\
     </div>\
     <div v-if="search.open" class="uip-position-fixed uip-w-100p uip-h-viewport uip-hidden uip-text-normal" \
     style="background:rgba(0,0,0,0.3);z-index:99999;top:0;left:0;right:0;max-height:100vh" \
     :class="{\'uip-nothidden\' : search.open}">\
       <!-- MODAL GRID -->\
-      <div class="uip-flex uip-w-100p">\
+      <div class="uip-flex uip-w-100p uip-h-viewport">\
         <div class="uip-flex-grow" @click="closeSearch()" ></div>\
         <div class="uip-w-500 uip-background-default uip-padding-m uip-overflow-auto " >\
           <div class="" style="max-height: 100vh;">\
@@ -339,6 +529,13 @@ UIPtoolbar.component("toolbar-create", {
     postTypes() {
       return this.create.types;
     },
+    areWeFloating() {
+      if (this.options.toolbar.options["flyout-toolbar"].value && this.options.toolbar.options["flyout-toolbar"].value == true) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   methods: {
     getPostTypes() {
@@ -389,18 +586,21 @@ UIPtoolbar.component("toolbar-create", {
     },
   },
   template:
-    '<div v-if="isEnabled()" class="uip-flex uip-flex-center uip-margin-left-s">\
+    '<div v-if="!areWeFloating && isEnabled()" class="uip-flex uip-flex-center uip-margin-left-s">\
        <div @click="openSearch()"\
        class="uip-background-dark uip-padding-xxs uip-padding-left-xs uip-padding-right-xs  uip-border-round hover:uip-background-secondary uip-cursor-pointer uip-flex uip-flex-center uip-text-inverse">\
           <span>{{translations.create}}</span>\
           <span class="material-icons-outlined">chevron_right</span>\
        </div>\
     </div>\
+    <div v-if="areWeFloating"  @click="openSearch()" >\
+        <span class="material-icons-outlined">add_circle</span>\
+    </div>\
     <div v-if="create.open" class="uip-position-fixed uip-w-100p uip-h-viewport uip-hidden uip-text-normal" \
     style="background:rgba(0,0,0,0.3);z-index:99999;top:0;left:0;right:0;max-height:100vh" \
     :class="{\'uip-nothidden\' : create.open}">\
       <!-- MODAL GRID -->\
-      <div class="uip-flex uip-w-100p">\
+      <div class="uip-flex uip-w-100p uip-h-viewport">\
         <div class="uip-flex-grow" @click="closeSearch()" ></div>\
         <div class="uip-w-500 uip-background-default uip-padding-m" >\
           <div  style="max-height: 100vh;">\
@@ -501,6 +701,13 @@ UIPtoolbar.component("toolbar-offcanvas", {
     this.detectDarkMode();
   },
   computed: {
+    areWeFloating() {
+      if (this.options.toolbar.options["flyout-toolbar"].value && this.options.toolbar.options["flyout-toolbar"].value == true) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     allUpdates() {
       return this.updates.allUpdates;
     },
@@ -704,9 +911,14 @@ UIPtoolbar.component("toolbar-offcanvas", {
     },
   },
   template:
-    '<div class="uip-flex uip-flex-center uip-margin-left-s" style="height:100%">\
-      <div @click="openOffcanvas()"\
-      class="uip-background-primary uip-border-circle uip-w-28 uip-h-28 hover:uip-background-primary-dark uip-flex uip-flex-center uip-flex-middle">\
+    '<div class="uip-flex uip-flex-center" style="height:100%">\
+      <div v-if="!areWeFloating" @click="openOffcanvas()" \
+      class="uip-margin-left-s uip-background-primary uip-border-circle uip-w-28 uip-h-28 hover:uip-background-primary-dark uip-flex uip-flex-center uip-flex-middle">\
+        <span v-if="!settings.defaults.user.img" class="uip-text-inverse uip-text-m uip-no-select uip-line-height-0" >{{defaults.user.initial}}</span>\
+        <img v-if="settings.defaults.user.img" class="uip-border-circle uip-w-100p" :src="settings.defaults.user.img">\
+      </div>\
+      <div v-if="areWeFloating" @click="openOffcanvas()"\
+      class="uip-background-primary uip-border-circle uip-w-26 uip-h-26 hover:uip-background-primary-dark uip-flex uip-flex-center uip-flex-middle">\
         <span v-if="!settings.defaults.user.img" class="uip-text-inverse uip-text-m uip-no-select uip-line-height-0" >{{defaults.user.initial}}</span>\
         <img v-if="settings.defaults.user.img" class="uip-border-circle uip-w-100p" :src="settings.defaults.user.img">\
       </div>\
@@ -715,7 +927,7 @@ UIPtoolbar.component("toolbar-offcanvas", {
     style="background:rgba(0,0,0,0.3);z-index:99999;top:0;left:0;right:0;max-height:100vh" \
     :class="{\'uip-nothidden\' : panel.open}">\
       <!-- MODAL GRID -->\
-      <div class="uip-flex uip-w-100p">\
+      <div class="uip-flex uip-w-100p uip-h-viewport">\
         <div class="uip-flex-grow" @click="panel.open = false" ></div>\
         <div class="uip-w-500 uip-background-default uip-padding-m uip-max-h-viewport uip-overflow-auto" >\
           <div class="uip-text-normal"  style="max-height: 100vh;">\
@@ -1137,4 +1349,46 @@ UIPtoolbar.component("loading-placeholder", {
 
 if (jQuery("#uip-toolbar").length > 0) {
   UIPtoolbar.mount("#uip-toolbar");
+} else if (jQuery("#uip-floating-toolbar").length > 0) {
+  UIPtoolbar.mount("#uip-floating-toolbar");
+
+  let uip_floating_bar = document.getElementById("uip-floating-toolbar");
+  let uip_drag_handle = document.getElementById("uip-float-draghandle");
+
+  if (window.innerWidth > 900) {
+    uip_drag_handle.onmousedown = function (event) {
+      let shiftX = event.clientX - uip_floating_bar.getBoundingClientRect().left;
+      let shiftY = event.clientY - uip_floating_bar.getBoundingClientRect().top;
+
+      document.body.append(uip_floating_bar);
+
+      moveAt(event.pageX, event.pageY);
+
+      function moveAt(pageX, pageY) {
+        uip_floating_bar.style.left = pageX - shiftX + "px";
+        uip_floating_bar.style.top = pageY - shiftY + "px";
+        uip_floating_bar.style.bottom = "auto";
+        uip_floating_bar.style.right = "auto";
+      }
+
+      function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+
+        uip_drag_handle.hidden = true;
+        let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+        uip_drag_handle.hidden = false;
+      }
+
+      document.addEventListener("mousemove", onMouseMove);
+
+      uip_drag_handle.onmouseup = function () {
+        document.removeEventListener("mousemove", onMouseMove);
+        uip_drag_handle.onmouseup = null;
+      };
+    };
+
+    uip_drag_handle.ondragstart = function () {
+      return false;
+    };
+  }
 }

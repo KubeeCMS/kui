@@ -842,6 +842,8 @@ class uipress_overview
     $translations["exitRate"] = __("Exit Rate", "uipress");
     $translations["averageTimeOnPage"] = __("Average Time On Page", "uipress");
     $translations["referer"] = __("Referer", "uipress");
+    $translations["sectionName"] = __("Section name", "uipress");
+    $translations["sectionDescription"] = __("Section description", "uipress");
 
     return $translations;
   }
@@ -1360,7 +1362,7 @@ class uipress_overview
     $previewImage = $this->pathURL . "assets/img/overview-example.png";
     ?>
     <div v-if="cardsWithIndex.length < 1 && !uipOverview.data.ui.editingMode">
-      <div class="uip-margin-auto uip-w-600 uip-padding-l">
+      <div class="uip-margin-auto uip-max-w-600 uip-padding-m">
         <div class="uip-margin-bottom-l">
           <img class="uip-w-100p uip-border-round uip-shadow"src="<?php echo $previewImage; ?>">
         </div>

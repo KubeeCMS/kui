@@ -396,7 +396,14 @@ const uipressOverviewArgs = {
       uipNotification(this.uipOverview.data.translations.colAdded, { pos: "bottom-left", status: "primary" });
     },
     newSection() {
-      this.uipOverview.settings.cards.formatted.unshift({ name: "Section name", desc: "Section description", open: true, columns: [], size: "xlarge" });
+      let self = this;
+      this.uipOverview.settings.cards.formatted.unshift({
+        name: self.uipOverview.data.translations.sectionName,
+        desc: self.uipOverview.data.translations.sectionDescription,
+        open: true,
+        columns: [],
+        size: "xlarge",
+      });
       uipNotification(this.uipOverview.data.translations.sectionAdded, { pos: "bottom-left", status: "primary" });
     },
     deleteSection(index) {

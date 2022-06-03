@@ -217,7 +217,13 @@ class uipress_admin_pages
       $shownForOptions = $utils->get_option("admin-pages", "show-pages-for", true);
 
       if (!empty($shownForOptions)) {
-        $adminPagesShownFor = $utils->valid_for_user($shownForOptions);
+        if (isset($_GET["sub_site_id"]) && $_GET["sub_site_id"] != "" && is_numeric($_GET["sub_site_id"])) {
+          switch_to_blog($_GET["sub_site_id"]);
+          $adminPagesShownFor = $utils->valid_for_user($shownForOptions);
+          restore_current_blog();
+        } else {
+          $adminPagesShownFor = $utils->valid_for_user($shownForOptions);
+        }
 
         if ($adminPagesShownFor !== true) {
           wp_redirect(admin_url());
@@ -400,7 +406,7 @@ class uipress_admin_pages
       $passData["slug"] = $slug;
       $passData["ID"] = $theid;
       $passData["parent_site"] = false;
-      $adminPageURL = "admin-page?id=" . $theid;
+      $adminPageURL = "uip-admin-page-id-" . $theid;
 
       add_menu_page(
         $title,
@@ -422,6 +428,7 @@ class uipress_admin_pages
    */
   public function get_multisite_pages()
   {
+    $currentSiteID = get_current_blog_id();
     $mainSiteId = get_main_site_id();
     switch_to_blog($mainSiteId);
 
@@ -468,7 +475,8 @@ class uipress_admin_pages
       $passData["slug"] = $slug;
       $passData["ID"] = $theid;
       $passData["parent_site"] = true;
-      $adminPageURL = "uip-admin-page?id=" . $theid;
+      $passData["sub_site_id"] = $currentSiteID;
+      $adminPageURL = urldecode("uip-admin-page-id-" . $theid);
 
       $temp = [];
       $temp["passdata"] = $passData;
@@ -515,7 +523,7 @@ class uipress_admin_pages
   
         <iframe id="uip-admin-page-frame"
         title=""
-        src="<?php echo $passData["slug"] . "?uip_no_menu=true"; ?>"
+        src="<?php echo $passData["slug"] . "?uip_no_menu=true&sub_site_id=" . $passData["sub_site_id"]; ?>"
         style="width:100%;height:100vh">
     </iframe>
       <?php }

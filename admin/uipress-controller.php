@@ -35,6 +35,8 @@ class uipress_controller
     require_once $this->path . "admin/apps/overview/analytics.php";
     require_once $this->path . "admin/apps/overview/woocommerce.php";
     require_once $this->path . "admin/apps/content/content.php";
+    require_once $this->path . "admin/apps/users/uip-users.php";
+    require_once $this->path . "admin/apps/users/uip-history.php";
 
     $uipressapp = new uipress_settings($this->version, $this->pluginName, $this->path, $this->textDomain, $this->pathURL);
     $uipressapp->run();
@@ -66,6 +68,9 @@ class uipress_controller
 
     $uipressAdminPages = new uipress_admin_pages($this->version, $this->pluginName, $this->path, $this->textDomain, $this->pathURL);
     $uipressAdminPages->run();
+
+    $uipUsers = new uipress_users($this->version, $this->pluginName, $this->path, $this->textDomain, $this->pathURL);
+    $uipUsers->run();
 
     $this->load_plugin_textdomain();
   }

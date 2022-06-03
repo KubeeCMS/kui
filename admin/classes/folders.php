@@ -33,6 +33,34 @@ class uipress_folders
     add_action("wp_ajax_uip_move_content_to_folder", [$this, "uip_move_content_to_folder"]);
     add_action("wp_ajax_uip_remove_from_folder", [$this, "uip_remove_from_folder"]);
     add_filter("uipress_register_settings", [$this, "folder_settings_options"], 1, 2);
+
+    add_action("pre_get_posts", [$this, "uip_filter_by_folder"]);
+  }
+
+  function uip_filter_by_folder($query)
+  {
+    if (isset($_GET["uip_folder"])) {
+      $folder_id = sanitize_text_field($_GET["uip_folder"]);
+      if ($folder_id != "") {
+        if ($folder_id == "all") {
+          return;
+        }
+        //Get original meta query
+        $meta_query = $query->get("meta_query");
+
+        if (!is_array($meta_query)) {
+          $meta_query = [];
+        }
+
+        //Add our meta query to the original meta queries
+        if ($folder_id == "nofolder") {
+          $meta_query[] = ["key" => "admin2020_folder", "value" => $folder_id, "compare" => "NOT EXISTS"];
+        } else {
+          $meta_query[] = ["key" => "admin2020_folder", "value" => $folder_id, "compare" => "="];
+        }
+        $query->set("meta_query", $meta_query);
+      }
+    }
   }
 
   /**
@@ -98,6 +126,15 @@ class uipress_folders
     $temp["description"] = sprintf(__("%s folders will be disabled for any users or roles you select", "uipress"), $this->pluginName);
     $temp["type"] = "user-role-select";
     $temp["optionName"] = "disabled-for";
+    $temp["premium"] = true;
+    $temp["value"] = $utils->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"], true);
+    $options[$temp["optionName"]] = $temp;
+
+    $temp = [];
+    $temp["name"] = __("Enable folders for post types", "uipress");
+    $temp["description"] = sprintf(__("%s folders will be enabled post, page and custom post types you choose", "uipress"), $this->pluginName);
+    $temp["type"] = "post-type-select";
+    $temp["optionName"] = "folders-post-tyes";
     $temp["premium"] = true;
     $temp["value"] = $utils->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"], true);
     $options[$temp["optionName"]] = $temp;
@@ -229,7 +266,6 @@ class uipress_folders
 
       if ($folderid == "" || $folderid == "all") {
       } elseif ($folderid == "nofolder") {
-        error_Log($folderid);
         $args["meta_query"] = [
           [
             "key" => "admin2020_folder",
@@ -259,6 +295,17 @@ class uipress_folders
     if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
       $utils = new uipress_util();
       $folderID = $utils->clean_ajax_input($_POST["activeFolder"]);
+      $contentPage = $utils->clean_ajax_input($_POST["contentPage"]);
+
+      if ($contentPage != "true" && $contentPage != "false") {
+        $types = $contentPage;
+      }
+      if ($contentPage == "true") {
+        $types = "any";
+      }
+      if ($contentPage == "false") {
+        $types = "attachment";
+      }
 
       if (!is_numeric($folderID) && !$folderID > 0) {
         $returndata["error"] = __("No folder to delete", "uipress");
@@ -302,7 +349,7 @@ class uipress_folders
 
       ///FIND CONTENT WITH DELETED FOLDER
       $args = [
-        "post_type" => "attachment",
+        "post_type" => $types,
         "fields" => "ids",
         "posts_per_page" => -1,
         "post_status" => "any",
@@ -614,6 +661,25 @@ class uipress_folders
         if ($privatemode == "true") {
           $args["author"] = get_current_user_id();
         }
+
+        wp_reset_query();
+        $attachments = new WP_Query($args);
+        $totalMedia = $attachments->found_posts;
+      }
+
+      /////POSTS PAGE / CPT PAGES
+      if ($contentPage != "true" && $contentPage != "false") {
+        $types = $contentPage;
+
+        ////QUERY POSTS
+        $args = ["public" => true];
+        $output = "objects";
+
+        $args = [
+          "post_type" => $types,
+          "post_status" => "any",
+          "fields" => "ids",
+        ];
 
         wp_reset_query();
         $attachments = new WP_Query($args);

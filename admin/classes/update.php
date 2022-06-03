@@ -24,15 +24,6 @@ class uipress_update
 
   public function run()
   {
-    $current_page = false;
-    if (array_key_exists("page", $_GET)) {
-      $current_page = $_GET["page"];
-    }
-    $disallowedPages = ["uip-settings", "uip-styles", "uip-menu-creator", "uip-overview", "uip-content"];
-    if (!in_array($current_page, $disallowedPages)) {
-      add_action("admin_head", [$this, "update_a2020_settings"]);
-    }
-
     add_filter("plugins_api", [$this, "a2020_plugin_info"], 20, 3);
     add_filter("site_transient_update_plugins", [$this, "a2020_push_update"]);
     add_action("upgrader_process_complete", [$this, "a2020_after_update"], 10, 2);

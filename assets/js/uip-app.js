@@ -364,7 +364,6 @@ UIPmenu.component("build-menu", {
   computed: {
     menuWithSearch() {
       let original = this.masterMenu.menu;
-      console.log(this.masterMenu.menu);
       let tempmenu = Object.assign([], original);
       let filterMenu = [];
 

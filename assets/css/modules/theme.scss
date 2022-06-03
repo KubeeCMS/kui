@@ -802,7 +802,7 @@ div.updated,
 }
 .edit-attachment-frame .attachment-info .details,
 .edit-attachment-frame .attachment-info .settings {
-  color: var(--uip-border-color);
+  color: var(--uip-text-color-normal);
 }
 .edit-attachment-frame .edit-media-header .left,
 .edit-attachment-frame .edit-media-header .right,
@@ -812,7 +812,7 @@ div.updated,
 }
 
 .wp-core-ui .attachment-preview {
-  background: var(--uip-border-color);
+  background: var(--uip-background-muted);
 }
 /**
 * THEMES & PLUGINS

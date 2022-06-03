@@ -1206,7 +1206,7 @@ class uipress_menu_creator
 											
 											<li class="uip-padding-xxs hover:uip-background-grey uip-border-round">
 												<a href="#" class="uip-link-default uip-no-underline uip-no-outline uip-flex"@click="duplicateMenu(menu)" >
-													<span class="material-icons-outlined uip-margin-right-xs">copy</span>
+													<span class="material-icons-outlined uip-margin-right-xs">file_copy</span>
 													<?php _e("Duplicate", "uipress"); ?>
 												</a>
 											</li>

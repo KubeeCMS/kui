@@ -72,6 +72,8 @@ class uipress_app
     add_action("admin_init", [$this, "menu_actions"]);
     ///HTML CLASSES
     add_action("admin_xml_ns", [$this, "html_attributes"]);
+    //LOAD FOLDERS ON EDIT POST / PAGES
+    add_action("current_screen", [$this, "start_post_folders"], 10);
 
     add_action("init", [$this, "uip_create_folders_cpt"]);
     //AJAX
@@ -337,8 +339,8 @@ class uipress_app
     if (!is_rtl()) {
       if (!wp_style_is("uip-app", "enqueued")) {
         ///GOOGLE ICONS
-        wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
-        wp_enqueue_style("uip-icons");
+        //wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
+        //wp_enqueue_style("uip-icons");
         ///MAIN APP CSS
         wp_register_style("uip-app", $this->pathURL . "assets/css/uip-app.css", [], $this->version);
         wp_enqueue_style("uip-app");
@@ -346,8 +348,8 @@ class uipress_app
     } else {
       if (!wp_style_is("uip-app-rtl", "enqueued")) {
         ///GOOGLE ICONS
-        wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
-        wp_enqueue_style("uip-icons");
+        //wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
+        //wp_enqueue_style("uip-icons");
         ///MAIN APP CSS
         wp_register_style("uip-app-rtl", $this->pathURL . "assets/css/uip-app-rtl.css", [], $this->version);
         wp_enqueue_style("uip-app-rtl");
@@ -356,6 +358,111 @@ class uipress_app
 
     add_action("admin_footer", [$uipressFolders, "build_media_template"]);
     add_action("wp_footer", [$uipressFolders, "build_media_template"]);
+  }
+
+  /**
+   * Adds folders to posts and pages
+   * @since 2.2
+   */
+
+  public function start_post_folders()
+  {
+    if (!is_user_logged_in()) {
+      return;
+    }
+
+    $screen = get_current_screen();
+    if ($screen->base != "edit") {
+      return;
+    }
+
+    $utils = new uipress_util();
+    $foldersOn = $utils->get_option("folders", "status");
+    $foldersDisabledForUser = $utils->valid_for_user($utils->get_option("folders", "disabled-for", true));
+
+    if ($foldersOn == "true" || $foldersDisabledForUser) {
+      return;
+    }
+
+    $folders_post_types = $utils->get_option("folders", "folders-post-tyes", true);
+
+    if (!is_array($folders_post_types)) {
+      return;
+    }
+
+    if (!in_array($screen->post_type, $folders_post_types)) {
+      return;
+    }
+
+    add_action("admin_footer", [$this, "build_post_folders"]);
+    add_action("admin_xml_ns", [$this, "html_attributes_folders"]);
+
+    foreach ($folders_post_types as $post_type) {
+      add_filter("manage_" . $post_type . "_posts_columns", [$this, "uip_add_drag_column"]);
+      if ($post_type == "page") {
+        add_action("manage_pages_custom_column", [$this, "uip_add_drag_icon"], 10, 2);
+      }
+    }
+    add_action("manage_posts_custom_column", [$this, "uip_add_drag_icon"], 10, 2);
+  }
+
+  /**
+   * Adds draggable column to posts
+   * @since 2.2
+   */
+  public function uip_add_drag_column($columns)
+  {
+    $newcolumns["uip_draggable"] = "";
+    $result = array_merge($newcolumns, $columns);
+    return $result;
+  }
+
+  /**
+   * Adds draggable icon to posts
+   * @since 2.2
+   */
+  function uip_add_drag_icon($column_id, $post_id)
+  {
+    //run a switch statement for all of the custom columns created
+    switch ($column_id) {
+      case "uip_draggable":
+        echo '<div class="uip-flex uip-w-28">';
+        echo '<span class="material-icons-outlined uip-cursor-drag uip-post-drag" data-id="' . $post_id . '" draggable="true">drag_indicator</span>';
+        echo "</div>";
+        break;
+
+      //add more items here as needed, just make sure to use the column_id in the filter for each new item.
+    }
+  }
+  /**
+   * Adds folders to posts and pages
+   * @since 2.2
+   */
+
+  public function build_post_folders()
+  {
+    require_once $this->path . "admin/classes/folders.php";
+    $uipressFolders = new uipress_folders($this->version, $this->pluginName, $this->path, "uipress", $this->pathURL);
+    $screen = get_current_screen();
+    $posttype = $screen->post_type;
+    ?>
+    <script>
+    const uipContentPage = '<?php echo $posttype; ?>';
+    </script>
+    <div class="uip-post-folders">
+      <div class="uip-text-xxl uip-text-bold uip-text-emphasis uip-margin-bottom-m uip-body-font"><?php _e("Folders", "uipress"); ?></div>
+    <?php $uipressFolders->output_for_content(); ?>
+    </div>
+    <?php
+  }
+
+  /**
+   * Adds attr to html
+   * @since 2.2
+   */
+  public function html_attributes_folders()
+  {
+    echo 'uip-post-folders="true"';
   }
 
   /**
@@ -421,7 +528,7 @@ class uipress_app
       $styles = new uipress_styles($this->version, $this->pluginName, $this->path, "uipress", $this->pathURL);
       add_action("wp_body", [$styles, "add_user_styles"]);
       add_filter("language_attributes", [$this, "html_attributes_front"], 10, 2);
-      $this->add_custom_css_js();
+      $this->add_custom_css_js_front();
     }
     if ($menuStatus) {
       add_filter("language_attributes", [$this, "html_attributes_front_menu"], 10, 2);
@@ -638,6 +745,12 @@ class uipress_app
       echo 'uip-admin-menu="true"';
     }
 
+    $flyouttoolbar = $utils->get_option("toolbar", "flyout-toolbar");
+
+    if ($flyouttoolbar) {
+      echo 'uip-flyout-toolbar="true"';
+    }
+
     $themeDisabled = $utils->get_option("theme", "status");
     $themeDisabledFor = $utils->valid_for_user($utils->get_option("theme", "disabled-for", true));
 
@@ -674,6 +787,12 @@ class uipress_app
       }
 
       $toolbar = $utils->get_option("toolbar", "status");
+
+      $flyouttoolbar = $utils->get_option("toolbar", "flyout-toolbar");
+
+      if ($flyouttoolbar) {
+        $output = $output . 'uip-flyout-toolbar="true"';
+      }
 
       if ($toolbar != true && !$this->toolbarStatus) {
         $output = $output . 'uip-toolbar="true"';
@@ -759,8 +878,8 @@ class uipress_app
     wp_enqueue_style("uip-font");
 
     ///GOOGLE ICONS
-    wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
-    wp_enqueue_style("uip-icons");
+    //wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
+    //wp_enqueue_style("uip-icons");
 
     ///MAIN APP CSS
     if (is_rtl()) {
@@ -831,6 +950,31 @@ class uipress_app
   }
 
   /**
+   * Adds custom css and javascript on the front end
+   * @since 2.2
+   */
+
+  public function add_custom_css_js_front()
+  {
+    $utils = new uipress_util();
+
+    $css = $utils->get_option("advanced", "admin-css");
+    $js = $utils->get_option("advanced", "admin-js");
+
+    if ($css != "") {
+      echo '<style type="text/css" id="uip-user-custom-css">';
+      echo html_entity_decode(stripslashes($css));
+      echo "</style>";
+    }
+
+    if ($js != "") {
+      echo '<script id="uip-user-custom-js">';
+      echo html_entity_decode(stripslashes($js));
+      echo "</script>";
+    }
+  }
+
+  /**
    * Loads all required styles and scripts for UiPress base app
    * @since 2.2
    */
@@ -844,8 +988,8 @@ class uipress_app
     wp_enqueue_style("uip-font");
 
     ///GOOGLE ICONS
-    wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
-    wp_enqueue_style("uip-icons");
+    //wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
+    //wp_enqueue_style("uip-icons");
 
     ///MAIN APP CSS
     if (is_rtl()) {
@@ -1221,7 +1365,7 @@ class uipress_app
     $translations["urlToFile"] = __("URL to file", "uipress");
     $translations["remove"] = __("Remove", "uipress");
     $translations["allMedia"] = __("All media", "uipress");
-    $translations["allContent"] = __("All media", "uipress");
+    $translations["allContent"] = __("All Content", "uipress");
     $translations["noFolder"] = __("No folder", "uipress");
     $translations["folders"] = __("Folders", "uipress");
     $translations["newFolder"] = __("New Folder", "uipress");
@@ -1231,6 +1375,7 @@ class uipress_app
     $translations["editFolder"] = __("Edit Folder", "uipress");
     $translations["update"] = __("Update", "uipress");
     $translations["oneFile"] = __("1 File", "uipress");
+    $translations["files"] = __("files", "uipress");
     $translations["noFolders"] = __("You haven't created a folder yet", "uipress");
     $translations["removeFromFolder"] = __("Remove from folder", "uipress");
     $translations["unlockNotificationCenter"] = __("Upgrade to pro to unlock the notification center. View, edit and organise all your plugin and theme notifications in one place", "uipress");
@@ -1262,6 +1407,9 @@ class uipress_app
     $translations["themeImported"] = __("Theme Imported", "uipress");
     $translations["madeBy"] = __("Made by", "uipress");
     $translations["settings"] = __("Settings", "uipress");
+    $translations["failedfolders"] = __("Failed to fetch folder content", "uipress");
+    $translations["user"] = __("user", "uipress");
+    $translations["users"] = __("users", "uipress");
 
     return $translations;
   }
@@ -1454,9 +1602,23 @@ class uipress_app
     } else {
       echo $this->toolbar;
     }
-
     $tb = ob_get_clean();
-    ?>
+    $utils = new uipress_util();
+    $flyouttoolbar = $utils->get_option("toolbar", "flyout-toolbar");
+
+    if ($flyouttoolbar) { ?>
+      <div id="uip-floating-toolbar">
+        <div @mouseover="floatingActive = true" @mouseleave="floatingActive = false">
+          <floating-toolbar :defaults="defaults" :options="masterPrefs" :translations="translations" :preferences="userPreferences" :updatefloat="floatingActive"></floating-toolbar>
+          <div class="uip-flex uip-flex-column uip-row-gap-xxs uip-position-absolute uip-right-100p uip-top-0 uip-background-muted uip-shadow uip-padding-xxs uip-scale-in-right uip-legacy-admin uip-hidden uip-border-round-left" :class="{'uip-nothidden' : floatingActive}">
+            <div class="uip-margin-top-xxs">
+            <?php echo $tb; ?>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <?php } else { ?>
   
   <div id="uip-toolbar" class="uip-padding-s uip-border-box uip-body-font">
     <?php echo $this->toolbar_loader(); ?>
@@ -1498,7 +1660,7 @@ class uipress_app
     </div>
   </div>
   
-  <?php
+  <?php }
   }
 
   /**
@@ -2655,6 +2817,14 @@ class uipress_app
     $temp["description"] = __("Disables legacy links on left side of admin bar for all users. Also hides the user preference.", "uipress");
     $temp["type"] = "switch";
     $temp["optionName"] = "legacy-admin";
+    $temp["value"] = $this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"]);
+    $options[$temp["optionName"]] = $temp;
+
+    $temp = [];
+    $temp["name"] = __("Enable floating flyout toolbar", "uipress");
+    $temp["description"] = __("Changes the toolbar to a floating flyout toolbar", "uipress");
+    $temp["type"] = "switch";
+    $temp["optionName"] = "flyout-toolbar";
     $temp["value"] = $this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"]);
     $options[$temp["optionName"]] = $temp;
 

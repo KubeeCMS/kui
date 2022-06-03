@@ -176,7 +176,6 @@ class uipress_settings
     ///LOAD UP WP IMAGE MODALS
     wp_enqueue_media();
 
-    $settingsUpdater = new uipress_update($this->version, $this->pluginName, $this->path, "uipress", $this->pathURL);
     $utils = new uipress_util();
     $appicon = $utils->get_option("general", "app-icon");
     ?>
@@ -189,8 +188,6 @@ class uipress_settings
 		
 		<div id="uip-settings" class="uip-body-font">
 			<div class="uip-flex uip-flex-wrap">
-        
-         <?php $settingsUpdater->update_a2020_settings_menu(); ?>
 				
 				<div class="uip-flex-grow uip-flex uip-h-viewport uip-background-default">
           
