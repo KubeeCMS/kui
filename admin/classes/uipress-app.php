@@ -1079,6 +1079,7 @@ class uipress_app
     $supportedplugins["smart-slider-3-pro"] = $this->pathURL . "assets/css/plugins/smart-slider-3.css";
     $supportedplugins["wp-seopress"] = $this->pathURL . "assets/css/plugins/wp-seopress.css";
     $supportedplugins["ws-form"] = $this->pathURL . "assets/css/plugins/ws-form.css";
+    $supportedplugins["ws-form-pro"] = $this->pathURL . "assets/css/plugins/ws-form.css";
     $supportedplugins["groundhogg"] = $this->pathURL . "assets/css/plugins/groundhogg.css";
     $supportedplugins["wordfence"] = $this->pathURL . "assets/css/plugins/wordfence.css";
     $supportedplugins["code-snippets"] = $this->pathURL . "assets/css/plugins/code-snippets.css";

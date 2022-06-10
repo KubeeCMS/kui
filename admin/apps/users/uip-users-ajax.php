@@ -1103,7 +1103,11 @@ class uipress_users_ajax extends uipress_users
     if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-user-app-security-nonce", "security") > 0) {
       $utils = new uipress_util();
       $message = $utils->clean_ajax_input_html($_POST["message"]);
-      $allrecip = $utils->clean_ajax_input_html($_POST["allRecipients"]);
+
+      $allrecip = [];
+      if (isset($_POST["allRecipients"])) {
+        $allrecip = $utils->clean_ajax_input_html($_POST["allRecipients"]);
+      }
 
       if (!isset($message["subject"]) || $message["subject"] == "") {
         $returndata["error"] = __("Subject is required", "uipress");
@@ -1124,8 +1128,10 @@ class uipress_users_ajax extends uipress_users
       }
 
       //ARE WE BATCHING
+      $batchemail = false;
       if (is_array($allrecip) && count($allrecip) > 0) {
         $email = [];
+        $batchemail = true;
         foreach ($allrecip as $user) {
           array_push($email, $user["user_email"]);
         }
@@ -1142,11 +1148,25 @@ class uipress_users_ajax extends uipress_users
       $content = stripslashes(html_entity_decode($message["message"]));
       $replyTo = $message["replyTo"];
 
-      $headers[] = "From: " . " " . get_bloginfo("name");
+      $headers[] = "From: " . " " . get_bloginfo("name") . "<" . $replyTo . ">";
       $headers[] = "Reply-To: " . " " . $replyTo;
       $headers[] = "Content-Type: text/html; charset=UTF-8";
 
-      $status = wp_mail($email, $subject, $content, $headers);
+      $wrap = '<table style="box-sizing:border-box;border-color:inherit;text-indent:0;padding:0;margin:64px auto;width:464px"><tbody>';
+      $wrapend = "</tbody></table>";
+      $formatted = $wrap . $content . $wrapend;
+
+      add_action("wp_mail_failed", [$this, "log_uip_mail_error"], 10, 1);
+
+      if ($batchemail) {
+        foreach ($email as $mail) {
+          $headers[] = "Bcc: " . $mail;
+        }
+
+        $status = wp_mail($replyTo, $subject, $formatted, $headers);
+      } else {
+        $status = wp_mail($email, $subject, $formatted, $headers);
+      }
 
       if (!$status) {
         $returndata["error"] = __("Unable to send mail at this time", "uipress");
@@ -1159,6 +1179,11 @@ class uipress_users_ajax extends uipress_users
       die();
     }
     die();
+  }
+
+  public function log_uip_mail_error($wp_error)
+  {
+    error_log(json_encode($wp_error));
   }
 
   /**
