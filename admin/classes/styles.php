@@ -610,6 +610,28 @@ class uipress_styles extends uipress_app
     $styles[$optionname]["label"] = $label;
 
     $temp = [];
+    $temp["name"] = __("Secondary Color", "uipress");
+    $temp["type"] = "color";
+    $temp["cssVariable"] = "--uip-color-black";
+    $temp["optionName"] = $temp["cssVariable"];
+    $temp["value"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["light"];
+    $temp["darkValue"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["dark"];
+    $temp["global"] = false;
+    $styles[$optionname]["options"][] = $temp;
+    $styles[$optionname]["label"] = $label;
+
+    $temp = [];
+    $temp["name"] = __("Secondary Color Hover", "uipress");
+    $temp["type"] = "color";
+    $temp["cssVariable"] = "--uip-color-black-full";
+    $temp["optionName"] = $temp["cssVariable"];
+    $temp["value"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["light"];
+    $temp["darkValue"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["dark"];
+    $temp["global"] = false;
+    $styles[$optionname]["options"][] = $temp;
+    $styles[$optionname]["label"] = $label;
+
+    $temp = [];
     $temp["name"] = __("Font", "uipress");
     $temp["type"] = "font";
     $temp["cssVariable"] = "--uip-body-font-family";
@@ -669,6 +691,17 @@ class uipress_styles extends uipress_app
 
     $optionname = "text";
     $label = __("Text", "uipress");
+
+    $temp = [];
+    $temp["name"] = __("Base font size", "uipress");
+    $temp["type"] = "text";
+    $temp["cssVariable"] = "--uip-body-font-size";
+    $temp["optionName"] = $temp["cssVariable"];
+    $temp["value"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"], true)["light"];
+    $temp["global"] = true;
+    $temp["premium"] = true;
+    $styles[$optionname]["options"][] = $temp;
+    $styles[$optionname]["label"] = $label;
 
     $temp = [];
     $temp["name"] = __("Text Color", "uipress");
@@ -1027,9 +1060,31 @@ class uipress_styles extends uipress_app
     $styles[$optionname]["label"] = $label;
 
     $temp = [];
+    $temp["name"] = __("Submenu Text Color", "uipress");
+    $temp["type"] = "color";
+    $temp["cssVariable"] = "--uip-menu-sub-text-color";
+    $temp["optionName"] = $temp["cssVariable"];
+    $temp["value"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["light"];
+    $temp["darkValue"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["dark"];
+    $temp["global"] = false;
+    $styles[$optionname]["options"][] = $temp;
+    $styles[$optionname]["label"] = $label;
+
+    $temp = [];
     $temp["name"] = __("Submenu Active Text Color", "uipress");
     $temp["type"] = "color";
     $temp["cssVariable"] = "--uip-menu-sub-text-emphasis";
+    $temp["optionName"] = $temp["cssVariable"];
+    $temp["value"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["light"];
+    $temp["darkValue"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["dark"];
+    $temp["global"] = false;
+    $styles[$optionname]["options"][] = $temp;
+    $styles[$optionname]["label"] = $label;
+
+    $temp = [];
+    $temp["name"] = __("Submenu Hover Text Color", "uipress");
+    $temp["type"] = "color";
+    $temp["cssVariable"] = "--uip-submenu-hover";
     $temp["optionName"] = $temp["cssVariable"];
     $temp["value"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["light"];
     $temp["darkValue"] = $this->get_style_value_from_object($stylesObject, $temp["optionName"])["dark"];

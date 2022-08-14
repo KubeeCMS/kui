@@ -37,6 +37,9 @@ html[uip-admin-menu="true"] {
     & > li {
       display: none !important;
     }
+    padding-left: 0;
+    list-style: none;
+    list-style-type: none;
     .update-plugins.wf-menu-badge {
       background-color: transparent !important;
     }
@@ -52,12 +55,16 @@ html[uip-admin-menu="true"] {
     #uip-menu-content::-webkit-scrollbar {
       width: 1em;
     }
-
+    font-size: var(--uip-body-font-size);
     #uip-menu-content::-webkit-scrollbar-track {
       background-color: var(--uip-menu-secondary-color);
       border-radius: var(--uip-border-radius);
     }
-
+    ul.uip-menu-list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
     #uip-menu-content::-webkit-scrollbar-thumb {
       background-color: var(--uip-menu-background);
       border: 2px solid var(--uip-menu-secondary-color);
@@ -78,11 +85,19 @@ html[uip-admin-menu="true"] {
     max-height: calc(100vh - var(--uip-menu-offset));
     color: var(--uip-menu-text-color);
     #uip-menu-content {
-      animation-name: menufade;
-      animation-duration: 0.8s;
+      //animation-name: menufade;
+      //animation-duration: 1.2s;
     }
     .uip-link-muted {
       color: var(--uip-menu-text-color);
+    }
+    .uip-sub-menu {
+      .uip-link-muted {
+        color: var(--uip-menu-sub-text-color);
+        &:hover {
+          color: var(--uip-submenu-hover);
+        }
+      }
     }
     .uip-text-emphasis {
       color: var(--uip-menu-text-emphasis);
@@ -111,7 +126,6 @@ html[uip-admin-menu="true"] {
       background-position: center !important;
       background-repeat: no-repeat !important;
       display: block;
-      background-blend-mode: difference;
     }
   }
   #wpcontent,

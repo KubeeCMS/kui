@@ -108,6 +108,35 @@ export function moduleData() {
           this.role.editData.caps[cap] = true;
         }
       },
+      removeCapability(cap) {
+        let self = this;
+        if (!confirm(self.appdata.translations.confirmCapDelete)) {
+          return;
+        }
+
+        jQuery.ajax({
+          url: uip_user_app_ajax.ajax_url,
+          type: "post",
+          data: {
+            action: "uip_remove_custom_capability",
+            security: uip_user_app_ajax.security,
+            role: self.role.editData,
+            customcap: cap,
+          },
+          success: function (response) {
+            let data = JSON.parse(response);
+
+            if (data.error) {
+              ///SOMETHING WENT WRONG
+              uipNotification(data.error, { pos: "bottom-left", status: "danger" });
+              return;
+            }
+            uipNotification(data.message, { pos: "bottom-left", status: "danger" });
+            self.customcap = "";
+            self.allcaps = data.allcaps;
+          },
+        });
+      },
     },
     template:
       '<div class="" >\
@@ -143,9 +172,16 @@ export function moduleData() {
                 </div>\
                 <div class="uip-flex-grow uip-padding-xxs uip-flex uip-flex-column uip-row-gap-xxs">\
                   <template v-for="cap in allcaps[activeCat].caps">\
-                    <div class="uip-flex uip-flex-between uip-flex-center uip-cursor-pointer" @click="toggleCap(cap)">\
-                      <div class="">{{cap}}</div>\
-                      <input type="checkbox" :checked="isInCaps(cap)">\
+                    <div class="uip-flex uip-flex-center uip-flex-middle uip-gap-s">\
+                      <div class="uip-flex uip-flex-between uip-flex-center uip-cursor-pointer uip-flex-grow" @click="toggleCap(cap)">\
+                        <div class="">{{cap}}</div>\
+                        <input style="margin: 0" type="checkbox" :checked="isInCaps(cap)">\
+                      </div>\
+                      <div>\
+                        <div class="uip-padding-xxs uip-border-box uip-w-32 uip-h-32 uip-border-round hover:uip-background-muted uip-cursor-pointer uip-flex uip-flex-center uip-flex-middle" @click="removeCapability(cap)">\
+                          <div class="material-icons-outlined">delete</div>\
+                        </div>\
+                      </div>\
                     </div>\
                   </template>\
                 </div>\

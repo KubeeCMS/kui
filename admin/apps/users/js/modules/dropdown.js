@@ -84,7 +84,21 @@ export function moduleData() {
           return;
         }
         let drop = self.$refs.uipdrop;
-        let bottom = drop.getBoundingClientRect().bottom + 500;
+        let triger = self.$refs.droptrigger;
+        let bottom = drop.getBoundingClientRect().bottom + 30;
+        let left = drop.getBoundingClientRect().left;
+        let right = drop.getBoundingClientRect().left;
+        let width = drop.getBoundingClientRect().width;
+
+        if (left < 30) {
+          drop.style.left = triger.getBoundingClientRect().left + "px";
+          drop.style.right = "auto";
+        }
+
+        if (right > window.innerWidth) {
+          drop.style.right = triger.getBoundingClientRect().right + "px";
+          drop.style.left = "auto";
+        }
 
         if (bottom > window.innerHeight) {
           let POStop = window.innerHeight - self.$el.getBoundingClientRect().top + 10;
@@ -121,7 +135,7 @@ export function moduleData() {
     },
     template:
       '<div class="uip-position-relative">\
-        <div class="">\
+        <div class="" ref="droptrigger">\
           <tooltip v-if="tooltip" :tooltiptext="tooltiptext">\
             <div v-if="type == \'icon\'" @click="openThisComponent" class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer material-icons-outlined" type="button" :class="returnButtonSize()">{{icon}}</div>\
             <div v-if="type == \'text\'" @click="openThisComponent" class="uip-background-muted uip-border-round hover:uip-background-grey uip-cursor-pointer" type="button" :class="returnButtonSize()">{{buttontext}}</div>\

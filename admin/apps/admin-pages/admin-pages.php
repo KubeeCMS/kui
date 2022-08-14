@@ -247,7 +247,7 @@ class uipress_admin_pages
     $options = [];
     //
     $category["module_name"] = $moduleName;
-    $category["label"] = __("Admin Pages - Beta", "uipress");
+    $category["label"] = __("Admin Pages", "uipress");
     $category["description"] = __("Creates custom admin pages.", "uipress");
     $category["icon"] = "segment";
 
@@ -343,7 +343,6 @@ class uipress_admin_pages
       "hierarchical" => false,
       "supports" => ["editor", "title"],
       "show_in_rest" => true,
-      "rewrite" => ["slug" => $apslug],
     ];
     register_post_type("uip-admin-page", $args);
   }

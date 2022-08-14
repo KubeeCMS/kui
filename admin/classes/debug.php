@@ -17,9 +17,21 @@ class uipress_debug
 
     if (!$string || $string == "") {
       return;
-    } else {
-      $string = 'GPL';
     }
+
+    $instanceid = $this->get_string_local("instance");
+
+    $domain = get_home_url();
+    $remoteURL = "https://api.uipress.co/validate/?k=" . $string . "&d=" . $domain . "&instance=" . $instanceid;
+
+    //error_log($remoteURL);
+
+    $remote = wp_remote_get($remoteURL, [
+      "timeout" => 10,
+      "headers" => [
+        "Accept" => "application/json",
+      ],
+    ]);
 
     return $this->build_response_object($remote, $string);
   }
@@ -31,7 +43,7 @@ class uipress_debug
       return true;
     }
 
-    return true;
+    return false;
   }
 
   public function get_string($option_name)
@@ -69,36 +81,36 @@ class uipress_debug
     return $option;
   }
 
-  // public function get_string_local($option_name)
-  // {
-  //   if ($option_name == false) {
-  //     return "";
-  //   }
+  public function get_string_local($option_name)
+  {
+    if ($option_name == false) {
+      return "";
+    }
 
-  //   $uipOptions = get_option("uip-activation");
-  //   $option = "";
+    $uipOptions = get_option("uip-activation");
+    $option = "";
 
-  //   if (!is_array($uipOptions)) {
-  //     $uipOptions = [];
-  //   }
+    if (!is_array($uipOptions)) {
+      $uipOptions = [];
+    }
 
-  //   if (isset($uipOptions[$option_name])) {
-  //     $value = $uipOptions[$option_name];
-  //     if ($value != "") {
-  //       $option = $value;
-  //     }
-  //   }
+    if (isset($uipOptions[$option_name])) {
+      $value = $uipOptions[$option_name];
+      if ($value != "") {
+        $option = $value;
+      }
+    }
 
-  //   if ($option == "false") {
-  //     $option = false;
-  //   }
+    if ($option == "false") {
+      $option = false;
+    }
 
-  //   if ($option == "true") {
-  //     $option = true;
-  //   }
+    if ($option == "true") {
+      $option = true;
+    }
 
-  //   return $option;
-  // }
+    return $option;
+  }
 
   public function is_site_wide($plugin)
   {
@@ -114,21 +126,41 @@ class uipress_debug
     return false;
   }
 
-  public function build_response_object($string)
+  public function build_response_object($status, $string)
   {
-    $uipOptions = get_option("uip-activation");
-    if (!$uipOptions) {
-      $uipOptions = [];
+    // REQUEST ERRORS
+    if (isset($status->errors)) {
+      $returndata["errorMessage"] = __("Unable to register UiPress at this time", "uipress");
+      $returndata["errors"] = $status->errors;
+      return $returndata;
     }
-    $uipOptions["instance"] = 1;
-    $uipOptions["key"] = 'gplvault';
 
-        update_option("uip-activation",$uipOptions );
+    if (isset($status["response"]["code"]) && $status["response"]["code"] != 200) {
+      $returndata["errorMessage"] = __("Unable to register UiPress at this time", "uipress");
+      $returndata["errors"][$status["response"]["code"]] = $status["response"]["message"];
+      return $returndata;
+    }
 
-        $returndata["message"] = __("UiPress succesfully activated", $this->textDomain);
+    if (!is_wp_error($status)) {
+      $remote = json_decode($status["body"]);
+      $state = $remote->state;
+      $themessage = $remote->message;
+
+      if ($state == "true") {
+        $this->save_data($remote, $string);
+        $this->cache_result();
+        $returndata["message"] = __("UiPress succesfully activated", "uipress");
         $returndata["activated"] = true;
         return $returndata;
-    // REQUEST ERRORS
+      } else {
+        $this->remove_instance();
+        $returndata["errorMessage"] = $themessage;
+        return $returndata;
+      }
+    } else {
+      $returndata["errorMessage"] = __("Unable to register UiPress at this time", "uipress");
+      return $returndata;
+    }
   }
 
   public function check_connection()
@@ -150,7 +182,7 @@ class uipress_debug
     if (!$uipOptions) {
       $uipOptions = [];
     }
-    $uipOptions["key"] = 'activated'+$string;
+    $uipOptions["key"] = $string;
 
     if (isset($remote->instance_id)) {
       $uipOptions["instance"] = $remote->instance_id;
@@ -174,6 +206,6 @@ class uipress_debug
   public function cache_result()
   {
     ///CONFIRMS CONNECTION WITH UIPRESS SERVERS FOR AUTOMATIC UPDATE
-    set_transient("uip-data-connect", true, 48 * HOUR_IN_SECONDS);
+    set_transient("uip-data-connect", true, 120 * HOUR_IN_SECONDS);
   }
 }

@@ -615,6 +615,7 @@ UIPsettings.component("output-options", {
   template:
     '<output-licence :appData="alloptions" :translations="translations" v-if="activemodule == \'general\'" :returnstate="returnstate"></output-licence>\
     <div v-for="cat in returnSettings" class="uip-margin-top-l">\
+      <div v-if="cat.module_name == activemodule && \'command-center\' == activemodule" class="uip-text-muted uip-margin-bottom-m">{{cat.description}}</div>\
       <div v-if="cat.module_name == activemodule" v-for="(option, index) in cat.options" :id="option.optionName">\
         <div class="uip-flex uip-margin-bottom-m uip-border-bottom uip-padding-bottom-m">\
           <div class="uip-w-300">\
@@ -696,7 +697,7 @@ UIPsettings.component("output-options", {
             </div>\
             <!-- TEXTAREA -->\
             <!-- CODE -->\
-            <div v-if="option.type == \'code-block\'" class="uip-display-inline-block">\
+            <div v-if="option.type == \'code-block\'" class="">\
               <code-block :language="option.language" :usercode="option.value" @code-change="option.value = getDataFromComp(option.value, $event)"></code-block>\
             </div>\
             <!-- CODE -->\

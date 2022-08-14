@@ -129,7 +129,7 @@ class uipress_users
 
     $temp = [];
     $temp["name"] = __("Anonymize user IP addresses?", "uipress");
-    $temp["description"] = __("Each history item logs the users IP address, enable this to anonymize the address.");
+    $temp["description"] = __("Each history item logs the users IP address, enable this to anonymize the address.", "uipress");
     $temp["type"] = "switch";
     $temp["minimum"] = "1";
     $temp["optionName"] = "anonymize-ip";
@@ -335,6 +335,8 @@ class uipress_users
       "deleteUser" => __("Delete user", "uipress"),
       "confirmUserDelete" => __("Are you sure you want to delete this user?", "uipress"),
       "confirmUserDeleteMultiple" => __("Are you sure you want to the selected users?", "uipress"),
+      "confirmUserDeleteMultipleActions" => __("Are you sure you want to the selected actions?", "uipress"),
+      "confirmUserDeleteAllHistory" => __("Are you sure you want to delete all history?", "uipress"),
       "confirmUserPassReset" => __("Are you sure you want to send password reset links to the selected users?", "uipress"),
       "recipient" => __("Recipient", "uipress"),
       "subject" => __("Subject", "uipress"),
@@ -371,6 +373,7 @@ class uipress_users
       "deleteSelected" => __("Delete selected", "uipress"),
       "deselect" => __("Deselect", "uipress"),
       "deleteUsers" => __("Delete users", "uipress"),
+      "deleteActions" => __("Delete actions", "uipress"),
       "clearSelection" => __("Clear selection", "uipress"),
       "recipients" => __("recipients", "uipress"),
       "users" => __("users", "uipress"),
@@ -378,6 +381,7 @@ class uipress_users
       "replaceExistingRoles" => __("Replace existing roles", "uipress"),
       "updateRoles" => __("Update roles", "uipress"),
       "usersSelected" => __("users selected", "uipress"),
+      "actionsSelected" => __("actions selected", "uipress"),
       "chooseImage" => __("Choose image", "uipress"),
       "profileImage" => __("Profile image", "uipress"),
       "groups" => __("Groups", "uipress"),
@@ -402,6 +406,14 @@ class uipress_users
       "groupIcon" => __("Group icon", "uipress"),
       "logoutEverywhere" => __("Logout everywhere else", "uipress"),
       "openProfile" => __("Open profile", "uipress"),
+      "confirmCapDelete" => __("Are you sure you want to delete this capability? This will remove the capability sitewide. Please note not all capabilities can be deleted.", "uipress"),
+      "historylogLarge" => __("Activity Log is very big", "uipress"),
+      "logSizeWarning" => __(
+        "Your activity log now has over 20,000 entries, consider reducing how long entries are stored for, disable page view logging or delete all of your entries below.",
+        "uipress"
+      ),
+      "dismiss" => __("Dismiss", "uipress"),
+      "deleteAllActivity" => __("Delete all", "uipress"),
     ];
   }
 

@@ -279,7 +279,8 @@ body[class*="chaty_page"] {
 }
 
 #ct-toggle-shortcodes,
-#ct-toggle-revisions {
+#ct-toggle-revisions,
+#ct-toggle-json {
   color: var(--uip-color-primary);
 }
 
@@ -392,5 +393,23 @@ body.toplevel_page_piotnetforms,
 body.piotnetforms-edit {
   #uip-toolbar {
     display: none;
+  }
+}
+
+///QUERY MONITOR
+html[uip-toolbar="true"] #uip-toolbar .uip-legacy-admin {
+  #wpadminbar #wp-admin-bar-query-monitor {
+    border-radius: var(--uip-border-radius);
+  }
+
+  #wpadminbar #wp-admin-bar-query-monitor-logger-warning a,
+  #wpadminbar #wp-admin-bar-query-monitor-warnings a,
+  #wpadminbar #wp-admin-bar-query-monitor-errors a,
+  #wpadminbar .qm-error,
+  #wpadminbar .qm-alert,
+  #wpadminbar .qm-warning {
+    .ab-item .ab-label {
+      color: #fff;
+    }
   }
 }

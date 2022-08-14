@@ -58,6 +58,7 @@ html {
   --uip-text-l: 1.4em;
   --uip-text-xl: 1.8em;
   --uip-text-xxl: 2.5em;
+  --uip-body-font-size: 13px;
   //BORDER RADIUS
   --uip-border-radius: 4px;
   --uip-border-circle: 50%;
@@ -76,9 +77,11 @@ html {
   --uip-menu-secondary-color: var(--uip-background-grey);
   --uip-menu-background-grey: rgb(199, 199, 199, 0.53);
   --uip-notification-background: var(--uip-color-black);
-  --uip-menu-text-color: #6c6c6ccf;
+  --uip-menu-text-color: #777777;
   --uip-menu-text-emphasis: var(--uip-text-color-emphasis);
+  --uip-menu-sub-text-color: #757575;
   --uip-menu-sub-text-emphasis: var(--uip-menu-text-emphasis);
+  --uip-submenu-hover: var(--uip-text-color-emphasis);
   --uip-menu-offset: 32px;
   --uip-menu-padding: var(--uip-padding-s);
   --uip-menu-logo-height: 28px;
@@ -114,6 +117,7 @@ html {
 
   //SHADOW
   --uip-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  --uip-box-shadow-large: 0 12px 48px rgb(0 0 0 / 30%), 0 32px 80px rgb(0 0 0 / 10%);
   //INPUTS
   --uip-checkbox-border: #c1c1c1;
   //CARDS
@@ -159,12 +163,18 @@ html[data-theme="dark"] {
   //CARDS
   --uip-card-border-color: transparent;
   --uip-card-background: #222;
+
+  //shadow
+  --uip-box-shadow-large: 0 12px 48px rgb(62 67 108 / 30%), 0 32px 80px rgb(62 67 108 / 10%);
 }
 /**
 * UTILITY CLASSES
 */
 .uip-overflow-auto {
   overflow: auto;
+}
+.uip-overflow-visible {
+  overflow: visible;
 }
 .uip-overflow-hidden {
   overflow: hidden;
@@ -193,6 +203,9 @@ html[data-theme="dark"] {
 }
 .uip-shadow {
   box-shadow: var(--uip-box-shadow);
+}
+.uip-shadow-large {
+  box-shadow: var(--uip-box-shadow-large);
 }
 .uip-drop-top {
   transform: translate(0%, calc(-100% - 40px));
@@ -514,6 +527,15 @@ html[data-theme="dark"] {
   height: 150px;
   min-height: 150px;
 }
+.uip-h-380 {
+  height: 380px;
+}
+.uip-h-400 {
+  height: 400px;
+}
+.uip-h-420 {
+  height: 420px;
+}
 
 .uip-h-200 {
   height: 200px;
@@ -522,6 +544,9 @@ html[data-theme="dark"] {
 .uip-max-h-200 {
   height: 200px;
   max-height: 200px;
+}
+.uip-max-h-100p {
+  max-height: 100%;
 }
 
 .uip-max-h-280 {
@@ -1018,6 +1043,7 @@ html[data-theme="dark"] {
     background-color: var(--uip-color-red);
   }
 }
+
 /**
 * LINK CLASSES
 */
@@ -1089,6 +1115,9 @@ html[data-theme="dark"] {
   color: var(--uip-color-orange);
 }
 .uip-text-green {
+  color: var(--uip-color-green);
+}
+.uip-text-yellow {
   color: var(--uip-color-green);
 }
 
@@ -1390,6 +1419,9 @@ html[data-theme="dark"] {
 }
 
 ///ROW GAP CLASSES
+.uip-row-gap-xxxs {
+  row-gap: 3px;
+}
 .uip-row-gap-xxs {
   row-gap: var(--uip-margin-xxs);
 }
@@ -1586,7 +1618,7 @@ html[data-theme="dark"] {
 
 .uip-post-folders {
   position: fixed;
-  top: calc(var(--uip-toolbar-height) + 28px);
+  top: calc(var(--uip-toolbar-height) + 15px);
   width: 250px;
   left: calc(var(--uip-menu-width) + 20px);
   z-index: 99999;
@@ -1628,7 +1660,6 @@ html[uip-post-folders="true"] {
   }
 }
 
-/* we will explain what these classes do next! */
 .uip-remove-list-enter-active,
 .uip-remove-list-leave-active {
   transition: all 0.5s ease;
@@ -1638,6 +1669,13 @@ html[uip-post-folders="true"] {
 .uip-remove-list-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+
+.material-icons-outlined {
+  max-width: 17px;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.1s ease;
 }
 
 ///inline drop
@@ -1719,6 +1757,25 @@ inline-drop {
   background: linear-gradient(45deg, var(--uip-color-primary-wash), var(--uip-color-primary), var(--uip-color-primary-wash));
   left: -100%;
   animation: uip-load 1s linear infinite;
+}
+
+.uip-scrollbar {
+  &::-webkit-scrollbar {
+    width: 1em;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--uip-background-muted);
+    border-radius: var(--uip-border-radius);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--uip-background-default);
+    border: 2px solid var(--uip-background-muted);
+    border-radius: var(--uip-border-radius);
+  }
+}
+
+uip-highlight {
+  background: rgb(255, 150, 0, 0.26);
 }
 
 @keyframes uip-load {

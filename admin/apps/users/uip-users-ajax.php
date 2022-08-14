@@ -29,8 +29,11 @@ class uipress_users_ajax extends uipress_users
     add_action("wp_ajax_uip_password_reset_multiple", [$this, "uip_password_reset_multiple"]);
     add_action("wp_ajax_uip_delete_user", [$this, "uip_delete_user"]);
     add_action("wp_ajax_uip_delete_multiple_users", [$this, "uip_delete_multiple_users"]);
+    add_action("wp_ajax_uip_delete_multiple_actions", [$this, "uip_delete_multiple_actions"]);
+    add_action("wp_ajax_uip_delete_all_history", [$this, "uip_delete_all_history"]);
     add_action("wp_ajax_uip_send_message", [$this, "uip_send_message"]);
     add_action("wp_ajax_uip_add_custom_capability", [$this, "uip_add_custom_capability"]);
+    add_action("wp_ajax_uip_remove_custom_capability", [$this, "uip_remove_custom_capability"]);
     add_action("wp_ajax_uip_logout_user_everywhere", [$this, "uip_logout_user_everywhere"]);
   }
 
@@ -869,7 +872,7 @@ class uipress_users_ajax extends uipress_users
       $customcap = $utils->clean_ajax_input($_POST["customcap"]);
 
       if (!current_user_can("edit_users")) {
-        $returndata["error"] = __("You don't have sufficent priviledges to delete this user", "uipress");
+        $returndata["error"] = __("You don't have sufficent priviledges to add this capability", "uipress");
         echo json_encode($returndata);
         die();
       }
@@ -909,6 +912,65 @@ class uipress_users_ajax extends uipress_users
 
       if ($status == null) {
         $returndata["error"] = __("Unable to add capability. Make sure role name is unique", "uipress");
+        echo json_encode($returndata);
+        die();
+      }
+
+      $returndata["message"] = __("Capability added", "uipress");
+      $returndata["allcaps"] = $this->uip_get_role_capabilities();
+      echo json_encode($returndata);
+      die();
+    }
+    die();
+  }
+
+  /**
+   * Updates role info
+   * @since 2.3.5
+   */
+
+  public function uip_remove_custom_capability()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-user-app-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+      $role = $utils->clean_ajax_input($_POST["role"]);
+      $customcap = $utils->clean_ajax_input($_POST["customcap"]);
+
+      if (!current_user_can("edit_users")) {
+        $returndata["error"] = __("You don't have sufficent priviledges to delete this capability", "uipress");
+        echo json_encode($returndata);
+        die();
+      }
+
+      if (!isset($role["name"]) || $role["name"] == "") {
+        $returndata["error"] = __("Role name is required", "uipress");
+        echo json_encode($returndata);
+        die();
+      }
+
+      if (!isset($role["label"]) || $role["label"] == "") {
+        $returndata["error"] = __("Role name is required", "uipress");
+        echo json_encode($returndata);
+        die();
+      }
+
+      if (strpos($role["name"], " ") !== false) {
+        $returndata["error"] = __("Role name cannot contain spaces", "uipress");
+        echo json_encode($returndata);
+        die();
+      }
+
+      $customcap = strtolower($customcap);
+
+      $currentRole = get_role($role["name"]);
+      $currentRole->remove_cap($customcap, false);
+      $currentcaps = $currentRole->capabilities;
+
+      remove_role($role["name"]);
+      $status = add_role($role["name"], $role["label"], $currentcaps);
+
+      if ($status == null) {
+        $returndata["error"] = __("Unable to delete capability. Make sure role name is unique", "uipress");
         echo json_encode($returndata);
         die();
       }
@@ -1226,7 +1288,7 @@ class uipress_users_ajax extends uipress_users
 
   /**
    * Deletes user
-   * @since 2.3.5
+   * @since 2.39
    */
 
   public function uip_delete_multiple_users()
@@ -1269,6 +1331,116 @@ class uipress_users_ajax extends uipress_users
       }
 
       $returndata["message"] = __("Users successfully deleted", "uipress");
+      $returndata["undeleted"] = $errors;
+      echo json_encode($returndata);
+      die();
+    }
+    die();
+  }
+
+  /**
+   * Deletes actions
+   * @since 2.3.9
+   */
+
+  public function uip_delete_multiple_actions()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-user-app-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+      $allIDS = $utils->clean_ajax_input($_POST["allIDS"]);
+
+      if (!is_array($allIDS)) {
+        $returndata["message"] = __("No actions sent to delete!", "uipress");
+        echo json_encode($returndata);
+        die();
+      }
+
+      if (!current_user_can("delete_posts")) {
+        $returndata["error"] = __("You don't have sufficent priviledges to delete these actions", "uipress");
+        echo json_encode($returndata);
+        die();
+      }
+
+      $errors = [];
+      foreach ($allIDS as $actionID) {
+        $type = get_post_type($actionID);
+
+        if ($type != "uip-history") {
+          $errors[] = [
+            "message" => __("You can only delete history items here", "uipress"),
+            "user" => sprintf(__("Action ID: %s", "uipress"), $actionID),
+          ];
+          continue;
+        }
+
+        $status = wp_delete_post($actionID, true);
+
+        if (!$status) {
+          $errors[] = [
+            "message" => __("Unable to delete this action", "uipress"),
+            "user" => sprintf(__("Action ID: %s", "uipress"), $actionID),
+          ];
+          continue;
+        }
+      }
+
+      $returndata["message"] = __("Actions successfully deleted", "uipress");
+      $returndata["undeleted"] = $errors;
+      echo json_encode($returndata);
+      die();
+    }
+    die();
+  }
+
+  /**
+   * Deletes all history
+   * @since 2.3.9
+   */
+
+  public function uip_delete_all_history()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-user-app-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+
+      if (!current_user_can("delete_posts")) {
+        $returndata["error"] = __("You don't have sufficent priviledges to delete all actions", "uipress");
+        echo json_encode($returndata);
+        die();
+      }
+
+      $args = [
+        "posts_per_page" => -1,
+        "post_type" => "uip-history",
+      ];
+
+      $history_query = new WP_Query($args);
+      $all_history = $history_query->get_posts();
+
+      $errors = [];
+      foreach ($all_history as $action) {
+        $actionID = $action->ID;
+        $type = get_post_type($actionID);
+
+        if ($type != "uip-history") {
+          $errors[] = [
+            "message" => __("You can only delete history items here", "uipress"),
+            "user" => sprintf(__("Action ID: %s", "uipress"), $actionID),
+          ];
+          continue;
+        }
+
+        $status = wp_delete_post($actionID, true);
+
+        if (!$status) {
+          $errors[] = [
+            "message" => __("Unable to delete this action", "uipress"),
+            "user" => sprintf(__("Action ID: %s", "uipress"), $actionID),
+          ];
+          continue;
+        }
+      }
+
+      $returndata["message"] = __("Actions successfully deleted", "uipress");
       $returndata["undeleted"] = $errors;
       echo json_encode($returndata);
       die();

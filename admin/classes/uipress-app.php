@@ -47,6 +47,7 @@ class uipress_app
     //CHECKS WE ARE NOT ON STANDARD ADMIN PAGE, LOGIN PAGE AND THE URL DOESN'T CONTAIN ADMIN URL (/WP-ADMIN/)
     if (!is_admin() && stripos($_SERVER["SCRIPT_NAME"], wp_login_url()) === false && stripos($currentURL, admin_url()) === false) {
       add_action("wp", [$this, "load_actions_front"]);
+      add_action("init", [$this, "command_center_actions"]);
       add_action("wp_enqueue_media", [$this, "start_folder_system"]);
       $uipressFolders = new uipress_folders($this->version, $this->pluginName, $this->path, "uipress", $this->pathURL);
       $uipressFolders->ajax();
@@ -68,6 +69,8 @@ class uipress_app
 
     //TOOLBAR ACTIONS
     add_action("admin_init", [$this, "toolbar_actions"]);
+    //TOOLBAR ACTIONS
+    add_action("admin_init", [$this, "command_center_actions"]);
     //MENU ACTIONS
     add_action("admin_init", [$this, "menu_actions"]);
     ///HTML CLASSES
@@ -79,6 +82,8 @@ class uipress_app
     //AJAX
     add_action("wp_ajax_uip_save_prefs", [$this, "uip_save_prefs"]);
     add_action("wp_ajax_uip_master_search", [$this, "uip_master_search"]);
+    add_action("wp_ajax_uip_site_global_search", [$this, "uip_site_global_search"]);
+    add_action("wp_ajax_uip_get_quick_actions", [$this, "uip_get_quick_actions"]);
     add_action("wp_ajax_uipress_get_create_types", [$this, "uipress_get_create_types"]);
     add_action("wp_ajax_uipress_get_updates", [$this, "uipress_get_updates"]);
     add_action("wp_ajax_uipress_get_notices", [$this, "uipress_get_notices"]);
@@ -139,6 +144,17 @@ class uipress_app
         return true;
       }
     }
+
+    //$utils = new uipress_util();
+    //$hidden = $utils->get_option("advanced", "safe-key");
+
+    //if ($hidden) {
+    //if (isset($_GET["no_uip"])) {
+    //if ($_GET["no_uip"] == $hidden) {
+    //return true;
+    //}
+    //}
+    //}
 
     return false;
   }
@@ -450,7 +466,7 @@ class uipress_app
     const uipContentPage = '<?php echo $posttype; ?>';
     </script>
     <div class="uip-post-folders">
-      <div class="uip-text-xxl uip-text-bold uip-text-emphasis uip-margin-bottom-m uip-body-font"><?php _e("Folders", "uipress"); ?></div>
+      <div class="uip-margin-bottom-s uip-text-bold uip-background-muted uip-padding-xs uip-border-round uip-flex uip-flex-center uip-text-bold uip-body-font"><?php _e("Folders", "uipress"); ?></div>
     <?php $uipressFolders->output_for_content(); ?>
     </div>
     <?php
@@ -580,6 +596,66 @@ class uipress_app
     add_action("wp_footer", [$this, "build_toolbar"]);
 
     return true;
+  }
+
+  /**
+   * Adds command center actions
+   * @since 2.2
+   */
+  public function command_center_actions()
+  {
+    if (!is_user_logged_in()) {
+      return;
+    }
+
+    $utils = new uipress_util();
+
+    $this->commandStatus = $utils->valid_for_user($utils->get_option("command-center", "enabled-for", true));
+
+    if (!$this->commandStatus) {
+      return;
+    }
+
+    add_filter("admin_footer", [$this, "add_command_center"]);
+    add_filter("wp_footer", [$this, "add_command_center"]);
+
+    if (!wp_script_is("uip-app", "enqueued")) {
+      //STYLES
+      ///GOOGLE FONTS
+      wp_register_style("uip-font", $this->pathURL . "assets/css/uip-font.css", [], $this->version);
+      wp_enqueue_style("uip-font");
+
+      ///MAIN APP CSS
+      if (is_rtl()) {
+        wp_register_style("uip-app-rtl", $this->pathURL . "assets/css/uip-app-rtl.css", [], $this->version);
+        wp_enqueue_style("uip-app-rtl");
+      } else {
+        wp_register_style("uip-app", $this->pathURL . "assets/css/uip-app.css", [], $this->version);
+        wp_enqueue_style("uip-app");
+      }
+      //SCRIPTS
+      wp_enqueue_script("uip-vue", $this->pathURL . "assets/js/uip-vue.js", ["jquery"], $this->version);
+      wp_enqueue_script("uip-app", $this->pathURL . "assets/js/uip-app.min.js", ["jquery"], $this->version, true);
+      wp_localize_script("uip-app", "uip_ajax", [
+        "ajax_url" => admin_url("admin-ajax.php"),
+        "security" => wp_create_nonce("uip-security-nonce"),
+        "preferences" => json_encode($utils->get_user_preferences()),
+        "masterPrefs" => json_encode($this->get_master_prefs()),
+        "translations" => json_encode($this->get_translations()),
+        "defaults" => json_encode($this->get_defaults()),
+        "network" => $this->network,
+        "front" => json_encode($this->front),
+      ]);
+    }
+
+    wp_enqueue_script("uip-command-center", $this->pathURL . "assets/js/uip-command-center.min.js", ["uip-app"], $this->version, true);
+
+    //ajax
+    add_action("wp_ajax_uip_get_contextual", [$this, "uip_get_contextual"]);
+    add_action("wp_ajax_uip_delete_item_from_command", [$this, "uip_delete_item_from_command"]);
+    add_action("wp_ajax_uip_modify_plugin_status", [$this, "uip_modify_plugin_status"]);
+    add_action("wp_ajax_uip_duplicate_item_from_command", [$this, "uip_duplicate_item_from_command"]);
+    add_action("wp_ajax_uip_search_wp_directory", [$this, "uip_search_wp_directory"]);
   }
 
   /**
@@ -987,10 +1063,6 @@ class uipress_app
     wp_register_style("uip-font", $this->pathURL . "assets/css/uip-font.css", [], $this->version);
     wp_enqueue_style("uip-font");
 
-    ///GOOGLE ICONS
-    //wp_register_style("uip-icons", $this->pathURL . "assets/css/uip-icons.css", [], $this->version);
-    //wp_enqueue_style("uip-icons");
-
     ///MAIN APP CSS
     if (is_rtl()) {
       wp_register_style("uip-app-rtl", $this->pathURL . "assets/css/uip-app-rtl.css", [], $this->version);
@@ -1000,6 +1072,8 @@ class uipress_app
       wp_enqueue_style("uip-app");
     }
 
+    //CUSTOM ATT
+    add_filter("style_loader_tag", [$this, "uip_add_type_attribute"], 10, 4);
     //VUE
     wp_enqueue_script("uip-vue", $this->pathURL . "assets/js/uip-vue.js", ["jquery"], $this->version);
 
@@ -1035,27 +1109,24 @@ class uipress_app
       }
     }
 
-    //$current_screen = get_current_screen();
-    //if (method_exists($current_screen, "is_block_editor") && $current_screen->is_block_editor()) {
-    //wp_enqueue_script("uip-block-editor", $this->pathURL . "assets/js/uip-block-editor.js", [], $this->version, true);
-    //add_filter("script_loader_tag", [$this, "add_type_attribute"], 10, 3);
-    //}
-
     $this->load_plugin_css();
   }
 
   /**
-   * Filters for block editor script
-   * @since 2.3.1.8
+   * Adds a module tag to uip-user-app
+   * @since 2.3.5
    */
-  public function add_type_attribute($tag, $handle, $src)
+
+  public function uip_add_type_attribute($tag, $handle, $src, $media)
   {
     // if not your script, do nothing and return original $tag
-    if ("uip-block-editor" !== $handle) {
+    if ("uip-app" == $handle || "uip-app-rtl" == $handle) {
+      $tag = '<link rel="stylesheet preload prefetch" as="style" href="' . $src . '" id="' . $handle . '" media="' . $media . '" crossorigin="false">';
       return $tag;
     }
+
     // change the script tag by adding type="module" and return it.
-    $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
+    //$tag = '<script type="module" src="' . esc_url($src) . '"></script>';
     return $tag;
   }
 
@@ -1078,9 +1149,11 @@ class uipress_app
     $supportedplugins["smart-slider-3"] = $this->pathURL . "assets/css/plugins/smart-slider-3.css";
     $supportedplugins["smart-slider-3-pro"] = $this->pathURL . "assets/css/plugins/smart-slider-3.css";
     $supportedplugins["wp-seopress"] = $this->pathURL . "assets/css/plugins/wp-seopress.css";
+    $supportedplugins["wp-seopress-pro"] = $this->pathURL . "assets/css/plugins/wp-seopress.css";
     $supportedplugins["ws-form"] = $this->pathURL . "assets/css/plugins/ws-form.css";
     $supportedplugins["ws-form-pro"] = $this->pathURL . "assets/css/plugins/ws-form.css";
     $supportedplugins["groundhogg"] = $this->pathURL . "assets/css/plugins/groundhogg.css";
+    $supportedplugins["groundhogg-pro"] = $this->pathURL . "assets/css/plugins/groundhogg.css";
     $supportedplugins["wordfence"] = $this->pathURL . "assets/css/plugins/wordfence.css";
     $supportedplugins["code-snippets"] = $this->pathURL . "assets/css/plugins/code-snippets.css";
     $supportedplugins["lifterlms"] = $this->pathURL . "assets/css/plugins/lifter-lms.css";
@@ -1191,15 +1264,11 @@ class uipress_app
   public function get_defaults()
   {
     $arg = [
-      "default" => "noimage",
+      "default" => "404",
       "size" => "200",
     ];
 
     $img = get_avatar_url(get_current_user_id(), $arg);
-
-    if (strpos($img, "noimage") !== false) {
-      $img = false;
-    }
 
     $front = false;
 
@@ -1411,7 +1480,16 @@ class uipress_app
     $translations["failedfolders"] = __("Failed to fetch folder content", "uipress");
     $translations["user"] = __("user", "uipress");
     $translations["users"] = __("users", "uipress");
-
+    $translations["totalFound"] = __("total found", "uipress");
+    $translations["toNavigate"] = __("to navigate", "uipress");
+    $translations["toSelect"] = __("to select", "uipress");
+    $translations["toClose"] = __("to close", "uipress");
+    $translations["forceSearchDirectory"] = __("search directory", "uipress");
+    $translations["confirmDelete"] = __("Are you sure you want to delete this?", "uipress");
+    $translations["confirmCopy"] = __("Are you sure you want to duplicate this?", "uipress");
+    $translations["confirmPluginDelete"] = __("Are you sure you want to delete this plugin from your server?", "uipress");
+    $translations["pluginUpdated"] = __("Plugin updated", "uipress");
+    $translations["searchDirectory"] = __("Nothing found, search plugin directory?", "uipress");
     return $translations;
   }
 
@@ -1521,9 +1599,10 @@ class uipress_app
       return;
     }
 
-    $requestedPage = $_SERVER["REQUEST_URI"];
+    $fullLink = trim((isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on" ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+    $adminUrl = trim(admin_url());
 
-    if ($requestedPage != "/wp-admin/") {
+    if ($fullLink != $adminUrl) {
       return;
     }
 
@@ -1671,39 +1750,21 @@ class uipress_app
   public function toolbar_loader()
   {
     ?>
-      <div v-if="loading && !isSmallScreen" class="uip-flex">
+      <div v-if="loading && !isSmallScreen" class="uip-flex uip-gap-xs uip-flex-center">
         <div >
-          <svg class="uip-margin-right-s" height="34" width="75">
+          <svg class="" height="34" width="75">
             <rect width="75" height="34" rx="5" fill="#bbbbbb2e"/>
           </svg>
         </div>
         <div >
-          <svg class="uip-margin-right-s" height="34" width="75">
+          <svg class="" height="34" width="75">
             <rect width="75" height="34" rx="5" fill="#bbbbbb2e"/>
           </svg>
         </div>
         <div class="uip-flex-grow">
-          <svg class="uip-margin-right-s" height="34" width="75">
-            <rect width="75" height="34" rx="5" fill="#bbbbbb2e"/>
-          </svg>
         </div>
         <div class="">
-          <svg class="uip-margin-right-s" height="34" width="50">
-            <rect width="75" height="34" rx="5" fill="#bbbbbb2e"/>
-          </svg>
-        </div>
-        <div class="">
-          <svg class="uip-margin-right-s" height="34" width="50">
-            <rect width="75" height="34" rx="5" fill="#bbbbbb2e"/>
-          </svg>
-        </div>
-        <div class="">
-          <svg class="uip-margin-right-s" height="34" width="50">
-            <rect width="75" height="34" rx="5" fill="#bbbbbb2e"/>
-          </svg>
-        </div>
-        <div class="">
-          <svg height="34" width="34"><circle cx="17" cy="17" r="17" stroke-width="0" fill="#bbbbbb2e" /></svg>
+          <svg height="28" width="28"><circle cx="14" cy="14" r="14" stroke-width="0" fill="#bbbbbb2e" /></svg>
         </div>
       </div>
     <?php
@@ -1794,6 +1855,135 @@ class uipress_app
         return $sql;
       });
     }
+  }
+
+  /**
+   * Gets contextual quick actions for command search
+   * @since 2.3.9
+   */
+
+  public function uip_get_quick_actions()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      ///SWITCHTODARKMODE
+
+      $returndata = [];
+      $returndata["actions"] = $this->return_quick_actions();
+      echo json_encode($returndata);
+    }
+    die();
+  }
+
+  /**
+   * Gets contextual quick actions for command search
+   * @since 2.3.9
+   */
+
+  public function return_quick_actions($search = null)
+  {
+    $actions = [];
+    ///CREATE POST
+    $temp = [];
+    $temp["title"] = __("Create new post", "uipress");
+    $temp["actionType"] = "link";
+    $temp["icon"] = "add_circle";
+    $temp["link"] = get_admin_url(null, "post-new.php");
+    $temp["type"] = "quickAction";
+    $actions[] = $temp;
+
+    ///CREATE PAGE
+    $temp = [];
+    $temp["title"] = __("Create new page", "uipress");
+    $temp["actionType"] = "link";
+    $temp["icon"] = "add_circle";
+    $temp["link"] = get_admin_url(null, "post-new.php?post_type=page");
+    $temp["type"] = "quickAction";
+    $actions[] = $temp;
+
+    ///CREATE PAGE
+    $temp = [];
+    $temp["title"] = __("View site", "uipress");
+    $temp["actionType"] = "link";
+    $temp["icon"] = "cottage";
+    $temp["link"] = get_home_url();
+    $temp["type"] = "quickAction";
+    $actions[] = $temp;
+
+    ///CREATE PAGE
+    $temp = [];
+    $temp["title"] = __("View dashboard", "uipress");
+    $temp["actionType"] = "link";
+    $temp["icon"] = "dashboard";
+    $temp["link"] = get_admin_url();
+    $temp["type"] = "quickAction";
+    $actions[] = $temp;
+
+    $temp = [];
+    $temp["title"] = __("Switch to dark mode", "uipress");
+    $temp["actionType"] = "function";
+    $temp["icon"] = "dark_mode";
+    $temp["function"] = "darkmode";
+    $temp["type"] = "quickAction";
+    $actions[] = $temp;
+
+    $temp = [];
+    $temp["title"] = __("Switch to light mode", "uipress");
+    $temp["actionType"] = "function";
+    $temp["icon"] = "light_mode";
+    $temp["function"] = "lightmode";
+    $temp["type"] = "quickAction";
+    $actions[] = $temp;
+
+    if ($search != null) {
+      $filtered = [];
+      foreach ($actions as $item) {
+        if (strpos(strtolower($item["title"]), $search) !== false) {
+          $filtered[] = $item;
+        }
+      }
+      return $filtered;
+    }
+
+    return $actions;
+  }
+
+  /**
+   * Searches all WP content
+   * @since 2.3.9
+   */
+
+  public function return_filtered_menu($term)
+  {
+    $userid = get_current_user_id();
+    $mastermenu = get_transient("uip_admin_menu-" . $userid);
+
+    if (!$mastermenu || !is_array($mastermenu) || empty($mastermenu) || !isset($mastermenu["menu"])) {
+      return [];
+    }
+
+    $menuitems = $mastermenu["menu"];
+    $matcheditems = [];
+
+    foreach ($menuitems as $item) {
+      if ($item["type"] == "sep") {
+        continue;
+      }
+      ///TOP LEVEL
+      if (strpos(strtolower($item[0]), $term) !== false) {
+        $matcheditems[] = $item;
+      }
+      //SUB LEVEL
+      if (isset($item["submenu"]) && is_array($item["submenu"])) {
+        foreach ($item["submenu"] as $sub) {
+          if (strpos(strtolower($sub[0]), $term) !== false) {
+            $sub["parentItem"] = $item[0];
+            $matcheditems[] = $sub;
+          }
+        }
+      }
+    }
+
+    return $matcheditems;
   }
 
   /**
@@ -1926,6 +2116,165 @@ class uipress_app
   }
 
   /**
+   * Searches site wide content
+   * @since 2.3.9
+   */
+
+  public function uip_site_global_search()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      $term = $_POST["search"];
+      $page = $_POST["currentpage"];
+      $perpage = $_POST["perpage"];
+      $utils = new uipress_util();
+
+      $post_types_enabled = $utils->get_option("toolbar", "post-types-search");
+
+      if ($post_types_enabled == "" || !$post_types_enabled || !is_array($post_types_enabled)) {
+        $post_types = "any";
+      } else {
+        $post_types = $post_types_enabled;
+      }
+
+      //BUILD SEARCH ARGS//
+      $args = [
+        "_uip_meta_or_title" => $term,
+        "posts_per_page" => $perpage,
+        "post_type" => $post_types,
+        "paged" => $page,
+        "post_status" => "all",
+        "meta_query" => [
+          "relation" => "OR",
+          [
+            "value" => $term,
+            "compare" => "LIKE",
+          ],
+        ],
+      ];
+
+      $result = new WP_Query($args);
+      $result->post_count = count($result->posts);
+
+      $foundposts = $result->posts;
+      $searchresults = [];
+      $categorized = [];
+      $categ = [];
+
+      foreach ($foundposts as $item) {
+        $temp = [];
+        $author_id = $item->post_author;
+        $title = $item->post_title;
+        $status = get_post_status_object(get_post_status($item->ID));
+        $label = $status->label;
+
+        $postype_single = get_post_type($item);
+        $postype = get_post_type_object($postype_single);
+        $postype_label = "";
+        if (isset($postype->label)) {
+          $postype_label = $postype->label;
+        }
+
+        if (!$postype_label) {
+          $postype_label = __("Unkown post type", "uipress");
+        }
+        if (!$label || $label == "") {
+          $label = __("Unkown", "uipress");
+        }
+
+        $editurl = get_edit_post_link($item, "&");
+        $public = get_permalink($item);
+
+        if ($postype_single == "attachment" && wp_attachment_is_image($item)) {
+          $temp["image"] = wp_get_attachment_thumb_url($item->ID);
+        }
+
+        if ($postype_single == "attachment") {
+          $temp["attachment"] = true;
+
+          $mime = get_post_mime_type($item->ID);
+          $actualMime = explode("/", $mime);
+
+          if (isset($actualMime[1])) {
+            $actualMime = $actualMime[1];
+          }
+
+          $temp["mime"] = $actualMime;
+        } else {
+          $img = get_the_post_thumbnail_url($item->ID);
+
+          if ($img) {
+            $temp["image"] = $img;
+          }
+        }
+
+        $temp["name"] = $title;
+
+        if ($term != "") {
+          $foundtitle = str_ireplace($term, "<uip-highlight>" . $term . "</uip-highlight>", $title);
+          $temp["name"] = $foundtitle;
+        }
+
+        $temp["editUrl"] = $editurl;
+        $temp["type"] = $postype_label;
+        $temp["status"] = $label;
+        $temp["author"] = get_the_author_meta("user_login", $author_id);
+        $temp["date"] = get_the_date("j M y", $item);
+        $temp["url"] = $public;
+        $temp["id"] = $item->ID;
+
+        $categorized[] = $temp;
+
+        $searchresults[] = $temp;
+      }
+
+      $totalFound = $result->found_posts;
+      $totalPages = $result->max_num_pages;
+
+      $lc = null;
+      if ($term != "") {
+        $lc = strtolower($term);
+      }
+
+      $actions = $this->return_quick_actions($term);
+      $menu = $this->return_filtered_menu($term);
+      $plugins = $this->return_filtered_plugins($term);
+
+      $filtered = array_merge($actions, $categorized, $menu, $plugins);
+
+      $returndata = [];
+      $returndata["founditems"] = $searchresults;
+      $returndata["totalfound"] = $totalFound;
+      $returndata["totalpages"] = $totalPages;
+      $returndata["categorized"] = $filtered;
+      echo json_encode($returndata);
+    }
+    die();
+  }
+
+  /**
+   * Returns plugins in search results
+   * @since 2.3.9
+   */
+  public function return_filtered_plugins($term)
+  {
+    $plugins = get_plugins();
+    $filtered = [];
+
+    foreach ($plugins as $key => $value) {
+      $plugin = $value;
+      if (strpos(strtolower($plugin["Name"]), $term) !== false) {
+        $plugin["type"] = "plugin";
+        $plugin["slug"] = $key;
+        $plugin["name"] = $plugin["Name"];
+        $plugin["author"] = $plugin["Author"];
+        $filtered[] = $plugin;
+      }
+    }
+
+    return $filtered;
+  }
+
+  /**
    * Gets the specified post types for the toolbar create button
    * @since 2.1.6
    */
@@ -1976,6 +2325,487 @@ class uipress_app
     }
 
     die();
+  }
+
+  /**
+   * Gets contextual actions for item
+   * @since 2.3.9
+   */
+
+  public function uip_get_contextual()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+      $item = $utils->clean_ajax_input($_POST["item"]);
+      $mac = $utils->clean_ajax_input($_POST["mac"]);
+      $actions = [];
+
+      if ($item["type"] == "plugin") {
+        if (isset($item["pluginType"]) && $item["pluginType"] == "remote") {
+          if (!function_exists("get_plugins")) {
+            require_once ABSPATH . "wp-admin/includes/plugin.php";
+          }
+          $all_plugins = get_plugins();
+          foreach ($all_plugins as $key => $value) {
+            if (strpos($key, $item["slug"]) !== false) {
+              $item["slug"] = $key;
+              $item["pluginType"] = false;
+              break;
+            } else {
+              continue;
+            }
+          }
+        }
+      }
+
+      //PLUGINS
+      if ($item["type"] == "plugin") {
+        if (isset($item["pluginType"]) && $item["pluginType"] == "remote") {
+          $temp["title"] = __("Install plugin", "uipress");
+          $temp["icon"] = "file_download";
+          $temp["type"] = "action";
+          $temp["action"] = "install_plugin";
+          $actions[] = $temp;
+
+          $temp["title"] = __("View details", "uipress");
+          $temp["icon"] = "info";
+          $temp["type"] = "link";
+          $temp["url"] = "https://wordpress.org/plugins/" . $item["slug"];
+          $temp["newtab"] = true;
+          $actions[] = $temp;
+        } else {
+          $update_plugins = get_site_transient("update_plugins");
+          if (!empty($update_plugins->response)) {
+            $updates = $update_plugins->response;
+          } else {
+            $updates = [];
+          }
+
+          if (isset($updates[$item["slug"]])) {
+            $temp["title"] = __("Update", "uipress");
+            $temp["icon"] = "upgrade";
+            $temp["type"] = "action";
+            $temp["action"] = "upgrade_plugin";
+            $actions[] = $temp;
+          }
+
+          if (is_plugin_active($item["slug"])) {
+            $temp["title"] = __("Deactivate", "uipress");
+            $temp["icon"] = "toggle_off";
+            $temp["type"] = "action";
+            $temp["action"] = "deactivate_plugin";
+            $actions[] = $temp;
+          } else {
+            $temp["title"] = __("Activate", "uipress");
+            $temp["icon"] = "toggle_on";
+            $temp["type"] = "action";
+            $temp["action"] = "activate_plugin";
+            $actions[] = $temp;
+
+            $temp["title"] = __("Delete", "uipress");
+            $temp["icon"] = "delete";
+            $temp["type"] = "action";
+            $temp["action"] = "delete_plugin";
+            $actions[] = $temp;
+          }
+        }
+      }
+      ///POSTS
+      else {
+        $id = $item["id"];
+        $postType = get_post_type($id);
+
+        $command = "ctrl";
+        if ($mac == true) {
+          $command = "cmd";
+        }
+
+        $type = get_post_type($id);
+
+        $actions = [];
+        $temp["title"] = __("Edit", "uipress");
+        $temp["icon"] = "edit";
+        $temp["type"] = "link";
+        $temp["shortcut"] = [$command, "e"];
+        $temp["url"] = get_edit_post_link($id, "&");
+        $actions[] = $temp;
+
+        $temp["title"] = __("View", "uipress");
+        $temp["icon"] = "launch";
+        $temp["type"] = "link";
+        $temp["shortcut"] = [$command, "o"];
+        $temp["url"] = get_the_permalink($id);
+        $actions[] = $temp;
+
+        if ($postType != "attachment") {
+          $temp["title"] = __("Duplicate", "uipress");
+          $temp["icon"] = "content_copy";
+          $temp["type"] = "action";
+          $temp["action"] = "duplicate";
+          $temp["shortcut"] = [$command, "o"];
+          $actions[] = $temp;
+        }
+
+        $temp["title"] = __("Delete", "uipress");
+        $temp["icon"] = "delete";
+        $temp["type"] = "action";
+        $temp["action"] = "delete";
+        $temp["shortcut"] = [$command, "o"];
+        $actions[] = $temp;
+      }
+      $returndata = [];
+      $returndata["actions"] = $actions;
+      $returndata["log"] = $item;
+      echo json_encode($returndata);
+    }
+    die();
+  }
+
+  /**
+   * Deletes item from command search
+   * @since 2.3.9
+   */
+
+  public function uip_delete_item_from_command()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+      $id = $utils->clean_ajax_input($_POST["id"]);
+
+      if (!current_user_can("delete_post", $id)) {
+        $message = __("You don't have the capability to delete this item", "uipress");
+        $returndata["error"] = true;
+        $returndata["message"] = $message;
+        echo json_encode($returndata);
+        die();
+      }
+
+      $status = wp_delete_post($id, true);
+
+      if (!$status) {
+        $message = __("Unable to delete this item", "uipress");
+        $returndata["error"] = true;
+        $returndata["message"] = $message;
+        echo json_encode($returndata);
+        die();
+      }
+
+      $message = __("Item deleted", "uipress");
+      $returndata["message"] = $message;
+      echo json_encode($returndata);
+    }
+    die();
+  }
+
+  /**
+   * Modifies plugin status from command
+   * @since 2.3.9
+   */
+
+  public function uip_modify_plugin_status()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+      $item = $utils->clean_ajax_input($_POST["item"]);
+      $action = $utils->clean_ajax_input($_POST["plugin_action"]);
+
+      if ($item["type"] == "plugin") {
+        if (isset($item["pluginType"]) && $item["pluginType"] == "remote") {
+          if (!function_exists("get_plugins")) {
+            require_once ABSPATH . "wp-admin/includes/plugin.php";
+          }
+          $all_plugins = get_plugins();
+          foreach ($all_plugins as $key => $value) {
+            if (strpos($key, $item["slug"]) !== false) {
+              $item["slug"] = $key;
+              $item["pluginType"] = false;
+              break;
+            } else {
+              continue;
+            }
+          }
+        }
+      }
+
+      if ($action == "deactivate_plugin" || $action == "activate_plugin") {
+        if (!current_user_can("activate_plugins")) {
+          $message = __("You don't have the capability to change this plugin", "uipress");
+          $returndata["error"] = true;
+          $returndata["message"] = $message;
+          echo json_encode($returndata);
+          die();
+        }
+      }
+
+      if ($action == "delete_plugin") {
+        if (!current_user_can("delete_plugins")) {
+          $message = __("You don't have the capability to delete this plugin", "uipress");
+          $returndata["error"] = true;
+          $returndata["message"] = $message;
+          echo json_encode($returndata);
+          die();
+        }
+      }
+
+      if ($action == "deactivate_plugin") {
+        deactivate_plugins($item["slug"]);
+        $message = __("Plugin deactivated", "uipress");
+      }
+
+      if ($action == "activate_plugin") {
+        ob_start();
+        $status = activate_plugins($item["slug"]);
+        ob_get_clean();
+        if (!$status) {
+          $message = __("Unable to activate this plugin", "uipress");
+          $returndata["error"] = true;
+          $returndata["message"] = $message;
+          echo json_encode($returndata);
+          die();
+        }
+        $message = __("Plugin activated", "uipress");
+      }
+
+      if ($action == "delete_plugin") {
+        $status = delete_plugins([$item["slug"]]);
+        if (!$status) {
+          $message = __("Unable to delete this plugin", "uipress");
+          $returndata["error"] = true;
+          $returndata["message"] = $message;
+          echo json_encode($returndata);
+          die();
+        }
+        $message = __("Plugin deleted", "uipress");
+      }
+
+      if ($action == "upgrade_plugin") {
+        include_once ABSPATH . "wp-admin/includes/class-wp-upgrader.php";
+        ob_start();
+        $upgrader = new Plugin_Upgrader();
+        $upgraded = $upgrader->upgrade($item["slug"]);
+        $list = ob_get_contents();
+        ob_end_clean();
+        if (!$upgraded) {
+          $message = __("Unable to upgrade this plugin", "uipress");
+          $returndata["error"] = true;
+          $returndata["message"] = $message;
+          echo json_encode($returndata);
+          die();
+        }
+        $message = __("Plugin updated", "uipress");
+      }
+
+      if ($action == "install_plugin") {
+        include_once ABSPATH . "wp-admin/includes/class-wp-upgrader.php";
+        $skin = new WP_Ajax_Upgrader_Skin();
+        $upgrader = new Plugin_Upgrader($skin);
+        $status = $upgrader->install($item["downloadLink"]);
+        if (!$status) {
+          $message = __("Unable to install this plugin", "uipress");
+          $returndata["error"] = true;
+          $returndata["message"] = $message;
+          echo json_encode($returndata);
+          die();
+        }
+
+        error_log($status);
+        $message = __("Plugin installed", "uipress");
+      }
+
+      $returndata["message"] = $message;
+      echo json_encode($returndata);
+    }
+    die();
+  }
+
+  /**
+   * Searches wp directory
+   * @since 2.3.9
+   */
+
+  public function uip_search_wp_directory()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+      $term = $utils->clean_ajax_input($_POST["term"]);
+
+      if (!$term || $term == "") {
+        $message = __("Please enter something to search for", "uipress");
+        $returndata["error"] = true;
+        $returndata["message"] = $message;
+        echo json_encode($returndata);
+        die();
+      }
+      include_once ABSPATH . "wp-admin/includes/plugin-install.php";
+
+      $plugins = plugins_api("query_plugins", [
+        "per_page" => 20,
+        "search" => $term,
+        "fields" => [
+          "short_description" => true,
+          "description" => false,
+          "sections" => false,
+          "tested" => false,
+          "requires" => false,
+          "rating" => true,
+          "ratings" => false,
+          "downloaded" => false,
+          "downloadlink" => true,
+          "last_updated" => false,
+          "added" => false,
+          "tags" => false,
+          "slug" => true,
+          "compatibility" => false,
+          "homepage" => true,
+          "versions" => false,
+          "donate_link" => false,
+          "reviews" => false,
+          "banners" => false,
+          "icons" => true,
+          "active_installs" => false,
+          "group" => false,
+          "contributors" => false,
+        ],
+      ]);
+
+      $formatted = [];
+      foreach ($plugins->plugins as $plugin) {
+        $temp = [];
+        $temp["name"] = $plugin["name"];
+        $temp["Name"] = $plugin["name"];
+        $temp["Title"] = $plugin["name"];
+        $temp["downloadLink"] = $plugin["download_link"];
+        $temp["shortDes"] = $plugin["short_description"];
+        $temp["type"] = "plugin";
+        $temp["pluginType"] = "remote";
+
+        if ($plugin["rating"] > 0) {
+          $rating = round($plugin["rating"] / 20, 1);
+        } else {
+          $rating = 0;
+        }
+        $temp["rating"] = $rating;
+
+        $starred = "<span class='uip-flex uip-text-orange'>";
+        for ($x = 0; $x < 5; $x++) {
+          if (floor($rating) - $x >= 1) {
+            $starred .= '<span class="material-icons-outlined">star</span>';
+          } elseif ($rating - $x > 0) {
+            $starred .= '<span class="material-icons-outlined">star_half</span>';
+          } else {
+            $starred .= '<span class="material-icons-outlined">grade</span>';
+          }
+        }
+        $starred .= "</span>";
+
+        $temp["author"] = '<div class="uip-flex uip-gap-s">' . $plugin["author"] . $starred . "</div>";
+        if (isset($plugin["icons"]) && isset($plugin["icons"]["1x"])) {
+          $temp["image"] = $plugin["icons"]["1x"];
+        }
+        $temp["slug"] = $plugin["slug"];
+
+        $formatted[] = $temp;
+      }
+
+      if (count($formatted) < 1) {
+        $returndata["message"] = __("No plugins found", "uipress");
+      } else {
+        $returndata["message"] = sprintf(__("Found %s plugins", "uipress"), $plugins->info["results"]);
+      }
+      $returndata["plugins"] = $formatted;
+      $returndata["og"] = $plugins;
+      echo json_encode($returndata);
+    }
+    die();
+  }
+
+  /**
+   * Deletes item from command search
+   * @since 2.3.9
+   */
+
+  public function uip_duplicate_item_from_command()
+  {
+    if (defined("DOING_AJAX") && DOING_AJAX && check_ajax_referer("uip-security-nonce", "security") > 0) {
+      $utils = new uipress_util();
+      $id = $utils->clean_ajax_input($_POST["id"]);
+
+      if (!$id || $id == "") {
+        $message = __("Invalid item id", "uipress");
+        $returndata["error"] = true;
+        $returndata["message"] = $message;
+        echo json_encode($returndata);
+        die();
+      }
+
+      $this->uip_duplicate_item($id);
+
+      $message = __("Item duplicated", "uipress");
+      $returndata["message"] = $message;
+      echo json_encode($returndata);
+    }
+    die();
+  }
+
+  /**
+   * Duplicates a single post
+   * @since 2.9
+   */
+  public function uip_duplicate_item($post_id)
+  {
+    global $wpdb;
+    $post = get_post($post_id);
+
+    $current_user = wp_get_current_user();
+    $new_post_author = $current_user->ID;
+
+    $args = [
+      "comment_status" => $post->comment_status,
+      "ping_status" => $post->ping_status,
+      "post_author" => $new_post_author,
+      "post_content" => $post->post_content,
+      "post_excerpt" => $post->post_excerpt,
+      "post_name" => $post->post_name,
+      "post_parent" => $post->post_parent,
+      "post_password" => $post->post_password,
+      "post_status" => "draft",
+      "post_title" => $post->post_title . "-" . __("copy", "uipress"),
+      "post_type" => $post->post_type,
+      "to_ping" => $post->to_ping,
+      "menu_order" => $post->menu_order,
+    ];
+
+    $new_post_id = wp_insert_post($args);
+
+    if (!$new_post_id) {
+      return false;
+    }
+
+    $taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
+    foreach ($taxonomies as $taxonomy) {
+      $post_terms = wp_get_object_terms($post_id, $taxonomy, ["fields" => "slugs"]);
+      wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
+    }
+
+    $post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
+    if (count($post_meta_infos) != 0) {
+      $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
+      foreach ($post_meta_infos as $meta_info) {
+        $meta_key = $meta_info->meta_key;
+        if ($meta_key == "_wp_old_slug") {
+          continue;
+        }
+        $meta_value = addslashes($meta_info->meta_value);
+        $sql_query_sel[] = "SELECT $new_post_id, '$meta_key', '$meta_value'";
+      }
+
+      $sql_query .= implode(" UNION ALL ", $sql_query_sel);
+      $wpdb->query($sql_query);
+    }
+
+    $postobject = get_post($new_post_id);
+
+    return true;
   }
 
   /**
@@ -2461,7 +3291,7 @@ class uipress_app
       "dashicons-admin-plugins" => "extension",
       "dashicons-admin-users" => "people",
       "dashicons-admin-tools" => "build_circle",
-      "dashicons-chart-bar" => "analytics",
+      "dashicons-chart-bar" => "bar_chart",
       "dashicons-admin-settings" => "tune",
     ];
 
@@ -2495,6 +3325,17 @@ class uipress_app
         ob_start(); ?><div class="wp-menu-image dashicons-before <?php echo $wpicon; ?> uip-background-muted uip-border-round uip-h-18 uip-w-18 uip-icon-image"></div><?php return ob_get_clean();
       }
     }
+  }
+
+  /**
+   * Adds container for command centre
+   * @since 2.3.9
+   */
+  public function add_command_center()
+  {
+    ?>
+    <div id="uip-command-center"></div>
+    <?php
   }
 
   /**
@@ -3050,6 +3891,19 @@ class uipress_app
     $options[$temp["optionName"]] = $temp;
 
     $temp = [];
+    $temp["name"] = __("Safe Mode Key", "uipress");
+    $temp["description"] = __(
+      "Add a private key to allow you to disable uipress on specific pages with query paramaters. For example, add '?no_uip=your_key' to a URL and it wil stop uipress from loading on that page.",
+      "uipress"
+    );
+    $temp["type"] = "text";
+    $temp["optionName"] = "safe-key";
+    $temp["password"] = true;
+    $temp["premium"] = true;
+    $temp["value"] = $this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"]);
+    //$options[$temp["optionName"]] = $temp;
+
+    $temp = [];
     $temp["name"] = __("Admin CSS", "uipress");
     $temp["description"] = __("CSS added here will be loaded on every admin page as well as the login page", "uipress");
     $temp["type"] = "code-block";
@@ -3079,18 +3933,30 @@ class uipress_app
     $temp["value"] = html_entity_decode(stripslashes($this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"])));
     $options[$temp["optionName"]] = $temp;
 
-    $temp = [];
-    $temp["name"] = __("Safe Mode Key", "uipress");
-    $temp["description"] = __(
-      "Add a private key to allow you to disable uipress on specific pages with query paramaters. For example, add '?no_uip=your_key' to a URL and it wil stop uipress from loading on that page.",
+    $category["options"] = $options;
+    $settings[$moduleName] = $category;
+
+    ////////COMMAND OPTIONS
+    $moduleName = "command-center";
+    $category = [];
+    $options = [];
+    //
+    $category["module_name"] = $moduleName;
+    $category["label"] = __("Command center - beta", "uipress");
+    $category["description"] = __(
+      "Options for the uipress command center, which is disabled by default. The uipress command center can be accessed with the keyboard shortcut (cmd + k | ctrl + k)",
       "uipress"
     );
-    $temp["type"] = "text";
-    $temp["optionName"] = "safe-key";
-    $temp["password"] = true;
+    $category["icon"] = "manage_search";
+
+    $temp = [];
+    $temp["name"] = __("Command Center enabled for", "uipress");
+    $temp["description"] = __("Choose who has access to the command center.", "uipress");
+    $temp["type"] = "user-role-select";
+    $temp["optionName"] = "enabled-for";
     $temp["premium"] = true;
-    $temp["value"] = html_entity_decode(stripslashes($this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"])));
-    //$options[$temp["optionName"]] = $temp;
+    $temp["value"] = $this->get_option_value_from_object($allOptions, $moduleName, $temp["optionName"], true);
+    $options[$temp["optionName"]] = $temp;
 
     $category["options"] = $options;
     $settings[$moduleName] = $category;

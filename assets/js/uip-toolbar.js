@@ -402,8 +402,8 @@ UIPtoolbar.component("toolbar-search", {
   template:
     '<div v-if="isEnabled()" class="uip-flex uip-flex-center">\
        <span v-if="!floating" @click="openSearch()"\
-       class="material-icons-outlined uip-background-icon uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer">\
-          search\
+       class="uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer uip-w-32 uip-h-32 uip-flex uip-flex-middle uip-border-box">\
+          <span class="material-icons-outlined uip-icon-large">search</span>\
        </span>\
        <span v-if="floating" @click="openSearch()"\
         class="material-icons-outlined uip-background-icon">\
@@ -448,7 +448,7 @@ UIPtoolbar.component("toolbar-search", {
                   <span class="material-icons-outlined">search</span>\
                 </span> \
                 <input type="search" :placeholder="translations.search" class="uip-blank-input uip-flex-grow" \
-                v-on:keyup.enter="masterSearch()"\
+                v-on:keyup.enter="masterSearch()" style="color: var(--uip-text-color-normal)"\
                 v-model="search.term" autofocus>\
               </div>\
             </div>\
@@ -586,15 +586,14 @@ UIPtoolbar.component("toolbar-create", {
     },
   },
   template:
-    '<div v-if="!areWeFloating && isEnabled()" class="uip-flex uip-flex-center uip-margin-left-s">\
+    '<div v-if="!areWeFloating && isEnabled()" class="uip-flex uip-flex-center">\
        <div @click="openSearch()"\
-       class="uip-background-dark uip-padding-xxs uip-padding-left-xs uip-padding-right-xs  uip-border-round hover:uip-background-secondary uip-cursor-pointer uip-flex uip-flex-center uip-text-inverse">\
-          <span>{{translations.create}}</span>\
-          <span class="material-icons-outlined">chevron_right</span>\
+       class="uip-padding-xxs uip-border-box uip-w-32 uip-h-32 uip-border-round hover:uip-background-muted uip-cursor-pointer uip-flex uip-flex-center uip-flex-middle">\
+          <span class="material-icons-outlined">add_circle</span>\
        </div>\
     </div>\
     <div v-if="areWeFloating"  @click="openSearch()" >\
-        <span class="material-icons-outlined">add_circle</span>\
+        <span class="material-icons-outlined uip-icon-large">add_circle</span>\
     </div>\
     <div v-if="create.open" class="uip-position-fixed uip-w-100p uip-h-viewport uip-hidden uip-text-normal" \
     style="background:rgba(0,0,0,0.3);z-index:99999;top:0;left:0;right:0;max-height:100vh" \
@@ -909,13 +908,16 @@ UIPtoolbar.component("toolbar-offcanvas", {
 
       return "_self";
     },
+    defaultImage(e) {
+      let initial = this.defaults.user.initial;
+      jQuery(e.target).replaceWith('<span class="uip-text-inverse uip-text-m uip-no-select uip-line-height-0">' + initial + "</span>");
+    },
   },
   template:
     '<div class="uip-flex uip-flex-center" style="height:100%">\
       <div v-if="!areWeFloating" @click="openOffcanvas()" \
-      class="uip-margin-left-s uip-background-primary uip-border-circle uip-w-28 uip-h-28 hover:uip-background-primary-dark uip-flex uip-flex-center uip-flex-middle">\
-        <span v-if="!settings.defaults.user.img" class="uip-text-inverse uip-text-m uip-no-select uip-line-height-0" >{{defaults.user.initial}}</span>\
-        <img v-if="settings.defaults.user.img" class="uip-border-circle uip-w-100p" :src="settings.defaults.user.img">\
+      class="uip-margin-left-xs uip-background-primary uip-border-circle uip-w-28 uip-h-28 hover:uip-background-primary-dark uip-flex uip-flex-center uip-flex-middle uip-cursor-pointer">\
+        <img @error="defaultImage" v-if="settings.defaults.user.img" class="uip-border-circle uip-w-100p" :src="settings.defaults.user.img">\
       </div>\
       <div v-if="areWeFloating" @click="openOffcanvas()"\
       class="uip-background-primary uip-border-circle uip-w-26 uip-h-26 hover:uip-background-primary-dark uip-flex uip-flex-center uip-flex-middle">\
@@ -1172,17 +1174,17 @@ UIPtoolbar.component("toolbar-links", {
   template:
     '<div class="uip-flex uip-flex-center" style="height:100%">\
       <a v-if="isEnabled() && !isfront()" :href="defaults.siteHome" :target="getTarget()"\
-      class="material-icons-outlined uip-background-icon uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer uip-toolbar-link uip-no-underline uip-no-outline uip-margin-left-xs">\
-       house\
+      class=" uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer uip-toolbar-link uip-no-underline uip-no-outline uip-border-box uip-w-32 uip-h-32 uip-flex uip-flex-middle">\
+       <span class="material-icons-outlined uip-icon-large">cottage</span>\
       </a>\
       <a v-if="isEnabled() && isfront()" :href="defaults.adminHome"\
-      class="material-icons-outlined uip-background-icon uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer uip-toolbar-link uip-no-underline uip-no-outline uip-margin-left-xs">\
-        dashboard\
+      class=" uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer uip-toolbar-link uip-flex uip-no-underline uip-no-outline  uip-border-box uip-w-32 uip-h-32 uip-flex-middle">\
+        <span class="material-icons-outlined uip-icon-large">dashboard</span>\
       </a>\
       <span v-if="showScreenOptions()"\
       @click="toggleScreenMeta()" \
-      class="material-icons-outlined uip-background-icon uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer uip-margin-left-xs">\
-        tune\
+      class=" uip-padding-xxs uip-border-round hover:uip-background-muted uip-cursor-pointer uip-border-box uip-w-32 uip-h-32 uip-flex uip-flex-middle">\
+        <span class="material-icons-outlined uip-icon-large">tune</span>\
       </span>\
     </div>',
 });

@@ -16,6 +16,10 @@ body::-webkit-scrollbar-thumb {
   border-radius: var(--uip-border-radius);
 }
 
+body {
+  font-size: var(--uip-body-font-size);
+}
+
 /**
 * LINKS
 */
@@ -38,7 +42,6 @@ body::-webkit-scrollbar-thumb {
   font-family: var(--uip-header-font-family);
   padding: 0;
   font-weight: var(--uip-text-bold);
-  margin-top: var(--uip-margin-s) !important;
   color: var(--uip-text-color-emphasis);
 }
 
@@ -952,6 +955,21 @@ body#plugin-information {
   content: "\f341";
   font-family: dashicons;
   font-size: 22px;
+}
+.edit-post-fullscreen-mode-close.components-button {
+  &:before {
+    content: "\f341";
+    font-family: dashicons;
+    top: auto;
+    font-size: 28px;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+
+  & > svg {
+    display: none;
+  }
 }
 .edit-post-fullscreen-mode-close.has-icon svg {
   display: none;

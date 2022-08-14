@@ -31,13 +31,12 @@ html[uip-toolbar="true"] {
     right: 0;
     z-index: 99999;
     color: var(--uip-toolbar-text-color);
-    font-size: 14px;
+    font-size: var(--uip-body-font-size);
     line-height: initial;
     #uip-toolbar-content {
       animation-name: toolbarfade;
       animation-duration: 0.6s;
     }
-
     .uip-background-icon {
       background-color: var(--uip-toolbar-background-secondary);
       &:hover {
@@ -204,6 +203,7 @@ html[uip-toolbar="true"] {
 }
 
 html[uip-flyout-toolbar="true"][uip-toolbar="true"] {
+  --wp-admin--admin-bar--height: 0px;
   padding-top: 0;
 
   #uip-floating-toolbar {

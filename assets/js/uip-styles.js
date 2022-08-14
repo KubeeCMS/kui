@@ -59,27 +59,28 @@ const UIPstylesOptions = {
       if (this.isJSON(settings)) {
         let imported = JSON.parse(settings);
         let self = this;
-        console.log(self.styles);
 
-        for (var category in imported) {
-          let cat = imported[category];
+        for (const [key, value] of Object.entries(imported)) {
+          let cat = imported[key];
 
           if (cat.options) {
             let options = cat.options;
 
-            for (var option in options) {
-              let opt = options[option];
+            options.forEach(function (option, index) {
+              let opt = option;
 
-              if (opt.value && opt.value != "") {
-                self.styles[category].options[option].value = opt.value;
-              }
+              const searchIndex = self.styles[key].options.findIndex((soloOpt) => soloOpt.name == opt.name);
 
-              if (opt.darkValue && opt.darkValue != "") {
-                self.styles[category].options[option].darkValue = opt.darkValue;
+              if (searchIndex >= 0) {
+                if (opt.value && opt.value != "" && opt.value.length > 0) {
+                  self.styles[key].options[searchIndex].value = opt.value;
+                }
+
+                if (opt.darkValue && opt.darkValue != "" && opt.darkValue.length > 0) {
+                  self.styles[key].options[searchIndex].darkValue = opt.darkValue;
+                }
               }
-            }
-          } else {
-            continue;
+            });
           }
         }
       }

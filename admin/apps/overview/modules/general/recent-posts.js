@@ -83,7 +83,7 @@ export function moduleData() {
     				<span class="uip-text-muted">{{post.author}} - {{post.date}}</span>\
   			  </div>\
           <div class="uip-margin-left-xs">\
-            <span class="uip-background-primary-wash uip-border-round uip-padding-left-xxs uip-padding-right-xxs uip-text-bold">{{post.type}}</span>\
+            <span class="uip-background-primary-wash uip-border-round uip-padding-left-xxs uip-padding-right-xxs uip-text-bold uip-no-wrap">{{post.type}}</span>\
           </div>\
   			</div>\
 		  </div>\

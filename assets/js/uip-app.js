@@ -140,9 +140,7 @@ const UIPadminMenuOptions = {
       this.loading = false;
     },
   },
-  template:
-    '<menu-loader-placeholder v-if="loading"></menu-loader-placeholder>\
-  <get-menu @menu-loaded="loaded()"\
+  template: '<get-menu @menu-loaded="loaded()"\
   :translations="translations"\
   :appPrefs="userPreferences" \
   :appDefaults="returnDefaults"\
@@ -364,54 +362,86 @@ UIPmenu.component("build-menu", {
   computed: {
     menuWithSearch() {
       let original = this.masterMenu.menu;
-      let tempmenu = Object.assign([], original);
-      let filterMenu = [];
-
-      if (this.searchString.length > 0) {
-        let searchString = this.searchString.toLowerCase();
-
-        //LOOP THROUGH MENU
-        for (i = 0; i < tempmenu.length; i++) {
-          let tempSub = [];
-          let menuitem = tempmenu[i];
-          if (menuitem.type == "sep") {
-            continue;
-          }
-          //CHECK SUB ITEMS FIRST
-          if (menuitem.submenu) {
-            for (p = 0; p < menuitem.submenu.length; p++) {
-              let subItem = menuitem.submenu[p];
-              name = subItem.name.toLowerCase();
-              if (name.includes(searchString)) {
-                tempSub.push(subItem);
-              }
-            }
-          }
-          if (tempSub.length > 0) {
-            menuitem.active = true;
-            menuitem.submenu = tempSub;
-            pos = filterMenu.push(menuitem);
-          } else {
-            //CHECK PARENT
-            name = menuitem.name.toLowerCase();
-            if (name.includes(searchString)) {
-              filterMenu.push(menuitem);
-            }
-          }
-        }
-        //RETURN TEMP MENU
-        return filterMenu;
-      } else {
-        filterMenu = original;
-      }
-
-      return filterMenu;
+      return original;
     },
   },
   mounted: function () {
     this.loading = false;
   },
   methods: {
+    top_insearch(toplevel) {
+      let searchString = this.searchString.toLowerCase();
+
+      if (searchString == "") {
+        return true;
+      }
+      if (toplevel.type == "sep") {
+        return false;
+      }
+      let name = toplevel.name.toLowerCase();
+      //CHECK SUBS
+      //CHECK SUB ITEMS FIRST
+      let tempSub = [];
+      if (toplevel.submenu) {
+        for (p = 0; p < toplevel.submenu.length; p++) {
+          let subItem = toplevel.submenu[p];
+          name = subItem.name.toLowerCase();
+          if (name.includes(searchString)) {
+            tempSub.push(subItem);
+          }
+        }
+      }
+      //if subs are in search
+      if (tempSub.length > 0) {
+        return true;
+      }
+
+      //top level name
+      if (name.includes(searchString)) {
+        return true;
+      }
+    },
+    subs_insearch(toplevel) {
+      let searchString = this.searchString.toLowerCase();
+
+      if (searchString == "") {
+        return false;
+      }
+      if (toplevel.type == "sep") {
+        return false;
+      }
+      //CHECK SUBS
+      //CHECK SUB ITEMS FIRST
+      let tempSub = [];
+      if (toplevel.submenu) {
+        for (p = 0; p < toplevel.submenu.length; p++) {
+          let subItem = toplevel.submenu[p];
+          name = subItem.name.toLowerCase();
+          if (name.includes(searchString)) {
+            tempSub.push(subItem);
+          }
+        }
+      }
+      //if subs are in search
+      if (tempSub.length > 0) {
+        return true;
+      }
+      return false;
+    },
+    sub_in_search(subitem) {
+      let searchString = this.searchString.toLowerCase();
+
+      if (searchString == "") {
+        return true;
+      }
+      let name = subitem.name.toLowerCase();
+
+      //top level name
+      if (name.includes(searchString)) {
+        return true;
+      }
+      return false;
+    },
     showSubMenu(menuItem, ev) {
       if (this.preferences.showSubmenuHover || this.preferences.menuShrunk) {
         menuItem.hover = true;
@@ -536,6 +566,10 @@ UIPmenu.component("build-menu", {
         classes = classes + " " + item.userClasses;
       }
 
+      if (!item.submenu || item.submenu.length < 1) {
+        classes = classes + " " + "uip-w-100p";
+      }
+
       return classes;
     },
     showIcon() {
@@ -553,6 +587,76 @@ UIPmenu.component("build-menu", {
       }
       return classes;
     },
+    loadNextPage(item, e) {
+      return;
+      e.preventDefault();
+      let link = this.getItemUrl(item);
+
+      let searchParams = new URLSearchParams(window.location.search);
+      let current = window.location.origin;
+      searchParams.set("uip_remote_fetch", 1);
+      let newRelativePathQuery = current + "/wp-admin/" + link;
+
+      jQuery.ajax(newRelativePathQuery, {
+        success: function (data) {
+          let parser = new DOMParser();
+          let newPage = parser.parseFromString(data, "text/html");
+
+          document.querySelector("html").innerHTML = newPage.querySelector("html").innerHTML;
+          return;
+
+          // Your class(es)
+          let docClass = newPage.body.getAttribute("class");
+          document.body.className = docClass;
+          //GET WPCONTENT
+          let content = newPage.getElementById("wpcontent");
+          document.getElementById("wpcontent").replaceWith(content);
+
+          //GET SCRIPT TAGS
+          let newscripts = newPage.scripts;
+          let currentScripts = document.scripts;
+          let currentArr = JSON.stringify(currentScripts);
+          let test = [];
+
+          //build array of outerhtml
+
+          let comparison = [];
+          for (const script of currentScripts) {
+            comparison.push(script.outerHTML);
+          }
+          //document.scripts = newscripts;
+          for (const script of newscripts) {
+            // ...use `element`...
+            //console.log(script);
+            if (comparison.includes(script.outerHTML)) {
+              console.log("it is here");
+              document.head.appendChild(script);
+            } else {
+              console.log("Skip this one");
+            }
+          }
+
+          //update history
+          window.history.pushState({}, "", newRelativePathQuery);
+          item.active = true;
+          return;
+
+          //console.log(jQuery(data).find(".wp-admin").attr("class"));
+          //console.log(jQuery(data).filter("body"));
+
+          let rawData = data;
+          var thedata = rawData.replace("<body", '<div id="uip-body"').replace("</body>", "</div>");
+
+          console.log(jQuery(data));
+          jQuery("#wpcontent").html(jQuery(thedata).find("#wpcontent").html());
+          jQuery("body").attr("class", jQuery(thedata).find("#uip-body").attr("class"));
+          window.history.pushState({}, "", newRelativePathQuery);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          uipNotification(translations.failedfolders);
+        },
+      });
+    },
   },
   template:
     '<div class="uip-body-font uip-menu-padding uip-flex-grow uip-overflow-auto" id="uip-menu-content">\
@@ -564,54 +668,56 @@ UIPmenu.component("build-menu", {
   			<input type="search" :placeholder="translations.searchMenu" class="uip-blank-input uip-min-width-0 uip-flex-grow uip-menu-search-text"  v-model="searchString">\
   		</div>\
 	  </div>\
-	  <div>\
-		<template v-for="item in menuWithSearch">\
-      <!-- SEP -->\
-			<div v-if="item.type == \'sep\' && !item.name" :class="sepClass(\'uip-margin-m\', item)"></div>\
-      <div v-if="item.type == \'sep\' && item.name && !isShrunkMenu()" :class="sepClass(\'uip-margin-bottom-xxs uip-padding-xxs uip-margin-top-s uip-text-bold uip-text-emphasis\', item)">{{item.name}}</div>\
-      <div v-if="item.type == \'sep\' && item.name && isShrunkMenu()" class="uip-margin-m"></div>\
-      <!-- NORMAL MENU -->\
-			<li :id="item[5]" class="uip-margin-remove" v-if="item.type != \'sep\'" @mouseover="showSubMenu(item, $event)" @mouseleave="hideSubMenu(item)" :class="formatClases(item)">\
-				<div class="uip-margin-bottom-xxs uip-padding-xxs uip-border-round hover:uip-active-item-background "\
-				:class="{\'uip-active-item-background\' : item.active}">\
-					<div class="uip-flex uip-flex-center">\
-						<a :href="getItemUrl(item)" v-if="showIcon()" class="uip-margin-right-xs uip-link-muted" \
-            :class="[{\'uip-text-emphasis\' : item.active}, formatLinkClases(item)]"  v-html="item.icon" :target="hrefTarget(item.blankPage)"></a>\
-						<a :href="getItemUrl(item)" :class="{\'uip-text-emphasis \' : item.active}" class="uip-text-bold uip-link-muted"\
-						v-if="!isShrunkMenu()" v-html="item.name" :target="hrefTarget(item.blankPage)"></a>\
-						<span v-if="item.submenu && item.submenu.length > 0 && !isShrunkMenu() && (!preferences.showSubmenuHover || appDefaults.mobile == true)" \
-            @click="makeActive(item)" class="uip-cursor-pointer uip-flex-grow uip-text-right" :class="{\'uip-text-emphasis \' : item.active}">\
-							<span v-if="!item.active" class="material-icons-outlined uip-margin-left-auto">chevron_left</span>\
-							<span v-if="item.active" class="material-icons-outlined uip-margin-left-auto">expand_more</span>\
-						</span>\
-            <span v-if="item.submenu && item.submenu.length > 0 && !isShrunkMenu() && preferences.showSubmenuHover && appDefaults.mobile != true" \
-            @click="makeActive(item)" class="uip-cursor-pointer uip-flex-grow uip-text-right" :class="{\'uip-text-emphasis \' : item.active}">\
-              <span class="material-icons-outlined">chevron_right</span>\
-            </span>\
-					</div>\
-				</div>\
-				<!-- NORMAL SUB MENU -->\
-				<div v-if="showNormalSub(item)" class="uip-padding-top-xs uip-margin-bottom-s uip-sub-menu" style="margin-left:3px;"\
-				:class="{\'uip-padding-left-xs \' : preferences.hideIcons, \'uip-padding-left-m \' : preferences.hideIcons != true}">\
-					<template v-for="subitem in item.submenu">\
-						<div class="uip-margin-bottom-xxs" :class="subitem.userClasses">\
-							<a :target="hrefTarget(subitem.blankPage)" :href="getItemUrl(subitem)" :class="{\'uip-text-emphasis uip-text-bold\' : subitem.active}" class="uip-link-muted" v-html="subitem.name"></a>\
-						</div>\
-					</template>\
-				</div>\
-				<!-- HOVER MENU  -->\
-        <uip-menu-dropdown v-if="showHoverSub(item)" >\
-          <div class="uip-flex uip-gap-xxs uip-flex-column">\
-            <template v-for="subitem in item.submenu">\
-              <div class="" :class="subitem.userClasses">\
-                <a :target="hrefTarget(subitem.blankPage)" :href="getItemUrl(subitem)" :class="{\'uip-text-emphasis uip-text-bold\' : subitem.active}" class="uip-link-muted" v-html="subitem.name"></a>\
-              </div>\
-            </template>\
-          </div>\
-        </uip-menu-dropdown>\
-      </li>\
-		</template>\
-	  </div>\
+	  <ul class="uip-flex uip-flex-column uip-row-gap-xxxs uip-flex-start uip-flex-stretch uip-menu-list">\
+		  <template v-for="item in menuWithSearch">\
+        <!-- SEP -->\
+			  <div v-if="item.type == \'sep\' && !item.name && top_insearch(item)" :class="sepClass(\'uip-margin-xs\', item)"></div>\
+        <div v-if="item.type == \'sep\' && item.name && !isShrunkMenu() && top_insearch(item)" :class="sepClass(\'uip-margin-bottom-xxs uip-padding-xxs uip-margin-top-s uip-text-bold uip-text-emphasis\', item)">{{item.name}}</div>\
+        <div v-if="item.type == \'sep\' && item.name && isShrunkMenu() && top_insearch(item)" class="uip-margin-xs"></div>\
+        <!-- NORMAL MENU -->\
+			  <li :id="item[5]" class="uip-margin-remove" v-if="item.type != \'sep\' && top_insearch(item)" @mouseover="showSubMenu(item, $event)" @mouseleave="hideSubMenu(item)" :class="formatClases(item)">\
+				  <div class="uip-padding-xxs uip-border-round hover:uip-active-item-background "\
+				  :class="{\'uip-active-item-background\' : item.active}">\
+					  <div class="uip-flex uip-flex-center">\
+              <a @click="loadNextPage(item, $event)" :href="getItemUrl(item)" class="uip-text-bold uip-link-muted uip-flex uip-gap-xs"\
+              :class="[{\'uip-text-emphasis\' : item.active}, formatLinkClases(item)]"\
+              :target="hrefTarget(item.blankPage)">\
+                <span v-if="showIcon()" v-html="item.icon"></span>\
+                <span v-if="!isShrunkMenu()" v-html="item.name"></span>\
+              </a>\
+						  <span v-if="item.submenu && item.submenu.length > 0 && !isShrunkMenu() && (!preferences.showSubmenuHover || appDefaults.mobile == true)" \
+              @click="makeActive(item)" class="uip-cursor-pointer uip-flex-grow uip-text-right" :class="{\'uip-text-emphasis \' : item.active}">\
+							  <span v-if="!item.active" class="material-icons-outlined uip-margin-left-auto">chevron_left</span>\
+							  <span v-if="item.active" class="material-icons-outlined uip-margin-left-auto">expand_more</span>\
+						  </span>\
+              <span v-if="item.submenu && item.submenu.length > 0 && !isShrunkMenu() && preferences.showSubmenuHover && appDefaults.mobile != true" \
+              @click="makeActive(item)" class="uip-cursor-pointer uip-flex-grow uip-text-right" :class="{\'uip-text-emphasis \' : item.active}">\
+                <span class="material-icons-outlined">chevron_right</span>\
+              </span>\
+					  </div>\
+				  </div>\
+				  <!-- NORMAL SUB MENU -->\
+				  <div v-if="showNormalSub(item) || subs_insearch(item)" class="uip-margin-top-xs uip-sub-menu" style="margin-left:3px;"\
+				  :class="{\'uip-padding-left-xs \' : preferences.hideIcons, \'uip-padding-left-m \' : preferences.hideIcons != true}">\
+					  <template v-for="subitem in item.submenu">\
+						  <div v-if="sub_in_search(subitem)" class="uip-margin-bottom-xxs" :class="subitem.userClasses">\
+							  <a :target="hrefTarget(subitem.blankPage)" :href="getItemUrl(subitem)" :class="{\'uip-text-emphasis uip-text-bold\' : subitem.active}" class="uip-link-muted" v-html="subitem.name"></a>\
+						  </div>\
+					  </template>\
+				  </div>\
+				  <!-- HOVER MENU  -->\
+          <uip-menu-dropdown v-if="showHoverSub(item)" >\
+            <div class="uip-flex uip-gap-xxs uip-flex-column uip-sub-menu">\
+              <template v-for="subitem in item.submenu">\
+                <div class="" :class="subitem.userClasses">\
+                  <a :target="hrefTarget(subitem.blankPage)" :href="getItemUrl(subitem)" :class="{\'uip-text-emphasis uip-text-bold\' : subitem.active}" class="uip-link-muted" v-html="subitem.name"></a>\
+                </div>\
+              </template>\
+            </div>\
+          </uip-menu-dropdown>\
+        </li>\
+		  </template>\
+	  </ul>\
   </div>',
 });
 
@@ -998,3 +1104,8 @@ UIPmenu.component("menu-loader-placeholder", {
 if (jQuery("#uip-admin-menu").length > 0) {
   UIPmenu.mount("#uip-admin-menu");
 }
+
+jQuery(document).ready(function () {
+  //jQuery(".material-icons-outlined").addClass("material-icons-outlined-loaded");
+  jQuery("<style>.material-icons-outlined  { max-width: 1000px;overflow:visible;opacity:1; }</style>").appendTo("head");
+});

@@ -205,47 +205,53 @@ export function moduleData() {
         <!-- EDITING USER -->\
         <div class="" v-if="ui.editing">\
           <div class="uip-text-bold uip-text-xl uip-margin-bottom-m">{{translations.editUser}}</div>\
-          <div class="uip-flex uip-flex-column uip-row-gap-s">\
+          <div class="uip-flex uip-flex-column uip-row-gap-m">\
             <div class="uip-w-50p">\
               <div class="uip-margin-bottom-xs">{{translations.profileImage}}</div>\
-              <div v-if="!user.editData.uip_profile_image" class="uip-flex uip-flex-center uip-flex-middle uip-background-default uip-border uip-padding-s uip-border-circle uip-w-50 uip-h-50 uip-margin-bottom-xs uip-cursor-pointer" @click="chooseImage()">\
-                <span class="uip-text-muted uip-text-center">{{translations.chooseImage}}</span>\
-              </div>\
-              <img v-if="user.editData.uip_profile_image" class="uip-h-50 uip-max-h-50 uip-w-50 uip-border-circle uip-border uip-margin-bottom-xs uip-cursor-pointer" :src="user.editData.uip_profile_image"  @click="chooseImage()">\
-              <div class="uip-flex">\
-                <input class="uip-flex-grow uip-margin-right-xs uip-standard-input" type="text" placeholder="URL..." v-model="user.editData.uip_profile_image">\
-                <span class="uip-background-muted material-icons-outlined uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer uip-text-normal"\
-                @click="user.editData.uip_profile_image = \'\'">delete</span>\
+              <div class="uip-flex uip-gap-s uip-flex-start">\
+                <div v-if="!user.editData.uip_profile_image" class="uip-flex uip-flex-center uip-flex-middle uip-background-default uip-border uip-padding-s uip-border-circle uip-w-50 uip-h-50 uip-margin-bottom-xs uip-cursor-pointer" @click="chooseImage()">\
+                  <span class="uip-text-muted uip-text-center">{{translations.chooseImage}}</span>\
+                </div>\
+                <img v-if="user.editData.uip_profile_image" class="uip-h-50 uip-max-h-50 uip-w-50 uip-border-circle uip-border uip-margin-bottom-xs uip-cursor-pointer" :src="user.editData.uip_profile_image"  @click="chooseImage()">\
+                <div class="uip-flex">\
+                  <input class="uip-flex-grow uip-margin-right-xs uip-standard-input" type="text" placeholder="URL..." v-model="user.editData.uip_profile_image">\
+                  <span class="uip-background-muted material-icons-outlined uip-padding-xxs uip-border-round hover:uip-background-grey uip-cursor-pointer uip-text-normal"\
+                  @click="user.editData.uip_profile_image = \'\'">delete</span>\
+                </div>\
               </div>\
             </div>\
-            <div>\
-              <div class="uip-margin-bottom-xs">{{translations.firstName}}</div>\
-              <input type="text" class="uip-w-100p" v-model="user.editData.first_name">\
-            </div>\
-            <div>\
-              <div class="uip-margin-bottom-xs">{{translations.lastName}}</div>\
-              <input type="text" class="uip-w-100p"  v-model="user.editData.last_name">\
+            <div class="uip-flex uip-gap-s">\
+              <div class="uip-w-50p">\
+                <div class="uip-margin-bottom-xs">{{translations.firstName}}</div>\
+                <input type="text" class="uip-w-100p" v-model="user.editData.first_name">\
+              </div>\
+              <div class="uip-w-50p">\
+                <div class="uip-margin-bottom-xs">{{translations.lastName}}</div>\
+                <input type="text" class="uip-w-100p"  v-model="user.editData.last_name">\
+              </div>\
             </div>\
             <div>\
               <div class="uip-margin-bottom-xs">{{translations.email}}</div>\
               <input type="text" class="uip-w-100p"  v-model="user.editData.user_email">\
             </div>\
-            <div>\
-              <div class="uip-margin-bottom-xs">{{translations.roles}}</div>\
-              <role-select :selected="user.editData.roles"\
-              :name="translations.assignRoles"\
-              :translations="translations"\
-              :single=\'false\'\
-              :placeholder="translations.searchRoles"\
-              :updateRoles="returnRoles"></role-select>\
-            </div>\
-            <div>\
-              <div class="uip-margin-bottom-xs">{{translations.groups}}</div>\
-              <group-select :groups="groups" :selected="user.editData.uip_user_group"\
-              :name="translations.assignGroups"\
-              :single=\'false\'\
-              :placeholder="translations.searchGroups"\
-              :updategroups="returnGroups"></group-select>\
+            <div class="uip-flex uip-gap-s">\
+              <div class="uip-w-50p">\
+                <div class="uip-margin-bottom-xs">{{translations.roles}}</div>\
+                <role-select :selected="user.editData.roles"\
+                :name="translations.assignRoles"\
+                :translations="translations"\
+                :single=\'false\'\
+                :placeholder="translations.searchRoles"\
+                :updateRoles="returnRoles"></role-select>\
+              </div>\
+              <div class="uip-w-50p">\
+                <div class="uip-margin-bottom-xs">{{translations.groups}}</div>\
+                <group-select :groups="groups" :selected="user.editData.uip_user_group"\
+                :name="translations.assignGroups"\
+                :single=\'false\'\
+                :placeholder="translations.searchGroups"\
+                :updategroups="returnGroups"></group-select>\
+              </div>\
             </div>\
             <div>\
               <div class="uip-margin-bottom-xs">{{translations.userNotes}}</div>\
